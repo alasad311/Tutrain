@@ -1,0 +1,7 @@
+{
+  "name": "Tutrain",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
