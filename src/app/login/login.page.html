@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home" [text]=""></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>  
+<ion-content>
+  <ion-grid>
+      <ion-row>
+          <ion-col>
+                <ion-item class="first-border" lines="none">
+                    <ion-input  type="email" inputmode="email" clearInput placeholder="Email Address" autocomplete="email" required></ion-input>
+                </ion-item>
+                <ion-item class="last-border" lines="none">
+                    <ion-input inputmode="password" type="password" clearInput placeholder="Password" autocomplete="current-password" required></ion-input>
+                </ion-item>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>

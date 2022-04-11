@@ -9,4 +9,9 @@ export class HomePage {
 
   constructor() {}
 
+  //Slider auto play
+  afterslidesLoad(slides) {
+    slides.startAutoplay();
+  }
+
 }
