@@ -1,21 +1,42 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="home" [text]=""></ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>  
+  <!--
+  Authors : bunchdevelopers (Rahul Jograna)
+  Website : https://bunchdevelopers.com/
+  App Name : ionic6Template Pack
+  This App Template Source code is licensed as per the
+  terms found in the Website https://bunchdevelopers.com/license
+  Copyright and Good Faith Purchasers © 2021-present bunchdevelopers.
+ -->
 <ion-content>
-  <ion-grid>
-      <ion-row>
-          <ion-col>
-                <ion-item class="first-border" lines="none">
-                    <ion-input  type="email" inputmode="email" clearInput placeholder="Email Address" autocomplete="email" required></ion-input>
-                </ion-item>
-                <ion-item class="last-border" lines="none">
-                    <ion-input inputmode="password" type="password" clearInput placeholder="Password" autocomplete="current-password" required></ion-input>
-                </ion-item>
-          </ion-col>
-      </ion-row>
-  </ion-grid>
+
+  <div class="row">
+    <img src="https://via.placeholder.com/2818x522">
+    <ion-card>
+      <div class="title-div">
+        <ion-label class="title">Sign In</ion-label>
+      </div>
+      <div class="textbox">
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input class="ion-no-padding" type="email"></ion-input>
+      </div>
+      <div class="textbox">
+        <ion-label position="stacked">Password</ion-label>
+        <app-show-hide-password>
+          <ion-input class="ion-no-padding" type="password"></ion-input>
+        </app-show-hide-password>
+      </div>
+      <ion-button (click)="goToAddress()" shape="round">
+        Log In
+      </ion-button>
+      <div class="text-div">
+        <ion-label class="text">Don't have an account?
+          <span (click)="goToRegister()">Sign Up</span>
+        </ion-label>
+      </div>
+    </ion-card>
+  </div>
+  <div class="image">
+    <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
+    <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
+    <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
+  </div>
 </ion-content>

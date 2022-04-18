@@ -1,0 +1,68 @@
+<ion-content >
+  <div class="row">
+    <ion-card>
+      <div class="title-div">
+        <ion-label class="title">Sign Up</ion-label>
+      </div>
+      <div class="segments">
+        <ion-segment mode="ios" value="learner">
+          <ion-segment-button value="learner">
+            <ion-label>Learner</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="tutor">
+            <ion-label>Tutor</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="trainer">
+            <ion-label>Trainer</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <ion-item lines="none">
+        <ion-icon slot="start" name="location-outline" color="medium"></ion-icon>
+        <ion-select placeholder="Select Country" interface="popover">
+          <ion-select-option value="OM">Sultanate of Oman</ion-select-option>
+          <ion-select-option value="EA">Kuwait</ion-select-option>
+          <ion-select-option value="OM">Saudi Arabia</ion-select-option>
+          <ion-select-option value="OM">Qatar</ion-select-option>
+          <ion-select-option value="OM">Iraq</ion-select-option>
+          <ion-select-option value="OM">Bahrain</ion-select-option>
+          <ion-select-option value="OM">United Arab Emirates</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="textbox">
+        <ion-label position="stacked">Full Name</ion-label>
+        <ion-input class="ion-no-padding" type="text"></ion-input>
+      </div>
+      <div class="textbox">
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input class="ion-no-padding" type="email"></ion-input>
+      </div>
+      <div class="textbox">
+        <ion-label position="stacked">phone</ion-label>
+        <ion-input class="ion-no-padding" type="phone"></ion-input>
+      </div>
+      
+      <div class="textbox">
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input class="ion-no-padding" type="password"></ion-input>
+      </div>
+      <div class="textbox">
+        <ion-label position="stacked">Confirm Password</ion-label>
+        <ion-input class="ion-no-padding" type="password"></ion-input>
+      </div>
+      <ion-button (click)="goToAddress()" shape="round">
+        Register
+      </ion-button>
+      <div class="text-div">
+        <ion-label class="text">Already have an account?
+          <span (click)="goToLogin()">Sign In</span>
+        </ion-label>
+      </div>
+    </ion-card>
+  </div>
+  <div class="image">
+    <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
+    <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
+    <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
+  </div>
+</ion-content>
