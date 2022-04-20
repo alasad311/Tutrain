@@ -40,13 +40,27 @@
         font-family: "semi-bold";
         margin: 5px 0px;
       }
+      .password {
+        padding: 7px 35px 7px 7px !important;
+      }
+      ion-icon {
+        position: absolute;
+        right: 10px;
+        z-index: 100;
+      }
     }
     ion-button {
       width: 100%;
       color: white;
       margin: 10px 0px;
     }
-
+    .text-forgot{
+      text-align: right;
+      span {
+        font-family: "semi-bold";
+        color: var(--ion-color-primary);
+      }
+    }
     .text-div {
       text-align: center;
       .text {
@@ -91,4 +105,13 @@
     z-index: -1;
     filter: drop-shadow(0 0 0.75rem #d7d8da);
   }
+}
+
+.icon-padding{
+  padding-left: 10px;
+}
+ion-item {
+  --padding-end: 0px;
+  --inner-padding-end: 0px;
+  // here other custom CSS from documentation
 }

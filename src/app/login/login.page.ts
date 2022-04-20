@@ -15,16 +15,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public viewPassword = 'eye-outline';
+  public showPassword = false;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
   goToAddress(){
-    this.router.navigate(['/address']);
+    this.router.navigate(['/home']);
   }
   goToRegister(){
     this.router.navigate(['/register']);
   }
-
+  goToForgotPassword(){
+    this.router.navigate(['/forgot']);
+  }
+  togglePassword(){
+    if(this.viewPassword == 'eye-off-outline')
+    {
+      this.viewPassword = 'eye-outline'
+      this.showPassword = false;
+    }else
+    {
+      this.viewPassword = 'eye-off-outline'
+      this.showPassword = true;
+    }
+  }
 }

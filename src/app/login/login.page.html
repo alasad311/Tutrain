@@ -20,9 +20,13 @@
       </div>
       <div class="textbox">
         <ion-label position="stacked">Password</ion-label>
-        <app-show-hide-password>
-          <ion-input class="ion-no-padding" type="password"></ion-input>
-        </app-show-hide-password>
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-input class="ion-no-padding password" type="{{showPassword ? 'text' : 'password'}}"></ion-input>
+          <ion-icon slot="end" class="icon-padding" name="{{viewPassword}}" (click)="togglePassword()"></ion-icon>
+        </ion-item>
+      </div>
+      <div class="text-forgot">
+          <span (click)="goToForgotPassword()">Forgot password?</span>
       </div>
       <ion-button (click)="goToAddress()" shape="round">
         Log In

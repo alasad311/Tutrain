@@ -19,14 +19,14 @@
       </div>
       <ion-item lines="none">
         <ion-icon slot="start" name="location-outline" color="medium"></ion-icon>
-        <ion-select placeholder="Select Country" interface="popover">
-          <ion-select-option value="OM">Sultanate of Oman</ion-select-option>
-          <ion-select-option value="EA">Kuwait</ion-select-option>
-          <ion-select-option value="OM">Saudi Arabia</ion-select-option>
-          <ion-select-option value="OM">Qatar</ion-select-option>
-          <ion-select-option value="OM">Iraq</ion-select-option>
-          <ion-select-option value="OM">Bahrain</ion-select-option>
-          <ion-select-option value="OM">United Arab Emirates</ion-select-option>
+        <ion-select [(ngModel)]="getCountry" (ionChange)="getSelectCountry(getCountry,changePhone)" placeholder="Select Country" interface="popover">
+          <ion-select-option value="om">Sultanate of Oman</ion-select-option>
+          <ion-select-option value="kw">Kuwait</ion-select-option>
+          <ion-select-option value="sa">Saudi Arabia</ion-select-option>
+          <ion-select-option value="qa">Qatar</ion-select-option>
+          <ion-select-option value="iq">Iraq</ion-select-option>
+          <ion-select-option value="bh">Bahrain</ion-select-option>
+          <ion-select-option value="ae">United Arab Emirates</ion-select-option>
         </ion-select>
       </ion-item>
       <div class="textbox">
@@ -39,16 +39,26 @@
       </div>
       <div class="textbox">
         <ion-label position="stacked">phone</ion-label>
-        <ion-input class="ion-no-padding" type="phone"></ion-input>
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-text class="international-code">{{internationalCode}}</ion-text>
+          <ion-input class="ion-no-padding phone" type="phone"></ion-input>
+          <ion-img slot="start" class="flag-img" src="{{flagImage}}" ></ion-img>
+        </ion-item>
       </div>
       
       <div class="textbox">
         <ion-label position="stacked">Password</ion-label>
-        <ion-input class="ion-no-padding" type="password"></ion-input>
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-input class="ion-no-padding password" type="{{showPassword_1 ? 'text' : 'password'}}"></ion-input>
+          <ion-icon slot="end" class="icon-padding" name="{{viewPassword_1}}" (click)="togglePassword(1)"></ion-icon>
+        </ion-item>
       </div>
       <div class="textbox">
         <ion-label position="stacked">Confirm Password</ion-label>
-        <ion-input class="ion-no-padding" type="password"></ion-input>
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-input class="ion-no-padding password" type="{{showPassword_2 ? 'text' : 'password'}}"></ion-input>
+          <ion-icon slot="end" class="icon-padding" name="{{viewPassword_2}}" (click)="togglePassword(2)"></ion-icon>
+        </ion-item>
       </div>
       <ion-button (click)="goToAddress()" shape="round">
         Register
