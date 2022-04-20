@@ -1,0 +1,17 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+        <ion-button (click)="goBack()" fill="clear" mode="ios">
+          <ion-icon name="chevron-back" color="dark"></ion-icon>
+        </ion-button>
+      <ion-title>Forgot Password</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="main_content_div">
+      <ion-label class="grey_lbl">Enter your email address to receive a link to reset your password.</ion-label>   
+      <ion-input type="text" type="email" placeholder="Email"></ion-input>
+      <ion-button expand="block" mode="ios" class="block_btn" (click)="goToVerification()">
+        Reset Password
+      </ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,31 @@
+ion-toolbar {
+  --background: #f8f9fd;
+}
+ion-content {
+  --background: #f8f9fd;
+}
+.main_content_div {
+  padding: 16px;
+
+  .bold_lbl {
+    font-size: 24px;
+    font-family: "semi-bold";
+    margin-bottom: 10px;
+  }
+
+  .grey_lbl {
+    color: grey;
+    font-size: 14px;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  ion-input {
+    border-radius: 25px;
+    border: 1px solid #eef1f7;
+    background: white;
+    font-family: "regular";
+    margin-bottom: 20px;
+    --padding-start: 16px;
+  }
+}
