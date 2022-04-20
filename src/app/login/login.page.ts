@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,12 @@ export class LoginPage implements OnInit {
   public viewPassword = 'eye-outline';
   public showPassword = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private navCtrl: NavController) { }
 
   ngOnInit() {
   }
-  goToAddress(){
-    this.router.navigate(['/home']);
+  goToHome() {
+    this.navCtrl.navigateRoot(['tabs']);
   }
   goToRegister(){
     this.router.navigate(['/register']);
