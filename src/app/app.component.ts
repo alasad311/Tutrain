@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -7,6 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   
-    constructor() { }
+    constructor(private menuController: MenuController) { }
 
 }

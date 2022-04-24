@@ -1,117 +1,86 @@
 <ion-header mode="md">
   <ion-toolbar class="ion-no-margin">
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button (click)="util.openMenu()">
         <ion-icon slot="start" name="menu-outline" color="dark"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-title>Tutrain</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar mode="ios" placeholder="Find Restauratns, Foods, Drinks" showCancelButton="never"></ion-searchbar>
+    <ion-searchbar mode="ios" placeholder="Find Courses, Tutors, Trainers" showCancelButton="never"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
 
   <div class="main-content">
-
     <div class="banner">
       <ion-slides pager="false" [options]="slideOpts">
-        <ion-slide *ngFor="let item of banner">
-          <div class="banner-slide" [style.backgroundImage]="'url(assets/banner2.jpg)'">
+        <ion-slide *ngFor="let item of banner" (click)="gotToAd(item.link)">
+          <div class="banner-slide" [style.backgroundImage]="'url('+item.img+')'">
             <div class="badge">
-              <ion-label>TOP SALES</ion-label>
-            </div>
-            <br>
-            <div class="title">
-              <ion-label>INVITE FRIENDS</ion-label>
-            </div>
-            <div class="text">
-              <ion-label>Discount 1Rs for first order</ion-label>
+              <ion-label>{{item.breif}}</ion-label>
+            </div>            
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div class="heading">
+      <ion-label class="title">Select Category</ion-label>
+    </div>
+
+    <div class="category">
+      <div class="menu">
+        <div class="item" *ngFor="let item of categories" (click)="openStyle()">
+          <div class="icon">
+            <img src="{{item.img}}" />
+          </div>
+          <ion-label>{{item.name}}</ion-label>
+        </div>
+      </div>
+    </div>
+
+    <div class="heading">
+      <ion-label class="title">Registerd Courses</ion-label>
+      <ion-label class="text" (click)="goToRestaurant()">View all</ion-label>
+    </div>
+
+    <ion-row class="product">
+      <ion-col size="6" class="ion-no-margin" *ngFor="let item of newCourses" (click)="goToRestaurant(item.id)">
+        <ion-card>
+          <img src="{{item.img}}" />
+          <ion-label class="instructor">{{item.instructor}}</ion-label>
+          <ion-label class="product-name">{{item.name}}</ion-label>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <div class="heading">
+      <ion-label class="title">New Courses</ion-label>
+      <ion-label class="text" (click)="goToRestaurant()">View all</ion-label>
+    </div>
+
+    <div class="banner">
+      <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
+        <ion-slide *ngFor="let item of registeredCourses">
+          <div class="new_courses" (click)="onFavourite()">
+            <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
+            <div class="courses">
+              <ion-label class="name">{{item.name}}</ion-label>
+              <ion-label class="grey_lbl">Instructor Name: {{item.instructor}}</ion-label>
+              <div class="info">
+                <div>
+                  <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
+                  <ion-label style="padding-left: 10px;"><span>{{item.rating}}</span></ion-label>
+                </div>
+              </div>
             </div>
           </div>
         </ion-slide>
       </ion-slides>
     </div>
 
-    <div class="badge">
-      <ion-row>
-        <ion-col (click)="goToRestaurant()" size="3" *ngFor="let item of [0,1,2,3,4,5,6,7]">
-          <ion-img src="assets/img/5.png"></ion-img>
-          <ion-label>hot tea</ion-label>
-        </ion-col>
-      </ion-row>
-    </div>
-
-    <div class="heading">
-      <ion-label class="title">New on Food</ion-label>
-      <ion-label class="text" (click)="goToRestaurant()">View all</ion-label>
-    </div>
-
-    <ion-row class="product">
-      <ion-col size="6" *ngFor="let item of [0,1,2]" (click)="goToRestaurant()">
-        <ion-card class="ion-no-margin">
-          <img src="assets/burger.jpg" />
-          <ion-label class="product-name">Burger is king</ion-label>
-          <ion-label class="price">$ 20.12</ion-label>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
+    
   </div>
 
 </ion-content>
-<ion-split-pane contentId="main-content">
-  <ion-menu contentId="main-content" type="overlay">
-    <ion-header mode="md" class="ion-no-border">
-      <ion-toolbar></ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <div class="menu_content">
-        <div class="user_detail">
-          <div>
-            <ion-label class="name_lbl">Jonh Doe</ion-label>
-            <ion-label class="no_lbl">9876543212</ion-label>
-          </div>
-          <ion-icon name="close" (click)="close()"></ion-icon>
-        </div>
-
-
-        <ion-menu-toggle auto-hide="false">
-          <div class="flex_div" (click)="goToProfile()">
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-label>Profile</ion-label>
-          </div>
-          <div class="flex_div" (click)="openPayment()">
-            <ion-icon name="wallet-outline"></ion-icon>
-            <ion-label>Payment</ion-label>
-          </div>
-          <div class="flex_div" (click)="openBookLater()">
-            <ion-icon name="calendar-outline"></ion-icon>
-            <ion-label>Book Later</ion-label>
-          </div>
-          <div class="flex_div" (click)="goToMyTrips()">
-            <ion-icon name="location-outline"></ion-icon>
-            <ion-label>My Trips</ion-label>
-          </div>
-          <div class="flex_div" (click)="goToRateCard()">
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-label>Rate Card</ion-label>
-          </div>
-          <div class="flex_div" (click)="goToNews()">
-            <ion-icon name="gift-outline"></ion-icon>
-            <ion-label>News and Offes</ion-label>
-          </div>
-          <div class="flex_div" (click)="openContacts()">
-            <ion-icon name="phone-portrait-outline"></ion-icon>
-            <ion-label>Emergency Contacts</ion-label>
-          </div>
-          <div class="flex_div">
-            <ion-icon name="call-outline"></ion-icon>
-            <ion-label>Help and Support</ion-label>
-          </div>
-        </ion-menu-toggle>
-      </div>
-    </ion-content>
-  </ion-menu>
-  <ion-router-outlet id="main-content"></ion-router-outlet>
-</ion-split-pane>
