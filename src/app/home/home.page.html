@@ -1,11 +1,12 @@
 <ion-header mode="md">
   <ion-toolbar class="ion-no-margin">
-    <ion-buttons slot="start">
-      <ion-button (click)="util.openMenu()">
-        <ion-icon slot="start" name="menu-outline" color="dark"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-chip slot="start" class="remove-background" (click)="util.openMenu()">          
+      <ion-icon class="icon-remove-margin" name="menu-outline" color="dark"></ion-icon>
+    </ion-chip>
     <ion-title>Tutrain</ion-title>
+    <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">     
+      <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+    </ion-chip>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar mode="ios" placeholder="Find Courses, Tutors, Trainers" showCancelButton="never"></ion-searchbar>
@@ -62,16 +63,22 @@
 
     <div class="banner">
       <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
-        <ion-slide *ngFor="let item of registeredCourses">
+        <ion-slide *ngFor="let item of newCourses">
           <div class="new_courses" (click)="onFavourite()">
             <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
             <div class="courses">
               <ion-label class="name">{{item.name}}</ion-label>
-              <ion-label class="grey_lbl">Instructor Name: {{item.instructor}}</ion-label>
+              <ion-label class="grey_lbl">By: {{item.instructor}}</ion-label>
               <div class="info">
                 <div>
                   <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
                   <ion-label style="padding-left: 10px;"><span>{{item.rating}}</span></ion-label>
+                </div>
+                <div>
+                  <ion-chip color="warning" style="margin-right: 8px;">
+                    <ion-icon name="pricetag-outline"></ion-icon>
+                    <ion-label>{{item.price}}</ion-label>
+                  </ion-chip>
                 </div>
               </div>
             </div>

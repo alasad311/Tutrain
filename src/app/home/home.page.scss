@@ -9,11 +9,45 @@ ion-header {
     }
     ion-title{
       text-align: center;
-      margin-left: -15%;
     }
   }
 }
-
+.icon-remove-margin{
+  margin: 0px;
+}
+.remove-background{
+  background-color: transparent;
+}
+.contest{
+  box-shadow: 0 0 0 rgba(204,169,44, 0.4);
+  animation: pulse 2s infinite;
+  border-radius: 50%;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
 .main-content {
   
   .new_courses {
@@ -22,7 +56,7 @@ ion-header {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 15px;
-
+    width: 100%;
     .back_image {
       height: 170px;
       width: 100%;
@@ -42,6 +76,7 @@ ion-header {
         color: #c2c2cb;
         margin-bottom: 8px;
         width: 100%;
+        text-align: left !important;
       }
       .info {
         display: flex;

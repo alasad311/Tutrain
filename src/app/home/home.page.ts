@@ -108,28 +108,32 @@ export class HomePage implements OnInit {
       img: "https://via.placeholder.com/1920x1280",
       name: "Course Name 1",
       instructor: "Name of Instructor",
-      rating: 3
+      rating: 3,
+      price: '3.400'
     },
     {
       id: 2,
       img: "https://via.placeholder.com/1920x1280",
       name: "Course Name 2",
       instructor: "Name of Instructor",
-      rating: 4
+      rating: 4,
+      price: '3.400'
     },
     {
       id: 3,
       img: "https://via.placeholder.com/1920x1280",
       name: "Course Name 3",
       instructor: "Name of Instructor",
-      rating: 4.2
+      rating: 4.2,
+      price: '3.400'
     },
     {
       id: 4,
       img: "https://via.placeholder.com/1920x1280",
       name: "Course Name 4",
       instructor: "Name of Instructor",
-      rating: 2.2
+      rating: 2.2,
+      price: '3.400'
     },
   ]
   constructor(private router: Router,public util: UtilService) { }

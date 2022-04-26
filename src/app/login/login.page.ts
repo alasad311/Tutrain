@@ -16,7 +16,8 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
   goToHome() {
-    this.navCtrl.navigateRoot(['tabs']);
+    // this.navCtrl.navigateRoot(['tabs']);
+    this.router.navigate(['/home']);
   }
   goToRegister(){
     this.router.navigate(['/register']);
