@@ -32,7 +32,7 @@
 
     <div class="category">
       <div class="menu">
-        <div class="item" *ngFor="let item of categories" (click)="openStyle()">
+        <div class="item" *ngFor="let item of categories" (click)="openCategory(item.id)">
           <div class="icon">
             <img src="{{item.img}}" />
           </div>
@@ -43,11 +43,11 @@
 
     <div class="heading">
       <ion-label class="title">Registerd Courses</ion-label>
-      <ion-label class="text" (click)="goToRestaurant()">View all</ion-label>
+      <ion-label class="text" (click)="goToAllRegisteredCourses()">View all</ion-label>
     </div>
 
     <ion-row class="product">
-      <ion-col size="6" class="ion-no-margin" *ngFor="let item of newCourses" (click)="goToRestaurant(item.id)">
+      <ion-col size="6" class="ion-no-margin" *ngFor="let item of newCourses" (click)="gotToRegisteredCourse(item.id)">
         <ion-card>
           <img src="{{item.img}}" />
           <ion-label class="instructor">{{item.instructor}}</ion-label>
@@ -58,13 +58,13 @@
 
     <div class="heading">
       <ion-label class="title">New Courses</ion-label>
-      <ion-label class="text" (click)="goToRestaurant()">View all</ion-label>
+      <ion-label class="text" (click)="gotToAllNewCourses()">View all</ion-label>
     </div>
 
     <div class="banner">
       <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
         <ion-slide *ngFor="let item of newCourses">
-          <div class="new_courses" (click)="onFavourite()">
+          <div class="new_courses" (click)="goToNewCourse(item.id)">
             <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
             <div class="courses">
               <ion-label class="name">{{item.name}}</ion-label>
