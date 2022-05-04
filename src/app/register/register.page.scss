@@ -1,6 +1,22 @@
 
 ion-select{
   width: 100%;
+  text-align: center;
+}
+.error-message-select{
+  color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.error-select-border{
+  width: 100%;
+  border-left: 6px solid red;
+  border-radius: 15px;
+}
+.hide-input{
+  display: none;
 }
 .flag-img{
   width: 30px;
@@ -19,6 +35,8 @@ ion-select{
 ion-item {
   --padding-end: 0px;
   --inner-padding-end: 0px;
+  --inner-padding-start: 0px;
+  --padding-start: 0px;
   // here other custom CSS from documentation
 }
 .row {
@@ -36,6 +54,7 @@ ion-item {
     width: 85%;
     overflow: hidden;
     overflow-y: scroll;
+
     .title-div {
       margin: 10px 0px 10px 0px;
       .title {
@@ -62,6 +81,20 @@ ion-item {
         position: absolute;
         right: 10px;
         z-index: 100;
+      }
+      .error-icon{
+        position: absolute;
+        margin-top: -40px;
+        margin-right: 10px;
+      }
+      .error-message{
+        color: #cc0033;
+        display: inline-block;
+        font-size: 12px;
+        line-height: 15px;
+      }
+      .error-border{
+        border-left: 6px solid #cc0033;
       }
       .phone{
         padding: 7px 7px 7px 95px !important;

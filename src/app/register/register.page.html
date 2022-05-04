@@ -4,65 +4,81 @@
       <div class="title-div">
         <ion-label class="title">Sign Up</ion-label>
       </div>
-      <div class="segments">
-        <ion-segment mode="ios" value="learner">
-          <ion-segment-button value="learner">
-            <ion-label>Student</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="tutor">
-            <ion-label>Tutor</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="trainer">
-            <ion-label>Trainer</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </div>
-      <ion-item lines="none">
-        <ion-icon slot="start" name="location-outline" color="medium"></ion-icon>
-        <ion-select [(ngModel)]="getCountry" (ionChange)="getSelectCountry(getCountry,changePhone)" placeholder="Select Country" interface="popover">
-          <ion-select-option value="om">Sultanate of Oman</ion-select-option>
-          <ion-select-option value="kw">Kuwait</ion-select-option>
-          <ion-select-option value="sa">Saudi Arabia</ion-select-option>
-          <ion-select-option value="qa">Qatar</ion-select-option>
-          <ion-select-option value="iq">Iraq</ion-select-option>
-          <ion-select-option value="bh">Bahrain</ion-select-option>
-          <ion-select-option value="ae">United Arab Emirates</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <div class="textbox">
-        <ion-label position="stacked">Full Name</ion-label>
-        <ion-input class="ion-no-padding" type="text"></ion-input>
-      </div>
-      <div class="textbox">
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input class="ion-no-padding" type="email"></ion-input>
-      </div>
-      <div class="textbox">
-        <ion-label position="stacked">phone</ion-label>
-        <ion-item lines="none" class="ion-no-padding">
-          <ion-text class="international-code">{{internationalCode}}</ion-text>
-          <ion-input class="ion-no-padding phone" type="phone"></ion-input>
-          <ion-img slot="start" class="flag-img" src="{{flagImage}}" ></ion-img>
-        </ion-item>
-      </div>
-      
-      <div class="textbox">
-        <ion-label position="stacked">Password</ion-label>
-        <ion-item lines="none" class="ion-no-padding">
-          <ion-input class="ion-no-padding password" type="{{showPassword_1 ? 'text' : 'password'}}"></ion-input>
-          <ion-icon slot="end" class="icon-padding" name="{{viewPassword_1}}" (click)="togglePassword(1)"></ion-icon>
-        </ion-item>
-      </div>
-      <div class="textbox">
-        <ion-label position="stacked">Confirm Password</ion-label>
-        <ion-item lines="none" class="ion-no-padding">
-          <ion-input class="ion-no-padding password" type="{{showPassword_2 ? 'text' : 'password'}}"></ion-input>
-          <ion-icon slot="end" class="icon-padding" name="{{viewPassword_2}}" (click)="togglePassword(2)"></ion-icon>
-        </ion-item>
-      </div>
-      <ion-button (click)="goToAddress()" shape="round">
-        Register
-      </ion-button>
+        <div class="segments">
+          <ion-segment [(ngModel)]="type" (ionChange)="setHiddenValue(type)" mode="ios" value="student">
+            <ion-segment-button value="student">
+              <ion-label>Student</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="tutor">
+              <ion-label>Tutor</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="trainer">
+              <ion-label>Trainer</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+      <form [formGroup]="userRegistration" (ngSubmit)="createAccount()" novalidate>
+        <div class="textbox">
+          <ion-label position="stacked">Location</ion-label>
+          <ion-item lines="none">
+            <ion-select [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-select-border': ''"  formControlName="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location" interface="popover">
+              <ion-select-option value="om">Sultanate of Oman</ion-select-option>
+              <ion-select-option value="kw">Kuwait</ion-select-option>
+              <ion-select-option value="sa">Saudi Arabia</ion-select-option>
+              <ion-select-option value="qa">Qatar</ion-select-option>
+              <ion-select-option value="iq">Iraq</ion-select-option>
+              <ion-select-option value="bh">Bahrain</ion-select-option>
+              <ion-select-option value="ae">United Arab Emirates</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <span class="error-message-select" *ngIf="isSubmitted && errorControl.country.errors?.required" >Please select a location</span>
+        <div class="textbox">
+          <ion-label position="stacked">Full Name</ion-label>
+          <ion-input [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-border': ''" class="ion-no-padding" formControlName="fullname" type="text" required></ion-input>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required" >Please enter your fullname</span>
+        </div>
+        <div class="textbox">
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input class="ion-no-padding" [ngClass]="isSubmitted && errorControl.email.errors?.required || errorControl.email.errors?.pattern ? 'error-border': ''" formControlName="email" type="email"></ion-input>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.required" >Please enter your email</span>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.pattern" >Your email format looks incorrect</span>
+        </div>
+        <div class="textbox">
+          <ion-label position="stacked">Phone</ion-label>
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-text class="international-code">{{internationalCode}}</ion-text>
+            <ion-input class="ion-no-padding phone" formControlName="phone" type="phone" [ngClass]="isSubmitted && errorControl.phone.errors?.required || errorControl.phone.errors?.pattern ? 'error-border': ''"></ion-input>
+            <ion-img slot="start" class="flag-img" src="{{flagImage}}" ></ion-img>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required" >Please enter your phone number</span>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern" >Your phone number cant contain other than numbers</span>
+        </div>
+        
+        <div class="textbox">
+          <ion-label position="stacked">Password</ion-label>
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-input class="ion-no-padding password" [ngClass]="isSubmitted && errorControl.password.errors?.required || errorControl.password.errors?.minlength ? 'error-border': ''" formControlName="password" type="{{showPassword_1 ? 'text' : 'password'}}"></ion-input>
+            <ion-icon slot="end" class="icon-padding" name="{{viewPassword_1}}" (click)="togglePassword(1)"></ion-icon>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.password.errors?.required" >Please enter a new password</span>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.password.errors?.minlength" >Your password should be a minimum of 8 characters</span>
+        </div>
+        <div class="textbox">
+          <ion-label position="stacked">Confirm Password</ion-label>
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-input class="ion-no-padding password" [ngClass]="isSubmitted && errorControl.confirm_password.errors?.required || errorControl.confirm_password.errors?.confirmedValidator ? 'error-border': ''" formControlName="confirm_password" type="{{showPassword_2 ? 'text' : 'password'}}"></ion-input>
+            <ion-icon slot="end" class="icon-padding" name="{{viewPassword_2}}" (click)="togglePassword(2)"></ion-icon>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.confirm_password.errors?.required" >Please re-enter your password</span>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.confirm_password.errors?.confirmedValidator" >Your password doesnt match</span>    
+        </div>
+        <ion-button type="submit" shape="round" [disabled]="isDisablied" >
+          Register
+        </ion-button>
+        <ion-input type="text" class="hide-input" formControlName="type" ></ion-input>
+        <span class="error-message" *ngIf="isSubmitted && errorControl.type.errors?.required" >Your password doesnt match</span>    
+      </form>
       <div class="text-div">
         <ion-label class="text">Already have an account?
           <span (click)="goToLogin()">Sign In</span>
