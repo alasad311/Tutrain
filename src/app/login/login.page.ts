@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { UsersService } from './../service/api/users.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +12,34 @@ import { NavController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   public viewPassword = 'eye-outline';
   public showPassword = false;
-
-  constructor(private router: Router,private navCtrl: NavController) { }
+  public isDisablied = false;
+  public email;
+  public password;
+  constructor(private router: Router,private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController) { }
 
   ngOnInit() {
   }
   goToHome() {
-    // this.navCtrl.navigateRoot(['tabs']);
-    this.router.navigate(['/home']);
+    if(this.email && this.password)
+    {
+      this.userApi.siginUser(this.email,this.password).then((response) => {
+        var json = JSON.parse(response.data);
+        if(json.results === "false")
+        {
+          this.alertMessage("Error: #11","Email or password incorrect, did you forget your password? <a href='/forgot'>click here </a>","");
+          this.isDisablied = false;
+        }
+        else if(json.id){
+          this.router.navigate(['/home']);
+        }
+      }).catch((error) => {
+        this.alertMessage("Error: #1","Service seems offline or unavailable at the moment","");
+        this.isDisablied = false;
+     });
+     
+    }else{
+      
+    }
   }
   goToRegister(){
     this.router.navigate(['/register']);
@@ -35,5 +57,26 @@ export class LoginPage implements OnInit {
       this.viewPassword = 'eye-off-outline'
       this.showPassword = true;
     }
+  }
+  async alertMessage(header,message,location) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'ok',
+          id: 'confirm-button',
+          handler: () => {
+            if(location)
+            {
+              this.router.navigate([location]);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

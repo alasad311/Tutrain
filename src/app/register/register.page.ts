@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from './../service/api/users.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -19,7 +21,7 @@ export class RegisterPage implements OnInit {
   userRegistration: FormGroup;
   public confirm_password;
   internationalCode = "+968";
-  constructor(private router: Router,private userApi: UsersService,public formBuilder: FormBuilder) { 
+  constructor(private router: Router,private userApi: UsersService,public formBuilder: FormBuilder,public alertController: AlertController) { 
     
   }  
   ngOnInit() {
@@ -87,7 +89,7 @@ export class RegisterPage implements OnInit {
       this.internationalCode = "+971";
     }
   }
-  createAccount(){
+  async createAccount(){
     this.isSubmitted = true;
     this.isDisablied = true;
     if (!this.userRegistration.valid) {
@@ -95,21 +97,45 @@ export class RegisterPage implements OnInit {
       return false;
     } else {
       var data = JSON.stringify(this.userRegistration.value);
-      console.log(data);
-      this.userApi.createUser(data).subscribe(
-        Response => {
-          if(Response) {
-          console.log(Response.id)
-          }
-        },
-        error => {
-          alert(error.status)
+      this.userApi.createUser(data).then((response) => {
+        var json = JSON.parse(response.data);
+        if(json.code === "ER_DUP_ENTRY")
+        {
+          this.alertMessage("Error: #12","Email exisits, did you forget your password? <a href='/forgot'>click here </a>","");
           this.isDisablied = false;
-          // always good practice to handle errors from HTTP observables
         }
-      );
+        else if(json.id){
+          this.alertMessage("Welcome","Your account has been created <br /> check your email to confirm your account","login");
+        }
+      }).catch((error) => {
+        this.alertMessage("Error: #1","Service seems offline or unavailable at the moment","");
+        this.isDisablied = false;
+     });
+
+      
     }
   
+  }
+  async alertMessage(header,message,location) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'ok',
+          id: 'confirm-button',
+          handler: () => {
+            if(location)
+            {
+              this.router.navigate([location]);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
   setHiddenValue(type){
     this.userRegistration.controls['type'].setValue(type)

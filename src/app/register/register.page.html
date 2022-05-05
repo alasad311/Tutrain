@@ -17,7 +17,7 @@
             </ion-segment-button>
           </ion-segment>
         </div>
-      <form [formGroup]="userRegistration" (ngSubmit)="createAccount()" novalidate>
+      <form [formGroup]="userRegistration" (ngSubmit)="createAccount()" novalidate >
         <div class="textbox">
           <ion-label position="stacked">Location</ion-label>
           <ion-item lines="none">
@@ -35,12 +35,12 @@
         <span class="error-message-select" *ngIf="isSubmitted && errorControl.country.errors?.required" >Please select a location</span>
         <div class="textbox">
           <ion-label position="stacked">Full Name</ion-label>
-          <ion-input [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-border': ''" class="ion-no-padding" formControlName="fullname" type="text" required></ion-input>
+          <ion-input autocomplete="new-password" [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-border': ''" class="ion-no-padding" formControlName="fullname" type="text" ></ion-input>
           <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required" >Please enter your fullname</span>
         </div>
         <div class="textbox">
           <ion-label position="stacked">Email</ion-label>
-          <ion-input class="ion-no-padding" [ngClass]="isSubmitted && errorControl.email.errors?.required || errorControl.email.errors?.pattern ? 'error-border': ''" formControlName="email" type="email"></ion-input>
+          <ion-input class="ion-no-padding" autocomplete="new-password" [ngClass]="isSubmitted && errorControl.email.errors?.required || errorControl.email.errors?.pattern ? 'error-border': ''" formControlName="email" type="email"></ion-input>
           <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.required" >Please enter your email</span>
           <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.pattern" >Your email format looks incorrect</span>
         </div>
@@ -48,7 +48,7 @@
           <ion-label position="stacked">Phone</ion-label>
           <ion-item lines="none" class="ion-no-padding">
             <ion-text class="international-code">{{internationalCode}}</ion-text>
-            <ion-input class="ion-no-padding phone" formControlName="phone" type="phone" [ngClass]="isSubmitted && errorControl.phone.errors?.required || errorControl.phone.errors?.pattern ? 'error-border': ''"></ion-input>
+            <ion-input class="ion-no-padding phone" autocomplete="new-password" formControlName="phone" type="phone" [ngClass]="isSubmitted && errorControl.phone.errors?.required || errorControl.phone.errors?.pattern ? 'error-border': ''"></ion-input>
             <ion-img slot="start" class="flag-img" src="{{flagImage}}" ></ion-img>
           </ion-item>
           <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required" >Please enter your phone number</span>

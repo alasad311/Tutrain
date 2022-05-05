@@ -1,4 +1,20 @@
-
+ion-input::shadow input:-webkit-autofill,
+ion-input::shadow input:-webkit-autofill:hover, 
+ion-input::shadow input:-webkit-autofill:focus,
+ion-input::shadow textarea:-webkit-autofill,
+ion-input::shadow textarea:-webkit-autofill:hover,
+ion-input::shadow textarea:-webkit-autofill:focus,
+ion-input::shadow select:-webkit-autofill,
+ion-input::shadow select:-webkit-autofill:hover,
+ion-input::shadow select:-webkit-autofill:focus {
+  border: 1px solid green;
+  -webkit-text-fill-color: green;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+ion-input::part(test)::-webkit-autofill {
+  background-color: #000 !important;
+}
 ion-select{
   width: 100%;
   text-align: center;
