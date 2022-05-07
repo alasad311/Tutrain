@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "resources": "capacitor-resources -p android,ios"
   },
   "private": true,
   "dependencies": {
@@ -21,15 +22,20 @@
     "@angular/router": "~13.2.2",
     "@awesome-cordova-plugins/file": "^5.41.0",
     "@awesome-cordova-plugins/http": "^5.41.0",
+    "@awesome-cordova-plugins/screen-orientation": "^5.41.0",
     "@capacitor/android": "3.4.3",
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.4.3",
     "@capacitor/haptics": "1.1.4",
     "@capacitor/keyboard": "1.2.2",
+    "@capacitor/splash-screen": "^1.2.2",
     "@ionic-native/in-app-browser": "^5.36.0",
     "@ionic/angular": "^6.0.0",
+    "@ionic/storage-angular": "^3.0.6",
     "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-file": "^7.0.0",
+    "cordova-plugin-screen-orientation": "^3.0.2",
+    "es6-promise-plugin": "^4.2.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"

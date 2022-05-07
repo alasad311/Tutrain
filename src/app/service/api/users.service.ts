@@ -13,8 +13,8 @@ export class UsersService {
   
 
   public async createUser(data):Promise<any>{
-   return new Promise( (resolve,reject) => {
-      this.http.sendRequest( this.url , {
+    return new Promise( (resolve,reject) => {
+      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/users" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -29,24 +29,38 @@ export class UsersService {
         });
     });
   }
-  public async siginUser(email,password):Promise<any>{
+  public async siginUser(data):Promise<any>{
     return new Promise( (resolve,reject) => {
-       this.http.sendRequest( this.url , {
-         method: 'get',
-         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
-         data: {
-           'email': email,
-           'password': password
-         },
-         serializer: 'utf8',
-         timeout: 1000
-       } )
-         .then(res => {
-           resolve(res)
-         })
-         .catch(error => {
-           reject(error);
-         });
-     });
-   }
+      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/users/login" , {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        data: data,
+        serializer: 'json',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async sendVerification(data):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      this.http.sendRequest("http://192.168.100.6:3000/api/v1/users/resend" , {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        data: data,
+        serializer: 'json',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 }

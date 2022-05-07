@@ -9,9 +9,10 @@ import { Router } from '@angular/router'
 export class WelcomePage implements OnInit {
 
   constructor(private router: Router) { }
-
   ngOnInit() {
+   
   }
+
   goToLogin(){
     this.router.navigate(['/login']);
   }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilService } from './../service/util.service';
+import { StorageService } from "./../service/storage/storage.service"
+import { FetchService } from "./../service/api/fetch.service"
+import {  MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +11,6 @@ import { UtilService } from './../service/util.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
   slideOpts = {
     speed: 300,
     loop: true,
@@ -136,9 +138,16 @@ export class HomePage implements OnInit {
       price: '3.400'
     },
   ]
-  constructor(private router: Router,public util: UtilService) { }
+  constructor(private router: Router,private util: UtilService, 
+    private storage: StorageService,private menuCtrl: MenuController,
+    private fetch: FetchService ) { }
 
   ngOnInit() {
+    this.menuCtrl.enable(true);
+
+    //fetch ads
+
+
   }
   goToAddress(){
     this.router.navigate(['/address']);
