@@ -1,9 +1,9 @@
-<ion-split-pane contentId="main">
+<ion-split-pane contentId="main" >
    <!--  the side menu  -->
-  <ion-menu contentId="main" >
+  <ion-menu contentId="main"  *ngIf="user">
     <ion-content class="ion-padding">
       <div class="title">
-        <div class="bg_image" [style.backgroundImage]="'url(../assets/profile.webp)'"></div>
+        <div class="bg_image" [style.backgroundImage]="'url('+user[0].picture+')'"></div>
         <div class="btn">
         <ion-buttons>
           <ion-button (click)="goToNotification()">
@@ -14,9 +14,9 @@
       </div>
       <ion-menu-toggle>
         <div class="name">
-          <ion-label>Robert Fox</ion-label>
+          <ion-label>{{user[0].fullname}}</ion-label>
         </div>
-        <ion-label class="mail">Student</ion-label>
+        <ion-label class="mail">{{user[0].type}}</ion-label>
         <ion-label class="mail">Sub</ion-label>
       <div class="content">
         <ion-item lines="none" (click)="goToPaymentMethods()">

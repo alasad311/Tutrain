@@ -9,6 +9,23 @@ export class FetchService {
 
   constructor(private http: HTTP) { }
 
+  public async getUser(email):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = "http://192.168.100.6:3000/api/v1/users/"+email 
+      this.http.sendRequest( url, {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
   public async getAds():Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.sendRequest( "http://192.168.100.6:3000/api/v1/ads" , {
@@ -25,4 +42,37 @@ export class FetchService {
         });
     });
   }
+  public async getCategory():Promise<any>{
+    return new Promise( (resolve,reject) => {
+      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/category" , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async getNewCourses():Promise<any>{
+    return new Promise( (resolve,reject) => {
+      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/courses/new" , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  
 }

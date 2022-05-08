@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-    //data: { authGuardRedirect: 'welcome' },
+    data: { authGuardRedirect: 'welcome' },
   },
   {
     path: 'login',
@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
 ];
 

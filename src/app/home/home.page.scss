@@ -48,6 +48,10 @@ ion-header {
       box-shadow: 0 0 0 0 rgba(204,169,44, 0);
   }
 }
+ion-refresher ion-refresher-content {
+  background: #fff;
+ --color:#000!important;
+}
 .main-content {
   
   .new_courses {
