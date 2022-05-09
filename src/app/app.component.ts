@@ -5,6 +5,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 import {  MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { FetchService } from "./service/api/fetch.service"
+import { EventService } from "./service/event.service"
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,7 +15,8 @@ import { FetchService } from "./service/api/fetch.service"
 export class AppComponent {
   user:any;
   email:any;
-  constructor( private fetch:FetchService, private platform:Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation, private storage : StorageService) {
+
+  constructor( private fetch:FetchService, private event:EventService, private platform:Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation, private storage : StorageService) {
     this.initializeApp();
 
    }
@@ -22,6 +24,11 @@ export class AppComponent {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
     // If using a custom driver:
     // await this.storage.defineDriver(MyCustomDriver)
+    this.event.getObservable().subscribe((data) => {
+      this.user = data;
+      console.log('Data received', data);
+    });
+
     await this.storage.init();
     this.email = await this.storage.get("email");
      

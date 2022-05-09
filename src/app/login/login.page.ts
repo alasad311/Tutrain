@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { UsersService } from './../service/api/users.service';
 import { StorageService } from './../service/storage/storage.service';
 import { AlertController } from '@ionic/angular';
+import { EventService } from ".././service/event.service"
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
   public isDisablied = false;
   public email;
   public password;
-  constructor(private router: Router,private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
+  constructor(private router: Router,private event:EventService, private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
 
   ngOnInit() {}
   goToHome() {
@@ -52,9 +53,26 @@ export class LoginPage implements OnInit {
          await this.storage.set("about",json.response.user[0].about);
          await this.storage.set("membership",json.response.user[0].membership);
          await this.storage.set("is_active",json.response.user[0].is_active);
+         this.event.publishSomeData(json.response.user[0])
           this.router.navigate(['/home']);
         }else if(json.response.results === true && json.response.is_confirmed === false)
         {
+          await this.storage.set("id",json.response.user[0].id);
+          await this.storage.set("email",json.response.user[0].email);
+          await this.storage.set("fullname",json.response.user[0].fullname);
+          await this.storage.set("dateofbirth",json.response.user[0].dateofbirth);
+          await this.storage.set("type",json.response.user[0].type);
+          await this.storage.set("country",json.response.user[0].country);
+          await this.storage.set("phone",json.response.user[0].phone);
+          await this.storage.set("picture",json.response.user[0].picture);
+          await this.storage.set("degree",json.response.user[0].degree);
+          await this.storage.set("specialization_id",json.response.user[0].specialization_id);
+          await this.storage.set("governorate_id",json.response.user[0].governorate_id);
+          await this.storage.set("wilayat_id",json.response.user[0].wilayat_id);
+          await this.storage.set("id_card",json.response.user[0].id_card);
+          await this.storage.set("about",json.response.user[0].about);
+          await this.storage.set("membership",json.response.user[0].membership);
+          await this.storage.set("is_active",json.response.user[0].is_active);
           this.alertMessage("Error: #9","Your email has been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
             this.router.navigate(['/home']);
           });

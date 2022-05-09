@@ -11,7 +11,7 @@ export class FetchService {
 
   public async getUser(email):Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = "http://192.168.100.6:3000/api/v1/users/"+email 
+      const url = "https://tapp.scd.edu.om/api/v1/users/"+email 
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -28,7 +28,7 @@ export class FetchService {
   }
   public async getAds():Promise<any>{
     return new Promise( (resolve,reject) => {
-      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/ads" , {
+      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/ads" , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
@@ -44,7 +44,7 @@ export class FetchService {
   }
   public async getCategory():Promise<any>{
     return new Promise( (resolve,reject) => {
-      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/category" , {
+      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/category" , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
@@ -60,7 +60,7 @@ export class FetchService {
   }
   public async getNewCourses():Promise<any>{
     return new Promise( (resolve,reject) => {
-      this.http.sendRequest( "http://192.168.100.6:3000/api/v1/courses/new" , {
+      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/courses/new" , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
