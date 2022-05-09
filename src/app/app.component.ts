@@ -6,6 +6,7 @@ import {  MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { FetchService } from "./service/api/fetch.service"
 import { EventService } from "./service/event.service"
+import { App as CapacitorApp } from '@capacitor/app';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,24 +16,32 @@ import { EventService } from "./service/event.service"
 export class AppComponent {
   user:any;
   email:any;
+  subscriptions: any;
 
   constructor( private fetch:FetchService, private event:EventService, private platform:Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation, private storage : StorageService) {
     this.initializeApp();
-
+    this.test2();
    }
+   async test2(): Promise<void> {
+    await this.platform.ready();
+    CapacitorApp.addListener('backButton', ({canGoBack}) => {
+     
+    });
+  }
+
   async initializeApp() {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
     // If using a custom driver:
     // await this.storage.defineDriver(MyCustomDriver)
     this.event.getObservable().subscribe((data) => {
       this.user = data;
-      console.log('Data received', data);
     });
 
     await this.storage.init();
     this.email = await this.storage.get("email");
      
     this.platform.ready().then((readySource) => {
+      
       if (this.email) {
         this.menuCtrl.enable(true);
         this.router.navigate(['home']);
