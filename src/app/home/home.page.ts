@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UtilService } from './../service/util.service';
+import { AuthGuardService } from "./../service/Auth/auth-guard.service"
 import { StorageService } from "./../service/storage/storage.service"
 import { FetchService } from "./../service/api/fetch.service"
+import { UtilService } from "./../service/util.service"
 import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-home',
@@ -58,40 +59,39 @@ export class HomePage implements OnInit {
     },
   ]
   
-  constructor(private router: Router,private util: UtilService, 
-    private storage: StorageService,private menuCtrl: MenuController,
-    private fetch: FetchService ) { }
+  constructor(private router: Router, private menuCtrl: MenuController,
+    private fetch: FetchService, private auth:AuthGuardService, private storage:StorageService,
+    private util:UtilService ) { }
   ionViewWillEnter() {
-    setTimeout(() => {
+    setTimeout(async () => {
+      const user = await this.storage.get("user")
       //fetch ads
       this.fetch.getAds().then((response) => {
         var json = JSON.parse(response.data);
         this.banner = json.response
       }).catch((error) => {
-        alert("error")
       });
       //fetch catgories
       this.fetch.getCategory().then((response) => {
         var json = JSON.parse(response.data);
         this.categories = json.response
       }).catch((error) => {
-        alert("error")
       });
       //fetch courses
-      this.fetch.getNewCourses().then((response) => {
+      this.fetch.getNewCourses(user.email).then((response) => {
         var json = JSON.parse(response.data);
         this.newCourses = json.response
       }).catch((error) => {
-        alert("error")
       });
      
     }, 3000);
     
   }
-  doRefresh(event){
+  async doRefresh(event){
     this.banner = "";
     this.categories = "";
     this.newCourses = "";
+    const email = await this.auth.isAuthenicated()
     setTimeout(() => {
       //fetch ads
       this.fetch.getAds().then((response) => {
@@ -108,7 +108,7 @@ export class HomePage implements OnInit {
         
       });
       //fetch courses
-      this.fetch.getNewCourses().then((response) => {
+      this.fetch.getNewCourses(email).then((response) => {
         var json = JSON.parse(response.data);
         this.newCourses = json.response
       }).catch((error) => {

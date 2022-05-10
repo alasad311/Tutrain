@@ -12,8 +12,9 @@ export class AuthGuardService implements CanActivate {
       public storage: StorageService
         ) {}
     async isAuthenicated(){
-      const email = await this.storage.get("email");
-      return email
+      const user = await this.storage.get("user");
+      
+      return user.email
     }
     canActivate(): boolean {
      

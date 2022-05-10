@@ -38,19 +38,14 @@ export class AppComponent {
     });
 
     await this.storage.init();
-    this.email = await this.storage.get("email");
+    const user = await this.storage.get("user");
      
     this.platform.ready().then((readySource) => {
       
-      if (this.email) {
-        this.menuCtrl.enable(true);
+      if (user.email) {
         this.router.navigate(['home']);
-        this.fetch.getUser(this.email).then((response) => {
-          var json = JSON.parse(response.data);
-          this.user = json.response
-        }).catch((error) => {
-          
-        });
+        this.user = user;
+        this.menuCtrl.enable(true);
 
       } else {
         this.menuCtrl.enable(false);
