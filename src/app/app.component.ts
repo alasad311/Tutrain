@@ -42,7 +42,7 @@ export class AppComponent {
      
     this.platform.ready().then((readySource) => {
       
-      if (user.email) {
+      if (user) {
         this.router.navigate(['home']);
         this.user = user;
         this.menuCtrl.enable(true);

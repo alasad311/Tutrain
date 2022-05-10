@@ -5,6 +5,7 @@ import { StorageService } from './../storage/storage.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
+    user:any;
     subscribe(arg0: (state: any) => void) {
       throw new Error('Method not implemented.');
     }
@@ -13,14 +14,15 @@ export class AuthGuardService implements CanActivate {
         ) {}
     async isAuthenicated(){
       const user = await this.storage.get("user");
-      
-      return user.email
+      if(user)
+        return true
+      else
+        return false;
     }
     canActivate(): boolean {
-     
       if(this.isAuthenicated())
       {
-        return true;
+        return true
       }else{
         return false;
       }
