@@ -9,7 +9,7 @@
     </ion-chip>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar mode="ios" placeholder="Find Courses, Tutors, Trainers"  showCancelButton="focus"></ion-searchbar>
+    <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchPage(searchInput)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">

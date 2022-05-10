@@ -4,14 +4,14 @@ import { AuthGuardService } from "./../service/Auth/auth-guard.service"
 import { StorageService } from "./../service/storage/storage.service"
 import { FetchService } from "./../service/api/fetch.service"
 import { UtilService } from "./../service/util.service"
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  
+  searchInput:any;
   slideOpts = {
     speed: 300,
     loop: true,
@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
     },
   ]
   
-  constructor(private router: Router, private menuCtrl: MenuController,
+  constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth:AuthGuardService, private storage:StorageService,
     private util:UtilService ) { }
   ionViewWillEnter() {
@@ -86,6 +86,10 @@ export class HomePage implements OnInit {
      
     }, 3000);
     
+  }
+  searchPage(searchValue: any){
+    this.nav.navigateForward('/search',{ state: searchValue });
+    this.searchInput = "";
   }
   async doRefresh(event){
     this.banner = "";

@@ -29,6 +29,11 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule),
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({

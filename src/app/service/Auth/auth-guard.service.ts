@@ -21,11 +21,10 @@ export class AuthGuardService implements CanActivate {
     }
     canActivate(): boolean {
       if(this.isAuthenicated())
-      {
         return true
-      }else{
+      else
         return false;
-      }
+      
       
     }
 
