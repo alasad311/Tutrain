@@ -76,4 +76,57 @@ export class FetchService {
     });
   }
   
+  public async searchAll(value,page):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = "https://tapp.scd.edu.om/api/v1/search/all/"+value+"/"+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  
+  public async searchUsers(value,page):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = "https://tapp.scd.edu.om/api/v1/search/users/"+value+"/"+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
+  public async searchCourses(value,page):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = "https://tapp.scd.edu.om/api/v1/search/courses/"+value+"/"+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 }
