@@ -11,6 +11,7 @@ export class SearchPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   searchInput:any;
   searchResults:any;
+  showNull = false;
   type = "all";
   page = 0;
   constructor(private router: Router, private fetch: FetchService) { }
@@ -29,9 +30,15 @@ export class SearchPage implements OnInit {
   {
     this.page = 0;
     this.searchResults = null;
+    this.showNull = false;
     this.fetch.searchAll(value,this.page).then((response) => {
       var json = JSON.parse(response.data);
       this.searchResults = json.response
+      if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
     }).catch((error) => {
       
     });
@@ -40,12 +47,18 @@ export class SearchPage implements OnInit {
   {
     this.searchResults = null;
     this.page = 0;
+    this.showNull = false;
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
     if(by === "all")
     {
       this.fetch.searchAll(this.searchInput,this.page).then((response) => {
         var json = JSON.parse(response.data);
         this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
       }).catch((error) => {
         
       });
@@ -54,6 +67,11 @@ export class SearchPage implements OnInit {
       this.fetch.searchUsers(this.searchInput,this.page).then((response) => {
         var json = JSON.parse(response.data);
         this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
       }).catch((error) => {
         
       });
@@ -62,6 +80,11 @@ export class SearchPage implements OnInit {
       this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
         var json = JSON.parse(response.data);
         this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
       }).catch((error) => {
         
       });

@@ -110,11 +110,11 @@
         </ion-item>
       </ion-list>
     </div>
-    <div *ngIf="searchResults === null">
-      <ion-list >
+    <div *ngIf="showNull">
+      <ion-list>
         <ion-item>
           <ion-label>
-            <h3>Sorry we couldn't find any results</h3>
+            <h3 class="center-null">Sorry we couldn't find any results</h3>
           </ion-label>
         </ion-item>
       </ion-list>
