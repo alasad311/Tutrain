@@ -98,9 +98,9 @@
     <div *ngIf="searchResults">
       <ion-list  *ngFor="let item of searchResults" >
         <ion-item>
-          <ion-avatar slot="start">
+          <ion-thumbnail slot="start">
             <img [src]="item.img">
-          </ion-avatar>
+          </ion-thumbnail>
           <ion-label>
             <h3>
               {{item.title}}
