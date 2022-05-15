@@ -7,6 +7,8 @@ import { Platform } from '@ionic/angular';
 import { FetchService } from "./service/api/fetch.service"
 import { EventService } from "./service/event.service"
 import { App as CapacitorApp } from '@capacitor/app';
+import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,7 +20,15 @@ export class AppComponent {
   email:any;
   subscriptions: any;
 
-  constructor( private fetch:FetchService, private event:EventService, private platform:Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation, private storage : StorageService) {
+  constructor( private fetch:FetchService, private event:EventService, private platform:Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation, private storage : StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar) {
+  //   this.androidFullScreen.isImmersiveModeSupported()
+  // .then(() => console.log('Immersive mode supported'))
+  // .catch(err => console.log(err));
+  this.statusBar.overlaysWebView(false);
+  // set status bar to white
+  this.statusBar.backgroundColorByHexString('#ffffff');
+
+
     this.initializeApp();
     this.test2();
    }
