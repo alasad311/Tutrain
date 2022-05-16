@@ -59,7 +59,7 @@ export class AppComponent {
 
       } else {
         this.menuCtrl.enable(false);
-        this.router.navigate(['welcome']);
+        this.router.navigate(['search']);
       }
     });
   }

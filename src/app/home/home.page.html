@@ -13,14 +13,14 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Pull to refresh"
-      refreshingSpinner="crescent"
-      refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+      slot="fixed" pullFactor="0.5" 
+        pullingIcon="chevron-down-circle-outline"
+        pullingText="Pull to refresh"
+        refreshingSpinner="crescent">
+      </ion-refresher-content>
+    </ion-refresher>
   <div class="main-content">
     <div class="banner" *ngIf="!banner">
       <ion-slides pager="false" [options]="slideOpts">
@@ -131,12 +131,12 @@
               <div class="info">
                 <div>
                   <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
-                  <ion-label style="padding-left: 10px;"><span>{{item.rating}}</span></ion-label>
+                  <ion-label style="padding-left: 10px;"><span>{{item.rating | number : '1.0-3'}}</span></ion-label>
                 </div>
                 <div>
                   <ion-chip color="warning" style="margin-right: 8px;">
                     <ion-icon name="pricetag-outline"></ion-icon>
-                    <ion-label>{{item.price}}</ion-label>
+                    <ion-label>{{item.price | number : '1.0-3'}}</ion-label>
                   </ion-chip>
                 </div>
               </div>

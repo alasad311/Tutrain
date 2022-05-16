@@ -102,6 +102,7 @@ export class SearchPage implements OnInit {
           }
           if(json.response.length == 0)
             event.target.disabled = true;
+          event.target.complete();
         }).catch((error) => {
           
         });
@@ -114,6 +115,7 @@ export class SearchPage implements OnInit {
           }
           if(json.response.length == 0)
             event.target.disabled = true;
+          event.target.complete();
         }).catch((error) => {
           
         });
@@ -126,11 +128,12 @@ export class SearchPage implements OnInit {
           }
           if(json.response.length == 0)
             event.target.disabled = true;
+          event.target.complete();
         }).catch((error) => {
           
         });
       }
-      event.target.complete();
+      
     }, 3000);
   }
 
