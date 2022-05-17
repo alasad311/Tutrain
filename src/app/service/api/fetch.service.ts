@@ -79,40 +79,6 @@ export class FetchService {
       });
     });
   }
-  // public async getCategory():Promise<any>{
-  //   return new Promise( (resolve,reject) => {
-  //     this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/category" , {
-  //       method: 'get',
-  //       headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
-  //       serializer: 'utf8',
-  //       timeout: 1000
-  //     } )
-  //       .then(res => {
-  //         resolve(res)
-  //       })
-  //       .catch(error => {
-  //         reject(error);
-  //       });
-  //   });
-  // }
-  // public async getNewCourses(email):Promise<any>{
-  //   return new Promise( (resolve,reject) => {
-  //     const url = "https://tapp.scd.edu.om/api/v1/courses/new/"+email
-  //     this.http.sendRequest( url , {
-  //       method: 'get',
-  //       headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
-  //       serializer: 'utf8',
-  //       timeout: 1000
-  //     } )
-  //       .then(res => {
-  //         resolve(res)
-  //       })
-  //       .catch(error => {
-  //         reject(error);
-  //       });
-  //   });
-  // }
-  
   public async searchAll(value,page):Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = "https://tapp.scd.edu.om/api/v1/search/all/"+value+"/"+page;
@@ -166,4 +132,22 @@ export class FetchService {
         });
     });
   }
+  public async getCourseDetail(id):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = "https://tapp.scd.edu.om/api/v1/course/"+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  
 }

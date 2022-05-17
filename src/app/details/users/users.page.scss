@@ -1,3 +1,17 @@
+ion-header {
+  
+    ion-toolbar {
+      .chikni {
+        font-size: 12px;
+        position: absolute;
+        left: 15px;
+        top: 0px;
+      }
+      ion-title{
+        text-align: center;
+      }
+    }
+  }
 .icon-remove-margin {
     margin: 0px;
 }
@@ -10,10 +24,6 @@
     box-shadow: 0 0 0 rgba(204, 169, 44, 0.4);
     animation: pulse 2s infinite;
     border-radius: 50%;
-}
-
-.center-null {
-    text-align: center;
 }
 
 @-webkit-keyframes pulse {

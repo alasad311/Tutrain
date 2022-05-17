@@ -10,5 +10,119 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    {{id}} {{page}}
+    <div *ngIf="course">
+        <img src="{{course.img}}">
+        <div class="main-content">
+            <ion-row class="icon">
+                <div>
+                    <ion-icon class="heart" name="heart"></ion-icon>
+                </div>
+            </ion-row>
+            <div class="card">
+                <div class="r-detail">
+                <div class="heading">
+                    <ion-label class="title"> {{course.name}} </ion-label>
+                    <ion-label class="text"> {{course.code}}</ion-label>
+                    <ion-label class="text">By: {{course.fullname}}</ion-label>
+                </div>
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-label class="title">Rating</ion-label><br>
+                            <ion-label class="text">{{course.rating | number : '1.2-2'}}</ion-label>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="title">Duration</ion-label><br>
+                            <ion-label class="text">{{course.duration}}</ion-label>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="title">Price</ion-label><br>
+                            <ion-label class="text" color="danger">{{course.price | number : '1.3-3'}}</ion-label>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="title">Delivery</ion-label><br>
+                            <ion-label class="text" color="success">Online</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="segment">
+                    <ion-row fixed>
+                        <ion-col size="4" (click)="segmentChange(1)" class="ion-text-center" [class.active]="seg_id == 1">Videos
+                        </ion-col>
+                        <ion-col size="4" (click)="segmentChange(2)" class="ion-text-center" [class.active]="seg_id == 2">Image
+                        </ion-col>
+                        <ion-col size="4" (click)="segmentChange(3)" class="ion-text-center" [class.active]="seg_id == 3">Content
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="items" *ngIf="seg_id == 1">
+                    <div *ngFor="let item of duration">
+                        <div class="name">
+                            <ion-label>{{durationName}} {{item}}</ion-label>
+                        </div>
+                        <ion-row *ngFor="let iten of [1]">
+                            <ion-col class="ion-no-padding" size="3">
+                                <img src="assets/burger.jpg">
+                            </ion-col>
+                            <ion-col size="9" >
+                                <div class="title" (click)="goToItem()">
+                                    <ion-label class="item-name">Test</ion-label>
+                                    <ion-label class="calery">Test</ion-label>
+                                </div>
+                                <div class="item-detail" (click)="goToItem()">
+                                    <ion-label>Dave watched as the forest burned up on the hill, only a few miles from her house. The car had been hastily packed and Marta was inside trying to round up the last of the pets. </ion-label>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </div>
+                <!-- <div class="items" *ngIf="seg_id == 2 && pictures">
+                    <div class="name">
+                        <ion-label>Pizza</ion-label>
+                    </div>
+                    <ion-row *ngFor="let iten of [1,2,3,4,5,6,7,8,9]">
+                        <ion-col class="ion-no-padding" size="3">
+                            <img src="assets/burger.jpg">
+                        </ion-col>
+                        <ion-col size="9" >
+                            <div class="title" (click)="goToItem()">
+                                <ion-label class="item-name">Vegetable Pizza</ion-label>
+                                <ion-label class="calery">250 cal</ion-label>
+                            </div>
+                            <div class="item-detail" (click)="goToItem()">
+                                <ion-label>begetable pizza with soya sous and long corn with pasta healthy wand well.</ion-label>
+                            </div>
+                            <div class="item-price">
+                                <ion-label class="price">$20.12</ion-label>
+                                <ion-icon class="add-btn" name="add" (click)="cart()"></ion-icon>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="items" *ngIf="seg_id == 3 && contents">
+                    <div class="name">
+                        <ion-label>Pizza</ion-label>
+                    </div>
+                    <ion-row *ngFor="let iten of [1,2,3,4,5,6,7,8,9]">
+                        <ion-col class="ion-no-padding" size="3">
+                            <img src="assets/burger.jpg">
+                        </ion-col>
+                        <ion-col size="9" >
+                            <div class="title" (click)="goToItem()">
+                                <ion-label class="item-name">Vegetable Pizza</ion-label>
+                                <ion-label class="calery">250 cal</ion-label>
+                            </div>
+                            <div class="item-detail" (click)="goToItem()">
+                                <ion-label>begetable pizza with soya sous and long corn with pasta healthy wand well.</ion-label>
+                            </div>
+                            <div class="item-price">
+                                <ion-label class="price">$20.12</ion-label>
+                                <ion-icon class="add-btn" name="add" (click)="cart()"></ion-icon>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </div> -->
+            </div>
+        </div>
+    </div>
 </ion-content>
+  
