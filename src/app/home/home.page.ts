@@ -67,7 +67,6 @@ export class HomePage implements OnInit {
       const user = await this.storage.get('user');
       //fetch ads
       this.fetch.getHomePage(user.email).then((response) => {
-        alert(JSON.parse(response[0].data));
         this.banner = JSON.parse(response[0].data).response;
         this.categories = JSON.parse(response[1].data).response;
         this.newCourses = JSON.parse(response[2].data).response;

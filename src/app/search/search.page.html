@@ -1,85 +1,87 @@
 <ion-header mode="md">
-  <ion-toolbar class="ion-no-margin">
-    <ion-chip slot="start" class="remove-background" (click)="goBackHome()">          
-      <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
-    </ion-chip>
-    <ion-title>Tutrain</ion-title>
-    <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">     
-      <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
-    </ion-chip>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchDB(searchInput)"></ion-searchbar>
-  </ion-toolbar>
-  <ion-toolbar class="segment-toolbar">
-    <ion-segment [(ngModel)]="type" (ionChange)="searchBy(type)" mode="ios" value="all" [disabled]="!searchResults">
-      <ion-segment-button value="all">
-        <ion-label>All</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="courses">
-        <ion-label>Courses</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="users">
-        <ion-label>Trainer / Tutor</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchDB(searchInput)"></ion-searchbar>
+    </ion-toolbar>
+    <ion-toolbar class="segment-toolbar">
+        <ion-segment [(ngModel)]="type" (ionChange)="searchBy(type)" mode="ios" value="all" [disabled]="!searchResults">
+            <ion-segment-button value="all">
+                <ion-label>All</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="courses">
+                <ion-label>Courses</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="users">
+                <ion-label>Trainer / Tutor</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <div class="search" *ngIf="!searchResults" (click)="onFavourite()">
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-thumbnail>
-      <div class="search_detail">
-        <div class="name">
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </div>
-        <div class="distance">
-          <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-        </div>
-        <div class="about">
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="searchResults" >
-      <div class="search" *ngFor="let item of searchResults"(click)="openSearch()">
-        <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
+        <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
         <div class="search_detail">
-          <div class="name">
-            <ion-label>{{item.title}}</ion-label>
-          </div>
-          <div class="distance">
-            <ion-icon name="location" color="medium"></ion-icon>
-            <ion-label>{{item.location}}</ion-label>
-          </div>
-          <div class="about">
-            <ion-icon name="star" color="warning"></ion-icon>
-            <ion-label>{{item.rating | number : '1.0-3'}}</ion-label>
-            <ion-icon name="stopwatch-outline"  *ngIf="item.duration" ></ion-icon>
-            <ion-label  *ngIf="item.duration">{{item.duration}} Week</ion-label>
-            <ion-icon name="pricetag-outline"  *ngIf="item.price" ></ion-icon>
-            <ion-label  *ngIf="item.price">{{item.price | number : '1.0-3'}}</ion-label>
-          </div>
-          <div class="distance">
-            <ion-icon name="funnel" color="medium"*ngIf="item.tags"> </ion-icon>
-            <ion-label  *ngIf="item.tags">{{item.tags}}</ion-label>
-          </div>
+            <div class="name">
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </div>
+            <div class="distance">
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            </div>
+            <div class="about">
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </div>
         </div>
-      </div>
     </div>
-    <div *ngIf="showNull">
-      <ion-list>
-        <ion-item>
-          <ion-label>
-            <h3 class="center-null">Sorry we couldn't find any results</h3>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+    <div *ngIf="searchResults">
+        <div class="search" *ngFor="let item of searchResults" (click)="openSearch()">
+            <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
+            <div class="search_detail">
+                <div class="name">
+                    <ion-label>{{item.title}}</ion-label>
+                </div>
+                <div class="distance">
+                    <ion-icon name="location" color="medium"></ion-icon>
+                    <ion-label>{{item.location}}</ion-label>
+                </div>
+                <div class="about">
+                    <ion-icon name="star" color="warning"></ion-icon>
+                    <ion-label>{{item.rating | number : '1.2-2'}}</ion-label>
+                    <ion-icon name="stopwatch-outline" *ngIf="item.duration"></ion-icon>
+                    <ion-label *ngIf="item.duration">{{item.duration}} Week</ion-label>
+                    <ion-icon name="pricetag-outline" *ngIf="item.price"></ion-icon>
+                    <ion-label *ngIf="item.price">{{item.price | number : '1.3-3'}}</ion-label>
+                </div>
+            </div>
+            <div *ngIf="item.tags" class="tags">
+                <ion-chip color="tertiary" outline *ngFor="let tag of splitTags(item.tags)">
+                    <ion-icon name="library"></ion-icon>
+                    <ion-label>{{tag}}</ion-label>
+                </ion-chip>
+            </div>
+        </div>
     </div>
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" >
-      <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
+    <div *ngIf="showNull ">
+        <ion-list>
+            <ion-item>
+                <ion-label>
+                    <h3 class="center-null ">Sorry we couldn't find any results</h3>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+        </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>

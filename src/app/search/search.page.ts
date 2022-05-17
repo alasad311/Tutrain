@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { FetchService } from './../service/api/fetch.service'
+import { FetchService } from './../service/api/fetch.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
 })
+
 export class SearchPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   searchInput:any;
@@ -127,18 +128,18 @@ export class SearchPage implements OnInit {
         this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
           var json = JSON.parse(response.data);
           for (let i = 0; i < json.response.length; i++) {
-            this.searchResults.push(json.response[i])
+            this.searchResults.push(json.response[i]);
           }
           if(json.response.length == 0)
             event.target.disabled = true;
           event.target.complete();
         }).catch((error) => {
-          
         });
       }
-      
     }, 3000);
   }
-
+  splitTags(tags){
+    return tags.split(',');
+  }
 }
 

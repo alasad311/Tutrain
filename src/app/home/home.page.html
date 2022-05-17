@@ -1,151 +1,147 @@
 <ion-header mode="md">
-  <ion-toolbar class="ion-no-margin">
-    <ion-chip slot="start" class="remove-background" (click)="util.openMenu()">          
-      <ion-icon class="icon-remove-margin" name="menu-outline" color="dark"></ion-icon>
-    </ion-chip>
-    <ion-title>Tutrain</ion-title>
-    <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">     
-      <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
-    </ion-chip>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchPage(searchInput)"></ion-searchbar>
-  </ion-toolbar>
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin" name="menu-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchPage(searchInput)"></ion-searchbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content
-      slot="fixed" pullFactor="0.5" 
-        pullingIcon="chevron-down-circle-outline"
-        pullingText="Pull to refresh"
-        refreshingSpinner="crescent">
-      </ion-refresher-content>
+        <ion-refresher-content slot="fixed" pullFactor="0.5" pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh" refreshingSpinner="crescent">
+        </ion-refresher-content>
     </ion-refresher>
-  <div class="main-content">
-    <div class="banner" *ngIf="!banner">
-      <ion-slides pager="false" [options]="slideOpts">
-          <ion-slide>
-            <ion-skeleton-text animated style="height: 150px;">
-              <div class="banner-slide">
-                <div class="badge">
-                  <ion-label></ion-label>
-                </div>            
-              </div>
-            </ion-skeleton-text>
-          </ion-slide>
-      </ion-slides>
-    </div>
-    <div class="banner" *ngIf="banner">
-      <ion-slides pager="false" [options]="slideOpts">
-          <ion-slide *ngFor="let item of banner" (click)="gotToAd(item.link)">
-            <div class="banner-slide" [style.backgroundImage]="'url('+item.img+')'">
-              <div class="badge">
-                <ion-label>{{item.title}}</ion-label>
-              </div>            
-            </div>
-          </ion-slide>
-      </ion-slides>
-    </div>
-    <div class="heading">
-      <ion-label class="title">Select Category</ion-label>
-    </div>
-
-    <div class="category" *ngIf="!categories">
-      <div class="menu">
-        <ion-skeleton-text animated style="height: 150px;">
-          <div class="item">
-            <div class="icon">
-              <img src="https://via.placeholder.com/512x512" />
-            </div>
-            <ion-label></ion-label>
-          </div>
-        </ion-skeleton-text>
-      </div>
-    </div>
-    <div class="category" *ngIf="categories">
-      <div class="menu">
-        <div class="item" *ngFor="let item of categories" (click)="openCategory(item.id)">
-          <div class="icon">
-            <img src="{{item.img}}" />
-          </div>
-          <ion-label>{{item.name}}</ion-label>
+    <div class="main-content">
+        <div class="banner" *ngIf="!banner">
+            <ion-slides pager="false" [options]="slideOpts">
+                <ion-slide>
+                    <ion-skeleton-text animated style="height: 150px;">
+                        <div class="banner-slide">
+                            <div class="badge">
+                                <ion-label></ion-label>
+                            </div>
+                        </div>
+                    </ion-skeleton-text>
+                </ion-slide>
+            </ion-slides>
         </div>
-      </div>
-    </div>
-    <div class="heading">
-      <ion-label class="title">Registerd Courses</ion-label>
-      <ion-label class="text" (click)="goToAllRegisteredCourses()">View all</ion-label>
-    </div>
+        <div class="banner" *ngIf="banner">
+            <ion-slides pager="false" [options]="slideOpts">
+                <ion-slide *ngFor="let item of banner" (click)="gotToAd(item.link)">
+                    <div class="banner-slide" [style.backgroundImage]="'url('+item.img+')'">
+                        <div class="badge">
+                            <ion-label>{{item.title}}</ion-label>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slides>
+        </div>
+        <div class="heading">
+            <ion-label class="title">Select Category</ion-label>
+        </div>
 
-    <ion-row class="product">
-      <ion-col size="6" class="ion-no-margin" *ngFor="let item of registeredCourses" (click)="gotToRegisteredCourse(item.id)">
-        <ion-card>
-          <img src="{{item.img}}" />
-          <ion-label class="instructor">{{item.instructor}}</ion-label>
-          <ion-label class="product-name">{{item.name}}</ion-label>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-    <div class="heading">
-      <ion-label class="title">Recently Add</ion-label>
-      <ion-label class="text" (click)="gotToAllNewCourses()">View all</ion-label>
-    </div>
-
-    <div class="banner" *ngIf="!newCourses">
-      <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
-        <ion-slide>
-          <ion-skeleton-text animated style="height: 150px;">
-            <div class="new_courses" (click)="goToNewCourse(item.id)">
-              <div class="bg_image back_image" [style.backgroundImage]="'url()'"></div>
-              <div class="courses">
-                <ion-label class="name"></ion-label>
-                <ion-label class="grey_lbl"></ion-label>
-                <div class="info">
-                  <div>
-                    <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
-                    <ion-label style="padding-left: 10px;"><span></span></ion-label>
-                  </div>
-                  <div>
-                    <ion-chip color="warning" style="margin-right: 8px;">
-                      <ion-icon name="pricetag-outline"></ion-icon>
-                      <ion-label></ion-label>
-                    </ion-chip>
-                  </div>
-                </div>
-              </div>
+        <div class="category" *ngIf="!categories">
+            <div class="menu">
+                <ion-skeleton-text animated style="height: 150px;">
+                    <div class="item">
+                        <div class="icon">
+                            <img src="https://via.placeholder.com/512x512" />
+                        </div>
+                        <ion-label></ion-label>
+                    </div>
+                </ion-skeleton-text>
             </div>
-          </ion-skeleton-text>
-        </ion-slide>
-      </ion-slides>
-    </div>
-
-    <div class="banner" *ngIf="newCourses">
-      <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
-        <ion-slide *ngFor="let item of newCourses">
-          <div class="new_courses" (click)="goToNewCourse(item.id)">
-            <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
-            <div class="courses">
-              <ion-label class="name">{{item.name}}</ion-label>
-              <ion-label class="grey_lbl">By: {{item.fullname}}</ion-label>
-              <div class="info">
-                <div>
-                  <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
-                  <ion-label style="padding-left: 10px;"><span>{{item.rating | number : '1.0-3'}}</span></ion-label>
+        </div>
+        <div class="category" *ngIf="categories">
+            <div class="menu">
+                <div class="item" *ngFor="let item of categories" (click)="openCategory(item.id)">
+                    <div class="icon">
+                        <img src="{{item.img}}" />
+                    </div>
+                    <ion-label>{{item.name}}</ion-label>
                 </div>
-                <div>
-                  <ion-chip color="warning" style="margin-right: 8px;">
-                    <ion-icon name="pricetag-outline"></ion-icon>
-                    <ion-label>{{item.price | number : '1.0-3'}}</ion-label>
-                  </ion-chip>
-                </div>
-              </div>
             </div>
-          </div>
-        </ion-slide>
-      </ion-slides>
+        </div>
+        <div class="heading">
+            <ion-label class="title">Registerd Courses</ion-label>
+            <ion-label class="text" (click)="goToAllRegisteredCourses()">View all</ion-label>
+        </div>
+
+        <ion-row class="product">
+            <ion-col size="6" class="ion-no-margin" *ngFor="let item of registeredCourses" (click)="gotToRegisteredCourse(item.id)">
+                <ion-card>
+                    <img src="{{item.img}}" />
+                    <ion-label class="instructor">{{item.instructor}}</ion-label>
+                    <ion-label class="product-name">{{item.name}}</ion-label>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <div class="heading">
+            <ion-label class="title">Recently Add</ion-label>
+            <ion-label class="text" (click)="gotToAllNewCourses()">View all</ion-label>
+        </div>
+
+        <div class="banner" *ngIf="!newCourses">
+            <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
+                <ion-slide>
+                    <ion-skeleton-text animated style="height: 150px;">
+                        <div class="new_courses" (click)="goToNewCourse(item.id)">
+                            <div class="bg_image back_image" [style.backgroundImage]="'url()'"></div>
+                            <div class="courses">
+                                <ion-label class="name"></ion-label>
+                                <ion-label class="grey_lbl"></ion-label>
+                                <div class="info">
+                                    <div>
+                                        <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
+                                        <ion-label style="padding-left: 10px;"><span></span></ion-label>
+                                    </div>
+                                    <div>
+                                        <ion-chip color="warning" style="margin-right: 8px;">
+                                            <ion-icon name="pricetag-outline"></ion-icon>
+                                            <ion-label></ion-label>
+                                        </ion-chip>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-skeleton-text>
+                </ion-slide>
+            </ion-slides>
+        </div>
+
+        <div class="banner" *ngIf="newCourses">
+            <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
+                <ion-slide *ngFor="let item of newCourses">
+                    <div class="new_courses" (click)="goToNewCourse(item.id)">
+                        <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
+                        <div class="courses">
+                            <ion-label class="name">{{item.name}}</ion-label>
+                            <ion-label class="grey_lbl">By: {{item.fullname}}</ion-label>
+                            <div class="info">
+                                <div>
+                                    <ion-icon name="star" style="font-size: 16px; color: var(--ion-app-yellow-color);"></ion-icon>
+                                    <ion-label style="padding-left: 10px;"><span>{{item.rating | number : '1.2-2'}}</span></ion-label>
+                                </div>
+                                <div>
+                                    <ion-chip color="warning" style="margin-right: 8px;">
+                                        <ion-icon name="pricetag-outline"></ion-icon>
+                                        <ion-label>{{item.price | number : '1.3-3'}}</ion-label>
+                                    </ion-chip>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slides>
+        </div>
+
     </div>
-    
-  </div>
 
 </ion-content>
