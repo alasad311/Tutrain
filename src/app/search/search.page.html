@@ -27,7 +27,7 @@
 </ion-header>
 
 <ion-content>
-    <div class="search" *ngIf="!searchResults" (click)="onFavourite()">
+    <div class="search" *ngIf="!searchResults">
         <ion-thumbnail slot="start">
             <ion-skeleton-text animated></ion-skeleton-text>
         </ion-thumbnail>
@@ -43,31 +43,34 @@
             </div>
         </div>
     </div>
+
     <div *ngIf="searchResults">
-        <div class="search" *ngFor="let item of searchResults" (click)="openSearch()">
-            <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
-            <div class="search_detail">
-                <div class="name">
-                    <ion-label>{{item.title}}</ion-label>
+        <div *ngFor="let item of searchResults">
+            <div class="search" (click)="viewDetails(item.id,item.stype)">
+                <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
+                <div class="search_detail">
+                    <div class="name">
+                        <ion-label>{{item.title}}</ion-label>
+                    </div>
+                    <div class="distance">
+                        <ion-icon name="location" color="medium"></ion-icon>
+                        <ion-label>{{item.location}}</ion-label>
+                    </div>
+                    <div class="about">
+                        <ion-icon name="star" color="warning"></ion-icon>
+                        <ion-label>{{item.rating | number : '1.2-2'}}</ion-label>
+                        <ion-icon name="stopwatch-outline" *ngIf="item.duration"></ion-icon>
+                        <ion-label *ngIf="item.duration">{{item.duration}} Week</ion-label>
+                        <ion-icon name="pricetag-outline" *ngIf="item.price"></ion-icon>
+                        <ion-label *ngIf="item.price">{{item.price | number : '1.3-3'}}</ion-label>
+                    </div>
                 </div>
-                <div class="distance">
-                    <ion-icon name="location" color="medium"></ion-icon>
-                    <ion-label>{{item.location}}</ion-label>
+                <div *ngIf="item.tags" class="tags">
+                    <ion-chip color="tertiary" outline *ngFor="let tag of splitTags(item.tags)">
+                        <ion-icon name="library"></ion-icon>
+                        <ion-label>{{tag}}</ion-label>
+                    </ion-chip>
                 </div>
-                <div class="about">
-                    <ion-icon name="star" color="warning"></ion-icon>
-                    <ion-label>{{item.rating | number : '1.2-2'}}</ion-label>
-                    <ion-icon name="stopwatch-outline" *ngIf="item.duration"></ion-icon>
-                    <ion-label *ngIf="item.duration">{{item.duration}} Week</ion-label>
-                    <ion-icon name="pricetag-outline" *ngIf="item.price"></ion-icon>
-                    <ion-label *ngIf="item.price">{{item.price | number : '1.3-3'}}</ion-label>
-                </div>
-            </div>
-            <div *ngIf="item.tags" class="tags">
-                <ion-chip color="tertiary" outline *ngFor="let tag of splitTags(item.tags)">
-                    <ion-icon name="library"></ion-icon>
-                    <ion-label>{{tag}}</ion-label>
-                </ion-chip>
             </div>
         </div>
     </div>

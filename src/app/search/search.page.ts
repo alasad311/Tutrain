@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { Router, NavigationExtras  } from '@angular/router';
+import { IonInfiniteScroll,NavController } from '@ionic/angular';
 import { FetchService } from './../service/api/fetch.service';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
@@ -15,7 +16,7 @@ export class SearchPage implements OnInit {
   showNull = false;
   type = "all";
   page = 0;
-  constructor(private router: Router, private fetch: FetchService) { }
+  constructor(private router: Router, private fetch: FetchService,private nav: NavController) { }
 
   ngOnInit() {
     if (this.router.getCurrentNavigation().extras.state) {
@@ -140,6 +141,21 @@ export class SearchPage implements OnInit {
   }
   splitTags(tags){
     return tags.split(',');
+  }
+  viewDetails(selectID,type)
+  {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          page: '/search',
+          id: selectID
+      }
+    };
+   if(type === 'user')
+   {
+    this.nav.navigateForward('/details/users',navigationExtras);
+   }else if(type === 'course'){
+    this.nav.navigateForward('/details/courses',navigationExtras);
+   }
   }
 }
 

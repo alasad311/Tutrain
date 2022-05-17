@@ -4,7 +4,7 @@ import { AuthGuardService } from './../service/Auth/auth-guard.service';
 import { StorageService } from './../service/storage/storage.service';
 import { FetchService } from './../service/api/fetch.service';
 import { UtilService } from './../service/util.service';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController, NavController,ModalController  } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -61,7 +61,7 @@ export class HomePage implements OnInit {
 
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
-    private util: UtilService ) { }
+    private modalCtrl: ModalController,private util: UtilService ) { }
 
   async ionViewWillEnter() {
       const user = await this.storage.get('user');
@@ -97,5 +97,12 @@ export class HomePage implements OnInit {
   }
   gotToAd(link){
     window.open(link, '_system');
+  }
+  async openCategory(id){
+    // const modal = await this.modalCtrl.create({
+    //   component: CategoriesPage,
+    //   swipeToClose: true,
+    // });
+    // await modal.present();
   }
 }
