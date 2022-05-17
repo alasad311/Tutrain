@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+import { forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,15 @@ export class FetchService {
         timeout: 1000
       } )
         .then(res => {
-          resolve(res)
+          resolve(res);
         })
         .catch(error => {
           reject(error);
         });
     });
   }
-  public async getAds():Promise<any>{
-    return new Promise( (resolve,reject) => {
+  public async getHomePage(email):Promise<any>{
+    const res1 = new Promise( (resolve,reject) => {
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/ads" , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -35,15 +36,13 @@ export class FetchService {
         timeout: 1000
       } )
         .then(res => {
-          resolve(res)
+          resolve(res);
         })
         .catch(error => {
           reject(error);
-        });
+        })
     });
-  }
-  public async getCategory():Promise<any>{
-    return new Promise( (resolve,reject) => {
+    const res2 = new Promise( (resolve,reject) => {
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/category" , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -51,15 +50,13 @@ export class FetchService {
         timeout: 1000
       } )
         .then(res => {
-          resolve(res)
+          resolve(res);
         })
         .catch(error => {
           reject(error);
         });
     });
-  }
-  public async getNewCourses(email):Promise<any>{
-    return new Promise( (resolve,reject) => {
+    const res3 = new Promise( (resolve,reject) => {
       const url = "https://tapp.scd.edu.om/api/v1/courses/new/"+email
       this.http.sendRequest( url , {
         method: 'get',
@@ -68,13 +65,53 @@ export class FetchService {
         timeout: 1000
       } )
         .then(res => {
-          resolve(res)
+          resolve(res);
         })
         .catch(error => {
           reject(error);
         });
     });
+    return new Promise( (resolve,reject) => {
+        Promise.all([res1, res2,res3]).then(res => {
+        resolve(res);
+      }).catch(error => {
+        reject(error);
+      });
+    });
   }
+  // public async getCategory():Promise<any>{
+  //   return new Promise( (resolve,reject) => {
+  //     this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/category" , {
+  //       method: 'get',
+  //       headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+  //       serializer: 'utf8',
+  //       timeout: 1000
+  //     } )
+  //       .then(res => {
+  //         resolve(res)
+  //       })
+  //       .catch(error => {
+  //         reject(error);
+  //       });
+  //   });
+  // }
+  // public async getNewCourses(email):Promise<any>{
+  //   return new Promise( (resolve,reject) => {
+  //     const url = "https://tapp.scd.edu.om/api/v1/courses/new/"+email
+  //     this.http.sendRequest( url , {
+  //       method: 'get',
+  //       headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+  //       serializer: 'utf8',
+  //       timeout: 1000
+  //     } )
+  //       .then(res => {
+  //         resolve(res)
+  //       })
+  //       .catch(error => {
+  //         reject(error);
+  //       });
+  //   });
+  // }
   
   public async searchAll(value,page):Promise<any>{
     return new Promise( (resolve,reject) => {

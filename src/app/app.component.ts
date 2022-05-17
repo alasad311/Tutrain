@@ -25,6 +25,7 @@ export class AppComponent {
   // .then(() => console.log('Immersive mode supported'))
   // .catch(err => console.log(err));
   this.statusBar.overlaysWebView(false);
+  this.statusBar.styleDefault();
   // set status bar to white
   this.statusBar.backgroundColorByHexString('#ffffff');
 
@@ -59,7 +60,7 @@ export class AppComponent {
 
       } else {
         this.menuCtrl.enable(false);
-        this.router.navigate(['search']);
+        this.router.navigate(['welcome']);
       }
     });
   }
