@@ -18,6 +18,8 @@ export class CoursesPage implements OnInit {
   pictures: any;
   contents: any;
   durationName: any;
+  sections: any;
+  content: any;
   constructor(private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
 
   ngOnInit() {
@@ -35,8 +37,9 @@ export class CoursesPage implements OnInit {
   }
   getCourseDetails(id: any) {
     this.fetch.getCourseDetail(id).then((response) => {
-      var json = JSON.parse(response.data);
-      this.course = json.response[0]
+      this.course = JSON.parse(response[0].data).response[0];
+      this.sections = JSON.parse(response[1].data).response;
+      this.content = JSON.parse(response[2].data).response;
       for(var x=1; x<=this.course.duration.match(/\d+/); x++)
       {
         this.duration.push(x);

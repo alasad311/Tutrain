@@ -133,7 +133,7 @@ export class FetchService {
     });
   }
   public async getCourseDetail(id):Promise<any>{
-    return new Promise( (resolve,reject) => {
+    const courseDetails = new Promise( (resolve,reject) => {
       const url = "https://tapp.scd.edu.om/api/v1/course/"+id;
       this.http.sendRequest( url , {
         method: 'get',
@@ -148,6 +148,43 @@ export class FetchService {
           reject(error);
         });
     });
+    const sections = new Promise( (resolve,reject) => {
+      const url = "https://tapp.scd.edu.om/api/v1/course/sections/"+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+    const content = new Promise( (resolve,reject) => {
+      const url = "https://tapp.scd.edu.om/api/v1/course/content/"+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+    return new Promise( (resolve,reject) => {
+      Promise.all([courseDetails,sections,content]).then(res => {
+      resolve(res);
+    }).catch(error => {
+      reject(error);
+    });
+  });
   }
   
 }
