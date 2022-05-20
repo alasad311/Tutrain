@@ -59,14 +59,14 @@
                         <div class="name">
                             <ion-label>{{item.section_name}}</ion-label>
                         </div>
-                        <ion-row *ngFor="let content of item.course_content">
+                        <ion-row *ngFor="let content of item.course_content" (click)="playYoutubeVideo(parser(content.youtube_video))">
                             <ion-col class="ion-no-padding" size="3">
-                                <img src="assets/burger.jpg">
+                                <img src="https://i.ytimg.com/vi/{{parser(content.youtube_video)}}/hqdefault.jpg">
                             </ion-col>
                             <ion-col size="9" >
                                 <div class="title" (click)="goToItem()">
                                     <ion-label class="item-name">{{content.video_title}}</ion-label>
-                                    <ion-label class="calery">00:00:00</ion-label>
+                                    <ion-label class="calery">{{parser(content.youtube_video)}}</ion-label>
                                 </div>
                                 <div class="item-detail" (click)="goToItem()">
                                     <ion-label>{{content.video_description}} </ion-label>

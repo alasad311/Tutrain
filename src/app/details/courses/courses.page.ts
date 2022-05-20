@@ -44,6 +44,26 @@ export class CoursesPage implements OnInit {
       
     });
   }
+  parser(url){
+    const urlObject = new URL(url);
+    let urlOrigin = urlObject.origin;
+    let urlPath = urlObject.pathname;
+
+    if (urlOrigin.search('youtu.be') > -1) {
+        return urlPath.substr(1);
+    }
+
+    if (urlPath.search('embed') > -1) {
+        // Örneğin "/embed/wCCSEol8oSc" ise "wCCSEol8oSc" return eder.
+        return urlPath.substr(7);
+    }
+
+    
+    return urlObject.searchParams.get('v');
+  }
+  playYoutubeVideo(id){
+    this.youtube.openVideo(id);
+  }
   goBackHome(){
     this.router.navigate([this.page]);
   }
