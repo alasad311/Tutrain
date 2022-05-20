@@ -163,23 +163,9 @@ export class FetchService {
           reject(error);
         });
     });
-    const content = new Promise( (resolve,reject) => {
-      const url = "https://tapp.scd.edu.om/api/v1/course/content/"+id;
-      this.http.sendRequest( url , {
-        method: 'get',
-        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
-        serializer: 'utf8',
-        timeout: 1000
-      } )
-        .then(res => {
-          resolve(res)
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+   
     return new Promise( (resolve,reject) => {
-      Promise.all([courseDetails,sections,content]).then(res => {
+      Promise.all([courseDetails,sections]).then(res => {
       resolve(res);
     }).catch(error => {
       reject(error);

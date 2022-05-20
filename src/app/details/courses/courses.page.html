@@ -59,17 +59,17 @@
                         <div class="name">
                             <ion-label>{{item.section_name}}</ion-label>
                         </div>
-                        <ion-row *ngFor="let iten of [1]">
+                        <ion-row *ngFor="let content of item.course_content">
                             <ion-col class="ion-no-padding" size="3">
                                 <img src="assets/burger.jpg">
                             </ion-col>
                             <ion-col size="9" >
                                 <div class="title" (click)="goToItem()">
-                                    <ion-label class="item-name">Test</ion-label>
-                                    <ion-label class="calery">Test</ion-label>
+                                    <ion-label class="item-name">{{content.video_title}}</ion-label>
+                                    <ion-label class="calery">00:00:00</ion-label>
                                 </div>
                                 <div class="item-detail" (click)="goToItem()">
-                                    <ion-label>Dave watched as the forest burned up on the hill, only a few miles from her house. The car had been hastily packed and Marta was inside trying to round up the last of the pets. </ion-label>
+                                    <ion-label>{{content.video_description}} </ion-label>
                                 </div>
                             </ion-col>
                         </ion-row>
