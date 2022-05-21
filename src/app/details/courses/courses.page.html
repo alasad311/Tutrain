@@ -10,6 +10,76 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
+    <div *ngIf="!course">
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <div class="main-content">
+            <ion-row class="icon">
+                <div>
+                    <ion-icon class="heart" name="heart-outline"></ion-icon>
+                </div>
+            </ion-row>
+            <div class="card">
+                <div class="r-detail">
+                    <div class="heading">
+                        <ion-skeleton-text animated  style="width: 60%"></ion-skeleton-text>
+                        <ion-skeleton-text animated  style="width: 70%"></ion-skeleton-text>
+                        <ion-skeleton-text animated  style="width: 80%"></ion-skeleton-text>
+                    </div>
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-label class="title">Rating</ion-label><br>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="title">Duration</ion-label><br>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="title">Language</ion-label><br>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-label class="title">Price</ion-label><br>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-col>
+                    </ion-row>
+                    <div class="heading">
+                        <ion-label class="title">Description </ion-label>
+                        <ion-skeleton-text animated></ion-skeleton-text>
+                        <ion-skeleton-text animated></ion-skeleton-text>
+                        <ion-skeleton-text animated></ion-skeleton-text>
+                        <ion-skeleton-text animated></ion-skeleton-text>
+                    </div>
+                    
+                </div>
+                <div class="items">
+                    <div *ngFor="let item of [1,2]">
+                        <div class="name">
+                            <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                        </div>
+                        <ion-row>
+                            <ion-col class="ion-no-padding" size="3">
+                                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                            </ion-col>
+                            <ion-col size="9" >
+                                <div class="title" (click)="goToItem()">
+                                    <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                                </div>
+                                <div class="item-detail" (click)="goToItem()">
+                                    <ion-skeleton-text animated ></ion-skeleton-text>
+                                    <ion-skeleton-text animated ></ion-skeleton-text>
+                                    <ion-skeleton-text animated ></ion-skeleton-text>
+                                    <ion-skeleton-text animated ></ion-skeleton-text>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
     <div *ngIf="course">
         <img src="{{course.img}}">
         <div class="main-content">
@@ -59,14 +129,14 @@
                         <div class="name">
                             <ion-label>{{item.section_name}}</ion-label>
                         </div>
-                        <ion-row *ngFor="let content of item.course_content" (click)="playYoutubeVideo(parser(content.youtube_video))">
+                        <ion-row *ngFor="let content of item.course_content" (click)="playYoutubeVideo()">
                             <ion-col class="ion-no-padding" size="3">
-                                <img src="https://i.ytimg.com/vi/{{parser(content.youtube_video)}}/hqdefault.jpg">
+                                <img src="https://via.placeholder.com/1000x1000">
                             </ion-col>
                             <ion-col size="9" >
                                 <div class="title" (click)="goToItem()">
                                     <ion-label class="item-name">{{content.video_title}}</ion-label>
-                                    <ion-label class="calery">{{parser(content.youtube_video)}}</ion-label>
+                                    <ion-label class="calery">Duration</ion-label>
                                 </div>
                                 <div class="item-detail" (click)="goToItem()">
                                     <ion-label>{{content.video_description}} </ion-label>

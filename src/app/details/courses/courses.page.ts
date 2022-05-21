@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { FetchService } from './../../service/api/fetch.service';
-import { YoutubeVideoPlayer } from '@awesome-cordova-plugins/youtube-video-player/ngx';
+import { Capacitor } from '@capacitor/core';
+import { CapacitorVideoPlayer } from 'capacitor-video-player';
+
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.page.html',
@@ -20,14 +23,16 @@ export class CoursesPage implements OnInit {
   durationName: any;
   sections: any;
   content: any;
-  constructor(private youtube: YoutubeVideoPlayer,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
+  videoPlayer: any;
+  constructor(public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.id = params.id;
       this.page = params.page;
     });
-    
+    const player: any = await this.setVideoPlayer();
+    this.videoPlayer = player.plugin;
   }
   segmentChange(val) {
     this.seg_id = val;
@@ -44,26 +49,25 @@ export class CoursesPage implements OnInit {
       
     });
   }
-  parser(url){
-    const urlObject = new URL(url);
-    let urlOrigin = urlObject.origin;
-    let urlPath = urlObject.pathname;
+  setVideoPlayer = async (): Promise<any>=> {
+    const platform = Capacitor.getPlatform();
+    console.log(`platform ${platform}`);
+    return {plugin:CapacitorVideoPlayer, platform};
+  };
 
-    if (urlOrigin.search('youtu.be') > -1) {
-        return urlPath.substr(1);
-    }
-
-    if (urlPath.search('embed') > -1) {
-        // Örneğin "/embed/wCCSEol8oSc" ise "wCCSEol8oSc" return eder.
-        return urlPath.substr(7);
-    }
-
-    
-    return urlObject.searchParams.get('v');
+  async playYoutubeVideo(){
+    //return this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/HdU_rf7eMTI?modestbranding=1&autoplay=0&showinfo=0&controls=0&rel=0")
+    document.addEventListener('jeepCapVideoPlayerPlay', (e: CustomEvent) => { console.log('Event jeepCapVideoPlayerPlay ', e.detail) }, false);
+    document.addEventListener('jeepCapVideoPlayerPause', (e: CustomEvent) => { console.log('Event jeepCapVideoPlayerPause ', e.detail) }, false);
+    document.addEventListener('jeepCapVideoPlayerEnded', (e: CustomEvent) => { console.log('Event jeepCapVideoPlayerEnded ', e.detail) }, false);
+    await this.videoPlayer.initPlayer({
+      mode: 'fullscreen',
+      url: "http://static.videogular.com/assets/videos/elephants-dream.mp4",
+      playerId: 'fullscreen',
+      componentTag: 'app-home'
+    }); 
   }
-  playYoutubeVideo(id){
-    this.youtube.openVideo(id);
-  }
+ 
   goBackHome(){
     this.router.navigate([this.page]);
   }

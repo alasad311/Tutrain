@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from './service/storage/storage.service';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
-import {  MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { FetchService } from "./service/api/fetch.service"
 import { EventService } from "./service/event.service"
