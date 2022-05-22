@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
-import { forkJoin } from 'rxjs';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { forkJoin } from 'rxjs';
 export class FetchService {
   apiKey = '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611'; // <-- Enter your own key here!
 
-  constructor(private http: HTTP) { }
+  constructor(private http: HTTP,private storage: StorageService) { }
 
   public async getUser(email):Promise<any>{
     return new Promise( (resolve,reject) => {
@@ -163,9 +163,24 @@ export class FetchService {
           reject(error);
         });
     });
-   
+    const paid = new Promise( async (resolve,reject) => {
+      const user = await this.storage.get('user');
+      const url = "https://tapp.scd.edu.om/api/v1//course/paied/"+id+"/"+user.email;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
     return new Promise( (resolve,reject) => {
-      Promise.all([courseDetails,sections]).then(res => {
+      Promise.all([courseDetails,sections,paid]).then(res => {
       resolve(res);
     }).catch(error => {
       reject(error);

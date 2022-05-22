@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { FetchService } from './../../service/api/fetch.service';
 import { Capacitor } from '@capacitor/core';
 import { CapacitorVideoPlayer } from 'capacitor-video-player';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
-
+import { PaymentPage } from '../../payment/payment.page'
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.page.html',
@@ -25,7 +25,8 @@ export class CoursesPage implements OnInit {
   sections: any;
   content: any;
   videoPlayer: any;
-  constructor(private screenOrientation: ScreenOrientation,public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
+  paid: any;
+  constructor(private screenOrientation: ScreenOrientation,public alertController: AlertController,public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -41,7 +42,13 @@ export class CoursesPage implements OnInit {
   getCourseDetails(id: any) {
     this.fetch.getCourseDetail(id).then((response) => {
       this.course = JSON.parse(response[0].data).response[0];
+
       this.sections = JSON.parse(response[1].data).response;
+      if(JSON.parse(response[2].data).response.length === 0)
+        this.paid = false;
+      else
+        this.paid = true;
+      
       this.durationName = this.course.duration.replace(/[0-9]/g, '');
     }).catch((error) => {
       
@@ -93,6 +100,43 @@ export class CoursesPage implements OnInit {
  
   goBackHome(){
     this.router.navigate([this.page]);
+  }
+  purchaseCourse(){
+    this.alertMessage("Purchase","Are you sure you want to buy "+this.course.name);
+  }
+  async showPaymentPage() {
+    const modal = await this.modalController.create({
+      component: PaymentPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'course': this.course,
+      }
+    });
+    return await modal.present();
+  }
+  async alertMessage(header,message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'ok',
+          id: 'confirm-button',
+          handler: () => {
+            this.showPaymentPage()
+          }
+        },{
+          text: 'Cancel',
+          id: 'cancel-button',
+          handler: () => {
+            
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
 
