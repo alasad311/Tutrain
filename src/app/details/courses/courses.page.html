@@ -129,7 +129,7 @@
                         <div class="name">
                             <ion-label>{{item.section_name}}</ion-label>
                         </div>
-                        <ion-row *ngFor="let content of item.course_content" (click)="playYoutubeVideo()">
+                        <ion-row *ngFor="let content of item.course_content" (click)="playYoutubeVideo(content.video)">
                             <ion-col class="ion-no-padding" size="3">
                                 <img src="https://via.placeholder.com/1000x1000">
                             </ion-col>

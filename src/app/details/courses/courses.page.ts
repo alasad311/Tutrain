@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { FetchService } from './../../service/api/fetch.service';
 import { Capacitor } from '@capacitor/core';
 import { CapacitorVideoPlayer } from 'capacitor-video-player';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-courses',
@@ -24,7 +25,7 @@ export class CoursesPage implements OnInit {
   sections: any;
   content: any;
   videoPlayer: any;
-  constructor(public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
+  constructor(private screenOrientation: ScreenOrientation,public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -33,9 +34,6 @@ export class CoursesPage implements OnInit {
     });
     const player: any = await this.setVideoPlayer();
     this.videoPlayer = player.plugin;
-  }
-  segmentChange(val) {
-    this.seg_id = val;
   }
   ionViewWillEnter(){
     this.getCourseDetails(this.id);
@@ -54,18 +52,43 @@ export class CoursesPage implements OnInit {
     console.log(`platform ${platform}`);
     return {plugin:CapacitorVideoPlayer, platform};
   };
+  private async playerReady(data: any): Promise<void> {
+    this.screenOrientation.unlock();
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY);
+    return;
+  }
+  private async playerPlay(data: any): Promise<void> {
+    console.log(`Event jeepCapVideoPlayer ${data}`);
+    return;
+  }
+  private async playerEnd(data: any): Promise<void> {
+    this.screenOrientation.unlock();
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    return;
+  }
+  private async playerExit(data: any): Promise<void> {
+    this.screenOrientation.unlock();
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    return;
+  }
+  private async playerPause(data: any): Promise<void> {
+    console.log(`Event jeepCapVideoPlayerPause ${data}`);
+    return;
+}
+  async playYoutubeVideo(url){
+   
+    await this.videoPlayer.addListener('jeepCapVideoPlayerPlay', (data: any) => this.playerPlay(data), false);
+    await this.videoPlayer.addListener('jeepCapVideoPlayerPause', (data: any) => this.playerPause(data), false);
+    await this.videoPlayer.addListener('jeepCapVideoPlayerEnded', (data: any) => this.playerEnd(data), false);
+    await this.videoPlayer.addListener('jeepCapVideoPlayerExit', (data: any) => this.playerExit(data), false);
+    await this.videoPlayer.addListener('jeepCapVideoPlayerReady', async (data: any) => this.playerReady(data), false);
 
-  async playYoutubeVideo(){
-    //return this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/HdU_rf7eMTI?modestbranding=1&autoplay=0&showinfo=0&controls=0&rel=0")
-    document.addEventListener('jeepCapVideoPlayerPlay', (e: CustomEvent) => { console.log('Event jeepCapVideoPlayerPlay ', e.detail) }, false);
-    document.addEventListener('jeepCapVideoPlayerPause', (e: CustomEvent) => { console.log('Event jeepCapVideoPlayerPause ', e.detail) }, false);
-    document.addEventListener('jeepCapVideoPlayerEnded', (e: CustomEvent) => { console.log('Event jeepCapVideoPlayerEnded ', e.detail) }, false);
     await this.videoPlayer.initPlayer({
       mode: 'fullscreen',
-      url: "http://static.videogular.com/assets/videos/elephants-dream.mp4",
+      url: url,
       playerId: 'fullscreen',
       componentTag: 'app-home'
-    }); 
+    }).then(); 
   }
  
   goBackHome(){
