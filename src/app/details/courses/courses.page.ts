@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController,IonRouterOutlet } from '@ionic/angular';
 import { FetchService } from './../../service/api/fetch.service';
 import { Capacitor } from '@capacitor/core';
 import { CapacitorVideoPlayer } from 'capacitor-video-player';
@@ -26,7 +26,7 @@ export class CoursesPage implements OnInit {
   content: any;
   videoPlayer: any;
   paid: any;
-  constructor(private screenOrientation: ScreenOrientation,public alertController: AlertController,public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
+  constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -108,6 +108,8 @@ export class CoursesPage implements OnInit {
     const modal = await this.modalController.create({
       component: PaymentPage,
       cssClass: 'my-custom-class',
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
       componentProps: {
         'course': this.course,
       }
