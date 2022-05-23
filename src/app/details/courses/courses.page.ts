@@ -40,6 +40,8 @@ export class CoursesPage implements OnInit {
     this.getCourseDetails(this.id);
   }
   getCourseDetails(id: any) {
+    this.course = null;
+    this.sections = null;
     this.fetch.getCourseDetail(id).then((response) => {
       this.course = JSON.parse(response[0].data).response[0];
 
@@ -114,7 +116,19 @@ export class CoursesPage implements OnInit {
         'course': this.course,
       }
     });
-    return await modal.present();
+    modal.onDidDismiss()
+    .then((data) => {
+       const response = data.data.dismissed; // Here's your selected user!
+      if(response === true)
+      {
+        this.getCourseDetails(this.id);
+      }else
+      {
+
+      }
+    });
+    await modal.present();
+
   }
   async alertMessage(header,message) {
     const alert = await this.alertController.create({

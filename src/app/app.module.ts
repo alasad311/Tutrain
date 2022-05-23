@@ -11,13 +11,13 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { AuthGuardService } from './service/Auth/auth-guard.service'
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
-
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(),IonicStorageModule.forRoot()
     , AppRoutingModule,FormsModule,ReactiveFormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
