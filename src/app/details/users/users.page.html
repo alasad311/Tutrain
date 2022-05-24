@@ -10,5 +10,43 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    {{id}} {{page}}
-</ion-content>
+    <div *ngIf="user">
+      <div class="img" [style.backgroundImage]="'url('+user.picture+')'">
+      </div>
+      <div class="main-content">
+        <div class="uper_div">
+          <div class="item">
+            <ion-label class="name">{{user.fullname}}</ion-label>
+            <ion-badge class="badge">{{user.degree}}</ion-badge>
+          </div>
+          <div class="item">
+            <ion-label class="text"> {{user.governorate}}, {{user.wilayat}}, {{user.locality}}</ion-label>
+            <!-- <ion-label class="distance">1 km away</ion-label> -->
+          </div>
+          <div class="line"></div>
+          <div>
+            <ion-icon class="icon" name="school-outline"></ion-icon>
+            <ion-label class="text">{{user.specialization}}</ion-label>
+          </div>
+          <div>
+            <ion-icon class="icon" name="file-tray-outline"></ion-icon>
+            <ion-label class="text">{{user.tags}}</ion-label>
+          </div>
+          <div class="about">
+            <div class="title">
+              <ion-label>About</ion-label>
+            </div>
+            <div class="text">
+              <ion-label>{{user.about}}
+              </ion-label>
+            </div>
+          </div>
+         
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label class="text ion-text-center">Report {{user.fullname}}</ion-label>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  

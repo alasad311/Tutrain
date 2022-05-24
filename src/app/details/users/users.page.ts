@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,NavigationExtras,Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { FetchService } from 'src/app/service/api/fetch.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -11,20 +12,35 @@ export class UsersPage implements OnInit {
   id: any;
   page: any;
   courseID: any;
-  constructor(private router: Router,private route: ActivatedRoute,private nav: NavController) { }
+  user: any;
+  constructor(private router: Router,private route: ActivatedRoute,private nav: NavController,private fetch: FetchService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.id = params.id;
       this.page = params.page;
-      if(params.courseid.length !== 0)
+      if(params.courseid)
       {
         this.courseID = params.courseid;
       }
   });
   }
+  ionViewWillEnter(){
+    this.getUserDetails(this.id);
+  }
+  getUserDetails(id)
+  {
+    this.user = null;
+    this.fetch.getUserDetailByID(id).then((response) => {
+      this.user = JSON.parse(response.data).response[0];
+
+    }).catch((error) => {
+      
+    });
+  }
   goBackHome(){
-    if(this.courseID.length !== 0)
+    console.log(this.courseID);
+    if(this.courseID)
     {
       const navigationExtras: NavigationExtras = {
         queryParams: {
