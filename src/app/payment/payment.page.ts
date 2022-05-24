@@ -1,7 +1,8 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController, ModalController } from '@ionic/angular';
-
+import { FetchService } from '../service/api/fetch.service'
+import { StorageService } from '../service/storage/storage.service';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
@@ -9,7 +10,8 @@ import { AlertController, ModalController } from '@ionic/angular';
 })
 export class PaymentPage implements OnInit {
   @Input() course: any;
-  constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController) { }
+  constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
+    private storage: StorageService, public fetchServices: FetchService) { }
 
   ngOnInit() {
   }
@@ -18,11 +20,34 @@ export class PaymentPage implements OnInit {
   }
   onCheckout(){
     const browser = this.iab.create('https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om','_blank',{ location: 'no',zoom: 'no'});
-    browser.on('exit').subscribe(event => { this.checkPayment("closed!"); })
+    browser.on('exit').subscribe(event => { this.checkPayment(true); })
   }
-  checkPayment(event)
+  async checkPayment(event)
   {
-    this.alertMessage("Payment","You have paid "+ (this.course.price+2).toFixed(3))
+    if(event === true)
+    {
+      const user = await this.storage.get('user');
+      this.fetchServices.updateOrder({
+       paid_amount: this.course.price+2,
+       course_id : this.course.id,
+       user_id : user.id
+      }).then((response) => {
+        const json = JSON.parse(response.data);
+        if(json.id){
+          this.alertMessage("Payment","You have paid "+ (this.course.price+2).toFixed(3));
+        }
+       
+
+      }).catch((error) => {
+      });
+      
+    }else
+    {
+      
+    }
+    //Preparing ahead
+
+    
     
     // browser.executeScript({
     //   code: "document.getElementById('customBackbtn').onclick = function() {\
