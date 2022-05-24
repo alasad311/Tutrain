@@ -8,7 +8,9 @@ import { StorageService } from '../storage/storage.service';
 export class FetchService {
   apiKey = '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611'; // <-- Enter your own key here!
 
-  constructor(private http: HTTP,private storage: StorageService) { }
+  constructor(private http: HTTP,private storage: StorageService) {
+    this.http.setDataSerializer('raw');
+   }
 
   public async getUser(email):Promise<any>{
     return new Promise( (resolve,reject) => {
@@ -189,11 +191,12 @@ export class FetchService {
   }
   public async updateOrder(data):Promise<any>{
     return new Promise( (resolve,reject) => {
+      this.http.setDataSerializer('urlencoded');
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/order" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
-        serializer: 'utf8',
+        serializer: 'json',
         timeout: 1000
       } )
         .then(res => {

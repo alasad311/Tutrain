@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute,Router } from '@angular/router';
-import { AlertController, ModalController,IonRouterOutlet } from '@ionic/angular';
+import { ActivatedRoute,NavigationExtras,Router } from '@angular/router';
+import { AlertController, ModalController,IonRouterOutlet, NavController } from '@ionic/angular';
 import { FetchService } from './../../service/api/fetch.service';
 import { Capacitor } from '@capacitor/core';
 import { CapacitorVideoPlayer } from 'capacitor-video-player';
@@ -17,7 +17,6 @@ export class CoursesPage implements OnInit {
   page: any;
   course: any;
   duration = [];
-  seg_id = 1;
   videos: any;
   pictures: any;
   contents: any;
@@ -26,7 +25,9 @@ export class CoursesPage implements OnInit {
   content: any;
   videoPlayer: any;
   paid: any;
-  constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService) { }
+  constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,
+    public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
+    private nav: NavController) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -38,6 +39,16 @@ export class CoursesPage implements OnInit {
   }
   ionViewWillEnter(){
     this.getCourseDetails(this.id);
+  }
+  goToUser(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          page: '/details/courses/',
+          id: this.course.user_id,
+          courseid:this.id
+      }
+    };
+    this.nav.navigateForward('/details/users',navigationExtras);
   }
   getCourseDetails(id: any) {
     this.course = null;
@@ -83,9 +94,8 @@ export class CoursesPage implements OnInit {
   private async playerPause(data: any): Promise<void> {
     console.log(`Event jeepCapVideoPlayerPause ${data}`);
     return;
-}
+  }
   async playYoutubeVideo(url){
-   
     await this.videoPlayer.addListener('jeepCapVideoPlayerPlay', (data: any) => this.playerPlay(data), false);
     await this.videoPlayer.addListener('jeepCapVideoPlayerPause', (data: any) => this.playerPause(data), false);
     await this.videoPlayer.addListener('jeepCapVideoPlayerEnded', (data: any) => this.playerEnd(data), false);
@@ -154,5 +164,6 @@ export class CoursesPage implements OnInit {
 
     await alert.present();
   }
+ 
 }
 
