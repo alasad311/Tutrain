@@ -1,0 +1,21 @@
+ion-content {
+    ion-item {
+      border: 1px solid #92949c2a;
+      border-radius: 10px;
+      margin-top: 16px;
+      ion-input {
+        --padding-start: 10px;
+      }
+    }
+}
+ion-footer {
+    ion-toolbar {
+      padding: 10px;
+      --border-width: 0;
+      ion-button {
+        height: 50px;
+        font-size: 18px;
+      }
+    }
+  }
+  

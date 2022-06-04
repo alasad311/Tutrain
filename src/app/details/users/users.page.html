@@ -12,6 +12,9 @@
 <ion-content>
     <div *ngIf="user">
       <div class="img" [style.backgroundImage]="'url('+user.picture+')'">
+        <div class="icon">
+          <ion-icon class="back" name="alert-circle-outline" (click)="reportTutor()"></ion-icon>
+        </div>
       </div>
       <div class="main-content">
         <div class="uper_div">
@@ -21,7 +24,7 @@
           </div>
           <div class="item">
             <ion-label class="text"> {{user.governorate}}, {{user.wilayat}}, {{user.locality}}</ion-label>
-            <!-- <ion-label class="distance">1 km away</ion-label> -->
+            <!-- <ion-label class="distance"></ion-label> -->
           </div>
           <div class="line"></div>
           <div>
@@ -37,16 +40,18 @@
               <ion-label>About</ion-label>
             </div>
             <div class="text">
-              <ion-label>{{user.about}}
-              </ion-label>
+              <ion-label>{{user.about}}</ion-label>
             </div>
           </div>
-         
-          <ion-item class="ion-no-padding" lines="none">
-            <ion-label class="text ion-text-center">Report {{user.fullname}}</ion-label>
-          </ion-item>
         </div>
       </div>
     </div>
   </ion-content>
-  
+<ion-footer  *ngIf="user">
+  <ion-toolbar>
+      <ion-item lines="none" (click)="bookTutor()" [disabled]="isDisablied">
+        <ion-label>Book</ion-label>
+        <ion-label slot="end">{{user.fullname}}</ion-label>
+      </ion-item>
+  </ion-toolbar>
+</ion-footer>

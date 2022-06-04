@@ -31,8 +31,7 @@ export class PaymentPage implements OnInit {
     {
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: 'Please wait...',
-        duration: 2000
+        message: 'Please wait...'
       });
       await loading.present();
       const user = await this.storage.get('user');
@@ -44,7 +43,7 @@ export class PaymentPage implements OnInit {
       };
       this.fetchServices.updateOrder(data).then(async (response) => {
         const json = JSON.parse(response.data).response;
-        await loading.onDidDismiss();
+        await loading.dismiss();
         if(json.id){
           this.alertMessage("Payment","You have paid "+ (this.course.price+2).toFixed(3));
         }

@@ -1,0 +1,21 @@
+<ion-header mode="md" class="ion-no-border">
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item lines="none">
+    <ion-label>Date</ion-label>
+    <ion-input type="date" placeholder="Add schedule"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label>Time</ion-label>
+    <ion-input type="time" placeholder="Add time"></ion-input>
+  </ion-item>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+      <ion-button (click)="resolveSlot()" expand="block" shape="round">
+        Book
+      </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -66,7 +66,7 @@ ion-header {
         border-radius: 100%;
         opacity: 0.6;
         z-index: 9999;
-        left: 14px;
+        right: 14px;
         top: 20px;
         position: absolute;
         font-size: 22px;
@@ -129,4 +129,25 @@ ion-header {
       font-family: "medium";
     }
   }
-  
+  ion-footer {
+    ion-toolbar {
+      padding: 10px;
+      --border-style: 0px;
+      ion-item {
+        --background: var(--ion-color-primary);
+        --border-radius: 10px;
+        --padding-start: 30px;
+        --padding-end: 24px;
+        ion-icon {
+          font-size: 26px;
+        }
+        ion-label {
+          font-size: 18px;
+          font-family: "medium";
+          color: white;
+          margin-top: 16px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }

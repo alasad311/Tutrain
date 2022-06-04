@@ -46,6 +46,14 @@ const routes: Routes = [
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
   },
+  {
+    path: 'report-user',
+    loadChildren: () => import('./report-user/report-user.module').then( m => m.ReportUserPageModule)
+  },
+  {
+    path: 'book-tutor',
+    loadChildren: () => import('./book-tutor/book-tutor.module').then( m => m.BookTutorPageModule)
+  },
 
 
 ];
