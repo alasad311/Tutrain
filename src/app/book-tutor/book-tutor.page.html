@@ -2,15 +2,20 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item lines="none">
+  <!-- <ion-item lines="none">
     <ion-label>Date</ion-label>
-    <ion-input type="date" placeholder="Add schedule"></ion-input>
+    <ion-input type="date" [(ngModel)]="bookingDate" id="dateTest" placeholder="Add schedule" value="2022-02-20" min="2017-04-01" max="2017-04-30"></ion-input>
   </ion-item>
 
   <ion-item lines="none">
     <ion-label>Time</ion-label>
     <ion-input type="time" placeholder="Add time"></ion-input>
-  </ion-item>
+  </ion-item> -->
+  <div class="title date">
+    <ion-datetime locale="en-GB" hour-cycle="h23" minuteValues="0"></ion-datetime>
+  </div>
+  
+
 </ion-content>
 <ion-footer>
   <ion-toolbar>
