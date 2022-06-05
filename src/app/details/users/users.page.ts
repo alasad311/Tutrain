@@ -94,8 +94,8 @@ export class UsersPage implements OnInit {
     //lets add the report to the DB
     const modal = await this.modalController.create({
       component: BookTutorPage,
-      initialBreakpoint: 0.5,
-      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.6,
+      breakpoints: [0, 0.6, 1],
       presentingElement: await this.modalController.getTop(),
       componentProps: {
         'tutorID': this.id,

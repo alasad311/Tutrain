@@ -15,7 +15,8 @@ export class BookTutorPage implements OnInit {
     this.datetime.hourValues = "15,16,17,18,19";
     if(time > 18)
     {
-      this.datetime.max = this.maxDate;
+      let maxAntherDay = new Date(new Date().getTime() + (86400000*2)).toISOString().slice(0, 10);
+      this.datetime.max = maxAntherDay;
       this.datetime.min = this.maxDate;
       this.datetime.value = this.maxDate+"T15:00:00.136Z";
     }else
