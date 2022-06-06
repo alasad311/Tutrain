@@ -1,8 +1,16 @@
-<ion-header mode="md" class="ion-no-border">
-</ion-header>
+<ion-header mode="md">
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="end" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="close-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>{{tutorName}}</ion-title>
+        <ion-chip slot="start" class="remove-background">
 
+        </ion-chip>
+    </ion-toolbar>
+</ion-header>
 <ion-content class="ion-padding">
-  <!-- <ion-item lines="none">
+    <!-- <ion-item lines="none">
     <ion-label>Date</ion-label>
     <ion-input type="date" [(ngModel)]="bookingDate" id="dateTest" placeholder="Add schedule" value="2022-02-20" min="2017-04-01" max="2017-04-30"></ion-input>
   </ion-item>
@@ -11,14 +19,20 @@
     <ion-label>Time</ion-label>
     <ion-input type="time" placeholder="Add time"></ion-input>
   </ion-item> -->
-  <div class="title date">
-    <ion-datetime locale="en-GB" hour-cycle="h23" minuteValues="0"></ion-datetime>
-  </div>
-  
-  <ion-toolbar>
-    <ion-button (click)="resolveSlot()" expand="block" shape="round">
-      Book
-    </ion-button>
-  </ion-toolbar>
+    <div class="title date">
+        <ion-datetime locale="en-GB" hour-cycle="h23" minuteValues="0,30"></ion-datetime>
+    </div>
+    <ion-item lines="none">
+        <ion-label>Duration</ion-label>
+        <ion-select interface="popover" value="1">
+            <!-- <ion-select-option value="30">30 Min</ion-select-option> -->
+            <ion-select-option value="1">1 Hour</ion-select-option>
+            <ion-select-option value="2">2 Hours</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-toolbar>
+        <ion-button (click)="placeOrder()" expand="block" shape="round" [disabled]="isDisablied">
+            Book
+        </ion-button>
+    </ion-toolbar>
 </ion-content>
-

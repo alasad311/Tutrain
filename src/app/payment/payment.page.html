@@ -9,8 +9,7 @@
         </ion-chip>
     </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-
+<ion-content class="ion-padding" *ngIf="course">
     <div class="brand">
         <div class="bg_image back_image" [style.backgroundImage]="'url('+course.img+')'"></div>
         <div class="food_detail">
@@ -25,33 +24,47 @@
             </div>
         </div>
     </div>
-    <!-- 
-  <ion-item lines="none">
-      <img src="assets/images/promo.png" alt="">
-      <ion-label>Add promo coden</ion-label>
-      <ion-icon name="chevron-forward-outline"></ion-icon>
-  </ion-item> -->
-
     <div class="item_total">
         <ion-label>Item total <span>{{course.price | number : '1.3-3'}}</span></ion-label>
         <ion-label>Service fees: <span>2.000</span></ion-label>
         <ion-label class="color_lbl">Delivery <span>Online</span></ion-label>
     </div>
-
-
     <div class="fare">
         <ion-label>Total</ion-label>
         <ion-label>{{(course.price+2.000) | number : '1.3-3'}}</ion-label>
     </div>
-
 </ion-content>
-
+<ion-content class="ion-padding" *ngIf="tutor">
+    <div class="brand">
+        <div class="bg_image back_image" [style.backgroundImage]="'url('+tutor.picture+')'"></div>
+        <div class="food_detail">
+            <div class="name">
+                <ion-label>Session Duration {{durationSelect === 1 ? durationSelect+" Hours" : durationSelect+" Hour"}}</ion-label>
+            </div>
+            <div class="name">
+                <ion-label>By: {{tutor.fullname}}</ion-label>
+            </div>
+            <div class="cart_price">
+                <ion-label>{{(tutor.hour_price * durationSelect) | number : '1.3-3'}}</ion-label>
+            </div>
+        </div>
+    </div>
+    <div class="item_total">
+        <ion-label>Item total <span>{{(tutor.hour_price * durationSelect) | number : '1.3-3'}}</span></ion-label>
+        <ion-label>Service fees: <span>2.000</span></ion-label>
+        <ion-label class="color_lbl">Date and Time <span>{{datetimeSelect}}</span></ion-label>
+    </div>
+    <div class="fare">
+        <ion-label>Total</ion-label>
+        <ion-label>{{((tutor.hour_price * durationSelect) +2.000) | number : '1.3-3'}}</ion-label>
+    </div>
+</ion-content>
 <ion-footer>
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckout()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
             <ion-label>Checkout</ion-label>
-            <ion-label slot="end">{{(course.price+2.000) | number : '1.3-3'}}</ion-label>
+            <ion-label slot="end">{{((tutor.hour_price * durationSelect)+2.000) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
 </ion-footer>

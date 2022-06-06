@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,NavigationExtras,Router } from '@angular/router';
 import { AlertController, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { FetchService } from 'src/app/service/api/fetch.service';
-import { ReportUserPage } from '../../report-user/report-user.page'
-import { BookTutorPage } from "../../book-tutor/book-tutor.page"
+import { ReportUserPage } from '../../report-user/report-user.page';
+import { BookTutorPage } from '../../book-tutor/book-tutor.page';
+import { PaymentPage } from "../../payment/payment.page";
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -15,7 +16,9 @@ export class UsersPage implements OnInit {
   page: any;
   courseID: any;
   user: any;
-  constructor(private router: Router,private routerOutlet: IonRouterOutlet,public modalController: ModalController,private route: ActivatedRoute,private nav: NavController,private fetch: FetchService,public alertController: AlertController) { }
+  constructor(private router: Router,public modalController: ModalController,private routerOutlet: IonRouterOutlet,
+    private route: ActivatedRoute,private nav: NavController,private fetch: FetchService,public alertController: AlertController,
+    ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -37,7 +40,7 @@ export class UsersPage implements OnInit {
       this.user = JSON.parse(response.data).response[0];
 
     }).catch((error) => {
-      
+
     });
   }
   goBackHome(){
@@ -63,8 +66,8 @@ export class UsersPage implements OnInit {
       breakpoints: [0, 0.5, 1],
       presentingElement: await this.modalController.getTop(),
       componentProps: {
-        'tutorID': this.id,
-        'tutorName': this.user.fullname,
+        tutorID: this.id,
+        tutorName: this.user.fullname,
       }
     });
     modal.onDidDismiss()
@@ -72,10 +75,10 @@ export class UsersPage implements OnInit {
        const response = data.data.isReported; // Here's your selected user!
       if(response === true)
       {
-        this.alertMessage("Report","You have successfully reported "+ this.user.fullname);
+        this.alertMessage('Report','You have successfully reported '+ this.user.fullname);
       }else
       {
-        this.alertMessage("Report","An error occured while reporting tutor please try again later");
+        this.alertMessage('Report','An error occured while reporting tutor please try again later');
       }
     });
     await modal.present();
@@ -83,36 +86,36 @@ export class UsersPage implements OnInit {
   async alertMessage(header,message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: header,
-      message: message,
+      header,
+      message,
       buttons: ['OK']
     });
 
     await alert.present();
   }
   async bookTutor(){
-    //lets add the report to the DB
+    //lets add the order to the DB
     const modal = await this.modalController.create({
       component: BookTutorPage,
-      initialBreakpoint: 0.6,
-      breakpoints: [0, 0.6, 1],
+      initialBreakpoint: 0.7,
+      breakpoints: [0, 0.7, 1],
       presentingElement: await this.modalController.getTop(),
       componentProps: {
-        'tutorID': this.id,
-        'tutorName': this.user.fullname,
+        tutorName: this.user.fullname,
       }
     });
     modal.onDidDismiss()
-    .then((data) => {
-       const response = data.data.isReported; // Here's your selected user!
-      if(response === true)
-      {
-        this.alertMessage("Report","You have successfully reported "+ this.user.fullname);
-      }else
-      {
-        this.alertMessage("Report","An error occured while reporting tutor please try again later");
-      }
+    .then(async (data) => {
+      data.data.tutor = this.user;
+      const modal = await this.modalController.create({
+        component: PaymentPage,
+        swipeToClose: true,
+        presentingElement: this.routerOutlet.nativeEl,
+        componentProps: data.data
+      });
+      await modal.present();
     });
     await modal.present();
   }
 }
+

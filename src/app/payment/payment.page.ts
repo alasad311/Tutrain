@@ -10,6 +10,9 @@ import { StorageService } from '../service/storage/storage.service';
 })
 export class PaymentPage implements OnInit {
   @Input() course: any;
+  @Input() tutor: any;
+  @Input() durationSelect: any;
+  @Input() datetimeSelect: any;
   isDisablied = false;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController) { }
