@@ -148,7 +148,6 @@ ion-content {
       }
     }
   }
-  
   ion-footer {
     ion-toolbar {
       padding: 10px;
@@ -278,4 +277,17 @@ ion-content {
             }
         }
     }
+}
+.heading_lbl {
+  font-family: "medium";
+  margin-bottom: 16px;
+}
+.border_div {
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

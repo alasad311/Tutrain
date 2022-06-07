@@ -18,6 +18,7 @@ export class BookTutorPage implements OnInit {
   ngOnInit() {
     const time = new Date().getHours();
     this.datetime.hourValues = '15,16,17,18,19';
+    
     if(time > 18)
     {
       const maxAntherDay = new Date(new Date().getTime() + (86400000*2)).toISOString().slice(0, 10);

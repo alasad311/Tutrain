@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,NavigationExtras,Router } from '@angular/router';
-import { AlertController, IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { FetchService } from 'src/app/service/api/fetch.service';
 import { ReportUserPage } from '../../report-user/report-user.page';
 import { BookTutorPage } from '../../book-tutor/book-tutor.page';
-import { PaymentPage } from "../../payment/payment.page";
+import { StorageService } from 'src/app/service/storage/storage.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -16,7 +16,7 @@ export class UsersPage implements OnInit {
   page: any;
   courseID: any;
   user: any;
-  constructor(private router: Router,public modalController: ModalController,private routerOutlet: IonRouterOutlet,
+  constructor(private storage: StorageService,public loadingController: LoadingController,private router: Router,public modalController: ModalController,private routerOutlet: IonRouterOutlet,
     private route: ActivatedRoute,private nav: NavController,private fetch: FetchService,public alertController: AlertController,
     ) { }
 
@@ -106,16 +106,38 @@ export class UsersPage implements OnInit {
     });
     modal.onDidDismiss()
     .then(async (data) => {
-      data.data.tutor = this.user;
-      const modal = await this.modalController.create({
-        component: PaymentPage,
-        swipeToClose: true,
-        presentingElement: this.routerOutlet.nativeEl,
-        componentProps: data.data
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Please wait...'
       });
-      await modal.present();
+      await loading.present();
+      const loginUser = await this.storage.get('user');
+      const date = new Date(data.data.datetimeSelect);
+      let hour = date.getUTCHours();
+      let min = date.getUTCMinutes().toString().padStart(2, '0');
+      let yourDate = new Date(date.getTime() + (1000 * 60 * 60 * data.data.durationSelect));
+      const datas = {
+        user_id: loginUser.user_id,
+        tutor_id : this.user.user_id,
+        duration : data.data.durationSelect,
+        slot: date.getFullYear() + "-" + (1 + date.getMonth()).toString().padStart(2, '0') + "-"+date.getDate().toString().padStart(2, '0'),
+        timefrom:  hour + ":" + min,
+        timeto: yourDate.getUTCHours() + ":" + min
+      };
+      this.fetch.createSlot(datas).then(async (response) => {
+        const json = JSON.parse(response.data).response;
+        if(json.id){
+          await loading.dismiss();
+          this.alertMessage("Booking","Your request is under review by "+ this.user.fullname);
+        }else if(json.results === "duplicate"){
+          await loading.dismiss();
+          this.alertMessage("Duplicate","You have already requested and its under review.");
+        }else{
+          await loading.dismiss();
+          this.alertMessage("Error","Couldn't fullfill your request at the moment please try again later");
+        }
+      });
     });
     await modal.present();
-  }
+  } 
 }
-
