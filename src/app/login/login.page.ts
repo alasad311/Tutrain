@@ -5,6 +5,8 @@ import { UsersService } from './../service/api/users.service';
 import { StorageService } from './../service/storage/storage.service';
 import { AlertController } from '@ionic/angular';
 import { EventService } from ".././service/event.service"
+import { PushNotifications,Token } from '@capacitor/push-notifications';
+import { FetchService } from '../service/api/fetch.service';
 
 @Component({
   selector: 'app-login',
@@ -17,9 +19,15 @@ export class LoginPage implements OnInit {
   public isDisablied = false;
   public email;
   public password;
-  constructor(private router: Router,private event:EventService, private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
+  pushToken: any;
+  constructor(private fetch:FetchService,private router: Router,private event:EventService, private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    PushNotifications.addListener('registration', (token: Token) => {
+      this.pushToken = token.value
+     })
+    
+  }
   goToHome() {
     this.isDisablied = true;
     if(this.email && this.password)
@@ -30,23 +38,42 @@ export class LoginPage implements OnInit {
       }
       this.userApi.siginUser(data).then(async (response) => {
         var json = JSON.parse(response.data);
-        console.log(json)
         if(json.response.results === false)
         {
           this.alertMessage("Error: #11","Email or password incorrect, did you forget your password? <a href='/forgot'>click here </a>","","");
           this.isDisablied = false;
         }
         else if(json.response.results === true && json.response.is_confirmed === true){
-         await this.storage.set("user",json.response.user[0])
-         this.event.publishSomeData(json.response.user[0])
-          this.router.navigate(['/home']);
+          if(this.pushToken === json.response.user[0].pushtoken)
+          {
+            await this.storage.set("user",json.response.user[0])
+            this.event.publishSomeData(json.response.user[0])
+             this.router.navigate(['/home']);
+          }else{
+            this.fetch.updateUserToken({pushtoken: this.pushToken,user_id:json.response.user[0].user_id}).then(async (response) => {
+              var json = JSON.parse(response.data);
+              await this.storage.set("user",json.response[0])
+              this.event.publishSomeData(json.response[0])
+              this.router.navigate(['/home']);
+            })
+          }
         }else if(json.response.results === true && json.response.is_confirmed === false)
         {
-          await this.storage.set("user",json.response.user[0])
-          this.alertMessage("Error: #9","Your email has been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
-            this.router.navigate(['/home']);
-          });
-            
+          if(this.pushToken === json.response.user[0].pushtoken)
+          {
+            await this.storage.set("user",json.response.user[0])
+            this.alertMessage("Error: #9","Your email has been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
+              this.router.navigate(['/home']);
+            });
+          }else{
+            this.fetch.updateUserToken({pushtoken: this.pushToken,user_id:json.response.user[0].user_id}).then(async (response) => {
+              var json = JSON.parse(response.data);
+              await this.storage.set("user",json.response[0])
+              this.alertMessage("Error: #9","Your email has been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
+                this.router.navigate(['/home']);
+              });
+            })
+          }
           this.isDisablied = false;
         }
       }).catch((error) => {

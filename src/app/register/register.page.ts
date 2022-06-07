@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UsersService } from './../service/api/users.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { ActionPerformed,PushNotificationSchema,PushNotifications,Token } from '@capacitor/push-notifications';
+import { PushNotifications,Token } from '@capacitor/push-notifications';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',

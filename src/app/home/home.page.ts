@@ -4,7 +4,9 @@ import { AuthGuardService } from './../service/Auth/auth-guard.service';
 import { StorageService } from './../service/storage/storage.service';
 import { FetchService } from './../service/api/fetch.service';
 import { UtilService } from './../service/util.service';
-import { MenuController, NavController,ModalController  } from '@ionic/angular';
+import { MenuController, NavController,ModalController, AlertController  } from '@ionic/angular';
+import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -61,7 +63,9 @@ export class HomePage implements OnInit {
 
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
-    private modalCtrl: ModalController,private util: UtilService ) { }
+    private modalCtrl: ModalController,private util: UtilService,public alertController: AlertController ) {
+     
+     }
 
   async ionViewWillEnter() {
       const user = await this.storage.get('user');
@@ -94,6 +98,16 @@ export class HomePage implements OnInit {
   }
   async ngOnInit() {
     this.menuCtrl.enable(true);
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        //let navigate to requested slot
+        let response = JSON.parse(JSON.stringify(notification)).notification.data;
+        this.alertMessage("New Request",response.userFullName +" has requested a session on "+ response.slotDate + " from : "+response.timeFrom+" to: "+ response.timeTo)
+        //JSON.parse(JSON.stringify(notification)).notification.data.bookID
+        
+      }
+    );
   }
   gotToAd(link){
     window.open(link, '_system');
@@ -104,5 +118,34 @@ export class HomePage implements OnInit {
     //   swipeToClose: true,
     // });
     // await modal.present();
+  }
+  async alertMessage(header,message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header,
+      message,
+      buttons: [
+        {
+          text: 'Accept',
+          handler: () => {
+            console.log("Accepted");
+          }
+        },
+        {
+          text: 'Reject',
+          handler: () => {
+            console.log("Rejected");
+          }
+        },
+        {
+          text: 'Later',
+          handler: () => {
+            console.log("Later");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

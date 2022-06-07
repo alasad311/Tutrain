@@ -12,6 +12,9 @@ ion-header {
     }
   }
 }
+.alert-button-group .alert-button-group-vertical {
+  flex-direction: row;
+}
 .icon-remove-margin{
   margin: 0px;
 }
