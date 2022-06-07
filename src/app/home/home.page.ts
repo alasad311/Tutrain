@@ -92,7 +92,7 @@ export class HomePage implements OnInit {
       event.target.complete();
     });
   }
-  ngOnInit() {
+  async ngOnInit() {
     this.menuCtrl.enable(true);
   }
   gotToAd(link){

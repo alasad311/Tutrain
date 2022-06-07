@@ -12,6 +12,7 @@ import { AuthGuardService } from './service/Auth/auth-guard.service'
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

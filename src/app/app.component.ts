@@ -9,6 +9,7 @@ import { EventService } from "./service/event.service"
 import { App as CapacitorApp } from '@capacitor/app';
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+import { PushNotifications } from '@capacitor/push-notifications';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -52,7 +53,14 @@ export class AppComponent {
     const user = await this.storage.get("user");
      
     this.platform.ready().then((readySource) => {
-      
+      PushNotifications.requestPermissions().then(result => {
+        if (result.receive === 'granted') {
+          // Register with Apple / Google to receive push via APNS/FCM
+          PushNotifications.register();
+        } else {
+          // Show some error
+        }
+      });
       if (user) {
         this.router.navigate(['home']);
         this.user = user;
@@ -62,6 +70,8 @@ export class AppComponent {
         this.menuCtrl.enable(false);
         this.router.navigate(['welcome']);
       }
+
+
     });
   }
   set userDetails(user){

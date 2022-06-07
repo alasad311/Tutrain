@@ -16,7 +16,8 @@ export class UsersPage implements OnInit {
   page: any;
   courseID: any;
   user: any;
-  constructor(private storage: StorageService,public loadingController: LoadingController,private router: Router,public modalController: ModalController,private routerOutlet: IonRouterOutlet,
+  constructor(private storage: StorageService,public loadingController: LoadingController,private router: Router,
+    public modalController: ModalController,private routerOutlet: IonRouterOutlet,
     private route: ActivatedRoute,private nav: NavController,private fetch: FetchService,public alertController: AlertController,
     ) { }
 

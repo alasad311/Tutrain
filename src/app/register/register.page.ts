@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from './../service/api/users.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-
+import { ActionPerformed,PushNotificationSchema,PushNotifications,Token } from '@capacitor/push-notifications';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -15,16 +15,20 @@ export class RegisterPage implements OnInit {
   public viewPassword_2 = 'eye-outline';
   public showPassword_1 = false;
   public showPassword_2 = false;
-  public type = "student";
+  public type = 'student';
   isSubmitted = false;
   isDisablied = false;
+  pushToken: any;
   userRegistration: FormGroup;
   public confirm_password;
-  internationalCode = "+968";
-  constructor(private router: Router,private userApi: UsersService,public formBuilder: FormBuilder,public alertController: AlertController) { 
-    
-  }  
+  internationalCode = '+968';
+  constructor(private router: Router,private userApi: UsersService,public formBuilder: FormBuilder,public alertController: AlertController) {
+
+  }
   ngOnInit() {
+    PushNotifications.addListener('registration', (token: Token) => {
+      this.pushToken = token.value;
+     });
     this.userRegistration = this.formBuilder.group({
       fullname: ['', [Validators.required, Validators.minLength(2)]],
       country: ['', Validators.required],
@@ -37,10 +41,9 @@ export class RegisterPage implements OnInit {
     },
     {validator: RegisterPage.confirmed('password','confirm_password')}
     );
-    this.userRegistration.controls['type'].setValue('student');
+    this.userRegistration.controls.type.setValue('student');
   }
-  static confirmed = (controlName: string, matchingControlName: string) => {
-    return (control: AbstractControl): ValidationErrors | null => {
+  static confirmed = (controlName: string, matchingControlName: string) => (control: AbstractControl): ValidationErrors | null => {
         const input = control.get(controlName);
         const matchingInput = control.get(matchingControlName);
 
@@ -60,7 +63,6 @@ export class RegisterPage implements OnInit {
             return null;
         }
     };
-  }
   goToLogin(){
     this.router.navigate(['/login']);
   }
@@ -71,24 +73,25 @@ export class RegisterPage implements OnInit {
     return this.userRegistration.controls;
   }
   getSelectCountry(e){
-    this.flagImage = '/assets/flag/'+e.target.value+'.svg'
-    
-    if(e.target.value == "om"){
-      this.internationalCode = "+968";
-    }else if(e.target.value == "kw"){
-      this.internationalCode = "+965";
-    }else if(e.target.value == "sa"){
-      this.internationalCode = "+966";
-    }else if(e.target.value == "qa"){
-      this.internationalCode = "+974";
-    }else if(e.target.value == "iq"){
-      this.internationalCode = "+964";
-    }else if(e.target.value == "bh"){
-      this.internationalCode = "+973";
-    }else if(e.target.value == "ae"){
-      this.internationalCode = "+971";
+    this.flagImage = '/assets/flag/'+e.target.value+'.svg';
+
+    if(e.target.value == 'om'){
+      this.internationalCode = '+968';
+    }else if(e.target.value == 'kw'){
+      this.internationalCode = '+965';
+    }else if(e.target.value == 'sa'){
+      this.internationalCode = '+966';
+    }else if(e.target.value == 'qa'){
+      this.internationalCode = '+974';
+    }else if(e.target.value == 'iq'){
+      this.internationalCode = '+964';
+    }else if(e.target.value == 'bh'){
+      this.internationalCode = '+973';
+    }else if(e.target.value == 'ae'){
+      this.internationalCode = '+971';
     }
   }
+
   async createAccount(){
     this.isSubmitted = true;
     this.isDisablied = true;
@@ -96,31 +99,35 @@ export class RegisterPage implements OnInit {
       this.isDisablied = false;
       return false;
     } else {
-      var data = JSON.stringify(this.userRegistration.value);
+      let data = JSON.parse(JSON.stringify(this.userRegistration.value));
+      
+      data.pushtoken = this.pushToken;
+      data = JSON.stringify(data);
+      console.log(data);
       this.userApi.createUser(data).then((response) => {
-        var json = JSON.parse(response.data);
-        if(json.code === "ER_DUP_ENTRY")
+        const json = JSON.parse(response.data);
+        if(json.code === 'ER_DUP_ENTRY')
         {
-          this.alertMessage("Error: #12","Email exisits, did you forget your password? <a href='/forgot'>click here </a>","");
+          this.alertMessage('Error: #12','Email exisits, did you forget your password? <a href=\'/forgot\'>click here </a>','');
           this.isDisablied = false;
         }
         else if(json.id){
-          this.alertMessage("Welcome","Your account has been created <br /> check your email to confirm your account","login");
+          this.alertMessage('Welcome','Your account has been created <br /> check your email to confirm your account','login');
         }
       }).catch((error) => {
-        this.alertMessage("Error: #1","Service seems offline or unavailable at the moment","");
+        this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
         this.isDisablied = false;
      });
 
-      
+
     }
-  
+
   }
   async alertMessage(header,message,location) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: header,
-      message: message,
+      header,
+      message,
       buttons: [
         {
           text: 'ok',
@@ -138,29 +145,29 @@ export class RegisterPage implements OnInit {
     await alert.present();
   }
   setHiddenValue(type){
-    this.userRegistration.controls['type'].setValue(type)
+    this.userRegistration.controls.type.setValue(type);
   }
   togglePassword(id){
     if(id == 1)
     {
       if(this.viewPassword_1 == 'eye-off-outline')
       {
-        this.viewPassword_1 = 'eye-outline'
+        this.viewPassword_1 = 'eye-outline';
         this.showPassword_1 = false;
       }else
       {
-        this.viewPassword_1 = 'eye-off-outline'
+        this.viewPassword_1 = 'eye-off-outline';
         this.showPassword_1 = true;
       }
     }else if(id == 2)
     {
       if(this.viewPassword_2 == 'eye-off-outline')
       {
-        this.viewPassword_2 = 'eye-outline'
+        this.viewPassword_2 = 'eye-outline';
         this.showPassword_2 = false;
       }else
       {
-        this.viewPassword_2 = 'eye-off-outline'
+        this.viewPassword_2 = 'eye-off-outline';
         this.showPassword_2 = true;
 
       }
