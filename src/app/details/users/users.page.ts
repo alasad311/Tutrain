@@ -107,38 +107,79 @@ export class UsersPage implements OnInit {
     });
     modal.onDidDismiss()
     .then(async (data) => {
-      const loading = await this.loadingController.create({
-        cssClass: 'my-custom-class',
-        message: 'Please wait...'
-      });
-      await loading.present();
-      const loginUser = await this.storage.get('user');
-      const date = new Date(data.data.datetimeSelect);
-      let hour = date.getUTCHours();
-      let min = date.getUTCMinutes().toString().padStart(2, '0');
-      let yourDate = new Date(date.getTime() + (1000 * 60 * 60 * data.data.durationSelect));
-      const datas = {
-        user_id: loginUser.user_id,
-        tutor_id : this.user.user_id,
-        duration : data.data.durationSelect,
-        slot: date.getFullYear() + "-" + (1 + date.getMonth()).toString().padStart(2, '0') + "-"+date.getDate().toString().padStart(2, '0'),
-        timefrom:  hour + ":" + min,
-        timeto: yourDate.getUTCHours() + ":" + min
-      };
-      this.fetch.createSlot(datas).then(async (response) => {
-        const json = JSON.parse(response.data).response;
-        if(json.id){
-          await loading.dismiss();
-          this.alertMessage("Booking","Your request is under review by "+ this.user.fullname);
-        }else if(json.results === "duplicate"){
-          await loading.dismiss();
-          this.alertMessage("Duplicate","You have already requested and its under review.");
-        }else{
-          await loading.dismiss();
-          this.alertMessage("Error","Couldn't fullfill your request at the moment please try again later");
-        }
-      });
+      if(data.data.confirm)
+      {
+        const loading = await this.loadingController.create({
+          cssClass: 'my-custom-class',
+          message: 'Please wait...'
+        });
+        await loading.present();
+        const loginUser = await this.storage.get('user');
+        const date = new Date(data.data.datetimeSelect);
+        let hour = date.getUTCHours();
+        let min = date.getUTCMinutes().toString().padStart(2, '0');
+        let yourDate = new Date(date.getTime() + (1000 * 60 * 60 * data.data.durationSelect));
+        const datas = {
+          user_id: loginUser.user_id,
+          tutor_id : this.user.user_id,
+          duration : data.data.durationSelect,
+          slot: date.getFullYear() + "-" + (1 + date.getMonth()).toString().padStart(2, '0') + "-"+date.getDate().toString().padStart(2, '0'),
+          timefrom:  hour + ":" + min,
+          timeto: yourDate.getUTCHours() + ":" + min
+        };
+        this.fetch.createSlot(datas).then(async (response) => {
+          const json = JSON.parse(response.data).response;
+          if(json.id){
+            await loading.dismiss();
+            this.alertMessage("Booking","Your request is under review by "+ this.user.fullname);
+          }else if(json.results === "duplicate"){
+            await loading.dismiss();
+            this.alertMessage("Duplicate","You have already requested and its under review.");
+          }else{
+            await loading.dismiss();
+            this.alertMessage("Error","Couldn't fullfill your request at the moment please try again later");
+          }
+        });
+      }
     });
     await modal.present();
   } 
+  dialNumber(){
+    if(this.user.country == 'om'){
+      window.open('tel:+968'+this.user.phone, '_system');
+    }else if(this.user.country == 'kw'){
+      window.open('tel:+965'+this.user.phone, '_system');
+    }else if(this.user.country == 'sa'){
+      window.open('tel:+966'+this.user.phone, '_system');
+    }else if(this.user.country == 'qa'){
+      window.open('tel:+974'+this.user.phone, '_system');
+    }else if(this.user.country == 'iq'){
+      window.open('tel:+964'+this.user.phone, '_system');
+    }else if(this.user.country == 'bh'){
+      window.open('tel:+973'+this.user.phone, '_system');
+    }else if(this.user.country == 'ae'){
+      window.open('tel:+971'+this.user.phone, '_system');
+    }
+  }
+  sendEmail(){
+    window.open('mailto:'+this.user.email, '_system');
+  }
+  sendWhatapp(){
+    if(this.user.country == 'om'){
+      window.open('https://api.whatsapp.com/send?phone=+968'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }else if(this.user.country == 'kw'){
+      window.open('https://api.whatsapp.com/send?phone=+965'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }else if(this.user.country == 'sa'){
+      window.open('https://api.whatsapp.com/send?phone=+966'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }else if(this.user.country == 'qa'){
+      window.open('https://api.whatsapp.com/send?phone=+974'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }else if(this.user.country == 'iq'){
+      window.open('https://api.whatsapp.com/send?phone=+964'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }else if(this.user.country == 'bh'){
+      window.open('https://api.whatsapp.com/send?phone=+973'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }else if(this.user.country == 'ae'){
+      window.open('https://api.whatsapp.com/send?phone=+971'+this.user.phone+'&text=Hey%20there,%20found%20your%20user%20on%20Tutrain%20App.%20I%20need%20your%20help?', '_system');
+    }
+
+  }
 }

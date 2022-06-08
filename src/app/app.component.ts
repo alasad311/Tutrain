@@ -9,7 +9,7 @@ import { EventService } from "./service/event.service"
 import { App as CapacitorApp } from '@capacitor/app';
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
-import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
+import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-root',
@@ -50,6 +50,16 @@ export class AppComponent {
         //let navigate to requested slot
         console.log(JSON.stringify(notification))
         let response = JSON.parse(JSON.stringify(notification)).data;
+        this.alertMessage("New Request",response.userFullName +" has requested a session on "+ response.slotDate + " from : "+response.timeFrom+" to: "+ response.timeTo)
+        //JSON.parse(JSON.stringify(notification)).notification.data.bookID
+        
+      }
+    );
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        //let navigate to requested slot
+        let response = JSON.parse(JSON.stringify(notification)).notification.data;
         this.alertMessage("New Request",response.userFullName +" has requested a session on "+ response.slotDate + " from : "+response.timeFrom+" to: "+ response.timeTo)
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
         
@@ -99,24 +109,27 @@ export class AppComponent {
   }
   async alertMessage(header,message) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
       header,
       message,
+      backdropDismiss:false,
       buttons: [
         {
           text: 'Accept',
+          cssClass:'test',
           handler: () => {
             console.log("Accepted");
           }
         },
         {
           text: 'Reject',
+          cssClass:'test',
           handler: () => {
             console.log("Rejected");
           }
         },
         {
           text: 'Later',
+          cssClass:'test',
           handler: () => {
             console.log("Later");
           }

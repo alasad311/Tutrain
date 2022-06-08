@@ -12,9 +12,12 @@
 <ion-content>
     <div *ngIf="user">
       <div class="img" [style.backgroundImage]="'url('+user.picture+')'">
-        <div class="icon">
-          <ion-icon class="back" name="alert-circle-outline" (click)="reportTutor()"></ion-icon>
-        </div>
+        <ul>
+          <li class="icon"><ion-icon class="back" name="alert-circle-outline" (click)="reportTutor()"></ion-icon></li>
+          <li class="phone" *ngIf="user.is_phone"><ion-icon class="back" name="call-outline" (click)="dialNumber()"></ion-icon></li>
+          <li class="email"  *ngIf="user.is_email"> <ion-icon class="back" name="send-outline" (click)="sendEmail()"></ion-icon></li>
+          <li class="whatsapp"  *ngIf="user.is_whatapp"><ion-icon class="back" name="logo-whatsapp" (click)="sendWhatapp()"></ion-icon></li>
+        </ul>
       </div>
       <div class="main-content">
         <div class="uper_div">

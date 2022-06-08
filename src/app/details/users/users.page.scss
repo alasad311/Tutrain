@@ -12,6 +12,10 @@ ion-header {
       }
     }
   }
+ul{
+  padding-top: 1px;
+  margin-block-start:0px;
+}
 .icon-remove-margin {
     margin: 0px;
 }
@@ -60,6 +64,9 @@ ion-header {
     background-repeat: no-repeat;
     .icon {
       color: white;
+      list-style-type: none;
+      height: 40px;
+      margin-top: 20px;
       .back {
         color: white;
         background-color: black;
@@ -67,10 +74,57 @@ ion-header {
         opacity: 0.6;
         z-index: 9999;
         right: 14px;
-        top: 20px;
         position: absolute;
         font-size: 22px;
-        padding: 3px;
+        padding: 6px;
+      }
+    }
+    .phone {
+      color: white;
+      list-style-type: none;
+      height: 40px;
+      .back {
+        color: white;
+        background-color: black;
+        border-radius: 100%;
+        opacity: 0.6;
+        z-index: 9999;
+        right: 14px;
+        position: absolute;
+        font-size: 18px;
+        padding: 8px;
+      }
+    }
+    .email{
+      color: white;
+      list-style-type: none;
+      height: 40px;
+      .back {
+        color: white;
+        background-color: black;
+        border-radius: 100%;
+        opacity: 0.6;
+        z-index: 9999;
+        right: 14px;
+        position: absolute;
+        font-size: 18px;
+        padding: 8px;
+      }
+    }
+    .whatsapp{
+      color: white;
+      list-style-type: none;
+      height: 40px;
+      .back {
+        color: white;
+        background-color: black;
+        border-radius: 100%;
+        opacity: 0.6;
+        z-index: 9999;
+        right: 14px;
+        position: absolute;
+        font-size: 18px;
+        padding: 8px;
       }
     }
   }
