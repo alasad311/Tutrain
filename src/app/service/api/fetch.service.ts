@@ -280,4 +280,22 @@ export class FetchService {
         });
     });
   }
+  public async updateBooking(data):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      this.http.setDataSerializer('urlencoded');
+      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/update" , {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        data: data,
+        serializer: 'json',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 }
