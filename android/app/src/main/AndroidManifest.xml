@@ -10,8 +10,10 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-
-        <activity
+      <meta-data
+        android:name="com.google.firebase.messaging.default_notification_channel_id"
+        android:value="tutrain-default"/>
+      <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name="com.tutrain.MainActivity"
             android:label="@string/title_activity_main"

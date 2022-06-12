@@ -66,7 +66,7 @@
         <ion-label>Item total <span>{{(tutor.hour_price * durationSelect) | number : '1.3-3'}}</span></ion-label>
         <ion-label>Service fees: <span>{{serviceFees | number : '1.3-3'}}</span></ion-label>
         <ion-label class="color_lbl">Date <span>{{dateFormatted}} </span></ion-label>
-        <ion-label class="color_lbl">Time <span>{{timeFrom}} - {{timeTo}}</span></ion-label>
+        <ion-label class="color_lbl">Time <span>{{timeFromSelected}} - {{timeToSelected}}</span></ion-label>
     </div>
     <div class="fare">
         <ion-label>Total</ion-label>
@@ -78,7 +78,7 @@
         <ion-item lines="none" (click)="onCheckout()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
             <ion-label>Checkout</ion-label>
-            <ion-label slot="end">{{((tutor.hour_price * durationSelect)+ serviceFees) | number : '1.3-3'}}</ion-label>
+            <ion-label slot="end">{{(course.price + serviceFees) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
 </ion-footer>

@@ -12,26 +12,26 @@ export class PaymentPage implements OnInit {
   @Input() course: any;
   @Input() tutor: any;
   @Input() durationSelect: any;
-  @Input() datetimeSelect: any;
+  @Input() dateSelected: any;
+  @Input() timeFromSelected: any;
+  @Input() timeToSelected: any;
+  @Input() bookID: any;
+
+  
   paymentMethod = "online";
   dateFormatted: any;
-  timeFrom: any;
-  timeTo: any;
   serviceFees = 2;
   isDisablied = false;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController) { }
 
   ngOnInit() {
-    if(this.datetimeSelect)
+   console.log(this.tutor);
+    if(this.dateSelected)
     {
-      const date = new Date(this.datetimeSelect);
+      const date = new Date(this.dateSelected);
       this.dateFormatted = date.getDate().toString().padStart(2, '0') + "/" + (1 + date.getMonth()).toString().padStart(2, '0') + "/" + date.getFullYear();
-      let hour = date.getUTCHours();
-      let min = date.getUTCMinutes().toString().padStart(2, '0');
-      this.timeFrom = hour + ":" + min;
-      let yourDate = new Date(date.getTime() + (1000 * 60 * 60 * this.durationSelect));
-      this.timeTo = yourDate.getUTCHours() + ":" + min;
+      
     }
   }
 
