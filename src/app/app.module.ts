@@ -12,6 +12,8 @@ import { AuthGuardService } from './service/Auth/auth-guard.service';
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +21,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
   imports: [BrowserModule, IonicModule.forRoot(),IonicStorageModule.forRoot()
     , AppRoutingModule,FormsModule,ReactiveFormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser],
+    AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser,AppVersion],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

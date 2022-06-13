@@ -12,6 +12,7 @@ import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { PaymentPage } from './payment/payment.page';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,11 @@ export class AppComponent {
   email: any;
   pushToken: any;
   subscriptions: any;
+  appV: any;
   constructor(public alertController: AlertController,private fetch: FetchService, private event: EventService,
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
-    public loadingController: LoadingController,public modalController: ModalController) {
+    public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion) {
   //   this.androidFullScreen.isImmersiveModeSupported()
   // .then(() => console.log('Immersive mode supported'))
   // .catch(err => console.log(err));
@@ -40,6 +42,7 @@ export class AppComponent {
 
     this.initializeApp();
     this.test2();
+
    }
    async test2(): Promise<void> {
     await this.platform.ready();
@@ -58,7 +61,7 @@ export class AppComponent {
       visibility: 1,
       lights:true,
       vibration: true
-    })
+    });
     // If using a custom driver:
     // await this.storage.defineDriver(MyCustomDriver)
     this.event.getObservable().subscribe((data) => {
@@ -67,7 +70,8 @@ export class AppComponent {
 
     await this.storage.init();
     const user = await this.storage.get('user');
-    this.platform.ready().then((readySource) => {
+    this.platform.ready().then(async (readySource) => {
+      this.appV = await this.appVersion.getAppName()  + ' ' + await this.appVersion.getVersionNumber();
       PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         //let navigate to requested slot
@@ -87,7 +91,7 @@ export class AppComponent {
             visibility: 1,
             lights:true,
             vibration: true
-          })
+          });
           LocalNotifications.schedule({
             notifications:[
             {
@@ -100,7 +104,7 @@ export class AppComponent {
           });
           LocalNotifications.addListener('localNotificationActionPerformed', async (notifications) => {
 
-            if(response.accpeted == "Accepted")
+            if(response.accpeted == 'Accepted')
             {
               let tutorD;
               await this.fetch.getUserDetailByID(response.tutorDetails).then(async (response) => {
@@ -122,9 +126,9 @@ export class AppComponent {
               });
               await modal.present();
             }else{
-              this.alertMessageStudent("Rejected",response.userFullName+" has rejected your request");
+              this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
             }
-           
+
           });
         }
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
@@ -142,7 +146,7 @@ export class AppComponent {
           + response.slotDate + ' from : '+response.timeFrom+' to: '+ response.timeTo,response.bookID);
         }else if(response.type == 'SESSIONRESPONSE')
         {
-          if(response.accpeted == "Accepted")
+          if(response.accpeted == 'Accepted')
             {
               let tutorD;
               await this.fetch.getUserDetailByID(response.tutorDetails).then(async (response) => {
@@ -164,7 +168,7 @@ export class AppComponent {
               });
               await modal.present();
             }else{
-              this.alertMessageStudent("Rejected",response.userFullName+" has rejected your request");
+              this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
             }
         }
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
@@ -200,6 +204,9 @@ export class AppComponent {
   async logout(){
     await this.storage.clear();
     this.router.navigate(['/welcome']);
+  }
+  goToFAQ(){
+    this.router.navigate(['/faq']);
   }
   async alertMessageStudent(header,message) {
     const alert = await this.alertController.create({

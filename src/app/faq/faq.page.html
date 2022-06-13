@@ -1,0 +1,71 @@
+<ion-header mode="md">
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div class="content">
+        <ion-label class="lbl">What is flow cutters ?</ion-label>
+        <ion-buttons>
+            <ion-button (click)="onClick('1')">
+                <ion-icon name="add" color="medium"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </div>
+    <ion-label class="text hide" id="1">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    </ion-label>
+    <div class="content">
+        <ion-label class="lbl">How much does this cost ?</ion-label>
+        <ion-buttons>
+            <ion-button (click)="onClick('2')">
+                <ion-icon name="add" color="medium"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </div>
+    <ion-label class="text hide" id="2">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    </ion-label>
+
+    <div class="content">
+        <ion-label class="lbl">Do you accept PayPal ?</ion-label>
+        <ion-buttons>
+            <ion-button (click)="onClick('3')">
+                <ion-icon name="add" color="medium"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </div>
+    <ion-label class="text hide" id="3">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    </ion-label>
+    <div class="content">
+        <ion-label class="lbl">Where are you located ?</ion-label>
+        <ion-buttons>
+            <ion-button (click)="onClick('4')">
+                <ion-icon name="add" color="medium"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </div>
+    <ion-label class="text hide" id="4">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    </ion-label>
+    <div class="content">
+        <ion-label class="lbl">Can i just come in or do i have to <br> make an apointment ?</ion-label>
+        <ion-buttons>
+            <ion-button (click)="onClick('5')">
+                <ion-icon name="add" color="medium"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </div>
+    <ion-label class="text hide" id="5">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    </ion-label>
+
+</ion-content>
