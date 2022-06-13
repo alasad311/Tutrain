@@ -76,7 +76,7 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage('Payment','You have paid '+ ((this.tuturHourCost * this.durationSelect )+this.serviceFees).toFixed(3));
+          this.alertMessage('Payment','You have paid '+ (this.course.price+2).toFixed(3) );
         }
 
       }).catch((error) => {
@@ -110,7 +110,7 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage('Order Place','Your order has been placed make sure to pay the tutor directly on completetion of the session');
+          this.alertMessage('Payment','You have paid '+ ((this.tuturHourCost * this.durationSelect )+this.serviceFees).toFixed(3));
         }
 
       }).catch((error) => {
@@ -171,7 +171,7 @@ export class PaymentPage implements OnInit {
       const json = JSON.parse(response.data).response;
       await loading.dismiss();
       if(json.id){
-        this.alertMessage('Payment','You have paid '+ (this.course.price+2).toFixed(3));
+        this.alertMessage('Payment','Your order has been placed make sure to pay the tutor directly on completetion of the session');
       }
 
     }).catch((error) => {
