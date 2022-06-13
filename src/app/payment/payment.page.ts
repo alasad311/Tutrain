@@ -17,21 +17,23 @@ export class PaymentPage implements OnInit {
   @Input() timeToSelected: any;
   @Input() bookID: any;
 
-  
-  paymentMethod = "online";
+
+  paymentMethod = 'online';
   dateFormatted: any;
   serviceFees = 2;
   isDisablied = false;
+  tuturHourCost;
+  paymentType = true;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController) { }
 
   ngOnInit() {
-   console.log(this.tutor);
     if(this.dateSelected)
     {
+      this.tuturHourCost  = this.tutor.hour_price;
       const date = new Date(this.dateSelected);
-      this.dateFormatted = date.getDate().toString().padStart(2, '0') + "/" + (1 + date.getMonth()).toString().padStart(2, '0') + "/" + date.getFullYear();
-      
+      this.dateFormatted = date.getDate().toString().padStart(2, '0') + '/' +
+      (1 + date.getMonth()).toString().padStart(2, '0') + '/' + date.getFullYear();
     }
   }
 
@@ -40,48 +42,54 @@ export class PaymentPage implements OnInit {
   }
   onCheckout(){
     this.isDisablied = true;
-    const browser = this.iab.create('https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om','_blank',{ location: 'no',zoom: 'no'});
-    browser.on('exit').subscribe(event => { this.checkPayment(true) })
+    const browser = this.iab.create(
+      'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
+      '_blank',{ location: 'no',zoom: 'no'});
+    browser.on('exit').subscribe(event => { this.checkPayment(true); });
   }
-  // onTutorCheckout(){
-  //   this.isDisablied = true;
-  //   const browser = this.iab.create('https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om','_blank',{ location: 'no',zoom: 'no'});
-  //   browser.on('exit').subscribe(event => { this.checkTutorPayment(true) })
-  // }
-  // async checkTutorPayment(event)
-  // {
-  //   if(event)
-  //   {
-  //     const loading = await this.loadingController.create({
-  //       cssClass: 'my-custom-class',
-  //       message: 'Please wait...'
-  //     });
-  //     await loading.present();
-  //     const user = await this.storage.get('user');
-  //     const data = {
-  //       paid_amount: this.course.price+2,
-  //       course_id : this.course.id,
-  //       user_id : user.user_id,
-  //       tutor_id: null
-  //     };
-  //     this.fetchServices.updateOrder(data).then(async (response) => {
-  //       const json = JSON.parse(response.data).response;
-  //       await loading.dismiss();
-  //       if(json.id){
-  //         this.alertMessage("Payment","You have paid "+ (this.course.price+2).toFixed(3));
-  //       }
+  onTutorCheckout(){
+    this.isDisablied = true;
+    const browser = this.iab.create(
+    'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
+    '_blank',{ location: 'no',zoom: 'no'});
+    browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
+  }
+  async checkTutorPayment(event)
+  {
+    if(event)
+    {
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Please wait...'
+      });
+      await loading.present();
+      const user = await this.storage.get('user');
+      const data = {
+        paid_amount: (this.tuturHourCost * this.durationSelect )+this.serviceFees,
+        course_id : null,
+        user_id : user.user_id,
+        tutor_id: this.tutor.user_id,
+        is_online:this.paymentType,
+        book_id: this.bookID
+      };
+      this.fetchServices.updateOrder(data).then(async (response) => {
+        const json = JSON.parse(response.data).response;
+        await loading.dismiss();
+        if(json.id){
+          this.alertMessage('Payment','You have paid '+ ((this.tuturHourCost * this.durationSelect )+this.serviceFees).toFixed(3));
+        }
 
-  //     }).catch((error) => {
-  //       this.isDisablied = false;
-  //       alert(error)
-  //     });
-  //   }else{
-  //     this.isDisablied = false;
-  //   }
-  // }
+      }).catch((error) => {
+        this.isDisablied = false;
+        alert(error);
+      });
+    }else{
+      this.isDisablied = false;
+    }
+  }
   async checkPayment(event)
   {
-   
+
     if(event)
     {
       const loading = await this.loadingController.create({
@@ -94,18 +102,20 @@ export class PaymentPage implements OnInit {
         paid_amount: this.course.price+2,
         course_id : this.course.id,
         user_id : user.user_id,
-        tutor_id: null
+        tutor_id: null,
+        is_online:this.paymentType,
+        book_id: null
       };
       this.fetchServices.updateOrder(data).then(async (response) => {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage("Payment","You have paid "+ (this.course.price+2).toFixed(3));
+          this.alertMessage('Order Place','Your order has been placed make sure to pay the tutor directly on completetion of the session');
         }
 
       }).catch((error) => {
         this.isDisablied = false;
-        alert(error)
+        alert(error);
       });
     }else{
       this.isDisablied = false;
@@ -113,8 +123,8 @@ export class PaymentPage implements OnInit {
 
     //Preparing ahead
 
-    
-    
+
+
     // browser.executeScript({
     //   code: "document.getElementById('customBackbtn').onclick = function() {\
     //   var message = 'close';\
@@ -124,30 +134,64 @@ export class PaymentPage implements OnInit {
     //   }"});
     // browser.on('message').subscribe((val)=>{
     //   const postObject:any = val;
-      
+
     //   //Do whatever you want to with postObject response from inappbrowser
-      
+
     //   });
   }
   setServiceFees(event){
-    if(event.target.value != "online")
+    if(event.target.value !== 'online')
     {
       this.serviceFees = 0;
+      this.tuturHourCost = 0;
+      this.paymentType = false;
     }else{
       this.serviceFees = 2;
+      this.tuturHourCost = this.tutor.hour_price;
+      this.paymentType = true;
     }
   }
-  // async onCheckOutTutor(){
-  //   if(this.paymentMethod == "online")
-  //   {
-  //     this.onTutorCheckout();
-  //   }
-  // }
+  async directFeesPayment(){
+    this.isDisablied = true;
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...'
+    });
+    await loading.present();
+    const user = await this.storage.get('user');
+    const data = {
+      paid_amount: (this.tuturHourCost * this.durationSelect )+this.serviceFees,
+      course_id : null,
+      user_id : user.user_id,
+      tutor_id: this.tutor.user_id,
+      is_online:this.paymentType,
+      book_id: this.bookID
+    };
+    this.fetchServices.updateOrder(data).then(async (response) => {
+      const json = JSON.parse(response.data).response;
+      await loading.dismiss();
+      if(json.id){
+        this.alertMessage('Payment','You have paid '+ (this.course.price+2).toFixed(3));
+      }
+
+    }).catch((error) => {
+      this.isDisablied = false;
+      alert(error);
+    });
+  }
+  onCheckOutTutor(){
+    if(this.paymentMethod == 'online')
+    {
+      this.onTutorCheckout();
+    }else{
+      this.directFeesPayment();
+    }
+  }
   async alertMessage(header,message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: header,
-      message: message,
+      header,
+      message,
       buttons: [
         {
           text: 'ok',
