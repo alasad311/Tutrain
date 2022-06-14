@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from './service/storage/storage.service';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
@@ -6,7 +6,7 @@ import { AlertController, MenuController,LoadingController, ModalController } fr
 import { Platform } from '@ionic/angular';
 import { FetchService } from './service/api/fetch.service';
 import { EventService } from './service/event.service';
-import { App as CapacitorApp } from '@capacitor/app';
+import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
@@ -29,7 +29,8 @@ export class AppComponent {
   constructor(public alertController: AlertController,private fetch: FetchService, private event: EventService,
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
-    public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion) {
+    public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion,
+    private zone: NgZone) {
   //   this.androidFullScreen.isImmersiveModeSupported()
   // .then(() => console.log('Immersive mode supported'))
   // .catch(err => console.log(err));
@@ -50,9 +51,15 @@ export class AppComponent {
 
     });
   }
-
+  getQueryParams(params, url) {
+    const reg = new RegExp('[?&]' + params + '=([^&#]*)', 'i');
+    const queryString = reg.exec(url);
+    return queryString ? queryString[1] : null;
+};
   async initializeApp() {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+
+
     PushNotifications.createChannel({
       id: 'tutrain-default',
       name: 'tutrain-default',
@@ -71,6 +78,27 @@ export class AppComponent {
     await this.storage.init();
     const user = await this.storage.get('user');
     this.platform.ready().then(async (readySource) => {
+
+      if(!user)
+      {
+        CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+          this.zone.run(() => {
+              // Example url: https://beerswift.app/tabs/tab2
+              // slug = /tabs/tab2
+              const slug = event.url.split('?')[0];
+              if (slug == 'https://oman-dev.com/referral') {
+                this.router.navigateByUrl('register');
+                const param = this.getQueryParams('ref',event.url);
+                alert(param);
+              }
+              // If no match, do nothing - let regular routing
+              // logic take over
+            });
+          });
+      }else{
+        alert('already registered!');
+      }
+
       this.appV = await this.appVersion.getAppName()  + ' ' + await this.appVersion.getVersionNumber();
       PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
