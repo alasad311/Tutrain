@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { UsersService } from './../service/api/users.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
@@ -16,16 +16,23 @@ export class RegisterPage implements OnInit {
   public showPassword_1 = false;
   public showPassword_2 = false;
   public type = 'student';
+  refCode: any;
   isSubmitted = false;
   isDisablied = false;
   pushToken: any;
   userRegistration: FormGroup;
   public confirm_password;
   internationalCode = '+968';
-  constructor(private router: Router,private userApi: UsersService,public formBuilder: FormBuilder,public alertController: AlertController) {
-
+  constructor(private route: ActivatedRoute,private router: Router,private userApi: UsersService,public formBuilder: FormBuilder,public alertController: AlertController) {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.refCode = this.router.getCurrentNavigation().extras.state.refCode;
+      }
+    });
+    
   }
   ngOnInit() {
+   
     PushNotifications.addListener('registration', (token: Token) => {
       this.pushToken = token.value;
      });
@@ -100,10 +107,9 @@ export class RegisterPage implements OnInit {
       return false;
     } else {
       let data = JSON.parse(JSON.stringify(this.userRegistration.value));
-      
       data.pushtoken = this.pushToken;
+      data.refCode = this.refCode;
       data = JSON.stringify(data);
-      console.log(data);
       this.userApi.createUser(data).then((response) => {
         const json = JSON.parse(response.data);
         if(json.code === 'ER_DUP_ENTRY')

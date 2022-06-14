@@ -1,5 +1,5 @@
 import { Component,NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { StorageService } from './service/storage/storage.service';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { AlertController, MenuController,LoadingController, ModalController } from '@ionic/angular';
@@ -26,6 +26,7 @@ export class AppComponent {
   pushToken: any;
   subscriptions: any;
   appV: any;
+  hasUrl = false;
   constructor(public alertController: AlertController,private fetch: FetchService, private event: EventService,
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
@@ -78,26 +79,54 @@ export class AppComponent {
     await this.storage.init();
     const user = await this.storage.get('user');
     this.platform.ready().then(async (readySource) => {
+      CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+        this.zone.run(() => {
+          this.hasUrl = true;
+          // Example url: https://beerswift.app/tabs/tab2
+          // slug = /tabs/tab2
+          const slug = event.url.split('?')[0];
+          if (slug == 'https://tapp.scd.edu.om/referral/') {
+            if (user) {
+              this.router.navigate(['home']);
+              this.user = user;
+              this.menuCtrl.enable(true);
+      
+            } else {
+              const param = this.getQueryParams('ref',event.url);
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  refCode: param
+                }
+              };
+              this.menuCtrl.enable(false);
+              this.router.navigate(['register'],navigationExtras);
+            }
+          }else if(slug == 'https://tapp.scd.edu.om/openlogin/')
+          {
+            if (user) {
+              this.router.navigate(['home']);
+              this.user = user;
+              this.menuCtrl.enable(true);
+      
+            } else {
+              this.menuCtrl.enable(false);
+              this.router.navigate(['login']);
+            }
 
-      if(!user)
-      {
-        CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-          this.zone.run(() => {
-              // Example url: https://beerswift.app/tabs/tab2
-              // slug = /tabs/tab2
-              const slug = event.url.split('?')[0];
-              if (slug == 'https://oman-dev.com/referral') {
-                this.router.navigateByUrl('register');
-                const param = this.getQueryParams('ref',event.url);
-                alert(param);
-              }
-              // If no match, do nothing - let regular routing
-              // logic take over
-            });
-          });
-      }else{
-        alert('already registered!');
-      }
+          }else{
+            if (user) {
+              this.router.navigate(['home']);
+              this.user = user;
+              this.menuCtrl.enable(true);
+            } else {
+              this.menuCtrl.enable(false);
+              this.router.navigate(['welcome']);
+            }
+          }
+          // If no match, do nothing - let regular routing
+          // logic take over
+        });
+      });
 
       this.appV = await this.appVersion.getAppName()  + ' ' + await this.appVersion.getVersionNumber();
       PushNotifications.addListener('pushNotificationReceived',
@@ -210,14 +239,18 @@ export class AppComponent {
           // Show some error
         }
       });
-      if (user) {
-        this.router.navigate(['home']);
-        this.user = user;
-        this.menuCtrl.enable(true);
 
-      } else {
-        this.menuCtrl.enable(false);
-        this.router.navigate(['welcome']);
+      if(this.hasUrl === false)
+      {
+        if (user) {
+          this.router.navigate(['home']);
+          this.user = user;
+          this.menuCtrl.enable(true);
+  
+        } else {
+          this.menuCtrl.enable(false);
+          this.router.navigate(['welcome']);
+        }
       }
 
 
@@ -235,6 +268,9 @@ export class AppComponent {
   }
   goToFAQ(){
     this.router.navigate(['/faq']);
+  }
+  goToInviteFried(){
+    this.router.navigate(['/invite-friend']);
   }
   async alertMessageStudent(header,message) {
     const alert = await this.alertController.create({

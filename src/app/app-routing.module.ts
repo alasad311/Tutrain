@@ -57,6 +57,10 @@ const routes: Routes = [
     path: 'faq',
     loadChildren: () => import('./faq/faq.module').then( m => m.FaqPageModule)
   },
+  {
+    path: 'invite-friend',
+    loadChildren: () => import('./invite-friend/invite-friend.module').then( m => m.InviteFriendPageModule)
+  },
 
 
 
