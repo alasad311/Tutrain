@@ -208,7 +208,7 @@ export class FetchService {
           reject(error);
         });
     });
-  }
+  } 
   public async getUserDetailByID(id):Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/user/'+id
@@ -292,6 +292,23 @@ export class FetchService {
       } )
         .then(res => {
           resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async getUserInvites(refCode):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/users/'+refCode+'/invites';
+      this.http.sendRequest( url, {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
         })
         .catch(error => {
           reject(error);

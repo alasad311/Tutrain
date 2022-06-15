@@ -52,6 +52,7 @@ ion-header {
         box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
     }
 }
+
 .main_content {
     .cover {
         display: flex;
@@ -68,5 +69,29 @@ ion-header {
         font-size: 14px;
         margin-top: 24px;
         color: gray;
+    }
+}
+
+.card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px var(--box-shadow-color);
+    --box-shadow-color: #d7d8da;
+    margin: 7px 0px;
+    .text {
+        font-family: "medium";
+        font-size: 14px;
+    }
+    .rate {
+        font-family: "medium";
+        font-size: 34px;
+        text-align: center;
+    }
+    .status {
+        font-family: "semi-bold";
+        font-size: 14px;
     }
 }

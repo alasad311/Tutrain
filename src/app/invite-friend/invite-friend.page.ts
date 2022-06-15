@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { StorageService } from '../service/storage/storage.service';
 import { toastController } from '@ionic/core';
 import { Clipboard } from '@capacitor/clipboard';
+import { FetchService } from '../service/api/fetch.service';
 @Component({
   selector: 'app-invite-friend',
   templateUrl: './invite-friend.page.html',
@@ -11,11 +12,18 @@ import { Clipboard } from '@capacitor/clipboard';
 export class InviteFriendPage implements OnInit {
 
   refCode: any;
-  constructor(private navCtrl: NavController,private storage: StorageService) { }
+  confirmedInvites = 0;
+  constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService) { }
 
   async ngOnInit() {
     const user = await this.storage.get('user');
     this.refCode = "https://tapp.scd.edu.om/referral/?ref="+user.ref_code;
+
+    this.fetch.getUserInvites(user.ref_code).then(async (response) => {
+      const json = JSON.parse(response.data).response[0];
+      this.confirmedInvites = json.TotalInvites;
+    });
+
   }
   goBackHome(){
     this.navCtrl.back();
