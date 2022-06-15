@@ -4,22 +4,34 @@ import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 
 @Component({
-  selector: 'app-payment-history',
-  templateUrl: './payment-history.page.html',
-  styleUrls: ['./payment-history.page.scss'],
+  selector: 'app-track-request',
+  templateUrl: './track-request.page.html',
+  styleUrls: ['./track-request.page.scss'],
 })
-export class PaymentHistoryPage implements OnInit {
-  orders: any;
+export class TrackRequestPage implements OnInit {
+  requests: any;
+  user: any;
   showNull = false;
   page = 0;
-  user: any;
+  tutor = false;
+  student = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService) { }
   
   async ngOnInit() {
     this.user = await this.storage.get('user');
-    this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
-      this.orders = JSON.parse(response.data).response;
-      if(this.orders.length == 0)
+
+    if(this.user.type == 'student')
+    {
+      this.student = true;
+      this.tutor = false;
+    }else {
+      this.tutor = true;
+      this.student = false;
+    }
+
+    this.fetch.getUserRequests(this.user.user_id,this.page).then(async (response) => {
+      this.requests = JSON.parse(response.data).response;
+      if(this.requests.length == 0)
       {
         this.showNull = true;
       }
@@ -37,10 +49,10 @@ export class PaymentHistoryPage implements OnInit {
   doInfinite(event) {
     setTimeout(() => {
       this.page = this.page + 1;
-      this.fetch.getUserOrders(this.user.user_id,this.page).then((response) => {
+      this.fetch.getUserRequests(this.user.user_id,this.page).then((response) => {
         var json = JSON.parse(response.data);
         for (let i = 0; i < json.response.length; i++) {
-          this.orders.push(json.response[i])
+          this.requests.push(json.response[i])
         }
         if(json.response.length == 0)
           event.target.disabled = true;

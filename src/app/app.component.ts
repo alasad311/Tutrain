@@ -275,6 +275,12 @@ export class AppComponent {
   goToPaymentHistory(){
     this.router.navigate(['/payment-history']);
   }
+  goToTrackRequests(){
+    this.router.navigate(['/track-request']);
+  }
+  goToToS(){
+    window.open('https://policies.google.com/terms?hl=en-US', '_system');
+  }
   async alertMessageStudent(header,message) {
     const alert = await this.alertController.create({
       header,

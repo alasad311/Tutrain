@@ -9,7 +9,8 @@
 - [x] Invite Friend (Missing Earned Amount)
 - [x] Payment History
 - [ ] Contest
-- [ ] Terms of service
+- [x] Terms of service
+- [x] Page Titles
 
 ## Backend
 - [ ] Wallet
@@ -17,3 +18,4 @@
 - [x] referral
 - [ ] Contest
 - [x] Payment History
+- [x] Track Request

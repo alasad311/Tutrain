@@ -1,0 +1,86 @@
+<ion-header mode="md">
+  <ion-toolbar class="ion-no-margin">
+      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+      </ion-chip>
+      <ion-title>Tutrain</ion-title>
+      <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+          <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+      </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngIf="!requests">
+    <ion-col size="9">
+      <div class="title">
+      <h6><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h6>
+      <ion-label><ion-skeleton-text animated style="width: 70%"></ion-skeleton-text></ion-label>
+      </div>
+      <ion-label><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
+    </ion-col>
+    <ion-col size="3">
+      <ion-buttons>
+        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+      </ion-buttons>
+      <ion-buttons>
+        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+  <div *ngIf="student">
+    <div *ngIf="requests">
+      <div *ngFor="let item of requests">
+        <ion-item lines="none" >
+          <ion-col size="9">
+            <div class="content">
+              <ion-label class="name">{{item.fullname}}</ion-label>
+              <ion-label class="req"> Has approved your reuqest on {{getActualDate(item.slotDate)}} <br />from {{item.timefrom}} to {{item.timeto}}</ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button (click)="onClick()" color="primary">
+                Make Payment
+              </ion-button>
+            </ion-buttons>
+            <ion-buttons>
+              <ion-button (click)="onClick()" color="primary">
+                Cancel Request
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-item>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tutor">
+    <div *ngIf="requests">
+      <div *ngFor="let item of requests">
+        <ion-item lines="none" >
+          <div class="content">
+            <ion-label class="name">{{item.fullname}}</ion-label>
+            <ion-label class="req"> Has reuqested a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+          </div>
+          <ion-icon name="close-outline" slot="end" color="danger" class="close"  (click)="onAccept()"></ion-icon>
+          <ion-icon name="checkmark-outline" slot="end" color="success" class="check" (click)="onReject()"></ion-icon>
+        </ion-item>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showNull ">
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+      <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+      </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
