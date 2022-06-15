@@ -3,14 +3,17 @@
 - [ ] course session
 - [ ] design
 - [ ] localization
-- [ ] service fees calculation
 - [ ] main menu page
 - [x] FAQ
 - [ ] Track Request
-- [x] Invite Friend (Missing Earned Amount)~
-- [ ] Payment History
+- [x] Invite Friend (Missing Earned Amount)
+- [x] Payment History
+- [ ] Contest
+- [ ] Terms of service
 
 ## Backend
 - [ ] Wallet
 - [ ] Course Session
 - [x] referral
+- [ ] Contest
+- [x] Payment History

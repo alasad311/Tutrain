@@ -315,4 +315,22 @@ export class FetchService {
         });
     });
   }
+  public async getUserOrders(id,page):Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/orders/'+page;
+      this.http.sendRequest( url, {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  
 }

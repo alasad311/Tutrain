@@ -272,6 +272,9 @@ export class AppComponent {
   goToInviteFried(){
     this.router.navigate(['/invite-friend']);
   }
+  goToPaymentHistory(){
+    this.router.navigate(['/payment-history']);
+  }
   async alertMessageStudent(header,message) {
     const alert = await this.alertController.create({
       header,

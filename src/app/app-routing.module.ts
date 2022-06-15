@@ -61,6 +61,10 @@ const routes: Routes = [
     path: 'invite-friend',
     loadChildren: () => import('./invite-friend/invite-friend.module').then( m => m.InviteFriendPageModule)
   },
+  {
+    path: 'payment-history',
+    loadChildren: () => import('./payment-history/payment-history.module').then( m => m.PaymentHistoryPageModule)
+  },
 
 
 
