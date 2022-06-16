@@ -12,11 +12,13 @@ import { StorageService } from '../service/storage/storage.service';
 export class TrackRequestPage implements OnInit {
   requests: any;
   user: any;
-  showNull = false;
+  showNull = true;
   page = 0;
   tutor = false;
   student = false;
   section = 'pending';
+  pending = true;
+  confirmed = false;
   hidePending = false;
   hideConfirmed = true;
   constructor(public alertController: AlertController,private navCtrl: NavController,private storage: StorageService,
@@ -90,6 +92,7 @@ export class TrackRequestPage implements OnInit {
     modal.onDidDismiss()
     .then(async (data) => {
       this.requests = null;
+      this.showNull = false;
       this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
         this.requests = JSON.parse(responsee.data).response;
         if(this.requests.length == 0)
@@ -119,6 +122,7 @@ export class TrackRequestPage implements OnInit {
           buttons: ['OK']});
         await alertRes.present();
         this.requests = null;
+        this.showNull = false;
         this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
           this.requests = JSON.parse(responsee.data).response;
           if(this.requests.length == 0)
@@ -134,6 +138,7 @@ export class TrackRequestPage implements OnInit {
             buttons: ['OK']});
           await alertRes.present();
           this.requests = null;
+          this.showNull = false;
           this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
             this.requests = JSON.parse(responsee.data).response;
             if(this.requests.length == 0)
@@ -163,6 +168,7 @@ export class TrackRequestPage implements OnInit {
           buttons: ['OK']});
         await alertRes.present();
         this.requests = null;
+        this.showNull = false;
         this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
           this.requests = JSON.parse(responsee.data).response;
           if(this.requests.length == 0)
@@ -178,6 +184,7 @@ export class TrackRequestPage implements OnInit {
             buttons: ['OK']});
           await alertRes.present();
           this.requests = null;
+          this.showNull = false;
           this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
             this.requests = JSON.parse(responsee.data).response;
             if(this.requests.length == 0)
@@ -189,9 +196,18 @@ export class TrackRequestPage implements OnInit {
     }).catch((error) => {
     });
   }
-  showSegment(section){
-    alert(section);
+  showSegment(){
+    if(this.section == "pending")
+    {
+      this.confirmed = false;
+      this.pending = true;
+    }else{
+      this.confirmed = true;
+      this.pending = false;
+    }
+
     this.requests = null;
+    this.showNull = false;
     this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
       this.requests = JSON.parse(responsee.data).response;
       if(this.requests.length == 0)

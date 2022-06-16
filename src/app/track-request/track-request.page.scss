@@ -57,20 +57,8 @@ ion-header {
     text-align: center;
 }
 
-.segments {
-    margin: 2rem 0px 1rem 0px;
-    ion-segment {
-        background: transparent;
-        ion-segment-button {
-            padding: 5px;
-            --border-radius: 30px;
-            --indicator-color: var(--ion-color-primary) !important;
-            --indicator-box-shadow: transparent !important;
-            --color-checked: white;
-            --background: #ffff;
-            margin: 5px;
-        }
-    }
+.segment-toolbar {
+    --min-height: 32px;
 }
 
 ion-content {

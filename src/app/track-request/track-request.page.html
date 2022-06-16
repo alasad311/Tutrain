@@ -8,100 +8,135 @@
             <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
     </ion-toolbar>
-    <ion-toolbar>
-        <div class="segments">
-            <ion-segment [(ngModel)]="section" (ionChange)="showSegment(section)" mode="ios" value="pending">
-                <ion-segment-button value="pending">
-                    <ion-label>Pending</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="confirmed">
-                    <ion-label>Confirmed</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-        </div>
+    <ion-toolbar class="segment-toolbar">
+        <ion-segment [(ngModel)]="section" (ionChange)="showSegment(section)" mode="ios" value="pending">
+            <ion-segment-button value="pending">
+                <ion-label>Pending</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="confirmed">
+                <ion-label>Confirmed</ion-label>
+            </ion-segment-button>
+        </ion-segment>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <div *ngIf="!requests" class="main_content_div">
-        <div class="card" *ngFor="let item of [1,2,3]">
-            <div class="currency_accet">
-                <div class="detail">
-                    <div class="up_div">
-                        <ion-label class="title">
-                            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                        </ion-label>
-                    </div>
-                    <div class="down_div">
-                        <ion-label class="type">
-                            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-                        </ion-label>
-                    </div>
-                </div>
-            </div>
-            <div class="btc_div">
-                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="student" class="main_content_div">
-        <div *ngIf="requests">
-            <div class="card" *ngFor="let item of requests">
+    <div *ngIf="!requests">
+        <div class="main_content_div">
+            <div class="card" *ngFor="let item of [1,2,3]">
                 <div class="currency_accet">
                     <div class="detail">
                         <div class="up_div">
-                            <ion-label class="title">{{item.fullname}}</ion-label>
+                            <ion-label class="title">
+                                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                            </ion-label>
                         </div>
                         <div class="down_div">
-                            <ion-label class="type">Has approved your reuqest on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                            <ion-label class="type">
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                            </ion-label>
                         </div>
                     </div>
                 </div>
                 <div class="btc_div">
-                    <ion-button (click)="onMakePayment(item.bookid,item.tutorID,item.duration,item.timefrom,item.timeto,item.fullslot)" color="primary">
-                        Make Payment
-                    </ion-button>
-                    <ion-button (click)="onCancelReques(item.bookid)" fill="outline">
-                        Cancel Request
-                    </ion-button>
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </div>
+            </div>
+        </div>
+</div>
+    <div *ngIf="pending">
+        <div *ngIf="student" class="main_content_div">
+            <div *ngIf="requests">
+                <div class="card" *ngFor="let item of requests">
+                    <div class="currency_accet">
+                        <div class="detail">
+                            <div class="up_div">
+                                <ion-label class="title">{{item.fullname}}</ion-label>
+                            </div>
+                            <div class="down_div">
+                                <ion-label class="type">Has approved your reuqest on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btc_div">
+                        <ion-button (click)="onMakePayment(item.bookid,item.tutorID,item.duration,item.timefrom,item.timeto,item.fullslot)" color="primary">
+                            Make Payment
+                        </ion-button>
+                        <ion-button (click)="onCancelReques(item.bookid)" fill="outline">
+                            Cancel Request
+                        </ion-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="tutor" class="main_content_div">
+            <div *ngIf="requests">
+                <div class="card" *ngFor="let item of requests">
+                    <div class="currency_accet">
+                        <div class="detail">
+                            <div class="up_div">
+                                <ion-label class="title">{{item.fullname}}</ion-label>
+                            </div>
+                            <div class="down_div">
+                                <ion-label class="type">Has requested a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btc_div">
+                        <ion-button (click)="onAccept(item.bookid)" color="primary">
+                            Accept
+                        </ion-button>
+                        <ion-button (click)="onReject(item.bookid)" fill="outline">
+                            Reject
+                        </ion-button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="tutor" class="main_content_div">
-        <div *ngIf="requests">
-            <div class="card" *ngFor="let item of requests">
-                <div class="currency_accet">
-                    <div class="detail">
-                        <div class="up_div">
-                            <ion-label class="title">{{item.fullname}}</ion-label>
-                        </div>
-                        <div class="down_div">
-                            <ion-label class="type">Has reuqested a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+    <div *ngIf="confirmed">
+        <div *ngIf="student" class="main_content_div">
+            <div *ngIf="requests">
+                <div class="card" *ngFor="let item of requests">
+                    <div>
+                        <div class="detail">
+                            <div class="up_div">
+                                <ion-label class="title">{{item.fullname}}</ion-label>
+                            </div>
+                            <div class="down_div">
+                                <ion-label class="type">Make sure you are on time, for your session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
-                <div class="btc_div">
-                    <ion-button (click)="onAccept(item.bookid)" color="primary">
-                        Accept
-                    </ion-button>
-                    <ion-button (click)="onReject(item.bookid)" fill="outline">
-                        Reject
-                    </ion-button>
+            </div>
+        </div>
+        <div *ngIf="tutor" class="main_content_div">
+            <div *ngIf="requests">
+                <div class="card" *ngFor="let item of requests">
+                    <div>
+                        <div class="detail">
+                            <div class="up_div">
+                                <ion-label class="title">{{item.fullname}}</ion-label>
+                            </div>
+                            <div class="down_div">
+                                <ion-label class="type">Make sure to be prepared you have a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div *ngIf="showNull">
-        <ion-list>
-            <ion-item class="ion-no-padding">
-                <ion-label>
-                    <h3 class="center-null ">Sorry we couldn't find any requests</h3>
-                </ion-label>
-            </ion-item>
-        </ion-list>
+        <ion-item class="ion-no-padding">
+            <ion-label>
+                <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+            </ion-label>
+        </ion-item>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
         <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">

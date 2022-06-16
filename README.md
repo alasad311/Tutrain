@@ -14,6 +14,7 @@
 - [ ] Page Titles
 - [ ] Setting / Profile
 - [ ] Create Course / Session
+- [ ] payment to be adjusted based on new gateaway
 
 ## Backend
 - [ ] Wallet
@@ -22,3 +23,4 @@
 - [ ] Contest
 - [x] Payment History
 - [x] Track Request
+- [ ] Payment Gateaway
