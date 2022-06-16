@@ -125,7 +125,8 @@ export class UsersPage implements OnInit {
           duration : data.data.durationSelect,
           slot: date.getFullYear() + "-" + (1 + date.getMonth()).toString().padStart(2, '0') + "-"+date.getDate().toString().padStart(2, '0'),
           timefrom:  hour + ":" + min,
-          timeto: yourDate.getUTCHours() + ":" + min
+          timeto: yourDate.getUTCHours() + ":" + min,
+          fullslot:  date.getFullYear() + "-" + (1 + date.getMonth()).toString().padStart(2, '0') + "-"+date.getDate().toString().padStart(2, '0')+'T'+hour+':00:00.136Z'
         };
         this.fetch.createSlot(datas).then(async (response) => {
           const json = JSON.parse(response.data).response;

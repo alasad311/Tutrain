@@ -3,14 +3,17 @@
 - [ ] course session
 - [ ] design
 - [ ] localization
-- [ ] main menu page
+- [x] main menu page
 - [x] FAQ
-- [ ] Track Request
+- [x] Track Request
 - [x] Invite Friend (Missing Earned Amount)
 - [x] Payment History
 - [ ] Contest
 - [x] Terms of service
-- [x] Page Titles
+- [x] After order notification
+- [ ] Page Titles
+- [ ] Setting / Profile
+- [ ] Create Course / Session
 
 ## Backend
 - [ ] Wallet

@@ -44,7 +44,7 @@ export class BookTutorPage implements OnInit {
     const data = {
       confirm: this.isConfirmed,
       durationSelect: this.duration.value,
-      datetimeSelect: this.datetime.value
+      datetimeSelect: this.datetime.value,
     };
     this.modalController.dismiss(data);
   }

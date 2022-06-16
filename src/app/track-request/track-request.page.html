@@ -1,86 +1,110 @@
 <ion-header mode="md">
-  <ion-toolbar class="ion-no-margin">
-      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
-          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
-      </ion-chip>
-      <ion-title>Tutrain</ion-title>
-      <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
-          <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
-      </ion-chip>
-  </ion-toolbar>
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+    </ion-toolbar>
+    <ion-toolbar>
+        <div class="segments">
+            <ion-segment [(ngModel)]="section" (ionChange)="showSegment(section)" mode="ios" value="pending">
+                <ion-segment-button value="pending">
+                    <ion-label>Pending</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="confirmed">
+                    <ion-label>Confirmed</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-row *ngIf="!requests">
-    <ion-col size="9">
-      <div class="title">
-      <h6><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></h6>
-      <ion-label><ion-skeleton-text animated style="width: 70%"></ion-skeleton-text></ion-label>
-      </div>
-      <ion-label><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
-    </ion-col>
-    <ion-col size="3">
-      <ion-buttons>
-        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-      </ion-buttons>
-      <ion-buttons>
-        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-      </ion-buttons>
-    </ion-col>
-  </ion-row>
-  <div *ngIf="student">
-    <div *ngIf="requests">
-      <div *ngFor="let item of requests">
-        <ion-item lines="none" >
-          <ion-col size="9">
-            <div class="content">
-              <ion-label class="name">{{item.fullname}}</ion-label>
-              <ion-label class="req"> Has approved your reuqest on {{getActualDate(item.slotDate)}} <br />from {{item.timefrom}} to {{item.timeto}}</ion-label>
+
+    <div *ngIf="!requests" class="main_content_div">
+        <div class="card" *ngFor="let item of [1,2,3]">
+            <div class="currency_accet">
+                <div class="detail">
+                    <div class="up_div">
+                        <ion-label class="title">
+                            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                        </ion-label>
+                    </div>
+                    <div class="down_div">
+                        <ion-label class="type">
+                            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                        </ion-label>
+                    </div>
+                </div>
             </div>
-          </ion-col>
-          <ion-col size="3">
-            <ion-buttons>
-              <ion-button (click)="onClick()" color="primary">
-                Make Payment
-              </ion-button>
-            </ion-buttons>
-            <ion-buttons>
-              <ion-button (click)="onClick()" color="primary">
-                Cancel Request
-              </ion-button>
-            </ion-buttons>
-          </ion-col>
-        </ion-item>
-        <hr>
-      </div>
+            <div class="btc_div">
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </div>
+        </div>
     </div>
-  </div>
-  <div *ngIf="tutor">
-    <div *ngIf="requests">
-      <div *ngFor="let item of requests">
-        <ion-item lines="none" >
-          <div class="content">
-            <ion-label class="name">{{item.fullname}}</ion-label>
-            <ion-label class="req"> Has reuqested a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
-          </div>
-          <ion-icon name="close-outline" slot="end" color="danger" class="close"  (click)="onAccept()"></ion-icon>
-          <ion-icon name="checkmark-outline" slot="end" color="success" class="check" (click)="onReject()"></ion-icon>
-        </ion-item>
-        <hr>
-      </div>
+    <div *ngIf="student" class="main_content_div">
+        <div *ngIf="requests">
+            <div class="card" *ngFor="let item of requests">
+                <div class="currency_accet">
+                    <div class="detail">
+                        <div class="up_div">
+                            <ion-label class="title">{{item.fullname}}</ion-label>
+                        </div>
+                        <div class="down_div">
+                            <ion-label class="type">Has approved your reuqest on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="btc_div">
+                    <ion-button (click)="onMakePayment(item.bookid,item.tutorID,item.duration,item.timefrom,item.timeto,item.fullslot)" color="primary">
+                        Make Payment
+                    </ion-button>
+                    <ion-button (click)="onCancelReques(item.bookid)" fill="outline">
+                        Cancel Request
+                    </ion-button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div *ngIf="showNull ">
-    <ion-list>
-        <ion-item>
-            <ion-label>
-                <h3 class="center-null ">Sorry we couldn't find any requests</h3>
-            </ion-label>
-        </ion-item>
-    </ion-list>
-  </div>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
-      <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
-      </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <div *ngIf="tutor" class="main_content_div">
+        <div *ngIf="requests">
+            <div class="card" *ngFor="let item of requests">
+                <div class="currency_accet">
+                    <div class="detail">
+                        <div class="up_div">
+                            <ion-label class="title">{{item.fullname}}</ion-label>
+                        </div>
+                        <div class="down_div">
+                            <ion-label class="type">Has reuqested a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="btc_div">
+                    <ion-button (click)="onAccept(item.bookid)" color="primary">
+                        Accept
+                    </ion-button>
+                    <ion-button (click)="onReject(item.bookid)" fill="outline">
+                        Reject
+                    </ion-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="showNull">
+        <ion-list>
+            <ion-item class="ion-no-padding">
+                <ion-label>
+                    <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

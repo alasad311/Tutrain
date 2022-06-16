@@ -182,6 +182,17 @@ export class AppComponent {
                 }
               });
               await modal.present();
+            }else if(response.type == 'NEWORDER'){
+              LocalNotifications.schedule({
+                notifications:[
+                {
+                    title : 'New Order',
+                    body: JSON.parse(JSON.stringify(notification)).body,
+                    largeBody : JSON.parse(JSON.stringify(notification)).body,
+                    id : randomId,
+                    channelId: 'tutrain-default'
+                }]
+              });
             }else{
               this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
             }
@@ -227,6 +238,8 @@ export class AppComponent {
             }else{
               this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
             }
+        }else if(response.type == 'NEWORDER'){
+          this.router.navigate(['/track-request']);
         }
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
       }
@@ -301,24 +314,21 @@ export class AppComponent {
             //Update DB and Send notification
             this.fetch.updateBooking({is_accpeted: true,bookid : id}).then(async (response) => {
               const json = JSON.parse(response.data).response;
-              if(json.status === 'updated')
+              if(json.status == 'updated')
               {
                 alert.dismiss();
                 const alertRes = await this.alertController.create({
                   header: 'Updated',
                   message:  'Booking has been updated',
                   buttons: ['OK']});
-                await alert.present();
+                await alertRes.present();
               }else{
-                if(json.status === 'updated')
-                {
                   alert.dismiss();
                   const alertRes = await this.alertController.create({
                     header: 'Error',
                     message:  'An Error happened while updated try again later.',
                     buttons: ['OK']});
-                  await alert.present();
-                }
+                  await alertRes.present();
               }
             }).catch((error) => {
             });
@@ -331,7 +341,7 @@ export class AppComponent {
             //Update DB and Send notification
             this.fetch.updateBooking({is_accpeted: false,bookid : id}).then(async (response) => {
               const json = JSON.parse(response.data).response;
-              if(json.status === 'updated')
+              if(json.status == 'updated')
               {
                 alert.dismiss();
                 const alertRes = await this.alertController.create({
@@ -340,15 +350,12 @@ export class AppComponent {
                   buttons: ['OK']});
                 await alert.present();
               }else{
-                if(json.status === 'updated')
-                {
                   alert.dismiss();
                   const alertRes = await this.alertController.create({
                     header: 'Error',
                     message:  'An Error happened while updated try again later.',
                     buttons: ['OK']});
-                  await alert.present();
-                }
+                  await alertRes.present();
               }
             }).catch((error) => {
             });
