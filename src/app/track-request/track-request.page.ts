@@ -12,7 +12,7 @@ import { StorageService } from '../service/storage/storage.service';
 export class TrackRequestPage implements OnInit {
   requests: any;
   user: any;
-  showNull = true;
+  showNull = false;
   page = 0;
   tutor = false;
   student = false;
