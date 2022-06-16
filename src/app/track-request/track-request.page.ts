@@ -90,7 +90,7 @@ export class TrackRequestPage implements OnInit {
     modal.onDidDismiss()
     .then(async (data) => {
       this.requests = null;
-      this.fetch.getUserRequests(this.user.user_id,this.page).then(async (responsee) => {
+      this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
         this.requests = JSON.parse(responsee.data).response;
         if(this.requests.length == 0)
         {
@@ -119,7 +119,7 @@ export class TrackRequestPage implements OnInit {
           buttons: ['OK']});
         await alertRes.present();
         this.requests = null;
-        this.fetch.getUserRequests(this.user.user_id,this.page).then(async (responsee) => {
+        this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
           this.requests = JSON.parse(responsee.data).response;
           if(this.requests.length == 0)
           {
@@ -134,7 +134,7 @@ export class TrackRequestPage implements OnInit {
             buttons: ['OK']});
           await alertRes.present();
           this.requests = null;
-          this.fetch.getUserRequests(this.user.user_id,this.page).then(async (responsee) => {
+          this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
             this.requests = JSON.parse(responsee.data).response;
             if(this.requests.length == 0)
             {
