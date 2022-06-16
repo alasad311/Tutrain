@@ -60,7 +60,9 @@ ion-header {
 .segment-toolbar {
     --min-height: 32px;
 }
-
+.adjust-margin{
+    margin-top: -21px !important;
+}
 ion-content {
     background-color: var(--ion-color-light);
     .main_content_div {
