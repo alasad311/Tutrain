@@ -45,14 +45,12 @@
     </div>
   </div>
   <div *ngIf="showNull ">
-    <ion-list>
-        <ion-item>
-            <ion-label>
-                <h3 class="center-null ">Sorry we couldn't find any results</h3>
-            </ion-label>
-        </ion-item>
-    </ion-list>
-</div>
+    <ion-item class="ion-no-padding adjust-margin">
+      <ion-label>
+          <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+      </ion-label>
+    </ion-item>
+  </div>
 <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
     <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
     </ion-infinite-scroll-content>

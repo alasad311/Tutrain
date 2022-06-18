@@ -1,6 +1,5 @@
 # Left Milestones:
 ## Within App
-- [ ] course session
 - [ ] design
 - [ ] localization
 - [x] main menu page
@@ -12,12 +11,13 @@
 - [x] Terms of service
 - [x] After order notification
 - [ ] Page Titles
-- [ ] Setting / Profile
+- [ ] Setting / Profile (waiting)
+- [ ] wallet page / earnings (in progress)
 - [ ] Create Course / Session
 - [ ] payment to be adjusted based on new gateaway
 
 ## Backend
-- [ ] Wallet
+- [ ] Wallet (in progress)
 - [ ] Course Session
 - [x] referral
 - [ ] Contest

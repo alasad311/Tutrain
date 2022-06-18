@@ -7,7 +7,7 @@ import { AlertController } from '@ionic/angular';
 import { EventService } from ".././service/event.service"
 import { PushNotifications,Token } from '@capacitor/push-notifications';
 import { FetchService } from '../service/api/fetch.service';
-
+import { AppComponent } from '../app.component'
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
   public email;
   public password;
   pushToken: any;
-  constructor(private fetch:FetchService,private router: Router,private event:EventService, private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
+  constructor(private test:AppComponent, private fetch:FetchService,private router: Router,private event:EventService, private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
 
   ngOnInit() {
     PushNotifications.addListener('registration', (token: Token) => {
@@ -44,6 +44,12 @@ export class LoginPage implements OnInit {
           this.isDisablied = false;
         }
         else if(json.response.results === true && json.response.is_confirmed === true){
+          if(json.response.user[0].type != "student")
+          {
+            this.test.setTutor(true);
+          }else{
+            this.test.setTutor(false);
+          }
           if(this.pushToken === json.response.user[0].pushtoken)
           {
             await this.storage.set("user",json.response.user[0])
@@ -101,9 +107,6 @@ export class LoginPage implements OnInit {
       this.viewPassword = 'eye-off-outline'
       this.showPassword = true;
     }
-  }
-  test(){
-    console.log("Clicked now we can reset password from app")
   }
   async alertMessage(header,message,location,btn) {
     if(btn === "Resend")
