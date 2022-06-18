@@ -69,6 +69,10 @@ const routes: Routes = [
     path: 'track-request',
     loadChildren: () => import('./track-request/track-request.module').then( m => m.TrackRequestPageModule)
   },
+  {
+    path: 'setting',
+    loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
+  },
 
 
 

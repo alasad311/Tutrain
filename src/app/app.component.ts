@@ -294,6 +294,10 @@ export class AppComponent {
   goToToS(){
     window.open('https://policies.google.com/terms?hl=en-US', '_system');
   }
+  goToSettings(){
+    this.router.navigate(['/setting']);
+    this.menuCtrl.close();
+  }
   async alertMessageStudent(header,message) {
     const alert = await this.alertController.create({
       header,

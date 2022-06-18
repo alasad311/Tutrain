@@ -6,7 +6,7 @@
                 <div class="bg_image" [style.backgroundImage]="'url('+user.picture+')'"></div>
                 <div class="btn">
                     <ion-buttons>
-                        <ion-button (click)="goToNotification()">
+                        <ion-button (click)="goToSettings()">
                             <ion-icon name="cog-outline" color="dark"></ion-icon>
                         </ion-button>
                     </ion-buttons>
@@ -50,7 +50,7 @@
                 </div>
 
             </ion-menu-toggle>
-            <ion-label class="mail">Tutrain Mobile {{appV}}</ion-label>
+            <ion-label class="mail">{{appV}}</ion-label>
         </ion-content>
     </ion-menu>
     <!-- the main content -->
