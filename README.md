@@ -17,6 +17,7 @@
 - [ ] payment to be adjusted based on new gateaway
 - [ ] Show student or tutor contact details once success booked a tutor
 - [ ] Request Money out
+- [ ] Home page connection categories / courses / purchases
 
 ## Backend
 - [x] Wallet (in progress)
