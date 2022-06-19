@@ -28,3 +28,10 @@
 - [x] Track Request
 - [ ] Payment Gateaway
 - [ ] Request Money out
+
+
+## Feedback
+- [ ] Booking slot date issue
+- [ ] Open to all timing from user current time 
+- [ ] Reject option
+- [ ] Service fees to be DB wise
