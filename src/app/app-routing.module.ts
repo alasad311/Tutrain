@@ -53,7 +53,8 @@ const routes: Routes = [
   {
     path: 'book-tutor',
     loadChildren: () => import('./book-tutor/book-tutor.module').then( m => m.BookTutorPageModule)
-  },  {
+  },
+  {
     path: 'faq',
     loadChildren: () => import('./faq/faq.module').then( m => m.FaqPageModule)
   },
@@ -72,10 +73,6 @@ const routes: Routes = [
   {
     path: 'setting',
     loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
-  },
-  {
-    path: 'earnings',
-    loadChildren: () => import('./earnings/earnings.module').then( m => m.EarningsPageModule)
   },
 
 

@@ -27,7 +27,6 @@ export class AppComponent {
   subscriptions: any;
   appV: any;
   hasUrl = false;
-  tutor = false;
   constructor(public alertController: AlertController,private fetch: FetchService, private event: EventService,
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
@@ -59,15 +58,8 @@ export class AppComponent {
     return queryString ? queryString[1] : null;
   };
 
-  getUserWallet(id)
-  {
-
-  }
-
   async initializeApp() {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-
-
     PushNotifications.createChannel({
       id: 'tutrain-default',
       name: 'tutrain-default',
@@ -85,13 +77,7 @@ export class AppComponent {
 
     await this.storage.init();
     const user = await this.storage.get('user');
-    if(user.type != "student")
-    {
-      this.tutor = true;
-    }else
-    {
-      this.tutor = false;
-    }
+
     this.platform.ready().then(async (readySource) => {
       CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
         this.zone.run(() => {
@@ -104,10 +90,10 @@ export class AppComponent {
               this.router.navigate(['home']);
               this.user = user;
               this.menuCtrl.enable(true);
-      
+
             } else {
               const param = this.getQueryParams('ref',event.url);
-              let navigationExtras: NavigationExtras = {
+              const navigationExtras: NavigationExtras = {
                 state: {
                   refCode: param
                 }
@@ -121,7 +107,7 @@ export class AppComponent {
               this.router.navigate(['home']);
               this.user = user;
               this.menuCtrl.enable(true);
-      
+
             } else {
               this.menuCtrl.enable(false);
               this.router.navigate(['login']);
@@ -273,7 +259,7 @@ export class AppComponent {
           this.router.navigate(['home']);
           this.user = user;
           this.menuCtrl.enable(true);
-  
+
         } else {
           this.menuCtrl.enable(false);
           this.router.navigate(['welcome']);
@@ -311,14 +297,6 @@ export class AppComponent {
   goToSettings(){
     this.router.navigate(['/setting']);
     this.menuCtrl.close();
-  }
-  goToEarnings(){
-    this.router.navigate(['/earnings']);
-    this.menuCtrl.close();
-  }
-  setTutor(value)
-  {
-    this.tutor = value;
   }
   async alertMessageStudent(header,message) {
     const alert = await this.alertController.create({

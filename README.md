@@ -12,15 +12,18 @@
 - [x] After order notification
 - [ ] Page Titles
 - [ ] Setting / Profile (waiting)
-- [ ] wallet page / earnings (in progress)
+- [x] wallet page / earnings (in progress)
 - [ ] Create Course / Session
 - [ ] payment to be adjusted based on new gateaway
+- [ ] Show student or tutor contact details once success booked a tutor
+- [ ] Request Money out
 
 ## Backend
-- [ ] Wallet (in progress)
+- [x] Wallet (in progress)
 - [ ] Course Session
 - [x] referral
 - [ ] Contest
 - [x] Payment History
 - [x] Track Request
 - [ ] Payment Gateaway
+- [ ] Request Money out
