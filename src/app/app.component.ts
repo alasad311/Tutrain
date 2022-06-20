@@ -195,22 +195,26 @@ export class AppComponent {
                     group:'tutrain-app'
                 }]
               });
-              LocalNotifications.schedule({
-                notifications:[
-                {
-                    title : 'Reminder',
-                    body: 'You have a session with '+response.userName+' in 30 min',
-                    largeBody : 'You have a session with '+response.userName+' in 30 min',
-                    id : randomId,
-                    schedule: {
-                        at: new Date(),
-                        allowWhileIdle: true,
-                        repeats: false,
-                    },
-                    channelId: 'tutrain-default',
-                    group:'tutrain-app'
-                }]
-              });
+              if(response.schedule)
+              {
+                LocalNotifications.schedule({
+                  notifications:[
+                  {
+                      title : 'Reminder',
+                      body: 'You have a session with '+response.userName+' in 30 min',
+                      largeBody : 'You have a session with '+response.userName+' in 30 min',
+                      id : randomId,
+                      schedule: {
+                          at: response.slotDate,
+                          allowWhileIdle: true,
+                          repeats: false,
+                      },
+                      channelId: 'tutrain-default',
+                      group:'tutrain-app'
+                  }]
+                });
+              }
+              
             }else{
               this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
             }
