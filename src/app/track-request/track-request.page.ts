@@ -21,6 +21,7 @@ export class TrackRequestPage implements OnInit {
   confirmed = false;
   hidePending = false;
   hideConfirmed = true;
+  isDisablied = false;
   constructor(public alertController: AlertController,private navCtrl: NavController,private storage: StorageService,
     private fetch: FetchService,public loadingController: LoadingController,public modalController: ModalController) { }
   
@@ -71,6 +72,7 @@ export class TrackRequestPage implements OnInit {
   }
   async onMakePayment(id,tutorID,duration,timefrom,timeto,slotDate){
     let tutorD;
+    this.isDisablied = true;
     await this.fetch.getUserDetailByID(tutorID).then(async (response) => {
       tutorD = JSON.parse(response.data).response[0];
     }).catch((error) => {
@@ -91,6 +93,7 @@ export class TrackRequestPage implements OnInit {
     await modal.present();
     modal.onDidDismiss()
     .then(async (data) => {
+      this.isDisablied = false;
       this.requests = null;
       this.showNull = false;
       this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
@@ -103,9 +106,10 @@ export class TrackRequestPage implements OnInit {
     });
   }
   onCancelReques(id){
-
+    this.isDisablied = true;
   }
   async onAccept(id){
+    this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...'
@@ -147,11 +151,13 @@ export class TrackRequestPage implements OnInit {
             }
           });
       }
+      this.isDisablied = false;
     }).catch((error) => {
     });
 
   }
   async onReject(id){
+    this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...'
@@ -192,6 +198,7 @@ export class TrackRequestPage implements OnInit {
               this.showNull = true;
             }
           });
+          this.isDisablied = false;
       }
     }).catch((error) => {
     });

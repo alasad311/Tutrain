@@ -12,7 +12,7 @@ export class FetchService {
     this.http.setDataSerializer('raw');
   }
 
-  public async getUser(email):Promise<any>{
+  public async getUser(email): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+email 
       this.http.sendRequest( url, {
@@ -29,7 +29,7 @@ export class FetchService {
         });
     });
   }
-  public async getHomePage(email):Promise<any>{
+  public async getHomePage(email): Promise<any>{
     const res1 = new Promise( (resolve,reject) => {
       this.http.sendRequest( 'https://tapp.scd.edu.om/api/v1/ads' , {
         method: 'get',
@@ -81,7 +81,7 @@ export class FetchService {
       });
     });
   }
-  public async searchAll(value,page):Promise<any>{
+  public async searchAll(value,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/search/all/'+value+'/'+page;
       const user = await this.storage.get('user');
@@ -100,7 +100,7 @@ export class FetchService {
     });
   }
   
-  public async searchUsers(value,page):Promise<any>{
+  public async searchUsers(value,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/search/users/'+value+'/'+page;
       const user = await this.storage.get('user');
@@ -119,7 +119,7 @@ export class FetchService {
     });
   }
 
-  public async searchCourses(value,page):Promise<any>{
+  public async searchCourses(value,page): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/search/courses/'+value+'/'+page;
       this.http.sendRequest( url , {
@@ -136,7 +136,7 @@ export class FetchService {
         });
     });
   }
-  public async getCourseDetail(id):Promise<any>{
+  public async getCourseDetail(id): Promise<any>{
     const courseDetails = new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/course/'+id;
       this.http.sendRequest( url , {
@@ -191,7 +191,7 @@ export class FetchService {
     });
   });
   }
-  public async updateOrder(data):Promise<any>{
+  public async updateOrder(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/order" , {
@@ -209,7 +209,7 @@ export class FetchService {
         });
     });
   } 
-  public async getUserDetailByID(id):Promise<any>{
+  public async getUserDetailByID(id): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/user/'+id
       this.http.sendRequest( url, {
@@ -226,7 +226,7 @@ export class FetchService {
         });
     });
   }
-  public async submitReport(data):Promise<any>{
+  public async submitReport(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/report/" , {
@@ -244,7 +244,7 @@ export class FetchService {
         });
     });
   }
-  public async createSlot(data):Promise<any>{
+  public async createSlot(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/" , {
@@ -262,7 +262,7 @@ export class FetchService {
         });
     });
   }
-  public async updateUserToken(data):Promise<any>{
+  public async updateUserToken(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/user/token" , {
@@ -280,7 +280,7 @@ export class FetchService {
         });
     });
   }
-  public async updateBooking(data):Promise<any>{
+  public async updateBooking(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
       this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/update" , {
@@ -298,7 +298,7 @@ export class FetchService {
         });
     });
   }
-  public async getUserInvites(refCode):Promise<any>{
+  public async getUserInvites(refCode): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+refCode+'/invites';
       this.http.sendRequest( url, {
@@ -315,7 +315,7 @@ export class FetchService {
         });
     });
   }
-  public async getUserOrders(id,page):Promise<any>{
+  public async getUserOrders(id,page): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/orders/'+page;
       this.http.sendRequest( url, {
@@ -332,7 +332,7 @@ export class FetchService {
         });
     });
   }
-  public async getUserRequests(id,page,type):Promise<any>{
+  public async getUserRequests(id,page,type): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/requests/'+page+'/'+type;
       this.http.sendRequest( url, {
@@ -349,7 +349,7 @@ export class FetchService {
         });
     });
   }
-  public async getTotalUnPaid(id):Promise<any>{
+  public async getTotalUnPaid(id): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/wallet/';
       this.http.sendRequest( url, {
@@ -366,5 +366,21 @@ export class FetchService {
         });
     });
   }
-  
+  public async getAppSetting(): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/app/setting';
+      this.http.sendRequest( url, {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 }

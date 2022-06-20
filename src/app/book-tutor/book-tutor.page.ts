@@ -10,32 +10,20 @@ export class BookTutorPage implements OnInit {
   @ViewChild(IonSelect) duration: IonSelect;
   @Input() tutorName: any;
   minDate = new Date().toISOString().slice(0, 10);
-  maxDate = new Date(new Date().getTime() + 86400000).toISOString().slice(0, 10);
+  maxDate = new Date(new Date().getTime() + (86400000*2)).toISOString().slice(0, 10);
   isDisablied = false;
   isConfirmed = false;
   constructor(public modalController: ModalController) { }
   
   ngOnInit() {
-    const time = new Date().getHours();
-    this.datetime.hourValues = '15,16,17,18,19';
+    const time = new Date().getHours()+2;
+    const dateToChange = new Date(new Date().getTime()).toISOString().slice(0, 10);
+    // this.datetime.hourValues = '15,16,17,18,19';
     
-    if(time > 18)
-    {
-      const maxAntherDay = new Date(new Date().getTime() + (86400000*2)).toISOString().slice(0, 10);
-      this.datetime.max = maxAntherDay;
-      this.datetime.min = this.maxDate;
-      this.datetime.value = this.maxDate+'T15:00:00.136Z';
-    }else if(time < 15){
-      this.datetime.max = this.maxDate;
-      this.datetime.min = this.minDate;
-      this.datetime.value = this.minDate+'T15:00:00.136Z';
-    }else
-    {
-      this.datetime.max = this.maxDate;
-      this.datetime.min = this.minDate;
-      this.datetime.value = this.minDate+'T'+(time+1)+':00:00.136Z';
-    }
-
+    this.datetime.value = dateToChange+'T'+time+':00:00.136Z';
+    this.datetime.hourValues = '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24';
+    this.datetime.max = this.maxDate;
+    this.datetime.min = this.minDate;
   }
   async placeOrder(){
     //lets place the order.

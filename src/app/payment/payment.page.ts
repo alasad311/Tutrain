@@ -17,12 +17,12 @@ export class PaymentPage implements OnInit {
   @Input() timeToSelected: any;
   @Input() bookID: any;
 
-
+  serviceFees: any;
   paymentMethod = 'online';
   dateFormatted: any;
-  serviceFees = 2;
   isDisablied = false;
   tuturHourCost;
+  service = 0;
   paymentType = true;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController) { }
@@ -35,6 +35,31 @@ export class PaymentPage implements OnInit {
       this.dateFormatted = date.getDate().toString().padStart(2, '0') + '/' +
       (1 + date.getMonth()).toString().padStart(2, '0') + '/' + date.getFullYear();
     }
+  }
+
+  async ionViewWillEnter(){
+    await this.fetchServices.getAppSetting().then(async (response) => {
+      const json = JSON.parse(response.data);
+      this.serviceFees = json.response[0];
+      if(this.course)
+      {
+        if(this.serviceFees.is_precentage)
+        {
+          this.service = (this.serviceFees.service_fees/100)*this.course.price;
+        }else{
+          this.service = this.serviceFees.service_fees;
+        }
+      }else{
+        if(this.serviceFees.is_precentage)
+        {
+          this.service = (this.serviceFees.service_fees/100)*this.tutor.hour_price;
+        }else{
+          this.service = this.serviceFees.service_fees;
+        }
+      }
+    }).catch((error) => {
+      
+    });
   }
 
   dismissModal(data){
@@ -65,8 +90,9 @@ export class PaymentPage implements OnInit {
       await loading.present();
       const user = await this.storage.get('user');
       const data = {
-        paid_amount: (this.tuturHourCost * this.durationSelect )+this.serviceFees,
+        paid_amount: (this.tuturHourCost * this.durationSelect ),
         course_id : null,
+        service_fees:this.service,
         user_id : user.user_id,
         tutor_id: this.tutor.user_id,
         is_online:this.paymentType,
@@ -76,7 +102,7 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage('Payment','You have paid '+ ((this.tuturHourCost * this.durationSelect )+this.serviceFees).toFixed(3));
+          this.alertMessage('Payment','You have paid '+ ((this.tuturHourCost * this.durationSelect )+this.service).toFixed(3));
         }
 
       }).catch((error) => {
@@ -99,7 +125,8 @@ export class PaymentPage implements OnInit {
       await loading.present();
       const user = await this.storage.get('user');
       const data = {
-        paid_amount: this.course.price+2,
+        paid_amount: this.course.price,
+        service_fees:this.service,
         course_id : this.course.id,
         user_id : user.user_id,
         tutor_id: null,
@@ -110,7 +137,7 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage('Payment','You have paid '+ (this.course.price+2).toFixed(3) );
+          this.alertMessage('Payment','You have paid '+ (this.course.price+this.service).toFixed(3) );
         }
 
       }).catch((error) => {
@@ -142,11 +169,16 @@ export class PaymentPage implements OnInit {
   setServiceFees(event){
     if(event.target.value !== 'online')
     {
-      this.serviceFees = 0;
+      this.service = 0;
       this.tuturHourCost = 0;
       this.paymentType = false;
     }else{
-      this.serviceFees = 2;
+      if(this.serviceFees.is_precentage)
+      {
+        this.service = (this.serviceFees.service_fees/100)*this.tutor.hour_price;
+      }else{
+        this.service = this.serviceFees.service_fees;
+      }
       this.tuturHourCost = this.tutor.hour_price;
       this.paymentType = true;
     }
@@ -162,10 +194,12 @@ export class PaymentPage implements OnInit {
     const data = {
       paid_amount: (this.tuturHourCost * this.durationSelect )+this.serviceFees,
       course_id : null,
+      service_fees:this.service,
       user_id : user.user_id,
       tutor_id: this.tutor.user_id,
       is_online:this.paymentType,
-      book_id: this.bookID
+      book_id: this.bookID,
+      
     };
     this.fetchServices.updateOrder(data).then(async (response) => {
       const json = JSON.parse(response.data).response;

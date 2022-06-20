@@ -14,7 +14,7 @@
                 <ion-label>Pending</ion-label>
             </ion-segment-button>
             <ion-segment-button value="confirmed">
-                <ion-label>Confirmed</ion-label>
+                <ion-label>Upcoming</ion-label>
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
@@ -61,10 +61,10 @@
                         </div>
                     </div>
                     <div class="btc_div">
-                        <ion-button (click)="onMakePayment(item.bookid,item.tutorID,item.duration,item.timefrom,item.timeto,item.fullslot)" color="primary">
+                        <ion-button [disabled]="isDisablied" (click)="onMakePayment(item.bookid,item.tutorID,item.duration,item.timefrom,item.timeto,item.fullslot)" color="primary">
                             Make Payment
                         </ion-button>
-                        <ion-button (click)="onCancelReques(item.bookid)" fill="outline">
+                        <ion-button [disabled]="isDisablied" (click)="onCancelReques(item.bookid)" fill="outline">
                             Cancel Request
                         </ion-button>
                     </div>
@@ -85,10 +85,10 @@
                         </div>
                     </div>
                     <div class="btc_div">
-                        <ion-button (click)="onAccept(item.bookid)" color="primary">
+                        <ion-button [disabled]="isDisablied" (click)="onAccept(item.bookid)" color="primary">
                             Accept
                         </ion-button>
-                        <ion-button (click)="onReject(item.bookid)" fill="outline">
+                        <ion-button [disabled]="isDisablied" (click)="onReject(item.bookid)" fill="outline">
                             Reject
                         </ion-button>
                     </div>
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

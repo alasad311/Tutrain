@@ -31,7 +31,9 @@
 
 
 ## Feedback
-- [ ] Booking slot date issue
-- [ ] Open to all timing from user current time 
+- [x] Booking slot date issue
+- [x] Open to all timing from user current time 
 - [ ] Reject option
-- [ ] Service fees to be DB wise
+- [x] Service fees to be DB wise
+- [x] Duplicate records in pending
+- [x] Disable button in pending on clicked
