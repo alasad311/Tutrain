@@ -18,6 +18,7 @@
 - [ ] Show student or tutor contact details once success booked a tutor
 - [ ] Request Money out
 - [ ] Home page connection categories / courses / purchases
+- [ ] set notification schdule
 
 ## Backend
 - [x] Wallet (in progress)
@@ -37,3 +38,4 @@
 - [x] Service fees to be DB wise
 - [x] Duplicate records in pending
 - [x] Disable button in pending on clicked
+- [x] hide completed session from both tutor and student

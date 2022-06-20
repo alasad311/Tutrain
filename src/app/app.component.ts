@@ -156,7 +156,8 @@ export class AppComponent {
                 body: JSON.parse(JSON.stringify(notification)).body,
                 largeBody : JSON.parse(JSON.stringify(notification)).body,
                 id : randomId,
-                channelId: 'tutrain-default'
+                channelId: 'tutrain-default',
+                group:'tutrain-app'
             }]
           });
           LocalNotifications.addListener('localNotificationActionPerformed', async (notifications) => {
@@ -190,7 +191,27 @@ export class AppComponent {
                     body: JSON.parse(JSON.stringify(notification)).body,
                     largeBody : JSON.parse(JSON.stringify(notification)).body,
                     id : randomId,
-                    channelId: 'tutrain-default'
+                    channelId: 'tutrain-default',
+                    group:'tutrain-app'
+                }]
+              });
+              LocalNotifications.schedule({
+                notifications:[
+                {
+                    title : 'Reminder',
+                    body: 'You have a session with '+response.userName+' in 30 min',
+                    largeBody : 'You have a session with '+response.userName+' in 30 min',
+                    id : randomId,
+                    schedule: {
+                        at: {
+                            hour: 12,
+                            minute: 30,
+                        },
+                        allowWhileIdle: true,
+                        repeats: false,
+                    },
+                    channelId: 'tutrain-default',
+                    group:'tutrain-app'
                 }]
               });
             }else{
