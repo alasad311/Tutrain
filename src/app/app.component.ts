@@ -203,10 +203,7 @@ export class AppComponent {
                     largeBody : 'You have a session with '+response.userName+' in 30 min',
                     id : randomId,
                     schedule: {
-                        at: {
-                            hour: 12,
-                            minute: 30,
-                        },
+                        at: new Date(),
                         allowWhileIdle: true,
                         repeats: false,
                     },
