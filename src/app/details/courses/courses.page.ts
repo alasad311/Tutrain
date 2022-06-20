@@ -69,7 +69,6 @@ export class CoursesPage implements OnInit {
   }
   setVideoPlayer = async (): Promise<any>=> {
     const platform = Capacitor.getPlatform();
-    console.log(`platform ${platform}`);
     return {plugin:CapacitorVideoPlayer, platform};
   };
   private async playerReady(data: any): Promise<void> {
@@ -78,7 +77,6 @@ export class CoursesPage implements OnInit {
     return;
   }
   private async playerPlay(data: any): Promise<void> {
-    console.log(`Event jeepCapVideoPlayer ${data}`);
     return;
   }
   private async playerEnd(data: any): Promise<void> {
@@ -92,7 +90,6 @@ export class CoursesPage implements OnInit {
     return;
   }
   private async playerPause(data: any): Promise<void> {
-    console.log(`Event jeepCapVideoPlayerPause ${data}`);
     return;
   }
   async playYoutubeVideo(url){

@@ -133,22 +133,33 @@ export class AppComponent {
       (notification: PushNotificationSchema) => {
         //let navigate to requested slot
         const response = JSON.parse(JSON.stringify(notification)).data;
-       
+        LocalNotifications.createChannel({
+          id: 'tutrain-default',
+          name: 'tutrain-default',
+          description:'tutrain-default',
+          importance: 5,
+          visibility: 1,
+          lights:true,
+          vibration: true
+        });
         if(response.type == 'NEWSESSION')
         {
           this.alertMessage('New Request',response.userFullName +' has requested a session on '
           + response.slotDate + ' from : '+response.timeFrom+' to: '+ response.timeTo,response.bookID);
+        }else if(response.type == 'SESSIONCANCELLED'){
+          LocalNotifications.schedule({
+            notifications:[
+            {
+                title : 'Session Cancelled',
+                body: JSON.parse(JSON.stringify(notification)).body,
+                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                id : this.generateRandomCode(),
+                channelId: 'tutrain-default',
+                group:'tutrainapp'
+            }]
+          });
         }else if(response.type == 'SESSIONRESPONSE')
         {
-          LocalNotifications.createChannel({
-            id: 'tutrain-default',
-            name: 'tutrain-default',
-            description:'tutrain-default',
-            importance: 5,
-            visibility: 1,
-            lights:true,
-            vibration: true
-          });
           LocalNotifications.schedule({
             notifications:[
             {
@@ -233,6 +244,18 @@ export class AppComponent {
         {
           this.alertMessage('New Request',response.userFullName +' has requested a session on '
           + response.slotDate + ' from : '+response.timeFrom+' to: '+ response.timeTo,response.bookID);
+        }else if(response.type == 'SESSIONCANCELLED'){
+          LocalNotifications.schedule({
+            notifications:[
+            {
+                title : 'Session Cancelled',
+                body: JSON.parse(JSON.stringify(notification)).body,
+                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                id : this.generateRandomCode(),
+                channelId: 'tutrain-default',
+                group:'tutrainapp'
+            }]
+          });
         }else if(response.type == 'SESSIONRESPONSE')
         {
           if(response.accpeted == 'Accepted')

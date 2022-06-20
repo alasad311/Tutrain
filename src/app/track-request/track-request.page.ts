@@ -70,6 +70,53 @@ export class TrackRequestPage implements OnInit {
       });
     }, 2000);
   }
+  async onCallTutor(tutorID){
+    this.isDisablied = true;
+    await this.fetch.getUserDetailByID(tutorID).then(async (response) => {
+      let json = JSON.parse(response.data).response[0];
+      this.isDisablied = false;
+      if(json.country == 'om'){
+        window.open('tel:+968'+json.phone, '_system');
+      }else if(json.country == 'kw'){
+        window.open('tel:+965'+json.phone, '_system');
+      }else if(json.country == 'sa'){
+        window.open('tel:+966'+json.phone, '_system');
+      }else if(json.country == 'qa'){
+        window.open('tel:+974'+json.phone, '_system');
+      }else if(json.country == 'iq'){
+        window.open('tel:+964'+json.phone, '_system');
+      }else if(json.country == 'bh'){
+        window.open('tel:+973'+json.phone, '_system');
+      }else if(json.country == 'ae'){
+        window.open('tel:+971'+json.phone, '_system');
+      }
+    }).catch((error) => {
+    });
+  }
+  async onCallStudent(userID){
+    this.isDisablied = true;
+    await this.fetch.getUserDetailByID(userID).then(async (response) => {
+      let json = JSON.parse(response.data).response[0];
+      this.isDisablied = false;
+      if(json.country == 'om'){
+        window.open('tel:+968'+json.phone, '_system');
+      }else if(json.country == 'kw'){
+        window.open('tel:+965'+json.phone, '_system');
+      }else if(json.country == 'sa'){
+        window.open('tel:+966'+json.phone, '_system');
+      }else if(json.country == 'qa'){
+        window.open('tel:+974'+json.phone, '_system');
+      }else if(json.country == 'iq'){
+        window.open('tel:+964'+json.phone, '_system');
+      }else if(json.country == 'bh'){
+        window.open('tel:+973'+json.phone, '_system');
+      }else if(json.country == 'ae'){
+        window.open('tel:+971'+json.phone, '_system');
+      }
+    }).catch((error) => {
+    });
+    
+  }
   async onMakePayment(id,tutorID,duration,timefrom,timeto,slotDate){
     let tutorD;
     this.isDisablied = true;
@@ -112,6 +159,45 @@ export class TrackRequestPage implements OnInit {
       message: 'Please wait...'
     });
     await loading.present();
+    this.fetch.cancelBooking({is_trash: true,bookid : id}).then(async (response) => {
+      const json = JSON.parse(response.data).response;
+      if(json.status == 'updated')
+      {
+        await loading.dismiss();
+        const alertRes = await this.alertController.create({
+          header: 'Updated',
+          message:  'Booking has been updated',
+          buttons: ['OK']});
+        await alertRes.present();
+        this.requests = null;
+        this.showNull = false;
+        this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
+          this.requests = JSON.parse(responsee.data).response;
+          if(this.requests.length == 0)
+          {
+            this.showNull = true;
+          }
+        });
+      }else{
+          await loading.dismiss();
+          const alertRes = await this.alertController.create({
+            header: 'Error',
+            message:  'An Error happened while updated try again later.',
+            buttons: ['OK']});
+          await alertRes.present();
+          this.requests = null;
+          this.showNull = false;
+          this.fetch.getUserRequests(this.user.user_id,this.page,this.section).then(async (responsee) => {
+            this.requests = JSON.parse(responsee.data).response;
+            if(this.requests.length == 0)
+            {
+              this.showNull = true;
+            }
+          });
+      }
+      this.isDisablied = false;
+    }).catch((error) => {
+    });
   }
   async onAccept(id){
     this.isDisablied = true;

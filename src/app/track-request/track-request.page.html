@@ -108,6 +108,11 @@
                             <div class="down_div">
                                 <ion-label class="type">Make sure you are on time, for your session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
                             </div>
+                            <div class="btc_div" style="justify-content: end;">
+                                <ion-button [disabled]="isDisablied" (click)="onCallTutor(item.tutorID)" color="primary">
+                                    Call Tutor
+                                </ion-button>
+                            </div>
                         </div>
                     </div>
 
@@ -124,6 +129,11 @@
                             </div>
                             <div class="down_div">
                                 <ion-label class="type">Make sure to be prepared you have a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                            </div>
+                            <div class="btc_div" style="justify-content: end;">
+                                <ion-button [disabled]="isDisablied" (click)="onCallStudent(item.userID)" color="primary">
+                                    Call Student
+                                </ion-button>
                             </div>
                         </div>
                     </div>

@@ -22,7 +22,6 @@ export class SearchPage implements OnInit {
     if (this.router.getCurrentNavigation().extras.state) {
       const searchValue = this.router.getCurrentNavigation().extras.state;
 
-      console.log(searchValue);
 
       this.searchInput = searchValue;
       this.searchDB(searchValue);

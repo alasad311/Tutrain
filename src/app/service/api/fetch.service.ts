@@ -298,6 +298,24 @@ export class FetchService {
         });
     });
   }
+  public async cancelBooking(data): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      this.http.setDataSerializer('urlencoded');
+      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/cancel" , {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        data: data,
+        serializer: 'json',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
   public async getUserInvites(refCode): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+refCode+'/invites';
@@ -373,6 +391,24 @@ export class FetchService {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async requestPayout(data): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/payout/request';
+      this.http.sendRequest( url, {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        data: data,
+        serializer: 'json',
         timeout: 1000
       } )
         .then(res => {

@@ -15,8 +15,8 @@
 - [x] wallet page / earnings (in progress)
 - [ ] Create Course / Session
 - [ ] payment to be adjusted based on new gateaway
-- [ ] Show student or tutor contact details once success booked a tutor
-- [ ] Request Money out
+- [x] Show student or tutor contact details once success booked a tutor
+- [x] Request Money out
 - [ ] Home page connection categories / courses / purchases
 - [x] set notification schdule
 
@@ -28,13 +28,13 @@
 - [x] Payment History
 - [x] Track Request
 - [ ] Payment Gateaway
-- [ ] Request Money out
+- [x] Request Money out
 
 
 ## Feedback
 - [x] Booking slot date issue
 - [x] Open to all timing from user current time 
-- [ ] Reject option
+- [x] Reject option
 - [x] Service fees to be DB wise
 - [x] Duplicate records in pending
 - [x] Disable button in pending on clicked

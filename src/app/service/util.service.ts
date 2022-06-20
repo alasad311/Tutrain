@@ -30,7 +30,6 @@ export class UtilService {
       spinner: 'dots',
     }).then(a => {
       a.present().then(() => {
-        console.log('presented');
         if (!this.isLoading) {
           a.dismiss().then(() => console.log('abort presenting'));
         }
@@ -125,6 +124,6 @@ export class UtilService {
     toast.present();
   }
   apiErrorHandler(err) {
-    console.log('error', err);
+
   }
 }

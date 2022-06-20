@@ -45,7 +45,6 @@ export class UsersPage implements OnInit {
     });
   }
   goBackHome(){
-    console.log(this.courseID);
     if(this.courseID)
     {
       const navigationExtras: NavigationExtras = {
