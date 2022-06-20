@@ -84,7 +84,7 @@ export class TrackRequestPage implements OnInit {
       componentProps: {
         tutor:tutorD,
         durationSelect:duration,
-        dateSelected:slotDate,
+        dateSelected:this.requests,
         timeFromSelected:timefrom,
         timeToSelected:timeto,
         bookID: id
@@ -105,8 +105,13 @@ export class TrackRequestPage implements OnInit {
       });
     });
   }
-  onCancelReques(id){
+  async onCancelReques(id){
     this.isDisablied = true;
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...'
+    });
+    await loading.present();
   }
   async onAccept(id){
     this.isDisablied = true;

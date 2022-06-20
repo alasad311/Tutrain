@@ -18,7 +18,7 @@
 - [ ] Show student or tutor contact details once success booked a tutor
 - [ ] Request Money out
 - [ ] Home page connection categories / courses / purchases
-- [ ] set notification schdule
+- [x] set notification schdule
 
 ## Backend
 - [x] Wallet (in progress)

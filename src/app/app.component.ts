@@ -133,13 +133,13 @@ export class AppComponent {
       (notification: PushNotificationSchema) => {
         //let navigate to requested slot
         const response = JSON.parse(JSON.stringify(notification)).data;
+       
         if(response.type == 'NEWSESSION')
         {
           this.alertMessage('New Request',response.userFullName +' has requested a session on '
           + response.slotDate + ' from : '+response.timeFrom+' to: '+ response.timeTo,response.bookID);
         }else if(response.type == 'SESSIONRESPONSE')
         {
-          const randomId = Math.floor(Math.random() * 10000) + 1;
           LocalNotifications.createChannel({
             id: 'tutrain-default',
             name: 'tutrain-default',
@@ -155,13 +155,13 @@ export class AppComponent {
                 title : 'Session '+response.accpeted,
                 body: JSON.parse(JSON.stringify(notification)).body,
                 largeBody : JSON.parse(JSON.stringify(notification)).body,
-                id : randomId,
+                id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
-                group:'tutrain-app'
+                group:'tutrainapp'
             }]
           });
           LocalNotifications.addListener('localNotificationActionPerformed', async (notifications) => {
-
+            
             if(response.accpeted == 'Accepted')
             {
               let tutorD;
@@ -184,42 +184,41 @@ export class AppComponent {
               });
               await modal.present();
             }else if(response.type == 'NEWORDER'){
-              LocalNotifications.schedule({
-                notifications:[
-                {
-                    title : 'New Order',
-                    body: JSON.parse(JSON.stringify(notification)).body,
-                    largeBody : JSON.parse(JSON.stringify(notification)).body,
-                    id : randomId,
-                    channelId: 'tutrain-default',
-                    group:'tutrain-app'
-                }]
-              });
-              if(response.schedule)
-              {
-                LocalNotifications.schedule({
-                  notifications:[
-                  {
-                      title : 'Reminder',
-                      body: 'You have a session with '+response.userName+' in 30 min',
-                      largeBody : 'You have a session with '+response.userName+' in 30 min',
-                      id : randomId,
-                      schedule: {
-                          at: response.slotDate,
-                          allowWhileIdle: true,
-                          repeats: false,
-                      },
-                      channelId: 'tutrain-default',
-                      group:'tutrain-app'
-                  }]
-                });
-              }
-              
+              this.router.navigate(['/track-request']);
             }else{
               this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
             }
 
           });
+        }else if(response.type == 'NEWORDER'){
+          const slotDate = new Date(new Date(response.slotDate).getTime() - (60000*30));
+          LocalNotifications.schedule({
+            notifications:[
+            {
+                title : 'New Order',
+                body: JSON.parse(JSON.stringify(notification)).body,
+                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                id : this.generateRandomCode(),
+                channelId: 'tutrain-default',
+                group:'tutrainapp'
+            },
+            {
+              title : 'Session Reminder',
+              body: 'You have a session with '+response.userName+' in 30 min',
+              largeBody : 'You have a session with '+response.userName+' in 30 min',
+              id : this.generateRandomCode(),
+              schedule: {
+                  at: slotDate,
+                  allowWhileIdle: true,
+                  repeats: false,
+              },
+              channelId: 'tutrain-default',
+              group:'tutrainapp'
+          }]
+          });
+        
+         
+          
         }
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
 
@@ -326,6 +325,9 @@ export class AppComponent {
       message,
       buttons: ['OK']});
       await alert.present();
+  }
+  generateRandomCode(){
+    return Math.floor(Math.random() * 10000) + 1;
   }
   async alertMessage(header,message,id) {
     const alert = await this.alertController.create({

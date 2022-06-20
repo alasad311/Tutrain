@@ -3,6 +3,8 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AlertController, ModalController,LoadingController  } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
@@ -103,11 +105,29 @@ export class PaymentPage implements OnInit {
         await loading.dismiss();
         if(json.id){
           this.alertMessage('Payment','You have paid '+ ((this.tuturHourCost * this.durationSelect )+this.service).toFixed(3));
+          const randomId = Math.floor(Math.random() * 10000) + 1;
+          
+          const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
+          LocalNotifications.schedule({
+            notifications:[
+            {
+                title : 'Session Reminder',
+                body: 'You have a session with '+this.tutor.fullname+' in 30 min',
+                largeBody : 'You have a session with '+this.tutor.fullname+' in 30 min',
+                id : randomId,
+                schedule: {
+                    at: slotDate,
+                    allowWhileIdle: true,
+                    repeats: false,
+                },
+                channelId: 'tutrain-default',
+                group:'tutrainapp'
+            }]
+          });
         }
 
       }).catch((error) => {
         this.isDisablied = false;
-        alert(error);
       });
     }else{
       this.isDisablied = false;
@@ -142,7 +162,6 @@ export class PaymentPage implements OnInit {
 
       }).catch((error) => {
         this.isDisablied = false;
-        alert(error);
       });
     }else{
       this.isDisablied = false;
@@ -192,7 +211,7 @@ export class PaymentPage implements OnInit {
     await loading.present();
     const user = await this.storage.get('user');
     const data = {
-      paid_amount: (this.tuturHourCost * this.durationSelect )+this.serviceFees,
+      paid_amount: (this.tuturHourCost * this.durationSelect )+this.service,
       course_id : null,
       service_fees:this.service,
       user_id : user.user_id,
@@ -206,11 +225,29 @@ export class PaymentPage implements OnInit {
       await loading.dismiss();
       if(json.id){
         this.alertMessage('Payment','Your order has been placed make sure to pay the tutor directly on completetion of the session');
+        const randomId = Math.floor(Math.random() * 10000) + 1;
+
+        const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
+        LocalNotifications.schedule({
+          notifications:[
+          {
+              title : 'Session Reminder',
+              body: 'You have a session with '+this.tutor.fullname+' in 30 min',
+              largeBody : 'You have a session with '+this.tutor.fullname+' in 30 min',
+              id : randomId,
+              schedule: {
+                  at: slotDate,
+                  allowWhileIdle: true,
+                  repeats: false,
+              },
+              channelId: 'tutrain-default',
+              group:'tutrainapp'
+          }]
+        });
       }
 
     }).catch((error) => {
       this.isDisablied = false;
-      alert(error);
     });
   }
   onCheckOutTutor(){

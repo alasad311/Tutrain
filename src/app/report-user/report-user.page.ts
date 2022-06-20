@@ -43,7 +43,6 @@ export class ReportUserPage implements OnInit {
 
       }).catch((error) => {
         this.isDisablied = false;
-        alert(error)
       });
       
     }else{
