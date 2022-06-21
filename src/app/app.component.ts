@@ -227,9 +227,6 @@ export class AppComponent {
               group:'tutrainapp'
           }]
           });
-        
-         
-          
         }
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
 
