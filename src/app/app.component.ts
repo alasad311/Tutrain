@@ -6,7 +6,7 @@ import { AlertController, MenuController,LoadingController, ModalController } fr
 import { Platform } from '@ionic/angular';
 import { FetchService } from './service/api/fetch.service';
 import { EventService } from './service/event.service';
-import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
+import { App as CapacitorApp, AppRestoredResult, RestoredListenerEvent, URLOpenListenerEvent } from '@capacitor/app';
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
@@ -43,15 +43,9 @@ export class AppComponent {
 
 
     this.initializeApp();
-    this.test2();
 
    }
-   async test2(): Promise<void> {
-    await this.platform.ready();
-    CapacitorApp.addListener('backButton', ({canGoBack}) => {
 
-    });
-  }
   getQueryParams(params, url) {
     const reg = new RegExp('[?&]' + params + '=([^&#]*)', 'i');
     const queryString = reg.exec(url);
@@ -76,8 +70,30 @@ export class AppComponent {
     });
 
     await this.storage.init();
-    const user = await this.storage.get('user');
+    let user = await this.storage.get('user');
 
+    //lets check if the user isnt deleted or inactive
+
+    await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
+      const checkUser = JSON.parse(response.data).response[0];
+      if(checkUser.is_active == 0)
+      {
+        user = null;
+        this.storage.clear();
+      }
+    }).catch((error) => {
+    });
+    CapacitorApp.addListener('appRestoredResult', async (event: RestoredListenerEvent) => {
+      await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
+        const checkUser = JSON.parse(response.data).response[0];
+        if(checkUser.is_active == 0)
+        {
+          user = null;
+          this.storage.clear();
+        }
+      }).catch((error) => {
+      });
+    });
     this.platform.ready().then(async (readySource) => {
       CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
         this.zone.run(() => {

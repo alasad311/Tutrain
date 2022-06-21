@@ -5,6 +5,7 @@ import { StorageService } from './../service/storage/storage.service';
 import { FetchService } from './../service/api/fetch.service';
 import { UtilService } from './../service/util.service';
 import { MenuController, NavController,ModalController, AlertController  } from '@ionic/angular';
+import { App as CapacitorApp } from '@capacitor/app';
 
 @Component({
   selector: 'app-home',
@@ -59,23 +60,22 @@ export class HomePage implements OnInit {
       rating: 2.2
     },
   ];
-
+  users: any;
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
     private modalCtrl: ModalController,private util: UtilService,public alertController: AlertController ) {
-     
+      CapacitorApp.addListener('backButton', ({canGoBack}) => {
+        if(this.router.url != "/home")
+        {
+          this.nav.back();
+        }
+       
+      });
      }
 
-  async ionViewWillEnter() {
-      const user = await this.storage.get('user');
-      //fetch ads
-      this.fetch.getHomePage(user.email).then((response) => {
-        this.banner = JSON.parse(response[0].data).response;
-        this.categories = JSON.parse(response[1].data).response;
-        this.newCourses = JSON.parse(response[2].data).response;
-      }).catch((error) => {
-      });
-  }
+  // async ionViewWillEnter() {
+      
+  // }
   searchPage(searchValue: any){
     this.nav.navigateForward('/search',{ state: searchValue });
     this.searchInput = '';
@@ -84,9 +84,9 @@ export class HomePage implements OnInit {
     this.banner = '';
     this.categories = '';
     this.newCourses = '';
-    const email = await this.auth.isAuthenicated();
+    
     //fetch ads
-    this.fetch.getHomePage(email).then((response) => {
+    this.fetch.getHomePage(this.users.email).then((response) => {
       this.banner = JSON.parse(response[0].data).response;
       this.categories = JSON.parse(response[1].data).response;
       this.newCourses = JSON.parse(response[2].data).response;
@@ -96,8 +96,18 @@ export class HomePage implements OnInit {
     });
   }
   async ngOnInit() {
-    this.menuCtrl.enable(true);
-    
+    this.users = await this.storage.get('user');
+    if(this.users.tags == null || this.users.picture == null || this.users.hour_price == null) 
+    {
+      this.alertMessageWithBtn("Update Profile","Hey "+this.users.fullname+" We can see that your profile is incomplete, to ensure your account being listed in our search you are requested to update your profile.\n Do you wish to update your profile now?")
+    }
+    //fetch ads
+    this.fetch.getHomePage(this.users.email).then((response) => {
+      this.banner = JSON.parse(response[0].data).response;
+      this.categories = JSON.parse(response[1].data).response;
+      this.newCourses = JSON.parse(response[2].data).response;
+    }).catch((error) => {
+    });
   }
   gotToAd(link){
     window.open(link, '_system');
@@ -108,5 +118,31 @@ export class HomePage implements OnInit {
     //   swipeToClose: true,
     // });
     // await modal.present();
+  }
+  async alertMessageWithBtn(header,message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'ok',
+          id: 'confirm-button',
+          handler: () => {
+            alert.dismiss();
+            this.router.navigate(['setting'])
+          }
+        },{
+          text: 'Cancel',
+          id: 'cancel-button',
+          handler: () => {
+            alert.dismiss();
+            
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

@@ -75,6 +75,9 @@ export class LoginPage implements OnInit {
             })
           }
           this.isDisablied = false;
+        }else{
+          this.alertMessage("Error: #12","Email or password incorrect","","");
+          this.isDisablied = false;
         }
       }).catch((error) => {
         this.alertMessage("Error: #1","Service seems offline or unavailable at the moment","","");

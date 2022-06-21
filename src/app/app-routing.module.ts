@@ -36,43 +36,53 @@ const routes: Routes = [
   },
   {
     path: 'details/users',
-    loadChildren: () => import('./details/users/users.module').then( m => m.UsersPageModule)
+    loadChildren: () => import('./details/users/users.module').then( m => m.UsersPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'details/courses',
-    loadChildren: () => import('./details/courses/courses.module').then( m => m.CoursesPageModule)
+    loadChildren: () => import('./details/courses/courses.module').then( m => m.CoursesPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'payment',
-    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
+    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'report-user',
-    loadChildren: () => import('./report-user/report-user.module').then( m => m.ReportUserPageModule)
+    loadChildren: () => import('./report-user/report-user.module').then( m => m.ReportUserPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'book-tutor',
-    loadChildren: () => import('./book-tutor/book-tutor.module').then( m => m.BookTutorPageModule)
+    loadChildren: () => import('./book-tutor/book-tutor.module').then( m => m.BookTutorPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'faq',
-    loadChildren: () => import('./faq/faq.module').then( m => m.FaqPageModule)
+    loadChildren: () => import('./faq/faq.module').then( m => m.FaqPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'invite-friend',
-    loadChildren: () => import('./invite-friend/invite-friend.module').then( m => m.InviteFriendPageModule)
+    loadChildren: () => import('./invite-friend/invite-friend.module').then( m => m.InviteFriendPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'payment-history',
-    loadChildren: () => import('./payment-history/payment-history.module').then( m => m.PaymentHistoryPageModule)
+    loadChildren: () => import('./payment-history/payment-history.module').then( m => m.PaymentHistoryPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'track-request',
-    loadChildren: () => import('./track-request/track-request.module').then( m => m.TrackRequestPageModule)
+    loadChildren: () => import('./track-request/track-request.module').then( m => m.TrackRequestPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'setting',
-    loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
+    loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule),
+    canActivate: [AuthGuardService],
   },
 
 
