@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -16,7 +17,8 @@ export class SettingPage implements OnInit {
   tutor = false;
   isDisablied = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
-    public alertController: AlertController,public loadingController: LoadingController,private util: UtilService) { }
+    public alertController: AlertController,public loadingController: LoadingController,private util: UtilService,
+    private router: Router) { }
 
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -54,6 +56,18 @@ export class SettingPage implements OnInit {
   }
   ionViewDidLeave() {
     this.util.refreshUserData();
+  }
+  goToPrivacy(){
+    window.open('https://policies.google.com/terms?hl=en-US', '_system');
+  }
+  goToContactUs(){
+    this.router.navigate(['/contact-us']);
+  }
+  goToCourses(){
+    this.router.navigate(['/track-request']);
+  }
+  goToSession(){
+    this.router.navigate(['/track-request']);
   }
   async alertMessageWithoutBtn(header,message) {
     const alert = await this.alertController.create({

@@ -11,7 +11,12 @@
 - [x] Terms of service
 - [x] After order notification
 - [ ] Page Titles
-- [ ] Setting / Profile Create Course / Session (in progress)
+- [x] Setting Page
+- [ ] Course list and create course
+- [ ] Session create and list
+- [x] privacy link
+- [ ] Output of notification option
+- [ ] contact us page
 - [x] wallet page / earnings
 - [ ] payment to be adjusted based on new gateaway
 - [x] Show student or tutor contact details once success booked a tutor

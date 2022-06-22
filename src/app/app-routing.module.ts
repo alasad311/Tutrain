@@ -84,6 +84,12 @@ const routes: Routes = [
     loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule),
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'contact-us',
+    loadChildren: () => import('./contact-us/contact-us.module').then( m => m.ContactUsPageModule),
+    canActivate: [AuthGuardService],
+  },
+
 
 
 
