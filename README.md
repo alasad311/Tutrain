@@ -11,9 +11,8 @@
 - [x] Terms of service
 - [x] After order notification
 - [ ] Page Titles
-- [ ] Setting / Profile (waiting)
-- [x] wallet page / earnings (in progress)
-- [ ] Create Course / Session
+- [ ] Setting / Profile Create Course / Session (in progress)
+- [x] wallet page / earnings
 - [ ] payment to be adjusted based on new gateaway
 - [x] Show student or tutor contact details once success booked a tutor
 - [x] Request Money out
@@ -21,7 +20,7 @@
 - [x] set notification schdule
 - [x] Android hardware back is active now
 - [x] Angular authgard now is active and working
-- [ ] need to find a way to check if user is active
+- [x] need to find a way to check if user is active
 
 ## Backend
 - [x] Wallet (in progress)
