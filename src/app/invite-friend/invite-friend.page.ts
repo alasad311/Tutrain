@@ -4,6 +4,7 @@ import { StorageService } from '../service/storage/storage.service';
 import { toastController } from '@ionic/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { FetchService } from '../service/api/fetch.service';
+import { UtilService } from '../service/util.service';
 @Component({
   selector: 'app-invite-friend',
   templateUrl: './invite-friend.page.html',
@@ -13,7 +14,8 @@ export class InviteFriendPage implements OnInit {
 
   refCode: any;
   confirmedInvites = 0;
-  constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService) { }
+  constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
+    ,private util: UtilService) { }
 
   async ngOnInit() {
     const user = await this.storage.get('user');
@@ -52,5 +54,11 @@ export class InviteFriendPage implements OnInit {
   }
   onFacebook(){
     window.open('https://www.facebook.com/sharer/sharer.php?u='+this.refCode+'&src=sdkpreparse', '_system');
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
 }

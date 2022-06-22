@@ -65,17 +65,20 @@ export class HomePage implements OnInit {
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
     private modalCtrl: ModalController,private util: UtilService,public alertController: AlertController ) {
       CapacitorApp.addListener('backButton', ({canGoBack}) => {
-        if(this.router.url != "/home")
+        if(this.router.url != '/home')
         {
           this.nav.back();
         }
-       
+
       });
      }
 
-  // async ionViewWillEnter() {
-      
-  // }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
+  }
   searchPage(searchValue: any){
     this.nav.navigateForward('/search',{ state: searchValue });
     this.searchInput = '';
@@ -84,7 +87,7 @@ export class HomePage implements OnInit {
     this.banner = '';
     this.categories = '';
     this.newCourses = '';
-    
+
     //fetch ads
     this.fetch.getHomePage(this.users.email).then((response) => {
       this.banner = JSON.parse(response[0].data).response;
@@ -97,17 +100,22 @@ export class HomePage implements OnInit {
   }
   async ngOnInit() {
     this.users = await this.storage.get('user');
-    if(this.users.tags == null || this.users.picture == null || this.users.hour_price == null) 
+    if(this.users)
     {
-      this.alertMessageWithBtn("Update Profile","Hey "+this.users.fullname+" We can see that your profile is incomplete, to ensure your account being listed in our search you are requested to update your profile.\n Do you wish to update your profile now?")
+      setTimeout( () => {
+        if(this.users.tags == null || this.users.picture == null || this.users.hour_price == null)
+        {
+          this.alertMessageWithBtn('Update Profile','Hey '+this.users.fullname+' We can see that your profile is incomplete, to ensure your account being listed in our search you are requested to update your profile.\n Do you wish to update your profile now?');
+        }
+        //fetch ads
+        this.fetch.getHomePage(this.users.email).then((response) => {
+          this.banner = JSON.parse(response[0].data).response;
+          this.categories = JSON.parse(response[1].data).response;
+          this.newCourses = JSON.parse(response[2].data).response;
+        }).catch((error) => {
+        });
+      }, 2000 );
     }
-    //fetch ads
-    this.fetch.getHomePage(this.users.email).then((response) => {
-      this.banner = JSON.parse(response[0].data).response;
-      this.categories = JSON.parse(response[1].data).response;
-      this.newCourses = JSON.parse(response[2].data).response;
-    }).catch((error) => {
-    });
   }
   gotToAd(link){
     window.open(link, '_system');
@@ -122,22 +130,22 @@ export class HomePage implements OnInit {
   async alertMessageWithBtn(header,message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: header,
-      message: message,
+      header,
+      message,
       buttons: [
         {
           text: 'ok',
           id: 'confirm-button',
           handler: () => {
             alert.dismiss();
-            this.router.navigate(['setting'])
+            this.router.navigate(['setting']);
           }
         },{
           text: 'Cancel',
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();
-            
+
           }
         }
       ]

@@ -6,6 +6,7 @@ import { Capacitor } from '@capacitor/core';
 import { CapacitorVideoPlayer } from 'capacitor-video-player';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { PaymentPage } from '../../payment/payment.page'
+import { UtilService } from 'src/app/service/util.service';
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.page.html',
@@ -27,7 +28,7 @@ export class CoursesPage implements OnInit {
   paid: any;
   constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,
     public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
-    private nav: NavController) { }
+    private nav: NavController,private util: UtilService) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -39,6 +40,12 @@ export class CoursesPage implements OnInit {
   }
   ionViewWillEnter(){
     this.getCourseDetails(this.id);
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   goToUser(){
     const navigationExtras: NavigationExtras = {

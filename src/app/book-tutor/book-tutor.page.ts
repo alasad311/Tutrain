@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonDatetime, IonSelect, ModalController } from '@ionic/angular';
+import { UtilService } from '../service/util.service';
 @Component({
   selector: 'app-book-tutor',
   templateUrl: './book-tutor.page.html',
@@ -13,7 +14,7 @@ export class BookTutorPage implements OnInit {
   maxDate = new Date(new Date().getTime() + (86400000*2)).toISOString().slice(0, 10);
   isDisablied = false;
   isConfirmed = false;
-  constructor(public modalController: ModalController) { }
+  constructor(public modalController: ModalController,private util: UtilService) { }
   
   ngOnInit() {
     const time = new Date().getHours()+2;
@@ -38,5 +39,11 @@ export class BookTutorPage implements OnInit {
   }
   goBackHome(){
     this.modalController.dismiss({confirm: this.isConfirmed});
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
 }

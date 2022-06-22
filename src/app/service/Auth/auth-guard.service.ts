@@ -7,15 +7,12 @@ import { StorageService } from './../storage/storage.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-
-  subscribe(arg0: (state: any) => void) {
-      throw new Error('Method not implemented.');
-    }
-    constructor(
-      public storage: StorageService,
-      public fetch: FetchService,
+    constructor(public storage: StorageService,public fetch: FetchService,
       private router: Router
         ) {}
+    subscribe(arg0: (state: any) => void) {
+      throw new Error('Method not implemented.');
+    }
     async canActivate(): Promise<boolean> {
       let status = false;
       const user = await this.storage.get("user").then(async (x) =>{

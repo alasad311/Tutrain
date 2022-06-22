@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, AlertController, ToastController, NavController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { StorageService } from './storage/storage.service';
+import { FetchService } from './api/fetch.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,9 @@ export class UtilService {
     private toastCtrl: ToastController,
     public router: Router,
     private navCtrl: NavController,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private storage: StorageService,
+    private fetch: FetchService
   ) {
   }
   openMenu() {
@@ -35,6 +39,19 @@ export class UtilService {
         }
       });
     });
+  }
+  async refreshUserData(){
+    const user = await this.storage.get('user');
+    await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
+      const checkUser = JSON.parse(response.data).response[0];
+      if(checkUser.is_active == 0)
+      {
+        this.storage.clear();
+        this.navCtrl.navigateForward(['/welcome']);
+      }
+    }).catch((error) => {
+    });
+
   }
   success_msg(title) {
     // Swal.fire({

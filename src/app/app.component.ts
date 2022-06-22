@@ -6,13 +6,14 @@ import { AlertController, MenuController,LoadingController, ModalController } fr
 import { Platform } from '@ionic/angular';
 import { FetchService } from './service/api/fetch.service';
 import { EventService } from './service/event.service';
-import { App as CapacitorApp, AppRestoredResult, RestoredListenerEvent, URLOpenListenerEvent } from '@capacitor/app';
+import { App as CapacitorApp, StateChangeListener, URLOpenListenerEvent } from '@capacitor/app';
 import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { PaymentPage } from './payment/payment.page';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { UtilService } from './service/util.service';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ export class AppComponent {
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion,
-    private zone: NgZone) {
+    private zone: NgZone,private util: UtilService) {
   //   this.androidFullScreen.isImmersiveModeSupported()
   // .then(() => console.log('Immersive mode supported'))
   // .catch(err => console.log(err));
@@ -71,28 +72,18 @@ export class AppComponent {
 
     await this.storage.init();
     let user = await this.storage.get('user');
-
     //lets check if the user isnt deleted or inactive
 
     await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
       const checkUser = JSON.parse(response.data).response[0];
+      this.storage.clear();
+      await this.storage.set('user',checkUser);
       if(checkUser.is_active == 0)
       {
         user = null;
         this.storage.clear();
       }
     }).catch((error) => {
-    });
-    CapacitorApp.addListener('appRestoredResult', async (event: RestoredListenerEvent) => {
-      await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
-        const checkUser = JSON.parse(response.data).response[0];
-        if(checkUser.is_active == 0)
-        {
-          user = null;
-          this.storage.clear();
-        }
-      }).catch((error) => {
-      });
     });
     this.platform.ready().then(async (readySource) => {
       CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
@@ -188,7 +179,6 @@ export class AppComponent {
             }]
           });
           LocalNotifications.addListener('localNotificationActionPerformed', async (notifications) => {
-            
             if(response.accpeted == 'Accepted')
             {
               let tutorD;
@@ -274,8 +264,8 @@ export class AppComponent {
           if(response.accpeted == 'Accepted')
             {
               let tutorD;
-              await this.fetch.getUserDetailByID(response.tutorDetails).then(async (response) => {
-                tutorD = JSON.parse(response.data).response[0];
+              await this.fetch.getUserDetailByID(response.tutorDetails).then(async (responsee) => {
+                tutorD = JSON.parse(responsee.data).response[0];
               }).catch((error) => {
               });
               const modal = await this.modalController.create({

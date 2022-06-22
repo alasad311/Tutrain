@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-setting',
@@ -15,7 +16,7 @@ export class SettingPage implements OnInit {
   tutor = false;
   isDisablied = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
-    public alertController: AlertController,public loadingController: LoadingController) { }
+    public alertController: AlertController,public loadingController: LoadingController,private util: UtilService) { }
 
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -47,6 +48,12 @@ export class SettingPage implements OnInit {
       this.isDisablied = false;
     }
 
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   async alertMessageWithoutBtn(header,message) {
     const alert = await this.alertController.create({

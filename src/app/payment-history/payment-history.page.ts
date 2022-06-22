@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-payment-history',
@@ -13,7 +14,8 @@ export class PaymentHistoryPage implements OnInit {
   showNull = false;
   page = 0;
   user: any;
-  constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService) { }
+  constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
+    ,private util: UtilService) { }
   
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -24,6 +26,12 @@ export class PaymentHistoryPage implements OnInit {
         this.showNull = true;
       }
     });
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   getActualDate(date)
   {

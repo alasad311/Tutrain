@@ -19,6 +19,9 @@
 - [x] Request Money out
 - [ ] Home page connection categories / courses / purchases
 - [x] set notification schdule
+- [x] Android hardware back is active now
+- [x] Angular authgard now is active and working
+- [ ] need to find a way to check if user is active
 
 ## Backend
 - [x] Wallet (in progress)

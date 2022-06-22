@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras  } from '@angular/router';
 import { IonInfiniteScroll,NavController } from '@ionic/angular';
+import { UtilService } from '../service/util.service';
 import { FetchService } from './../service/api/fetch.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class SearchPage implements OnInit {
   showNull = false;
   type = "all";
   page = 0;
-  constructor(private router: Router, private fetch: FetchService,private nav: NavController) { }
+  constructor(private router: Router, private fetch: FetchService,private nav: NavController,private util: UtilService) { }
 
   ngOnInit() {
     if (this.router.getCurrentNavigation().extras.state) {
@@ -29,6 +30,12 @@ export class SearchPage implements OnInit {
   }
   goBackHome(){
     this.router.navigate(['/home']);
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   searchDB(value)
   {

@@ -3,6 +3,7 @@ import { AlertController, LoadingController, ModalController, NavController } fr
 import { PaymentPage } from '../payment/payment.page';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-track-request',
@@ -23,7 +24,8 @@ export class TrackRequestPage implements OnInit {
   hideConfirmed = true;
   isDisablied = false;
   constructor(public alertController: AlertController,private navCtrl: NavController,private storage: StorageService,
-    private fetch: FetchService,public loadingController: LoadingController,public modalController: ModalController) { }
+    private fetch: FetchService,public loadingController: LoadingController,public modalController: ModalController,
+    private util: UtilService) { }
   
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -44,6 +46,12 @@ export class TrackRequestPage implements OnInit {
         this.showNull = true;
       }
     });
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   getActualDate(date)
   {

@@ -5,6 +5,7 @@ import { FetchService } from 'src/app/service/api/fetch.service';
 import { ReportUserPage } from '../../report-user/report-user.page';
 import { BookTutorPage } from '../../book-tutor/book-tutor.page';
 import { StorageService } from 'src/app/service/storage/storage.service';
+import { UtilService } from 'src/app/service/util.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -19,6 +20,7 @@ export class UsersPage implements OnInit {
   constructor(private storage: StorageService,public loadingController: LoadingController,private router: Router,
     public modalController: ModalController,private routerOutlet: IonRouterOutlet,
     private route: ActivatedRoute,private nav: NavController,private fetch: FetchService,public alertController: AlertController,
+    private util: UtilService
     ) { }
 
   ngOnInit() {
@@ -30,6 +32,12 @@ export class UsersPage implements OnInit {
         this.courseID = params.courseid;
       }
   });
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   ionViewWillEnter(){
     this.getUserDetails(this.id);

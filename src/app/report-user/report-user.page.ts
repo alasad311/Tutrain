@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-report-user',
@@ -13,7 +14,9 @@ export class ReportUserPage implements OnInit {
   @Input() tutorName: any;
   feedback: any;
   isDisablied = false;
-  constructor(public alertController: AlertController,private storage: StorageService,public modalController: ModalController,public fetchServices: FetchService,public loadingController: LoadingController) { }
+  constructor(public alertController: AlertController,private storage: StorageService,
+    public modalController: ModalController,public fetchServices: FetchService,
+    public loadingController: LoadingController,private util: UtilService) { }
   
   ngOnInit() {
   }
@@ -49,6 +52,12 @@ export class ReportUserPage implements OnInit {
       this.alertMessage("Error","Your feedback is less than 10 characters")
     }
 
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   async alertMessage(header,message) {
     const alert = await this.alertController.create({

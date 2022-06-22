@@ -4,6 +4,7 @@ import { AlertController, ModalController,LoadingController  } from '@ionic/angu
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-payment',
@@ -27,7 +28,8 @@ export class PaymentPage implements OnInit {
   service = 0;
   paymentType = true;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
-    private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController) { }
+    private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController
+    ,private util: UtilService) { }
 
   ngOnInit() {
     if(this.dateSelected)
@@ -184,6 +186,12 @@ export class PaymentPage implements OnInit {
     //   //Do whatever you want to with postObject response from inappbrowser
 
     //   });
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
   setServiceFees(event){
     if(event.target.value !== 'online')

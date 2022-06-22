@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-faq',
@@ -8,7 +9,7 @@ import { NavController } from '@ionic/angular';
 })
 export class FaqPage implements OnInit {
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController,private util: UtilService) { }
 
   ngOnInit() {
   }
@@ -25,5 +26,11 @@ export class FaqPage implements OnInit {
   }
   goBackHome(){
     this.navCtrl.back();
+  }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
   }
 }
