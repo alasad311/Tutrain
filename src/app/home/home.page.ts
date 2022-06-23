@@ -100,7 +100,7 @@ export class HomePage implements OnInit {
   }
   async ngOnInit() {
     this.users = await this.storage.get('user');
-    if(this.users)
+    if(this.users && this.users.type != "student")
     {
       setTimeout( () => {
         if(this.users.tags == null || this.users.picture == null || this.users.hour_price == null)
