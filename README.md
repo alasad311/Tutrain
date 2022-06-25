@@ -5,7 +5,7 @@
 - [x] main menu page
 - [x] FAQ
 - [x] Track Request
-- [x] Invite Friend
+- [x] Invite Friend (Missing Earned Amount)
 - [x] Payment History
 - [ ] Contest
 - [x] course session integration
@@ -29,11 +29,12 @@
 - [x] Angular authgard now is active and working
 - [x] need to find a way to check if user is active
 - [x] delete account request
+- [x] rating in payment history
 
 ## Backend
 - [x] Wallet (in progress)
 - [x] Course Session
-- [ ] rating
+- [x] rating
 - [x] order update to access sessions
 - [x] referral
 - [ ] Contest
@@ -48,4 +49,4 @@
 - update payment history to get course sessions + rating
 - out put from notification
 - course session added to app
-- 
+

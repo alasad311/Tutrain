@@ -76,3 +76,20 @@ ion-modal.custom_modal {
   flex-direction: row !important;
 }
 
+.alertstar{
+  button{
+    width: 40px;
+    margin: 0 !important;
+    background-image:url('assets/icon/star.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    color:#000 !important;
+    span{
+      display: block !important;
+      text-align: center;
+    }
+  }
+  .alert-button-group{padding:0; margin-top: 10px; flex-direction: row; justify-content: space-around;}
+  border-radius: 12px;
+  .alert-wrapper{border-radius: 12px;}
+  }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController, NavController } from '@ionic/angular';
-import { OrderRatingPage } from '../order-rating/order-rating.page';
+import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -16,7 +15,8 @@ export class PaymentHistoryPage implements OnInit {
   page = 0;
   user: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
-    ,private util: UtilService,public loadingController: LoadingController, public modalController: ModalController) { }
+    ,private util: UtilService,public loadingController: LoadingController, public modalController: ModalController
+    ,public alertController: AlertController) { }
   
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -59,48 +59,54 @@ export class PaymentHistoryPage implements OnInit {
       });
     }, 2000);
   }
+  async resolveRec(value,id, ordernumber)
+  {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...'
+    });
+    await loading.present();
+    const datas = {
+      user_id: this.user.user_id,
+      order_id : id,
+      value: value
+    };
+    this.fetch.addRating(datas).then(async (response) => {
+      const json = JSON.parse(response.data).response;
+      if(json.id){
+        await loading.dismiss();
+        const alert = await this.alertController.create({
+          header: "Rated",
+          message: "you rated has been added to "+ordernumber+" successfully",
+          buttons: ["OK"]
+        });
+        this.orders = null;
+        this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
+          this.orders = JSON.parse(response.data).response;
+          if(this.orders.length == 0)
+          {
+            this.showNull = true;
+          }
+        });
+        await alert.present();
+      }
+    });
+  }
   async rate(id,ordernumber)
   {
-     //lets add the order to the DB
-     const modal = await this.modalController.create({
-      component: OrderRatingPage,
-      initialBreakpoint: 0.7,
-      breakpoints: [0, 0.7, 1],
-      presentingElement: await this.modalController.getTop(),
-      componentProps: {
-        orderNumber: ordernumber,
-      }
+    const alert = await this.alertController.create({
+      cssClass: 'alertstar',
+      header: "Rate order "+ordernumber,
+      buttons: [
+        { text: '1',  cssClass:'letstest', handler: data => { this.resolveRec(1,id,ordernumber);}},
+        { text: '2',  cssClass:'letstest', handler: data => { this.resolveRec(2,id,ordernumber);}},
+        { text: '3',  cssClass:'letstest', handler: data => { this.resolveRec(3,id,ordernumber);}},
+        { text: '4',  cssClass:'letstest', handler: data => { this.resolveRec(4,id,ordernumber);}},
+        { text: '5',  cssClass:'letstest', handler: data => { this.resolveRec(5,id,ordernumber);}}
+      ]
     });
-    modal.onDidDismiss()
-    .then(async (data) => {
-      if(data.data.value)
-      {
-        const loading = await this.loadingController.create({
-          cssClass: 'my-custom-class',
-          message: 'Please wait...'
-        });
-        await loading.present();
-        const datas = {
-          user_id: this.user.user_id,
-          order_id : id,
-          value: data.data.value
-        };
-        alert(this.user.user_id+ " "+ id + " "+ data.data.value);
-        // this.fetch.addRating(datas).then(async (response) => {
-        //   const json = JSON.parse(response.data).response;
-        //   if(json.id){
-        //     await loading.dismiss();
-        //     this.alertMessage("Booking","Your request is under review by "+ this.user.fullname);
-        //   }else if(json.results === "duplicate"){
-        //     await loading.dismiss();
-        //     this.alertMessage("Duplicate","You have already requested and its under review.");
-        //   }else{
-        //     await loading.dismiss();
-        //     this.alertMessage("Error","Couldn't fullfill your request at the moment please try again later");
-        //   }
-        // });
-      }
-    });
-    await modal.present();
+
+    await alert.present();
+
   }
 }
