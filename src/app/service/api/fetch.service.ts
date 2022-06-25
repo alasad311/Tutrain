@@ -436,4 +436,77 @@ export class FetchService {
         });
     });
   }
+  public async searchSessions(value,page): Promise<any>{
+    const user = await this.storage.get('user');
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/search/sessions/'+value+'/'+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async getSessionDetails(id): Promise<any>{
+    const courseDetails = new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/session/'+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+    const seats = new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/session/counter/'+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+    const paid = new Promise( async (resolve,reject) => {
+      const user = await this.storage.get('user');
+      const url = 'https://tapp.scd.edu.om/api/v1//session/paied/'+id+'/'+user.email;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+    return new Promise( (resolve,reject) => {
+      Promise.all([courseDetails,seats,paid]).then(res => {
+      resolve(res);
+    }).catch(error => {
+      reject(error);
+    });
+  });
+  }
 }

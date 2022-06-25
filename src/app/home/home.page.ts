@@ -115,6 +115,14 @@ export class HomePage implements OnInit {
         }).catch((error) => {
         });
       }, 2000 );
+    }else{
+        //fetch ads
+        this.fetch.getHomePage(this.users.email).then((response) => {
+          this.banner = JSON.parse(response[0].data).response;
+          this.categories = JSON.parse(response[1].data).response;
+          this.newCourses = JSON.parse(response[2].data).response;
+        }).catch((error) => {
+        });
     }
   }
   gotToAd(link){

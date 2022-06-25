@@ -233,6 +233,19 @@ export class AppComponent {
               group:'tutrainapp'
           }]
           });
+        }else if(response.type == 'NEWORDERSESSION'){
+          const slotDate = new Date(new Date(response.slotDate).getTime() - (60000*30));
+          LocalNotifications.schedule({
+            notifications:[
+            {
+                title : 'New Order',
+                body: JSON.parse(JSON.stringify(notification)).body,
+                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                id : this.generateRandomCode(),
+                channelId: 'tutrain-default',
+                group:'tutrainapp'
+            }]
+          });
         }
         //JSON.parse(JSON.stringify(notification)).notification.data.bookID
 

@@ -72,10 +72,10 @@ export class SettingPage implements OnInit {
     this.router.navigate(['/contact-us']);
   }
   goToCourses(){
-    this.router.navigate(['/track-request']);
+    this.router.navigate(['/course-list']);
   }
   goToSession(){
-    this.router.navigate(['/track-request']);
+    this.router.navigate(['/session-list']);
   }
   onNotificationOptionChange(event){
     if(this.popOutNotification !== event.detail.checked)

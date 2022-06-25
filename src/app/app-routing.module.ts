@@ -89,12 +89,21 @@ const routes: Routes = [
     loadChildren: () => import('./contact-us/contact-us.module').then( m => m.ContactUsPageModule),
     canActivate: [AuthGuardService],
   },
-
-
-
-
-
-
+  {
+    path: 'session-list',
+    loadChildren: () => import('./session-list/session-list.module').then( m => m.SessionListPageModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'course-list',
+    loadChildren: () => import('./course-list/course-list.module').then( m => m.CourseListPageModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'details/session',
+    loadChildren: () => import('./details/session/session.module').then( m => m.SessionPageModule),
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({

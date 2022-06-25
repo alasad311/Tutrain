@@ -99,6 +99,19 @@ export class SearchPage implements OnInit {
       }).catch((error) => {
         
       });
+    }else if(by === "sessions")
+    {
+      this.fetch.searchSessions(this.searchInput,this.page).then((response) => {
+        var json = JSON.parse(response.data);
+        this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
+      }).catch((error) => {
+        
+      });
     }
   }
   doInfinite(event) {
@@ -142,6 +155,19 @@ export class SearchPage implements OnInit {
           event.target.complete();
         }).catch((error) => {
         });
+      }else if(this.type === "sessions")
+      {
+        this.fetch.searchSessions(this.searchInput,this.page).then((response) => {
+          var json = JSON.parse(response.data);
+          this.searchResults = json.response
+          if(json.response.length === 0)
+          {
+            this.showNull = true;
+            this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+          }
+        }).catch((error) => {
+          
+        });
       }
     }, 3000);
   }
@@ -161,6 +187,9 @@ export class SearchPage implements OnInit {
     this.nav.navigateForward('/details/users',navigationExtras);
    }else if(type === 'course'){
     this.nav.navigateForward('/details/courses',navigationExtras);
+   }
+   else if(type === 'session'){
+    this.nav.navigateForward('/details/session',navigationExtras);
    }
   }
 }

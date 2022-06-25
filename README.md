@@ -5,9 +5,10 @@
 - [x] main menu page
 - [x] FAQ
 - [x] Track Request
-- [x] Invite Friend (Missing Earned Amount)
+- [x] Invite Friend
 - [x] Payment History
 - [ ] Contest
+- [x] course session integration
 - [x] Terms of service
 - [x] After order notification
 - [ ] Page Titles
@@ -31,7 +32,9 @@
 
 ## Backend
 - [x] Wallet (in progress)
-- [ ] Course Session
+- [x] Course Session
+- [ ] rating
+- [x] order update to access sessions
 - [x] referral
 - [ ] Contest
 - [x] Payment History
@@ -39,3 +42,10 @@
 - [ ] Payment Gateaway
 - [x] Request Money out
 - [x] delete account request
+
+## 25/06/2022
+- delete account
+- update payment history to get course sessions + rating
+- out put from notification
+- course session added to app
+- 
