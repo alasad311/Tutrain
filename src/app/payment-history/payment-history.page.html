@@ -39,11 +39,15 @@
         <ion-label class="name" *ngIf="item.duration">Duration: {{item.duration === 1 ? item.duration+" Hour" : item.duration+" Hours"}} </ion-label>
         <ion-label class="name" *ngIf="item.time_from">Booked Time: {{item.time_from}} - {{item.time_to}} </ion-label>
         <ion-label class="name" *ngIf="item.startdate">Date: {{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}} </ion-label>
+        
       </div>
       <div class="date">
         <ion-label>{{getActualDate(item.date)}}</ion-label>
-        
+        <div *ngIf="!item.is_rated">
+          <ion-button expand="full" (click)="rate(item.ORDERID,item.order_number)" shape="round"> Rate</ion-button>
+        </div>
       </div>
+      
     </div>
   </div>
   <div *ngIf="showNull ">

@@ -1,0 +1,24 @@
+<ion-header mode="md">
+  <ion-toolbar class="ion-no-margin">
+      <ion-chip slot="end" class="remove-background" (click)="goBackHome()">
+          <ion-icon class="icon-remove-margin" name="close-outline" color="dark"></ion-icon>
+      </ion-chip>
+      <ion-title>{{orderNumber}}</ion-title>
+      <ion-chip slot="start" class="remove-background">
+
+      </ion-chip>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-label class="info">Rate Order Number {{orderNumber}}</ion-label>
+    <ion-row>
+      <ion-col size="2" size-lg *ngFor="let item of [0,1,2,3,4]">
+        <ion-icon name="star"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-button (click)="goToHome()" shape="round">
+      Send
+    </ion-button>
+  </ion-card>
+</ion-content>

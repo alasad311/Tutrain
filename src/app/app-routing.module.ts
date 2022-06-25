@@ -104,6 +104,11 @@ const routes: Routes = [
     loadChildren: () => import('./details/session/session.module').then( m => m.SessionPageModule),
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'order-rating',
+    loadChildren: () => import('./order-rating/order-rating.module').then( m => m.OrderRatingPageModule),
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({
