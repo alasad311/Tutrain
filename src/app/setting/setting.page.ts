@@ -57,9 +57,6 @@ export class SettingPage implements OnInit {
   ionViewDidLeave() {
     this.util.refreshUserData();
   }
-  goToPrivacy(){
-    window.open('https://policies.google.com/terms?hl=en-US', '_system');
-  }
   goToContactUs(){
     this.router.navigate(['/contact-us']);
   }

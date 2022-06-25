@@ -22,4 +22,22 @@ export class ContactUsPage implements OnInit {
   ionViewDidLeave() {
     this.util.refreshUserData();
   }
+  goToEmail(){
+    window.open('mailto:support@tutrainapp.com', '_system');
+  }
+  goToWhatsApp(){
+    window.open('https://api.whatsapp.com/send?phone=+96899776717&text=Hey%20there%2C%20i%20need%20help', '_system');
+  }
+  openTwitter(){
+    window.open('https://www.twitter.com', '_system');
+  }
+  openFacebook(){
+    window.open('https://www.facebook.com', '_system');
+  }
+  openInstagram(){
+    window.open('https://www.instagram.com', '_system');
+  }
+  openYoutube(){
+    window.open('https://www.youtube.com', '_system');
+  }
 }

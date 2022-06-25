@@ -16,7 +16,7 @@
 - [ ] Session create and list
 - [x] privacy link
 - [ ] Output of notification option
-- [ ] contact us page
+- [x] contact us page
 - [x] wallet page / earnings
 - [ ] payment to be adjusted based on new gateaway
 - [x] Show student or tutor contact details once success booked a tutor
@@ -26,6 +26,7 @@
 - [x] Android hardware back is active now
 - [x] Angular authgard now is active and working
 - [x] need to find a way to check if user is active
+- [ ] delete account request
 
 ## Backend
 - [x] Wallet (in progress)
@@ -36,13 +37,3 @@
 - [x] Track Request
 - [ ] Payment Gateaway
 - [x] Request Money out
-
-
-## Feedback
-- [x] Booking slot date issue
-- [x] Open to all timing from user current time 
-- [x] Reject option
-- [x] Service fees to be DB wise
-- [x] Duplicate records in pending
-- [x] Disable button in pending on clicked
-- [x] hide completed session from both tutor and student
