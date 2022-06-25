@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
-
+import { NativeSettings,AndroidSettings,IOSSettings } from 'capacitor-native-settings';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',
@@ -16,12 +17,22 @@ export class SettingPage implements OnInit {
   wallet: any;
   tutor = false;
   isDisablied = false;
+  popOutNotification;
+  notSystem = 0;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,private util: UtilService,
     private router: Router) { }
 
   async ngOnInit() {
     this.user = await this.storage.get('user');
+    let permStatus = await LocalNotifications.checkPermissions();
+
+    if(await permStatus.display !== 'granted')
+    {
+      this.popOutNotification = false;
+    }else{
+      this.popOutNotification = true;
+    }
     this.fetch.getTotalUnPaid(this.user.user_id).then(async (response) => {
       const json = JSON.parse(response.data);
       this.wallet = json.response[0].TotalW;
@@ -65,6 +76,48 @@ export class SettingPage implements OnInit {
   }
   goToSession(){
     this.router.navigate(['/track-request']);
+  }
+  onNotificationOptionChange(event){
+    if(this.popOutNotification !== event.detail.checked)
+    {
+      NativeSettings.open({
+        optionAndroid: AndroidSettings.AppNotification, 
+        optionIOS: IOSSettings.Notifications
+      })
+    }
+  }
+  async deleteAccount(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...'
+    });
+    await loading.present();
+    this.fetch.deleteUser(this.user.user_id).then(async (response) => {
+      const json = JSON.parse(response.data);
+      await loading.dismiss();
+      
+      if(json.response.results == "success")
+      {
+        this.storage.clear();
+        const alertRes = await this.alertController.create({
+          header: 'Deletion',
+          message:  'Your account has been successfully deleted',
+          buttons: [
+            {
+              text: 'OK',
+              cssClass:'test',
+              handler: () => {
+                this.router.navigate(['/login']);
+              }
+            }
+          ]
+        });
+        await alertRes.present();
+       
+      }
+    }).catch((error) => {
+    });
+   
   }
   async alertMessageWithoutBtn(header,message) {
     const alert = await this.alertController.create({

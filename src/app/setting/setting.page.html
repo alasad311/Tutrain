@@ -64,19 +64,20 @@
         <ion-item lines="none">
             <ion-icon name="notifications-outline" color="primary" style="margin-right: 10px;"></ion-icon>
             <ion-label>Pop-out Notificatioon</ion-label>
-            <ion-toggle mode="ios" color="danger" checked></ion-toggle>
+            <ion-toggle mode="ios" color="danger"  (ionChange)="onNotificationOptionChange($event)" [checked]="popOutNotification"></ion-toggle>
         </ion-item>
     </div>
 
     <div class="other">
+        
         <ion-label class="head_lbl">Support</ion-label>
         <ion-item lines="none" (click)="goToContactUs()">
             <ion-icon name="help-circle-outline" color="primary" style="margin-right: 10px;"></ion-icon>
             <ion-label>Help</ion-label>
             <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
         </ion-item>
-        <ion-item lines="none" (click)="goToDeleteAccount()">
-            <ion-icon name="help-circle-outline" color="primary" style="margin-right: 10px;"></ion-icon>
+        <ion-item lines="none" (click)="deleteAccount()">
+            <ion-icon name="person-remove-outline" color="primary" style="margin-right: 10px;"></ion-icon>
             <ion-label>Delete Account</ion-label>
             <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
         </ion-item>

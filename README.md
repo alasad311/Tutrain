@@ -14,8 +14,9 @@
 - [x] Setting Page
 - [ ] Course list and create course
 - [ ] Session create and list
+- [ ] update profile
 - [x] privacy link
-- [ ] Output of notification option
+- [x] Output of notification option
 - [x] contact us page
 - [x] wallet page / earnings
 - [ ] payment to be adjusted based on new gateaway
@@ -26,7 +27,7 @@
 - [x] Android hardware back is active now
 - [x] Angular authgard now is active and working
 - [x] need to find a way to check if user is active
-- [ ] delete account request
+- [x] delete account request
 
 ## Backend
 - [x] Wallet (in progress)
@@ -37,3 +38,4 @@
 - [x] Track Request
 - [ ] Payment Gateaway
 - [x] Request Money out
+- [x] delete account request

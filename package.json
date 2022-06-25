@@ -41,6 +41,7 @@
     "@ionic/angular": "^6.0.0",
     "@ionic/cordova-builders": "^6.1.0",
     "@ionic/storage-angular": "^3.0.6",
+    "capacitor-native-settings": "^0.2.1",
     "capacitor-video-player": "^3.4.2",
     "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-app-version": "^0.1.14",
