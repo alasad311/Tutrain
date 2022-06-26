@@ -1,64 +1,85 @@
 <ion-header mode="md">
-  <ion-toolbar class="ion-no-margin">
-      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
-          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
-      </ion-chip>
-      <ion-title>Tutrain</ion-title>
-      <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
-          <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
-      </ion-chip>
-  </ion-toolbar>
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+    </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <div class="main_content_div" *ngIf="!orders">
-    <div class="card" *ngFor="let item of [1,2,3]">
-      <div class="title" style="width: 90%;">
-        <ion-label class="dollar"><ion-skeleton-text animated style="width: 70%"></ion-skeleton-text></ion-label>
-        <ion-label class="name"> <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text> </ion-label>
-        <ion-label class="name"> <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text> </ion-label>
-        <ion-label class="name"> <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text> </ion-label>
-        <ion-label class="name"> <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text> </ion-label>
-      </div>
-      <div class="date" style="width: 30%;">
-        <ion-label><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-label>
-      </div>
-    </div>
-  </div>
-  <div class="main_content_div"  *ngIf="orders">
-    <div class="card" *ngFor="let item of orders">
-      <div class="title">
-        <ion-label class="dollar"> #{{item.order_number}} </ion-label>
-        <ion-label class="name" *ngIf="item.name">Course Name: {{item.name}} ({{item.code}})</ion-label>
-        <ion-label class="name" *ngIf="item.session_name">Session Name: {{item.session_name}}</ion-label>
-        <ion-label class="name" *ngIf="item.fullname">Tutor Name: {{item.fullname}}</ion-label>
-        <ion-label class="name"  *ngIf="item.is_online">Payment: {{item.paid_amount | number : '1.3-3'}}</ion-label>
-        <ion-label class="name"  *ngIf="!item.is_online">Payment: DIRECT</ion-label>
-        <ion-label class="name" *ngIf="item.slot">Booked Slot: {{getActualDate(item.slot)}} </ion-label>
-        <ion-label class="name" *ngIf="item.duration">Duration: {{item.duration === 1 ? item.duration+" Hour" : item.duration+" Hours"}} </ion-label>
-        <ion-label class="name" *ngIf="item.time_from">Booked Time: {{item.time_from}} - {{item.time_to}} </ion-label>
-        <ion-label class="name" *ngIf="item.startdate">Date: {{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}} </ion-label>
-        
-      </div>
-      <div class="date">
-        <ion-label>{{getActualDate(item.date)}}</ion-label>
-        <div *ngIf="!item.is_rated">
-          <ion-button expand="full" (click)="rate(item.ORDERID,item.order_number)" shape="round"> Rate</ion-button>
+    <div class="main_content_div" *ngIf="!orders">
+        <div class="card" *ngFor="let item of [1,2,3]">
+            <div class="title" style="width: 90%;">
+                <ion-label class="dollar">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                </ion-label>
+                <ion-label class="name">
+                    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </ion-label>
+                <ion-label class="name">
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </ion-label>
+                <ion-label class="name">
+                    <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                </ion-label>
+                <ion-label class="name">
+                    <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                </ion-label>
+            </div>
+            <div class="date" style="width: 30%;">
+                <ion-label>
+                    <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                </ion-label>
+            </div>
         </div>
-      </div>
-      
     </div>
-  </div>
-  <div *ngIf="showNull ">
-    <ion-item class="ion-no-padding adjust-margin">
-      <ion-label>
-          <h3 class="center-null ">Sorry we couldn't find any requests</h3>
-      </ion-label>
-    </ion-item>
-  </div>
-<ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
-    <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
-    </ion-infinite-scroll-content>
-</ion-infinite-scroll>
+    <div class="main_content_div" *ngIf="orders">
+        <div class="card" *ngFor="let item of orders">
+            <div class="currency_accet" (click)="openDetails(item)">
+                <div class="detail">
+                    <div class="up_div">
+                        <ion-label class="title"> #{{item.order_number}}</ion-label>
+                        <ion-label class="title right-side">{{getActualDate(item.date)}}</ion-label>
+                    </div>
+                    <div class="down_div">
+                        <ion-label class="type" *ngIf="item.name">Course Name: {{item.name}} ({{item.code}})</ion-label>
+                        <ion-label class="type" *ngIf="item.session_name">Session Name: {{item.session_name}}</ion-label>
+                        <ion-label class="type" *ngIf="item.fullname">Tutor Name: {{item.fullname}}</ion-label>
+                        <ion-label class="type" *ngIf="item.is_online">Payment: {{item.paid_amount | number : '1.3-3'}}</ion-label>
+                        <ion-label class="type" *ngIf="!item.is_online">Payment: DIRECT</ion-label>
+                        <ion-label class="type" *ngIf="item.slot">Booked Slot: {{getActualDate(item.slot)}} </ion-label>
+                        <ion-label class="type" *ngIf="item.duration">Duration: {{item.duration === 1 ? item.duration+" Hour" : item.duration+" Hours"}} </ion-label>
+                        <ion-label class="type" *ngIf="item.time_from">Booked Time: {{item.time_from}} - {{item.time_to}} </ion-label>
+                        <ion-label class="type" *ngIf="item.startdate">Date: {{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}} </ion-label>
+                    </div>
+                </div>
+            </div>
+            <div class="btc_div">
+                <div>
+                    <ion-button expand="full" (click)="openDetails(item)" shape="round"> View {{getOrderObjective(item)}}</ion-button>
+                </div>
+                <div *ngIf="!item.is_rated">
+                    <ion-button expand="full" (click)="rate(item.ORDERID,item.order_number)" shape="round"> Rate</ion-button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div *ngIf="showNull ">
+        <ion-item class="ion-no-padding adjust-margin">
+            <ion-label>
+                <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+            </ion-label>
+        </ion-item>
+    </div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

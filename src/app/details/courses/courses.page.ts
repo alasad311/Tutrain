@@ -115,7 +115,7 @@ export class CoursesPage implements OnInit {
   }
  
   goBackHome(){
-    this.router.navigate([this.page]);
+    this.nav.back();
   }
   purchaseCourse(){
     this.alertMessage("Purchase","Are you sure you want to buy "+this.course.name);

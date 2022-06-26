@@ -29,7 +29,7 @@ export class SearchPage implements OnInit {
     }
   }
   goBackHome(){
-    this.router.navigate(['/home']);
+    this.nav.back();
   }
   ionViewDidEnter() {
     this.util.refreshUserData();

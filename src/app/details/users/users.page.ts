@@ -53,18 +53,7 @@ export class UsersPage implements OnInit {
     });
   }
   goBackHome(){
-    if(this.courseID)
-    {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-            page: '/search',
-            id:this.courseID
-        }
-      };
-      this.nav.navigateForward('/details/courses',navigationExtras);
-    }else{
-      this.router.navigate([this.page]);
-    }
+    this.nav.back();
   }
   async reportTutor(){
     //lets add the report to the DB

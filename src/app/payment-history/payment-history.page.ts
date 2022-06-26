@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -17,7 +18,7 @@ export class PaymentHistoryPage implements OnInit {
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,private util: UtilService,public loadingController: LoadingController, public modalController: ModalController
     ,public alertController: AlertController) { }
-  
+
   async ngOnInit() {
     this.user = await this.storage.get('user');
     this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
@@ -47,15 +48,15 @@ export class PaymentHistoryPage implements OnInit {
     setTimeout(() => {
       this.page = this.page + 1;
       this.fetch.getUserOrders(this.user.user_id,this.page).then((response) => {
-        var json = JSON.parse(response.data);
+        const json = JSON.parse(response.data);
         for (let i = 0; i < json.response.length; i++) {
-          this.orders.push(json.response[i])
+          this.orders.push(json.response[i]);
         }
         if(json.response.length == 0)
-          event.target.disabled = true;
+          {event.target.disabled = true;}
         event.target.complete();
       }).catch((error) => {
-        
+
       });
     }, 2000);
   }
@@ -69,16 +70,16 @@ export class PaymentHistoryPage implements OnInit {
     const datas = {
       user_id: this.user.user_id,
       order_id : id,
-      value: value
+      value
     };
     this.fetch.addRating(datas).then(async (response) => {
       const json = JSON.parse(response.data).response;
       if(json.id){
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: "Rated",
-          message: "you rated has been added to "+ordernumber+" successfully",
-          buttons: ["OK"]
+          header: 'Rated',
+          message: 'you rated has been added to '+ordernumber+' successfully',
+          buttons: ['OK']
         });
         this.orders = null;
         this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
@@ -96,7 +97,7 @@ export class PaymentHistoryPage implements OnInit {
   {
     const alert = await this.alertController.create({
       cssClass: 'alertstar',
-      header: "Rate order "+ordernumber,
+      header: 'Rate order '+ordernumber,
       buttons: [
         { text: '1',  cssClass:'letstest', handler: data => { this.resolveRec(1,id,ordernumber);}},
         { text: '2',  cssClass:'letstest', handler: data => { this.resolveRec(2,id,ordernumber);}},
@@ -108,5 +109,45 @@ export class PaymentHistoryPage implements OnInit {
 
     await alert.present();
 
+  }
+  async openDetails(item){
+    if(item.course_id != null){
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+            page: '/payment-history',
+            id: item.course_id
+        }
+      };
+      this.navCtrl.navigateForward('/details/courses',navigationExtras);
+    }else if(item.tutor_id != null){
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+            page: '/payment-history',
+            id: item.tutor_id
+        }
+      };
+      this.navCtrl.navigateForward('/details/users',navigationExtras);
+    }else if(item.session_id != null){
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+            page: '/payment-history',
+            id: item.session_id
+        }
+      };
+      this.navCtrl.navigateForward('/details/session',navigationExtras);
+    }
+  }
+  getOrderObjective(item){
+    if(item.course_id != null)
+    {
+      return 'Course';
+    }else if(item.tutor_id != null)
+    {
+      return 'Tutor';
+    }
+    else if(item.session_id != null)
+    {
+      return 'Session';
+    }
   }
 }

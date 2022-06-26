@@ -35,7 +35,7 @@ export class SessionPage implements OnInit {
     this.util.refreshUserData();
   }
   goBackHome(){
-    this.router.navigate([this.page]);
+    this.nav.back();
   }
   ionViewWillEnter(){
     this.getSessionDetails(this.id);
