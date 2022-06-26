@@ -95,15 +95,15 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-    path: 'course-list',
-    loadChildren: () => import('./course-list/course-list.module').then( m => m.CourseListPageModule),
-    canActivate: [AuthGuardService],
-  },
-  {
     path: 'details/session',
     loadChildren: () => import('./details/session/session.module').then( m => m.SessionPageModule),
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'tutor-profle',
+    loadChildren: () => import('./tutor-profle/tutor-profle.module').then( m => m.TutorProflePageModule)
+  },
+
 ];
 
 @NgModule({

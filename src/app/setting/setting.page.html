@@ -43,11 +43,11 @@
 
 
     <div class="account" *ngIf="tutor">
-        <ion-label class="head_lbl">Content</ion-label>
+        <ion-label class="head_lbl">Your Services</ion-label>
         <div class="info">
-            <ion-item lines="none" (click)="goToCourses()">
+            <ion-item lines="none" (click)="goToTutorProfile()">
                 <ion-icon name="school-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-                <ion-label>Your Course</ion-label>
+                <ion-label>Your Tutor Profile</ion-label>
                 <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
             </ion-item>
             <ion-item lines="none" (click)="goToSession()">
@@ -64,13 +64,22 @@
         <ion-item lines="none">
             <ion-icon name="notifications-outline" color="primary" style="margin-right: 10px;"></ion-icon>
             <ion-label>Pop-out Notificatioon</ion-label>
-            <ion-toggle mode="ios" color="danger"  (ionChange)="onNotificationOptionChange($event)" [checked]="popOutNotification"></ion-toggle>
+            <ion-toggle mode="ios" color="danger" (ionChange)="onNotificationOptionChange($event)" [checked]="popOutNotification"></ion-toggle>
         </ion-item>
     </div>
 
     <div class="other">
-        
-        <ion-label class="head_lbl">Support</ion-label>
+        <ion-label class="head_lbl">More Options</ion-label>
+        <ion-item lines="none" (click)="goToContactUs()">
+            <ion-icon name="language-outline" color="primary" style="margin-right: 10px;"></ion-icon>
+            <ion-label>Language</ion-label>
+            <ion-buttons slot="end">
+                <span style="color: grey;">English</span>
+                <ion-button class="test">
+                    <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
         <ion-item lines="none" (click)="goToContactUs()">
             <ion-icon name="help-circle-outline" color="primary" style="margin-right: 10px;"></ion-icon>
             <ion-label>Help</ion-label>

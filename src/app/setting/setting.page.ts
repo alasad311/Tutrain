@@ -71,8 +71,8 @@ export class SettingPage implements OnInit {
   goToContactUs(){
     this.router.navigate(['/contact-us']);
   }
-  goToCourses(){
-    this.router.navigate(['/course-list']);
+  goToTutorProfile(){
+    this.router.navigate(['/tutor-profle']);
   }
   goToSession(){
     this.router.navigate(['/session-list']);

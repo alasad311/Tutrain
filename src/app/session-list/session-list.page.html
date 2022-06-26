@@ -1,9 +1,79 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>session-list</ion-title>
-  </ion-toolbar>
+<ion-header mode="md">
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
+            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+    </ion-toolbar>
+    <ion-toolbar class="segment-toolbar">
+        <ion-segment [(ngModel)]="section" (ionChange)="showSegment(section)" mode="ios" value="all">
+            <ion-segment-button value="all">
+                <ion-label>All Sessions</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="create">
+                <ion-label>Create Session</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <div *ngIf="isAll">
+        <div class="menu_div">
+            <div *ngIf="!sessions">
+                <div class="menu_div" *ngFor="item of [1,2,3,4];let last = last">
+                    <div class="menu_box" [class.withoutborder]="last">
+                        <div class="color_box">
+                            <ion-thumbnail>
+                                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                            </ion-thumbnail>
+                        </div>
+                        <div class="menu-box-holder" style="width: 200px;">
+                            <ion-label>
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                            </ion-label>
+                            <ion-label>
+                                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                            </ion-label>
+                        </div>
+                        <ion-icon name="chevron-forward" class="arrow_icn"></ion-icon>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="sessions">
+                <div class="menu_div" *ngFor="let item of sessions;let last = last">
+                    <div class="menu_box" [class.withoutborder]="last" (click)="goToSessionUpdate(item.id,item.is_active)">
+                        <div class="color_box">
+                            <ion-thumbnail>
+                                <img [src]="item.img" />
+                            </ion-thumbnail>
+                        </div>
+                        <div class="menu-box-holder">
+                            <ion-label>{{item.session_name}}</ion-label>
+                            <ion-label>{{item.location}}</ion-label>
+                            <ion-label>{{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}}</ion-label>
+                        </div>
+                        <ion-icon name="chevron-forward" class="arrow_icn"></ion-icon>
+                    </div>
+                </div>
+                <div *ngIf="showNull ">
+                    <ion-item class="ion-no-padding adjust-margin">
+                        <ion-label>
+                            <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+                        </ion-label>
+                    </ion-item>
+                </div>
+                <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+                    <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+                    </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </div>
+        </div>
+        <div *ngIf="isCreate">
+            im create page
+        </div>
+    </div>
 </ion-content>
