@@ -97,7 +97,7 @@
                         <ion-label class="text">{{getActualDate(session.enddate)}}</ion-label>
                     </ion-col>
                 </ion-row>
-                <ion-row *ngIf="session.map">
+                <ion-row *ngIf="session.map && paid">
                   <ion-col>
                     <ion-button expand="full" (click)="directionToLocation(session.map)" shape="round"> Direction to location</ion-button>
                   </ion-col>

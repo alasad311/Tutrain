@@ -46,11 +46,16 @@ export class SessionPage implements OnInit {
   getSessionDetails(id){
     this.fetch.getSessionDetails(id).then((response) => {
       this.session = JSON.parse(response[0].data).response[0];
-      this.numberofSeats = this.session.seats - JSON.parse(response[1].data).response[0].totalSeatsTaken
-      if(JSON.parse(response[2].data).response.length === 0)
-        this.paid = false;
-      else
-        this.paid = true;
+      if(this.session)
+      {
+        this.numberofSeats = this.session.seats - JSON.parse(response[1].data).response[0].totalSeatsTaken
+        if(JSON.parse(response[2].data).response.length === 0)
+          this.paid = false;
+        else
+          this.paid = true;
+      }else{
+        this.goBackHome();
+      }
       
     }).catch((error) => {
       

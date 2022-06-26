@@ -139,7 +139,7 @@ export class TrackRequestPage implements OnInit {
       componentProps: {
         tutor:tutorD,
         durationSelect:duration,
-        dateSelected:this.requests,
+        dateSelected:slotDate,
         timeFromSelected:timefrom,
         timeToSelected:timeto,
         bookID: id

@@ -64,7 +64,7 @@ export class SessionListPage implements OnInit {
   showSegment(section)
   {
     if(section === 'all'){
-      this.section = null;
+      this.sessions = null;
       this.fetch.getAllSessions(this.user.user_id,this.page).then(async (response) => {
         this.sessions = JSON.parse(response.data).response;
         if(this.sessions.length === 0){this.showNull = true;}else{this.showNull = false;}

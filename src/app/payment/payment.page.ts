@@ -93,11 +93,24 @@ export class PaymentPage implements OnInit {
     browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
   }
   onCheckoutSession(){
+    // check if session is still exisist before purchasing
     this.isDisablied = true;
-    const browser = this.iab.create(
-      'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
-      '_blank',{ location: 'no',zoom: 'no'});
-    browser.on('exit').subscribe(event => { this.checkPaymentSession(true); });
+    this.fetchServices.getSessionDetails(this.session.id).then(async (response) => {
+      const json = JSON.parse(response[0].data).response[0];
+      if(json && (this.session.seats - JSON.parse(response[1].data).response[0].totalSeatsTaken - 1) >= 0)
+      {
+        const browser = this.iab.create(
+          'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
+          '_blank',{ location: 'no',zoom: 'no'});
+        browser.on('exit').subscribe(event => { this.checkPaymentSession(true); });
+      }else{
+        this.isDisablied = false;
+        this.alertMessage("Error","The session you have selected is either full or has been removed")
+      }
+
+    }).catch((error) => {
+      this.isDisablied = false;
+    });
   }
   async checkTutorPayment(event)
   {
@@ -235,8 +248,8 @@ export class PaymentPage implements OnInit {
             notifications:[
             {
                 title : 'Session Reminder',
-                body: 'You have a session with '+this.session.fullname+' today in '+ this.session.location,
-                largeBody : 'You have a session with '+this.session.fullname+' today in '+ this.session.location,
+                body: 'You have a session with '+this.session.fullname+' begins today in '+ this.session.location,
+                largeBody : 'You have a session with '+this.session.fullname+' begins today in '+ this.session.location,
                 id : randomId,
                 schedule: {
                     at: this.session.startdate,
