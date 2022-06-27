@@ -102,7 +102,11 @@ const routes: Routes = [
   {
     path: 'tutor-profle',
     loadChildren: () => import('./tutor-profle/tutor-profle.module').then( m => m.TutorProflePageModule)
+  },  {
+    path: 'contest',
+    loadChildren: () => import('./contest/contest.module').then( m => m.ContestPageModule)
   },
+
 
 ];
 
