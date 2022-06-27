@@ -11,7 +11,8 @@ import { UtilService } from 'src/app/service/util.service';
   styleUrls: ['./session.page.scss'],
 })
 export class SessionPage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   id: any;
   page: any;
   session: any;
@@ -20,7 +21,7 @@ export class SessionPage implements OnInit {
   numberofSeats = 0;
   constructor(private routerOutlet: IonRouterOutlet,public alertController: AlertController,
     public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
-    private nav: NavController,private util: UtilService) { }
+    private nav: NavController,public util: UtilService) { }
 
     async ngOnInit() {
       this.route.queryParams.subscribe(params => {
@@ -30,6 +31,14 @@ export class SessionPage implements OnInit {
     }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

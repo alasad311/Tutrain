@@ -12,7 +12,8 @@ import { UtilService } from 'src/app/service/util.service';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   id: any;
   page: any;
   courseID: any;
@@ -20,7 +21,7 @@ export class UsersPage implements OnInit {
   constructor(private storage: StorageService,public loadingController: LoadingController,private router: Router,
     public modalController: ModalController,private routerOutlet: IonRouterOutlet,
     private route: ActivatedRoute,private nav: NavController,private fetch: FetchService,public alertController: AlertController,
-    private util: UtilService
+    public util: UtilService
     ) { }
 
   ngOnInit() {
@@ -35,6 +36,14 @@ export class UsersPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

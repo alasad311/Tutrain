@@ -16,7 +16,7 @@ export class ReportUserPage implements OnInit {
   isDisablied = false;
   constructor(public alertController: AlertController,private storage: StorageService,
     public modalController: ModalController,public fetchServices: FetchService,
-    public loadingController: LoadingController,private util: UtilService) { }
+    public loadingController: LoadingController,public util: UtilService) { }
   
   ngOnInit() {
   }

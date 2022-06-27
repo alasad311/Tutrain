@@ -8,8 +8,9 @@ import { UtilService } from '../service/util.service';
   styleUrls: ['./faq.page.scss'],
 })
 export class FaqPage implements OnInit {
-
-  constructor(private navCtrl: NavController,private util: UtilService) { }
+  contest: any;
+  contestBadge: any;
+  constructor(private navCtrl: NavController,public util: UtilService) { }
 
   ngOnInit() {
   }
@@ -29,6 +30,14 @@ export class FaqPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

@@ -11,6 +11,8 @@ import { UtilService } from '../service/util.service';
   styleUrls: ['./track-request.page.scss'],
 })
 export class TrackRequestPage implements OnInit {
+  contest: any;
+  contestBadge: any;
   requests: any;
   user: any;
   showNull = false;
@@ -25,7 +27,7 @@ export class TrackRequestPage implements OnInit {
   isDisablied = false;
   constructor(public alertController: AlertController,private navCtrl: NavController,private storage: StorageService,
     private fetch: FetchService,public loadingController: LoadingController,public modalController: ModalController,
-    private util: UtilService) { }
+    public util: UtilService) { }
   
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -49,6 +51,14 @@ export class TrackRequestPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

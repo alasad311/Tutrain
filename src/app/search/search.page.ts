@@ -12,12 +12,14 @@ import { FetchService } from './../service/api/fetch.service';
 
 export class SearchPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  contest: any;
+  contestBadge: any;
   searchInput:any;
   searchResults:any;
   showNull = false;
   type = "all";
   page = 0;
-  constructor(private router: Router, private fetch: FetchService,private nav: NavController,private util: UtilService) { }
+  constructor(private router: Router, private fetch: FetchService,private nav: NavController,public util: UtilService) { }
 
   ngOnInit() {
     if (this.router.getCurrentNavigation().extras.state) {
@@ -33,6 +35,14 @@ export class SearchPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

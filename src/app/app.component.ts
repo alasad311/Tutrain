@@ -32,7 +32,7 @@ export class AppComponent {
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion,
-    private zone: NgZone,private util: UtilService) {
+    private zone: NgZone,public util: UtilService) {
   //   this.androidFullScreen.isImmersiveModeSupported()
   // .then(() => console.log('Immersive mode supported'))
   // .catch(err => console.log(err));

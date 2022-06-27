@@ -10,7 +10,8 @@ import { UtilService } from '../service/util.service';
   styleUrls: ['./session-list.page.scss'],
 })
 export class SessionListPage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   section = 'all';
   isCreate = false;
   isAll = true;
@@ -19,7 +20,7 @@ export class SessionListPage implements OnInit {
   page = 0;
   showNull = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
-    ,private util: UtilService,public loadingController: LoadingController, public modalController: ModalController
+    ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
     ,public alertController: AlertController) { }
 
   async ngOnInit() {
@@ -54,6 +55,14 @@ export class SessionListPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

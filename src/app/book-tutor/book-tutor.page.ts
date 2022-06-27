@@ -14,7 +14,7 @@ export class BookTutorPage implements OnInit {
   maxDate = new Date(new Date().getTime() + (86400000*2)).toISOString().slice(0, 10);
   isDisablied = false;
   isConfirmed = false;
-  constructor(public modalController: ModalController,private util: UtilService) { }
+  constructor(public modalController: ModalController,public util: UtilService) { }
   
   ngOnInit() {
     const time = new Date().getHours()+2;

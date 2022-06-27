@@ -9,6 +9,7 @@ import { FetchService } from './api/fetch.service';
 export class UtilService {
   loader: any;
   isLoading = false;
+  contestCss = false;
   constructor(
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
@@ -23,6 +24,7 @@ export class UtilService {
   openMenu() {
     this.menuController.open();
   }
+ 
   /*
   Start Loader
   Call this method to Start your Loader
@@ -48,6 +50,19 @@ export class UtilService {
       {
         this.storage.clear();
         this.navCtrl.navigateForward(['/welcome']);
+      }
+    }).catch((error) => {
+    });
+
+  }
+  async checkContest(){
+    return await this.fetch.getContest().then(async (response) => {
+      const contest = JSON.parse(response.data).response[0];
+      if(contest)
+      {
+        return true;
+      }else{
+        return false;
       }
     }).catch((error) => {
     });
@@ -127,7 +142,7 @@ export class UtilService {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 2000,
-      color: color,
+      color,
       position: positon
     });
     toast.present();

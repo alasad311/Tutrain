@@ -14,6 +14,8 @@ import { App as CapacitorApp } from '@capacitor/app';
 })
 export class HomePage implements OnInit {
   searchInput: any;
+  contest: any;
+  contestBadge: any;
   slideOpts = {
     speed: 300,
     loop: true,
@@ -63,7 +65,7 @@ export class HomePage implements OnInit {
   users: any;
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
-    private modalCtrl: ModalController,private util: UtilService,public alertController: AlertController ) {
+    private modalCtrl: ModalController,public util: UtilService,public alertController: AlertController ) {
       CapacitorApp.addListener('backButton', ({canGoBack}) => {
         if(this.router.url != '/home')
         {
@@ -75,6 +77,14 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

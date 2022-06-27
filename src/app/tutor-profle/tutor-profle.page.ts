@@ -10,15 +10,24 @@ import { UtilService } from '../service/util.service';
   styleUrls: ['./tutor-profle.page.scss'],
 })
 export class TutorProflePage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
-    ,private util: UtilService,public loadingController: LoadingController, public modalController: ModalController
+    ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
     ,public alertController: AlertController) { }
 
   ngOnInit() {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

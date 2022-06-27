@@ -12,7 +12,8 @@ import { NativeSettings,AndroidSettings,IOSSettings } from 'capacitor-native-set
   styleUrls: ['./setting.page.scss'],
 })
 export class SettingPage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   user: any;
   wallet: any;
   tutor = false;
@@ -20,7 +21,7 @@ export class SettingPage implements OnInit {
   popOutNotification;
   notSystem = 0;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
-    public alertController: AlertController,public loadingController: LoadingController,private util: UtilService,
+    public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
     private router: Router) { }
 
   async ngOnInit() {
@@ -64,6 +65,14 @@ export class SettingPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

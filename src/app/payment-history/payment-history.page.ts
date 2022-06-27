@@ -15,8 +15,10 @@ export class PaymentHistoryPage implements OnInit {
   showNull = false;
   page = 0;
   user: any;
+  contest: any;
+  contestBadge: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
-    ,private util: UtilService,public loadingController: LoadingController, public modalController: ModalController
+    ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
     ,public alertController: AlertController) { }
 
   async ngOnInit() {
@@ -31,6 +33,14 @@ export class PaymentHistoryPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

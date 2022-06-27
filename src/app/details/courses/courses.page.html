@@ -5,8 +5,9 @@
         </ion-chip>
         <ion-title>Tutrain</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openMenu()">
-            <ion-icon class="icon-remove-margin contest " name="ribbon-outline" color="danger"></ion-icon>
+            <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
+        <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
 </ion-header>
 <ion-content>

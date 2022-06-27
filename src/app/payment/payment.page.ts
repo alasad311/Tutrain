@@ -20,7 +20,8 @@ export class PaymentPage implements OnInit {
   @Input() timeFromSelected: any;
   @Input() timeToSelected: any;
   @Input() bookID: any;
-
+  contest: any;
+  contestBadge: any;
   serviceFees: any;
   paymentMethod = 'online';
   dateFormatted: any;
@@ -30,7 +31,7 @@ export class PaymentPage implements OnInit {
   paymentType = true;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController
-    ,private util: UtilService) { }
+    ,public util: UtilService) { }
 
   ngOnInit() {
     if(this.dateSelected)
@@ -297,6 +298,14 @@ export class PaymentPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

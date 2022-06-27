@@ -11,11 +11,12 @@ import { UtilService } from '../service/util.service';
   styleUrls: ['./invite-friend.page.scss'],
 })
 export class InviteFriendPage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   refCode: any;
   confirmedInvites = 0;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
-    ,private util: UtilService) { }
+    ,public util: UtilService) { }
 
   async ngOnInit() {
     const user = await this.storage.get('user');
@@ -57,6 +58,14 @@ export class InviteFriendPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();

@@ -13,7 +13,8 @@ import { UtilService } from 'src/app/service/util.service';
   styleUrls: ['./courses.page.scss'],
 })
 export class CoursesPage implements OnInit {
-
+  contest: any;
+  contestBadge: any;
   id: any;
   page: any;
   course: any;
@@ -28,7 +29,7 @@ export class CoursesPage implements OnInit {
   paid: any;
   constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,
     public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
-    private nav: NavController,private util: UtilService) { }
+    private nav: NavController,public util: UtilService) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -43,6 +44,14 @@ export class CoursesPage implements OnInit {
   }
   ionViewDidEnter() {
     this.util.refreshUserData();
+    this.util.checkContest().then((response) => {
+      this.contest = response;
+      if(this.contest)
+      {
+        this.contestBadge = 1;
+      }
+    });
+
   }
   ionViewDidLeave() {
     this.util.refreshUserData();
