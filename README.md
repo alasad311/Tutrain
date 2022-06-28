@@ -4,10 +4,9 @@
 - [ ] localization
 - [ ] Contest
 - [ ] Page Titles
-- [ ] Course list and create course ( Web Better for videos upload)
-- [ ] Tutor profile update
-- [ ] Session create and list (in progress)
-- [ ] update profile
+- [ ] Course list and create course ( Pending Meeting)
+- [ ] Session create and list (Pending meeting)
+- [ ] User profile update / tutor / trainer / student
 - [ ] payment to be adjusted based on new gateaway
 - [ ] Home page connection categories / courses / purchases
 - [x] Payment History to see registered /paid course
