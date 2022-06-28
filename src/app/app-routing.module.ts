@@ -101,10 +101,18 @@ const routes: Routes = [
   },
   {
     path: 'tutor-profle',
-    loadChildren: () => import('./tutor-profle/tutor-profle.module').then( m => m.TutorProflePageModule)
-  },  {
+    loadChildren: () => import('./tutor-profle/tutor-profle.module').then( m => m.TutorProflePageModule),
+    canActivate: [AuthGuardService],
+  },
+  {
     path: 'contest',
-    loadChildren: () => import('./contest/contest.module').then( m => m.ContestPageModule)
+    loadChildren: () => import('./contest/contest.module').then( m => m.ContestPageModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'subscription',
+    loadChildren: () => import('./subscription/subscription.module').then( m => m.SubscriptionPageModule),
+    canActivate: [AuthGuardService],
   },
 
 

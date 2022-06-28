@@ -24,8 +24,9 @@ export class UtilService {
   openMenu() {
     this.menuController.open();
   }
-  openContest(){
-    this.navCtrl.navigateForward(['/contest']);
+  async openContest(){
+    const user = await this.storage.get('user');
+    if(user.membership){this.navCtrl.navigateForward(['/contest']);}else{this.navCtrl.navigateForward(['/subscription']);}
   }
   /*
   Start Loader

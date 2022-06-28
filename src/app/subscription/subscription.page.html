@@ -1,0 +1,41 @@
+<ion-header mode="md">
+  <ion-toolbar class="ion-no-margin">
+      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+      </ion-chip>
+      <ion-title>Tutrain</ion-title>
+      
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="subscription-image">
+    <img src="https://via.placeholder.com/512x512" />
+  </div>
+  <div class="slider_div" *ngIf="subs">
+      <ion-slides mode="ios" pager="false" [options]="slideOpts">
+          <ion-slide *ngFor="let item of subs">
+              <div class="bg_image back_image">
+                  <div class="overlay">
+                      <ion-label class="title">{{item.name}}</ion-label>
+                      <p>{{item.name_type}}</p>
+                      <ion-label class="price">{{item.price | number : '1.3-3'}}</ion-label>
+                  </div>
+              </div>
+          </ion-slide>
+      </ion-slides>
+  </div>
+  <div class="slider_div" *ngIf="!subs">
+    <ion-slides mode="ios" pager="false" [options]="slideOpts">
+        <ion-slide *ngFor="let item of [1,2,3]">
+            <div class="bg_image back_image">
+                <div class="overlay">
+                    <ion-label class="title"><ion-skeleton-text animated style="width: 88%"></ion-skeleton-text></ion-label>
+                    <p><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></p>
+                    <ion-label class="price"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
+                </div>
+            </div>
+        </ion-slide>
+    </ion-slides>
+</div>
+</ion-content>
