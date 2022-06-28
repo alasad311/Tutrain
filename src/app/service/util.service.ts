@@ -24,7 +24,9 @@ export class UtilService {
   openMenu() {
     this.menuController.open();
   }
- 
+  openContest(){
+    this.navCtrl.navigateForward(['/contest']);
+  }
   /*
   Start Loader
   Call this method to Start your Loader
