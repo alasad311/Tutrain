@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AuthGuardService } from './../service/Auth/auth-guard.service';
 import { StorageService } from './../service/storage/storage.service';
 import { FetchService } from './../service/api/fetch.service';
@@ -62,10 +62,13 @@ export class HomePage implements OnInit {
       rating: 2.2
     },
   ];
+
   users: any;
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
-    private modalCtrl: ModalController,public util: UtilService,public alertController: AlertController ) {
+    private modalCtrl: ModalController,public util: UtilService,public alertController: AlertController,
+    private route: ActivatedRoute ) {
+      
       CapacitorApp.addListener('backButton', ({canGoBack}) => {
         if(this.router.url != '/home')
         {

@@ -8,34 +8,44 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="subscription-image">
-    <img src="https://via.placeholder.com/512x512" />
-  </div>
-  <div class="slider_div" *ngIf="subs">
-      <ion-slides mode="ios" pager="false" [options]="slideOpts">
-          <ion-slide *ngFor="let item of subs">
-              <div class="bg_image back_image">
-                  <div class="overlay">
-                      <ion-label class="title">{{item.name}}</ion-label>
-                      <p>{{item.name_type}}</p>
-                      <ion-label class="price">{{item.price | number : '1.3-3'}}</ion-label>
-                  </div>
-              </div>
-          </ion-slide>
-      </ion-slides>
-  </div>
-  <div class="slider_div" *ngIf="!subs">
-    <ion-slides mode="ios" pager="false" [options]="slideOpts">
-        <ion-slide *ngFor="let item of [1,2,3]">
-            <div class="bg_image back_image">
-                <div class="overlay">
-                    <ion-label class="title"><ion-skeleton-text animated style="width: 88%"></ion-skeleton-text></ion-label>
-                    <p><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></p>
-                    <ion-label class="price"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
-                </div>
+<ion-content class="bg_color">
+    <div class="why_upgrade">
+        <h1>Whats the benefit of <br> contest subscription?</h1>
+
+        <div class="features">
+            <p class="d-flex">
+                <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
+                Benefit #1 
+            </p>
+            <p class="d-flex">
+                <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
+                Benefit #2
+            </p>
+            <p class="d-flex">
+                <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
+                Benefit #3
+            </p>
+        </div>
+    </div>
+    <ion-list lines="none" *ngIf="subs">
+        <ion-item (click)="makePayment(item)" *ngFor="let item of subs">
+            <div class="item_inner">
+                <h2>{{item.name}}</h2>
+                <h3 class="d-flex">
+                    {{item.name_type}} <span class="end">{{item.price | number : '1.3-3'}}</span>
+                </h3>
             </div>
-        </ion-slide>
-    </ion-slides>
-</div>
+        </ion-item>
+    </ion-list>
+    <ion-list lines="none" *ngIf="!subs">
+        <ion-item *ngFor="let item of [1,2,3]">
+            <div class="item_inner">
+                <h2><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></h2>
+                <h3 class="d-flex">
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text> <span class="end" style="width: 100px;"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></span>
+                </h3>
+            </div>
+        </ion-item>
+    </ion-list>
 </ion-content>
+

@@ -20,6 +20,7 @@ export class PaymentPage implements OnInit {
   @Input() timeFromSelected: any;
   @Input() timeToSelected: any;
   @Input() bookID: any;
+  @Input() subscription: any;
   contest: any;
   contestBadge: any;
   serviceFees: any;
@@ -93,6 +94,13 @@ export class PaymentPage implements OnInit {
     '_blank',{ location: 'no',zoom: 'no'});
     browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
   }
+  onCheckoutSubscription(){
+    this.isDisablied = true;
+    const browser = this.iab.create(
+      'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
+      '_blank',{ location: 'no',zoom: 'no'});
+    browser.on('exit').subscribe(event => { this.checkPaymentSubscription(true); });
+  }
   onCheckoutSession(){
     // check if session is still exisist before purchasing
     this.isDisablied = true;
@@ -131,7 +139,8 @@ export class PaymentPage implements OnInit {
         user_id : user.user_id,
         tutor_id: this.tutor.user_id,
         is_online:this.paymentType,
-        book_id: this.bookID
+        book_id: this.bookID,
+        subscription_id: null
       };
       this.fetchServices.updateOrder(data).then(async (response) => {
         const json = JSON.parse(response.data).response;
@@ -185,13 +194,68 @@ export class PaymentPage implements OnInit {
         user_id : user.user_id,
         tutor_id: null,
         is_online:this.paymentType,
-        book_id: null
+        book_id: null,
+        subscription_id: null
       };
       this.fetchServices.updateOrder(data).then(async (response) => {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
           this.alertMessage('Payment','You have paid '+ (this.course.price+this.service).toFixed(3) );
+        }
+
+      }).catch((error) => {
+        this.isDisablied = false;
+      });
+    }else{
+      this.isDisablied = false;
+    }
+
+    //Preparing ahead
+
+
+
+    // browser.executeScript({
+    //   code: "document.getElementById('customBackbtn').onclick = function() {\
+    //   var message = 'close';\
+    //   var messageObj = {message: message};\
+    //   var stringifiedMessageObj = JSON.stringify(messageObj);\
+    //   webkit.messageHandlers.cordova_iab.postMessage('stringifiedMessageObj');\
+    //   }"});
+    // browser.on('message').subscribe((val)=>{
+    //   const postObject:any = val;
+
+    //   //Do whatever you want to with postObject response from inappbrowser
+
+    //   });
+  }
+  async checkPaymentSubscription(event)
+  {
+
+    if(event)
+    {
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Please wait...'
+      });
+      await loading.present();
+      const user = await this.storage.get('user');
+      const data = {
+        paid_amount: this.subscription.price,
+        service_fees:0,
+        course_id : null,
+        session_id : null,
+        user_id : user.user_id,
+        tutor_id: null,
+        is_online:this.paymentType,
+        book_id: null,
+        subscription_id: this.subscription.id
+      };
+      this.fetchServices.updateOrder(data).then(async (response) => {
+        const json = JSON.parse(response.data).response;
+        await loading.dismiss();
+        if(json.id){
+          this.alertMessage('Payment','You have paid '+ (this.subscription.price).toFixed(3) );
         }
 
       }).catch((error) => {
@@ -238,7 +302,8 @@ export class PaymentPage implements OnInit {
         user_id : user.user_id,
         tutor_id: null,
         is_online:this.paymentType,
-        book_id: null
+        book_id: null,
+        subscription_id: null
       };
       this.fetchServices.updateOrder(data).then(async (response) => {
         const json = JSON.parse(response.data).response;
@@ -344,7 +409,7 @@ export class PaymentPage implements OnInit {
       tutor_id: this.tutor.user_id,
       is_online:this.paymentType,
       book_id: this.bookID,
-      
+      subscription_id: null
     };
     this.fetchServices.updateOrder(data).then(async (response) => {
       const json = JSON.parse(response.data).response;

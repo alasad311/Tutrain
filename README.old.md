@@ -50,3 +50,11 @@
 - out put from notification
 - course session added to app
 
+## 26/06/2022
+- Payment history now shows details of order
+- Back home in certain page doesnt go back correctly has been fixed
+- List of session
+- Check if session is either deleted or full before purchasing.
+- Rating via DB has been activiated.
+
+

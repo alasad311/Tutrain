@@ -12,6 +12,7 @@ export class ContestPage implements OnInit {
   constructor(private navCtrl: NavController,public util: UtilService) { }
 
   ngOnInit() {
+  
   }
   goBackHome(){
     this.navCtrl.back();

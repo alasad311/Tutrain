@@ -61,10 +61,10 @@
                 </div>
             </div>
             <div class="btc_div">
-                <div>
+                <div *ngIf="!item.subscription_id">
                     <ion-button expand="full" (click)="openDetails(item)" shape="round"> View {{getOrderObjective(item)}}</ion-button>
                 </div>
-                <div *ngIf="!item.is_rated">
+                <div *ngIf="!item.is_rated && !item.subscription_id">
                     <ion-button expand="full" (click)="rate(item.ORDERID,item.order_number)" shape="round"> Rate</ion-button>
                 </div>
             </div>

@@ -9,6 +9,30 @@
         </ion-chip>
     </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding" *ngIf="subscription">
+    <div class="brand">
+        <!-- <div class="bg_image back_image" [style.backgroundImage]="'url('+course.img+')'"></div> -->
+        <div class="food_detail">
+            <div class="name">
+                <ion-label>{{subscription.name}}</ion-label>
+            </div>
+            <div class="name">
+                <ion-label>Subscription Duration: {{subscription.noday}} {{subscription.noday > 1 ? "Days": "Day" }}</ion-label>
+            </div>
+            <div class="cart_price">
+                <ion-label>{{subscription.price | number : '1.3-3'}}</ion-label>
+            </div>
+        </div>
+    </div>
+    <div class="item_total">
+        <ion-label>Item total <span>{{subscription.price | number : '1.3-3'}}</span></ion-label>
+        <ion-label class="color_lbl">Delivery <span>Online</span></ion-label>
+    </div>
+    <div class="fare">
+        <ion-label>Total</ion-label>
+        <ion-label>{{subscription.price  | number : '1.3-3'}}</ion-label>
+    </div>
+</ion-content>
 <ion-content class="ion-padding" *ngIf="course">
     <div class="brand">
         <div class="bg_image back_image" [style.backgroundImage]="'url('+course.img+')'"></div>
@@ -126,6 +150,15 @@
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
             <ion-label>Checkout</ion-label>
             <ion-label slot="end">{{(session.price + service) | number : '1.3-3'}}</ion-label>
+        </ion-item>
+    </ion-toolbar>
+</ion-footer>
+<ion-footer *ngIf="subscription">
+    <ion-toolbar>
+        <ion-item lines="none" (click)="onCheckoutSubscription()" [disabled]="isDisablied">
+            <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
+            <ion-label>Checkout</ion-label>
+            <ion-label slot="end">{{subscription.price | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
 </ion-footer>
