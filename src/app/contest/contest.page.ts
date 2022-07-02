@@ -10,7 +10,7 @@ import { UtilService } from '../service/util.service';
   styleUrls: ['./contest.page.scss'],
 })
 export class ContestPage implements OnInit {
-  isAnswered = false;
+  isAnswered = true;
   contest: any;
   contestAnswerer: string;
   disabled = true;
