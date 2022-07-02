@@ -57,4 +57,9 @@
 - Check if session is either deleted or full before purchasing.
 - Rating via DB has been activiated.
 
+## 29/06/2022
+- Subscription page design
+- Subscription redirect to payment
+- Added subscription to DB and add user to membership
+- Redirect after payment to Contest page 
 

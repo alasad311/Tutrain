@@ -25,8 +25,15 @@ export class UtilService {
     this.menuController.open();
   }
   async openContest(){
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...'
+    });
+    await loading.present();
     const user = await this.storage.get('user');
-    if(user.membership){this.navCtrl.navigateForward(['/contest']);}else{this.navCtrl.navigateForward(['/subscription']);}
+    const contest = await this.checkContest();
+    if(contest){if(user.membership){await loading.dismiss(); this.navCtrl.navigateForward(['/contest/'+contest.id]);}else{await loading.dismiss(); this.navCtrl.navigateForward(['/subscription']);}}
+    else{await loading.dismiss(); this.showWarningAlert("No Contest","At the moment there arent any contest check again another day")}
   }
   /*
   Start Loader
@@ -61,12 +68,7 @@ export class UtilService {
   async checkContest(){
     return await this.fetch.getContest().then(async (response) => {
       const contest = JSON.parse(response.data).response[0];
-      if(contest)
-      {
-        return true;
-      }else{
-        return false;
-      }
+      return contest;
     }).catch((error) => {
     });
 
@@ -88,9 +90,9 @@ export class UtilService {
     param : msg = message to display
     Call this method to show Warning Alert,
     */
-  async showWarningAlert(msg) {
+  async showWarningAlert(header,msg) {
     const alert = await this.alertCtrl.create({
-      header: 'Warning',
+      header: header,
       message: msg,
       buttons: ['ok']
     });

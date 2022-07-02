@@ -105,7 +105,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-    path: 'contest',
+    path: 'contest/:id',
     loadChildren: () => import('./contest/contest.module').then( m => m.ContestPageModule),
     canActivate: [AuthGuardService],
   },

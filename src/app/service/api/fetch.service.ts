@@ -562,12 +562,69 @@ export class FetchService {
     });
   }
   public async getSubscriptions(): Promise<any>{
-    return new Promise( (resolve,reject) => {
+    return new Promise((resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/contest/subscriptions';
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async getContestQuestions(id): Promise<any>{
+    return new Promise((resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/contest/'+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async contestDidAnswerer(id): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const user = await this.storage.get('user');
+      const url = 'https://tapp.scd.edu.om/api/v1/contest/'+id+'/answered';
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async submitUserAnswerer(contestID,answererID): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const user = await this.storage.get('user');
+      const data = {
+        answer: answererID
+      };
+      const url = 'https://tapp.scd.edu.om/api/v1/contest/'+contestID+'/';
+      this.http.sendRequest( url , {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
+        data: data,
+        serializer: 'json',
         timeout: 1000
       } )
         .then(res => {

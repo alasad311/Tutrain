@@ -23,6 +23,12 @@ export class SubscriptionPage implements OnInit {
   });
 
   }
+  ionViewDidEnter() {
+    this.util.refreshUserData();
+  }
+  ionViewDidLeave() {
+    this.util.refreshUserData();
+  }
   goBackHome(){
     this.navCtrl.back();
   }
