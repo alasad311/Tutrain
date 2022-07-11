@@ -86,6 +86,9 @@ export class SettingPage implements OnInit {
   goToSession(){
     this.router.navigate(['/session-list']);
   }
+  editProfile(){
+    this.router.navigate(['/edit-profile'])
+  }
   onNotificationOptionChange(event){
     if(this.popOutNotification !== event.detail.checked)
     {

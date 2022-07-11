@@ -13,8 +13,7 @@ import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
-
-
+ 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

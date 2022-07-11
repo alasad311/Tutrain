@@ -1,0 +1,92 @@
+<ion-header mode="md">
+  <ion-toolbar class="ion-no-margin">
+      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+      </ion-chip>
+      <ion-title>Tutrain</ion-title>
+      <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
+          <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
+      </ion-chip>
+      <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
+  </ion-toolbar>
+  <div class="header_banner d-flex animate__animated animate__fadeInUp">
+    <div class="text_box">
+        <h2>Your Profile</h2>
+        <h3 *ngIf="profile">{{profile.type}}</h3>
+    </div>
+    <div class="img_section end d-flex">
+        <div class="img_box center_img end" *ngIf="profile">
+            <img [src]="imageUrl" class="crop_img">
+        </div>
+        <ion-icon class="zmdi zmdi-camera ion-text-center" (click)="selectPicture()"></ion-icon>
+    </div>
+</div>
+</ion-header>
+
+<ion-content *ngIf="student">
+  <form (ngSubmit)="updateProfile()" novalidate >
+    <div class="form animate__animated animate__fadeInUp" *ngIf="profile"  [formGroup]="profileUpdate" >
+      <ion-list lines="none">
+          <ion-card>
+              <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                  <div class="item_inner">
+                      <ion-label>Full Name</ion-label>
+                      <ion-input mode="md" formControlName="fullname" type="text"></ion-input>
+                  </div>
+                 
+                </ion-item>
+                <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required" >Please enter your fullname</span>
+              <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                  <div class="item_inner">
+                      <ion-label>Email</ion-label>
+                      <div class="input_box d-flex">
+                          <ion-input mode="md" type="email" readonly="true" [value]="profile.email"></ion-input>
+                      </div>
+                  </div>
+              </ion-item>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner">
+                    <ion-label>Date of Birth</ion-label>
+                    <ion-input mode="md" type="Date" formControlName="dob" ></ion-input>
+                </div>
+            </ion-item>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+              <div class="item_inner">
+                  <ion-label>Country</ion-label>
+                  <div class="input_box d-flex">
+                    <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location"  interface="popover">
+                      <ion-select-option value="om">Sultanate of Oman</ion-select-option>
+                      <ion-select-option value="kw">Kuwait</ion-select-option>
+                      <ion-select-option value="sa">Saudi Arabia</ion-select-option>
+                      <ion-select-option value="qa">Qatar</ion-select-option>
+                      <ion-select-option value="iq">Iraq</ion-select-option>
+                      <ion-select-option value="bh">Bahrain</ion-select-option>
+                      <ion-select-option value="ae">United Arab Emirates</ion-select-option>
+                    </ion-select>
+                  </div>
+              </div>
+          </ion-item>
+          <ion-item class="animate__animated animate__fadeInUp" style="border-bottom:unset !important;" lines="none">
+              <div class="item_inner">
+                  <ion-label>Phone</ion-label>
+                  <ion-item lines="none" class="ion-no-padding">
+                    <ion-text class="international-code">{{internationalCode}}</ion-text>
+                    <ion-input mode="md" type="tel" style="padding-top: 2px !important;" formControlName="phone" ></ion-input>
+                  </ion-item>
+                  <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required" >Please enter your phone number</span>
+                  <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern" >Your phone number cant contain other than numbers</span>
+                  <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.minlength" >Your phone number cant be less than 7 digits</span>
+              </div>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+    <div class="btn_box">
+        <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">Update</ion-button>
+    </div>
+  </form>
+
+</ion-content>
+<ion-content *ngIf="tutor">
+tutor
+</ion-content>

@@ -22,7 +22,7 @@
                     <ion-label class="name_lbl">{{user.fullname}}</ion-label>
                     <ion-label class="prgrm_lbl">{{user.type}}</ion-label>
                 </div>
-                <ion-button slot="end" shape="round">
+                <ion-button (click)="editProfile()" slot="end" shape="round">
                     Edit
                 </ion-button>
             </ion-item>
