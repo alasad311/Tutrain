@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { StorageService } from '../storage/storage.service';
-
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
+import { Photo } from '@capacitor/camera';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FetchService {
   apiKey = '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611'; // <-- Enter your own key here!
-  constructor( private http: HTTP,private storage: StorageService) {
+  constructor( private http: HTTP,private storage: StorageService,
+    private transfer: FileTransfer) {
     this.http.setDataSerializer('raw');
   }
-
+  fileTransfer: FileTransferObject = this.transfer.create();
   public async getUser(email): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+email 
@@ -635,22 +637,43 @@ export class FetchService {
         });
     });
   }
-  public async updateUser(userID,data): Promise<any>{
+  public async updateUser(userID,data,imageData: Photo): Promise<any>{
+    //lets being with upload the picture first
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/user/'+userID+'/update';
-      this.http.sendRequest( url , {
-        method: 'post',
-        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
-        data: data,
-        serializer: 'json',
-        timeout: 1000
-      } )
-        .then(res => {
-          resolve(res)
+      if(imageData != null)
+      {
+        let options: FileUploadOptions = {
+          fileKey: 'tutrainPro',
+          chunkedMode: true,
+          mimeType: 'multipart/form-data',
+          params: data,
+          headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID}
+       }
+        this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/users/upload'), options).then((data) => {
+          console.log("Success "+data);
+          resolve(data)
+        }, (err) => {
+          console.log("Error "+err)
+          reject(err);
+
         })
-        .catch(error => {
-          reject(error);
-        });
-    });
+      }
+   }) 
+    // return new Promise( async (resolve,reject) => {
+    //   const url = 'https://tapp.scd.edu.om/api/v1/user/'+userID+'/update';
+    //   this.http.sendRequest( url , {
+    //     method: 'post',
+    //     headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+    //     data: data,
+    //     serializer: 'json',
+    //     timeout: 1000
+    //   } )
+    //     .then(res => {
+    //       resolve(res)
+    //     })
+    //     .catch(error => {
+    //       reject(error);
+    //     });
+    // });
   }
 }

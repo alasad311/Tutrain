@@ -13,13 +13,14 @@ import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
+import { FileTransfer } from '@awesome-cordova-plugins/file-transfer/ngx'
  
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(),IonicStorageModule.forRoot()
     , AppRoutingModule,FormsModule,ReactiveFormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },FileTransfer,
     AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser,AppVersion],
   bootstrap: [AppComponent],
 })

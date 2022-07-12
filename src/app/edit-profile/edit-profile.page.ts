@@ -20,6 +20,8 @@ export class EditProfilePage implements OnInit {
   student = true;
   internationalCode:any;
   imageUrl:any;
+  imageData:any;
+  imageMime:any;
   country:any;
   user: any;
   isSubmitted = false;
@@ -107,10 +109,6 @@ export class EditProfilePage implements OnInit {
       {
         delete data.dob
       }
-      if(this.imageUrl !== this.profile.picture)
-      {
-        data.picture = this.imageUrl;
-      }
       if(this.country !== this.profile.country)
       {
         data.country = this.country;
@@ -125,7 +123,7 @@ export class EditProfilePage implements OnInit {
       }
       if(data)
       {
-        this.fetch.updateUser(this.profile.user_id,data).then((response) => {
+        this.fetch.updateUser(this.profile.user_id,data,this.imageData).then((response) => {
           const json = JSON.parse(response.data);
           // if(json.code === 'ER_DUP_ENTRY')
           // {
@@ -137,10 +135,10 @@ export class EditProfilePage implements OnInit {
           // }
         }).catch((error) => {
           //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
-          this.alertMessage("Nothing","Nothing to be updated!")
           this.isDisablied = false;
        });
       }else{
+        this.alertMessage("Nothing","Nothing to be updated!")
         this.isDisablied = false;
         return false;
       }
@@ -149,12 +147,13 @@ export class EditProfilePage implements OnInit {
   selectPicture = async () => {
 
     const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 50,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Prompt
+      source: CameraSource.Prompt,
     });
     this.imageUrl = image.webPath;
+    this.imageData = image;
   }
   ionViewDidLeave() {
     this.util.refreshUserData();
