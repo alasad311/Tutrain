@@ -6,6 +6,7 @@ import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
 import { Camera, CameraResultType,CameraSource } from '@capacitor/camera';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { EventService } from '../service/event.service';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class EditProfilePage implements OnInit {
   profileUpdate: FormGroup;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
-    private router: Router,public formBuilder: FormBuilder) { }
+    private router: Router,public formBuilder: FormBuilder,private event:EventService) { }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
@@ -96,12 +97,18 @@ export class EditProfilePage implements OnInit {
       }
     });
   }
-  updateProfile(){
+  async updateProfile(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait updating profile...'
+    });
+    await loading.present();
     //lets begin updateing
     this.isSubmitted = true;
     this.isDisablied = true;
     if (!this.profileUpdate.valid) {
       this.isDisablied = false;
+      await loading.dismiss();
       return false;
     } else {
       let data = JSON.parse(JSON.stringify(this.profileUpdate.value));
@@ -123,21 +130,30 @@ export class EditProfilePage implements OnInit {
       }
       if(data)
       {
-        this.fetch.updateUser(this.profile.user_id,data,this.imageData).then((response) => {
-          const json = JSON.parse(response.data);
-          // if(json.code === 'ER_DUP_ENTRY')
-          // {
-          //   this.alertMessage('Error: #12','Email exisits, did you forget your password? <a href=\'/forgot\'>click here </a>','');
-          //   this.isDisablied = false;
-          // }
-          // else if(json.id){
-          //   this.alertMessage('Welcome','Your account has been created <br /> check your email to confirm your account','login');
-          // }
-        }).catch((error) => {
+        this.fetch.updateUser(this.profile.user_id,data,this.imageData).then(async (response) => {
+          if(response.response.results == "success")
+          {
+            await loading.dismiss();
+            this.alertMessage("Updated","Profile updated successfully!")
+            this.storage.clear();
+            this.storage.set('user',response.response.user[0])
+            this.event.publishSomeData(response.response.user[0])
+            this.goBackHome();
+          }else{
+            await loading.dismiss();
+            this.alertMessage("Error","Couldn't update your profile, try again later!")
+            this.isDisablied = false;
+          }
+
+        
+        }).catch(async (error) => {
           //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
+          await loading.dismiss();
+          this.alertMessage("Error","Couldn't update your profile, try again later!")
           this.isDisablied = false;
        });
       }else{
+        await loading.dismiss();
         this.alertMessage("Nothing","Nothing to be updated!")
         this.isDisablied = false;
         return false;

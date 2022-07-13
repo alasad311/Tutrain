@@ -650,30 +650,46 @@ export class FetchService {
           headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID}
        }
         this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/users/upload'), options).then((data) => {
-          console.log("Success "+data);
-          resolve(data)
+          resolve(JSON.parse(data.response))
         }, (err) => {
-          console.log("Error "+err)
           reject(err);
 
         })
+      }else{
+        const url = 'https://tapp.scd.edu.om/api/v1/users/upload';
+        this.http.sendRequest( url , {
+          method: 'post',
+          headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID},
+          data: data,
+          serializer: 'json',
+          timeout: 1000
+        } )
+          .then(res => {
+            resolve(JSON.parse(res.data))
+          })
+          .catch(error => {
+            reject(error);
+          });
       }
    }) 
-    // return new Promise( async (resolve,reject) => {
-    //   const url = 'https://tapp.scd.edu.om/api/v1/user/'+userID+'/update';
-    //   this.http.sendRequest( url , {
-    //     method: 'post',
-    //     headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
-    //     data: data,
-    //     serializer: 'json',
-    //     timeout: 1000
-    //   } )
-    //     .then(res => {
-    //       resolve(res)
-    //     })
-    //     .catch(error => {
-    //       reject(error);
-    //     });
-    // });
+
+  }
+  public async changeUserPassword(userID,data): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/users/'+userID+'/password';
+      this.http.sendRequest( url, {
+        method: 'post',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        data: data,
+        serializer: 'json',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   }
 }

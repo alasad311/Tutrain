@@ -117,8 +117,14 @@ const routes: Routes = [
   {
     path: 'edit-profile',
     loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule),
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule),
+    //canActivate: [AuthGuardService],
+  },
+
 
 
 

@@ -45,7 +45,6 @@ export class SettingPage implements OnInit {
     }else{
       this.tutor = true;
     }
-   
   }
 
   goBackHome(){
@@ -63,7 +62,7 @@ export class SettingPage implements OnInit {
     }
 
   }
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     this.util.refreshUserData();
     this.util.checkContest().then((response) => {
       this.contest = response;
@@ -72,7 +71,15 @@ export class SettingPage implements OnInit {
         this.contestBadge = 1;
       }
     });
-
+    this.user = await this.storage.get('user');
+    
+    if(this.user.type == "student")
+    {
+      this.tutor = false;
+    }else{
+      this.tutor = true;
+    }
+   
   }
   ionViewDidLeave() {
     this.util.refreshUserData();
@@ -88,6 +95,9 @@ export class SettingPage implements OnInit {
   }
   editProfile(){
     this.router.navigate(['/edit-profile'])
+  }
+  changePassword(){
+    this.router.navigate(['/change-password'])
   }
   onNotificationOptionChange(event){
     if(this.popOutNotification !== event.detail.checked)

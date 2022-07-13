@@ -14,8 +14,8 @@
         <h2>Your Profile</h2>
         <h3 *ngIf="profile">{{profile.type}}</h3>
     </div>
-    <div class="img_section end d-flex">
-        <div class="img_box center_img end" *ngIf="profile">
+    <div class="img_section end d-flex"  *ngIf="profile">
+        <div class="img_box center_img end">
             <img [src]="imageUrl" class="crop_img">
         </div>
         <ion-icon class="zmdi zmdi-camera ion-text-center" (click)="selectPicture()"></ion-icon>
