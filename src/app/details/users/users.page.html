@@ -35,7 +35,7 @@
                     <ion-badge class="badge">{{user.degree}}</ion-badge>
                 </div>
                 <div class="item">
-                    <ion-label class="text"> {{user.governorate}}, {{user.wilayat}}, {{user.locality}}</ion-label>
+                    <ion-label class="text"> {{user.address}}</ion-label>
                     <!-- <ion-label class="distance"></ion-label> -->
                 </div>
                 <div class="line"></div>
@@ -61,7 +61,7 @@
 </ion-content>
 <ion-footer *ngIf="user">
     <ion-toolbar>
-        <ion-item lines="none" (click)="bookTutor()" [disabled]="isDisablied">
+        <ion-item lines="none" (click)="bookTutor()">
             <ion-label>Book</ion-label>
             <ion-label slot="end">{{user.fullname}}</ion-label>
         </ion-item>

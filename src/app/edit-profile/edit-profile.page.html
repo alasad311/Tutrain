@@ -47,7 +47,7 @@
             <ion-item class="animate__animated animate__fadeInUp" lines="none">
                 <div class="item_inner">
                     <ion-label>Date of Birth</ion-label>
-                    <ion-input mode="md" type="Date" formControlName="dob" ></ion-input>
+                    <ion-input mode="md" placeholder="dd/mm/yyyy" type="Date" formControlName="dob" ></ion-input>
                 </div>
             </ion-item>
             <ion-item class="animate__animated animate__fadeInUp" lines="none">
@@ -88,5 +88,136 @@
 
 </ion-content>
 <ion-content *ngIf="tutor">
-tutor
+  <form (ngSubmit)="updateProfile()" novalidate >
+    <div class="form animate__animated animate__fadeInUp" *ngIf="profile"  [formGroup]="profileUpdate" >
+      <ion-list lines="none">
+          <ion-card>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                <div class="item_inner">
+                    <ion-label>Full Name</ion-label>
+                    <ion-input mode="md" formControlName="fullname" type="text"></ion-input>
+                </div>
+                
+            </ion-item>
+            <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required" >Please enter your fullname</span>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner">
+                    <ion-label>Email</ion-label>
+                    <div class="input_box d-flex">
+                        <ion-input mode="md" type="email" readonly="true" [value]="profile.email"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner">
+                    <ion-label>Date of Birth</ion-label>
+                    <ion-input mode="md" type="Date" placeholder="dd/mm/yyyy" formControlName="dob" ></ion-input>
+                </div>
+            </ion-item>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+              <div class="item_inner">
+                  <ion-label>Country</ion-label>
+                  <div class="input_box d-flex">
+                    <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location"  interface="popover">
+                      <ion-select-option value="om">Sultanate of Oman</ion-select-option>
+                      <ion-select-option value="kw">Kuwait</ion-select-option>
+                      <ion-select-option value="sa">Saudi Arabia</ion-select-option>
+                      <ion-select-option value="qa">Qatar</ion-select-option>
+                      <ion-select-option value="iq">Iraq</ion-select-option>
+                      <ion-select-option value="bh">Bahrain</ion-select-option>
+                      <ion-select-option value="ae">United Arab Emirates</ion-select-option>
+                    </ion-select>
+                  </div>
+              </div>
+            </ion-item>
+            <ion-item class="animate__animated animate__fadeInUp" style="border-bottom:unset !important;" lines="none">
+                <div class="item_inner">
+                    <ion-label>Phone</ion-label>
+                    <ion-item lines="none" class="ion-no-padding">
+                      <ion-text class="international-code">{{internationalCode}}</ion-text>
+                      <ion-input mode="md" type="tel" style="padding-top: 2px !important;" formControlName="phone" ></ion-input>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required" >Please enter your phone number</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern" >Your phone number cant contain other than numbers</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.minlength" >Your phone number cant be less than 7 digits</span>
+                </div>
+            </ion-item>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+              <div class="item_inner">
+                  <ion-label>Degress</ion-label>
+                  <div class="input_box d-flex">
+                    <ion-select (ngModel)="degree" formControlName="deg" [value]="degree" (ionChange)="getSelectCountry($event)" placeholder="Select Degree"  interface="popover">
+                      <ion-select-option value="Professional Trainer">Professional Trainer</ion-select-option>
+                      <ion-select-option value="Diploma">Diploma</ion-select-option>
+                      <ion-select-option value="Bachelor">Bachelor</ion-select-option>
+                      <ion-select-option value="Master">Master</ion-select-option>
+                      <ion-select-option value="PHD">PHD</ion-select-option>
+                    </ion-select>
+                  </div>
+              </div>
+          </ion-item>
+          <ion-item class="animate__animated animate__fadeInUp" style="border-bottom:unset !important;" lines="none">
+            <div class="item_inner">
+                <ion-label>Hourly Price</ion-label>
+                <ion-item lines="none" class="ion-no-padding">
+                  <ion-input mode="md" type="number" formControlName="hourcost" ></ion-input>
+                </ion-item>
+                <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required" >Please enter your hourly price</span>
+                <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern" >Your hour pirce can only contain numbers</span>
+            </div>
+        </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.deg.errors?.required" >Please select a degree</span>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>Specialization</ion-label>
+                <ion-input mode="md" formControlName="spec" type="text"></ion-input>
+            </div>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.spec.errors?.required" >Please enter your Specialization</span>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>Address</ion-label>
+                <ion-textarea rows="5"  formControlName="address"  mode="md" placeholder="Your Address"></ion-textarea>
+            </div>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.address.errors?.required" >Please enter your address</span>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>About you</ion-label>
+                <ion-textarea rows="5"  formControlName="about"  mode="md" placeholder="Describe yourself here for users to view"></ion-textarea>
+            </div>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.about.errors?.required" >Please enter information about yourself </span>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>Tags</ion-label>
+                <ion-input mode="md" formControlName="tags" placeholder="sperate each tag with a , ex. english,arabic" type="text"></ion-input>
+            </div>
+          </ion-item>
+          <span class="error-message" *ngIf="isSubmitted && errorControl.tags.errors?.required" >Please enter tags</span>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>Show Email</ion-label>
+                <ion-toggle formControlName="isemail"></ion-toggle>
+            </div>
+          </ion-item>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>Show Phone</ion-label>
+                <ion-toggle formControlName="isphone"></ion-toggle>
+            </div>
+          </ion-item>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
+                <ion-label>Show Whatsapp</ion-label>
+                <ion-toggle formControlName="iswhatsapp"></ion-toggle>
+            </div>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </div>
+    <div class="btn_box">
+        <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">Update</ion-button>
+    </div>
+  </form>
 </ion-content>

@@ -28,6 +28,8 @@ export class EditProfilePage implements OnInit {
   isSubmitted = false;
   isDisablied = false;
   profile:any;
+  degree:any;
+  gov:any;
   profileUpdate: FormGroup;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
@@ -54,12 +56,32 @@ export class EditProfilePage implements OnInit {
       this.profile = JSON.parse(response.data).response[0];
       this.country = this.profile.country;
       this.imageUrl = this.profile.picture;
-      this.profileUpdate = this.formBuilder.group({
+      this.degree = this.profile.degree;
+      this.gov = this.profile.governorate;
+      if(this.profile.type == 'student')
+      {
+        this.profileUpdate = this.formBuilder.group({
           fullname: [this.profile.fullname, [Validators.required, Validators.minLength(2)]],
           phone: [this.profile.phone, [Validators.required, Validators.minLength(7), Validators.pattern('^[0-9]+$')]],
           dob: [this.profile.dateofbirth],
-        }
-      );
+        });
+      }else{
+        this.profileUpdate = this.formBuilder.group({
+          fullname: [this.profile.fullname, [Validators.required, Validators.minLength(2)]],
+          phone: [this.profile.phone, [Validators.required, Validators.minLength(7), Validators.pattern('^[0-9]+$')]],
+          deg: [this.profile.degree,  [Validators.required]],
+          spec: [this.profile.specialization,  [Validators.required]],
+          address: [this.profile.address,  [Validators.required]],
+          about:  [this.profile.about,  [Validators.required]],
+          tags: [this.profile.tags , [Validators.required]],
+          isemail: [this.profile.is_email,  [Validators.required]],
+          isphone: [this.profile.is_phone,  [Validators.required]],
+          iswhatsapp: [this.profile.is_whatapp,  [Validators.required]],
+          hourcost : [this.profile.hour_price, [Validators.required, Validators.pattern('^([0-9]+\.?[0-9]*|\.[0-9]+)$')]],
+          dob: [this.profile.dateofbirth],
+        });
+      }
+     
       if(this.profile.country == 'om'){
         this.internationalCode = '+968';
       }else if(this.profile.country == 'kw'){

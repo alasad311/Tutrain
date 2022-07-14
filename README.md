@@ -11,8 +11,3 @@
 
 ## Backend
 - [ ] Payment Gateaway
-
-## 2/7/2022
-- Contest ready and function
-- auto check for correct answer
-- dynamic
