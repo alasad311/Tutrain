@@ -32,36 +32,7 @@ export class HomePage implements OnInit {
   banner: any;
   categories: any;
   newCourses: any;
-  registeredCourses=[
-    {
-      id: 1,
-      img: 'https://via.placeholder.com/1920x1280',
-      name: 'Course Name 1',
-      instructor: 'Name of Instructor',
-      rating: 3
-    },
-    {
-      id: 2,
-      img: 'https://via.placeholder.com/1920x1280',
-      name: 'Course Name 2',
-      instructor: 'Name of Instructor',
-      rating: 4
-    },
-    {
-      id: 3,
-      img: 'https://via.placeholder.com/1920x1280',
-      name: 'Course Name 3',
-      instructor: 'Name of Instructor',
-      rating: 4.2
-    },
-    {
-      id: 4,
-      img: 'https://via.placeholder.com/1920x1280',
-      name: 'Course Name 4',
-      instructor: 'Name of Instructor',
-      rating: 2.2
-    },
-  ];
+  registeredCourses:any;
 
   users: any;
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
@@ -106,6 +77,7 @@ export class HomePage implements OnInit {
       this.banner = JSON.parse(response[0].data).response;
       this.categories = JSON.parse(response[1].data).response;
       this.newCourses = JSON.parse(response[2].data).response;
+      this.registeredCourses = JSON.parse(response[3].data).response;
       event.target.complete();
     }).catch((error) => {
       event.target.complete();
@@ -125,6 +97,7 @@ export class HomePage implements OnInit {
           this.banner = JSON.parse(response[0].data).response;
           this.categories = JSON.parse(response[1].data).response;
           this.newCourses = JSON.parse(response[2].data).response;
+          this.registeredCourses = JSON.parse(response[3].data).response;
         }).catch((error) => {
         });
       }, 2000 );
@@ -134,6 +107,7 @@ export class HomePage implements OnInit {
           this.banner = JSON.parse(response[0].data).response;
           this.categories = JSON.parse(response[1].data).response;
           this.newCourses = JSON.parse(response[2].data).response;
+          this.registeredCourses = JSON.parse(response[3].data).response;
         }).catch((error) => {
         });
     }
@@ -142,11 +116,7 @@ export class HomePage implements OnInit {
     window.open(link, '_system');
   }
   async openCategory(id){
-    // const modal = await this.modalCtrl.create({
-    //   component: CategoriesPage,
-    //   swipeToClose: true,
-    // });
-    // await modal.present();
+    this.router.navigate(['/category/'+id])
   }
   async alertMessageWithBtn(header,message) {
     const alert = await this.alertController.create({
@@ -173,5 +143,21 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+  goToCourse(selectID)
+  {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          page: '/home',
+          id: selectID
+      }
+    };
+    this.nav.navigateForward('/details/courses',navigationExtras);
+  }
+  goToAllPurchases(){
+    this.router.navigate(['/payment-history'])
+  }
+  gotToAllNewCourses(){
+    this.router.navigate(['/new-courses'])
   }
 }

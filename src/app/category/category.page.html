@@ -1,0 +1,37 @@
+<ion-header mode="md">
+  <ion-toolbar class="ion-no-margin">
+      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+      </ion-chip>
+      <ion-title>Tutrain</ion-title>
+      <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
+          <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
+      </ion-chip>
+      <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="product" *ngIf="category">
+    <ion-col size="6" class="ion-no-margin" *ngFor="let item of category" (click)="goToCourse(item.id)">
+        <ion-card>
+            <img src="{{item.img}}" />
+            <ion-label class="instructor">{{item.fullname}}</ion-label>
+            <ion-label class="product-name">{{item.name}}</ion-label>
+        </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row class="product" *ngIf="!category">
+    <ion-col size="6" class="ion-no-margin" *ngFor="let item of [1,2,3,4,5]">
+        <ion-card>
+         <ion-skeleton-text animated style="width: 100%; height: 100px;"></ion-skeleton-text>
+          <ion-label class="instructor"><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></ion-label>
+          <ion-label class="product-name"><ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text></ion-label>
+        </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+    <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+    </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+</ion-content>

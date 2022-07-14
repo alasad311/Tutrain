@@ -71,15 +71,26 @@
         </div>
         <div class="heading">
             <ion-label class="title">All Purchases</ion-label>
-            <ion-label class="text" (click)="goToAllRegisteredCourses()">View all</ion-label>
+            <ion-label class="text" (click)="goToAllPurchases()">View all</ion-label>
         </div>
 
-        <ion-row class="product">
-            <ion-col size="6" class="ion-no-margin" *ngFor="let item of registeredCourses" (click)="gotToRegisteredCourse(item.id)">
+        <ion-row class="product" *ngIf="registeredCourses">
+            <ion-col size="6" class="ion-no-margin" *ngFor="let item of registeredCourses" (click)="goToCourse(item.id)">
                 <ion-card>
                     <img src="{{item.img}}" />
-                    <ion-label class="instructor">{{item.instructor}}</ion-label>
+                    <ion-label class="instructor">{{item.fullname}}</ion-label>
                     <ion-label class="product-name">{{item.name}}</ion-label>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+
+        <ion-row class="product" *ngIf="!registeredCourses">
+            <ion-col size="6" class="ion-no-margin" *ngFor="let item of [1,2,3]">
+                <ion-card>
+                    <ion-skeleton-text animated style="width: 100%; height: 100px;"></ion-skeleton-text>
+                    <ion-label class="instructor"><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></ion-label>
+                    <ion-label class="product-name"><ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text></ion-label>
                 </ion-card>
             </ion-col>
         </ion-row>
@@ -93,7 +104,7 @@
             <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
                 <ion-slide>
                     <ion-skeleton-text animated style="height: 150px;">
-                        <div class="new_courses" (click)="goToNewCourse(item.id)">
+                        <div class="new_courses">
                             <div class="bg_image back_image" [style.backgroundImage]="'url()'"></div>
                             <div class="courses">
                                 <ion-label class="name"></ion-label>
@@ -120,7 +131,7 @@
         <div class="banner" *ngIf="newCourses">
             <ion-slides mode="ios" pager="false" scrollbar="ios" [options]="slideOptss">
                 <ion-slide *ngFor="let item of newCourses">
-                    <div class="new_courses" (click)="goToNewCourse(item.id)">
+                    <div class="new_courses" (click)="goToCourse(item.id)">
                         <div class="bg_image back_image" [style.backgroundImage]="'url('+item.img+')'"></div>
                         <div class="courses">
                             <ion-label class="name">{{item.name}}</ion-label>

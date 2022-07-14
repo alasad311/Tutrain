@@ -75,8 +75,23 @@ export class FetchService {
           reject(error);
         });
     });
+    const res4 = new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/users/'+email+'/order/courses'
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
     return new Promise( (resolve,reject) => {
-        Promise.all([res1, res2,res3]).then(res => {
+        Promise.all([res1, res2, res3, res4]).then(res => {
         resolve(res);
       }).catch(error => {
         reject(error);
@@ -692,4 +707,39 @@ export class FetchService {
         });
     });
   }
+  public async getAllNewCoursePages(id,page): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/courses/allnew/'+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+id},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async getAllCoursesInCategory(id,categoryID,page): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/category/'+categoryID+'/'+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+id},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  
 }

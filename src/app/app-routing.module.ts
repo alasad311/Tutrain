@@ -122,8 +122,21 @@ const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule),
-    //canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
+  {
+    path: 'new-courses',
+    loadChildren: () => import('./new-courses/new-courses.module').then( m => m.NewCoursesPageModule),
+    canActivate: [AuthGuardService],
+
+  },
+  {
+    path: 'category/:id',
+    loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule),
+    canActivate: [AuthGuardService],
+  },
+
+
 
 
 
