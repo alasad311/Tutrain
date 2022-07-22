@@ -2,7 +2,7 @@ import { Component,NgZone } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { StorageService } from './service/storage/storage.service';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
-import { AlertController, MenuController,LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, MenuController,LoadingController, ModalController, NavController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { FetchService } from './service/api/fetch.service';
 import { EventService } from './service/event.service';
@@ -32,20 +32,24 @@ export class AppComponent {
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion,
-    private zone: NgZone,public util: UtilService) {
-  //   this.androidFullScreen.isImmersiveModeSupported()
-  // .then(() => console.log('Immersive mode supported'))
-  // .catch(err => console.log(err));
-  this.statusBar.overlaysWebView(false);
-  this.statusBar.styleDefault();
-  // set status bar to white
-  this.statusBar.backgroundColorByHexString('#ffffff');
+    private zone: NgZone,public util: UtilService,private nav: NavController) {
+    //   this.androidFullScreen.isImmersiveModeSupported()
+    // .then(() => console.log('Immersive mode supported'))
+    // .catch(err => console.log(err));
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.styleDefault();
+    // set status bar to white
+    this.statusBar.backgroundColorByHexString('#ffffff');
+    CapacitorApp.addListener('backButton', ({canGoBack}) => {
+      if(this.router.url != '/home')
+      {
+        this.nav.back();
+      }
 
-
-
+    });
     this.initializeApp();
 
-   }
+  }
 
   getQueryParams(params, url) {
     const reg = new RegExp('[?&]' + params + '=([^&#]*)', 'i');
@@ -350,7 +354,7 @@ export class AppComponent {
   // }
   async logout(){
     await this.storage.clear();
-    this.router.navigate(['/welcome']);
+    this.router.navigate(['/welcome'], { replaceUrl: true });
   }
   goToFAQ(){
     this.router.navigate(['/faq']);

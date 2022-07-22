@@ -190,6 +190,12 @@
           <span class="error-message" *ngIf="isSubmitted && errorControl.about.errors?.required" >Please enter information about yourself </span>
           <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
             <div class="item_inner">
+                <ion-label>Video About you (optional) </ion-label>
+                <input type="file" formControlName="introvideo" id="avatar" name="avatar" accept="video/*">
+            </div>
+          </ion-item>
+          <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+            <div class="item_inner">
                 <ion-label>Tags</ion-label>
                 <ion-input mode="md" formControlName="tags" placeholder="sperate each tag with a , ex. english,arabic" type="text"></ion-input>
             </div>

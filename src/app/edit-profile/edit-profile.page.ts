@@ -79,6 +79,7 @@ export class EditProfilePage implements OnInit {
           iswhatsapp: [this.profile.is_whatapp,  [Validators.required]],
           hourcost : [this.profile.hour_price, [Validators.required, Validators.pattern('^([0-9]+\.?[0-9]*|\.[0-9]+)$')]],
           dob: [this.profile.dateofbirth],
+          introvideo: ['']
         });
       }
      
@@ -189,10 +190,12 @@ export class EditProfilePage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Prompt,
+      presentationStyle: "fullscreen"
     });
     this.imageUrl = image.webPath;
     this.imageData = image;
   }
+
   ionViewDidLeave() {
     this.util.refreshUserData();
   }

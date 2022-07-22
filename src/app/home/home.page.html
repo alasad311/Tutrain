@@ -44,7 +44,7 @@
             </ion-slides>
         </div>
         <div class="heading">
-            <ion-label class="title">Select Category</ion-label>
+            <ion-label class="title">Category</ion-label>
         </div>
 
         <div class="category" *ngIf="!categories">
@@ -61,7 +61,7 @@
         </div>
         <div class="category" *ngIf="categories">
             <div class="menu">
-                <div class="item" *ngFor="let item of categories" (click)="openCategory(item.id)">
+                <div class="item" *ngFor="let item of categories" (click)="openCategory(item.name)">
                     <div class="icon">
                         <img src="{{item.img}}" />
                     </div>
@@ -69,6 +69,29 @@
                 </div>
             </div>
         </div>
+        <div class="category">
+            <div class="menu">
+                <div class="item" (click)="openSearch('users')">
+                    <div class="icon">
+                        <img src="https://via.placeholder.com/512x512" />
+                    </div>
+                    <ion-label>Tutor / Trainer</ion-label>
+                </div>
+                <div class="item" (click)="openSearch('courses')">
+                    <div class="icon">
+                        <img src="https://via.placeholder.com/512x512" />
+                    </div>
+                    <ion-label>Courses</ion-label>
+                </div>
+                <div class="item" (click)="openSearch('sessions')">
+                    <div class="icon">
+                        <img src="https://via.placeholder.com/512x512" />
+                    </div>
+                    <ion-label>Sessions</ion-label>
+                </div>
+            </div>
+        </div>
+
         <div class="heading">
             <ion-label class="title">All Purchases</ion-label>
             <ion-label class="text" (click)="goToAllPurchases()">View all</ion-label>

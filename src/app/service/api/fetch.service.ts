@@ -137,11 +137,12 @@ export class FetchService {
   }
 
   public async searchCourses(value,page): Promise<any>{
-    return new Promise( (resolve,reject) => {
+    return new Promise( async (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/search/courses/'+value+'/'+page;
+      const user = await this.storage.get('user');
       this.http.sendRequest( url , {
         method: 'get',
-        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
         serializer: 'utf8',
         timeout: 1000
       } )

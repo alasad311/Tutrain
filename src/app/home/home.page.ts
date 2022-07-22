@@ -39,17 +39,10 @@ export class HomePage implements OnInit {
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
     private modalCtrl: ModalController,public util: UtilService,public alertController: AlertController,
     private route: ActivatedRoute ) {
-      
-      CapacitorApp.addListener('backButton', ({canGoBack}) => {
-        if(this.router.url != '/home')
-        {
-          this.nav.back();
-        }
 
-      });
      }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     this.util.refreshUserData();
     this.util.checkContest().then((response) => {
       this.contest = response;
@@ -58,7 +51,6 @@ export class HomePage implements OnInit {
         this.contestBadge = 1;
       }
     });
-
   }
   ionViewDidLeave() {
     this.util.refreshUserData();
@@ -71,7 +63,7 @@ export class HomePage implements OnInit {
     this.banner = '';
     this.categories = '';
     this.newCourses = '';
-
+    this.registeredCourses = '';
     //fetch ads
     this.fetch.getHomePage(this.users.email).then((response) => {
       this.banner = JSON.parse(response[0].data).response;
@@ -85,6 +77,7 @@ export class HomePage implements OnInit {
   }
   async ngOnInit() {
     this.users = await this.storage.get('user');
+    
     if(this.users && this.users.type != "student")
     {
       setTimeout( () => {
@@ -115,8 +108,8 @@ export class HomePage implements OnInit {
   gotToAd(link){
     window.open(link, '_system');
   }
-  async openCategory(id){
-    this.router.navigate(['/category/'+id])
+  async openCategory(value){
+    this.nav.navigateForward('/search',{ state:value });
   }
   async alertMessageWithBtn(header,message) {
     const alert = await this.alertController.create({
@@ -159,5 +152,11 @@ export class HomePage implements OnInit {
   }
   gotToAllNewCourses(){
     this.router.navigate(['/new-courses'])
+  }
+  openSearch(type)
+  {
+    this.nav.navigateForward('/search',{ state: {
+      type: type 
+    } });
   }
 }

@@ -25,9 +25,18 @@ export class SearchPage implements OnInit {
     if (this.router.getCurrentNavigation().extras.state) {
       const searchValue = this.router.getCurrentNavigation().extras.state;
 
+      if(searchValue.type)
+      {
+        this.searchInput = " "
+        this.type = searchValue.type
+        this.searchByType(searchValue.type);
 
-      this.searchInput = searchValue;
-      this.searchDB(searchValue);
+      }else
+      {
+        this.searchInput = searchValue;
+        this.searchDB(searchValue);
+      }
+
     }
   }
   goBackHome(){
@@ -118,6 +127,61 @@ export class SearchPage implements OnInit {
         {
           this.showNull = true;
           this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
+      }).catch((error) => {
+        
+      });
+    }
+  }
+  searchByType(by)
+  {
+    this.searchResults = null;
+    this.page = 0;
+    this.showNull = false;
+    if(by === "all")
+    {
+      this.fetch.searchAll(this.searchInput,this.page).then((response) => {
+        var json = JSON.parse(response.data);
+        this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+        }
+      }).catch((error) => {
+        
+      });
+    }else if(by === "users")
+    {
+      this.fetch.searchUsers(this.searchInput,this.page).then((response) => {
+        var json = JSON.parse(response.data);
+        this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+        }
+      }).catch((error) => {
+        
+      });
+    }else if(by === "courses")
+    {
+      this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
+        var json = JSON.parse(response.data);
+        this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+        }
+      }).catch((error) => {
+        
+      });
+    }else if(by === "sessions")
+    {
+      this.fetch.searchSessions(this.searchInput,this.page).then((response) => {
+        var json = JSON.parse(response.data);
+        this.searchResults = json.response
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
         }
       }).catch((error) => {
         

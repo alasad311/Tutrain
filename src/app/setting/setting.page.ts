@@ -109,37 +109,7 @@ export class SettingPage implements OnInit {
     }
   }
   async deleteAccount(){
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...'
-    });
-    await loading.present();
-    this.fetch.deleteUser(this.user.user_id).then(async (response) => {
-      const json = JSON.parse(response.data);
-      await loading.dismiss();
-      
-      if(json.response.results == "success")
-      {
-        this.storage.clear();
-        const alertRes = await this.alertController.create({
-          header: 'Deletion',
-          message:  'Your account has been successfully deleted',
-          buttons: [
-            {
-              text: 'OK',
-              cssClass:'test',
-              handler: () => {
-                this.router.navigate(['/login']);
-              }
-            }
-          ]
-        });
-        await alertRes.present();
-       
-      }
-    }).catch((error) => {
-    });
-   
+    this.alertMessageWithBtnDelete("Delete Account","Are you sure?")
   }
   async alertMessageWithoutBtn(header,message) {
     const alert = await this.alertController.create({
@@ -196,6 +166,63 @@ export class SettingPage implements OnInit {
           handler: () => {
             alert.dismiss();
             this.isDisablied = false;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  async removeAccount(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...'
+    });
+    await loading.present();
+    this.fetch.deleteUser(this.user.user_id).then(async (response) => {
+      const json = JSON.parse(response.data);
+      await loading.dismiss();
+      
+      if(json.response.results == "success")
+      {
+        this.storage.clear();
+        const alertRes = await this.alertController.create({
+          header: 'Deletion',
+          message:  'Your account has been successfully deleted',
+          buttons: [
+            {
+              text: 'OK',
+              cssClass:'test',
+              handler: () => {
+                this.router.navigate(['/login']);
+              }
+            }
+          ]
+        });
+        await alertRes.present();
+       
+      }
+    }).catch((error) => {
+    });
+  }
+  async alertMessageWithBtnDelete(header,message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'ok',
+          id: 'confirm-button',
+          handler: () => {
+            alert.dismiss();
+            this.removeAccount();
+          }
+        },{
+          text: 'Cancel',
+          id: 'cancel-button',
+          handler: () => {
+            alert.dismiss();
           }
         }
       ]
