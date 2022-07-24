@@ -190,13 +190,13 @@
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
                             <ion-label>Video About you (optional) </ion-label>
-                            <label (click)="introVideo()">
-                                <ion-icon *ngIf="!hideVideo" name="cloud-upload-outline"></ion-icon> 
-                                <span *ngIf="!hideVideo" class="upload-title" >Upload intro video of yourself</span>
-                            </label>
-                            <video *ngIf="hideVideo" height="200px" preload="auto" style>
-                                <source [src]="introvideoURL || profile.introvideo">
+                            <video id="introVideoTag" controls *ngIf="hideVideo"  height="200px" preload="auto">
+                                <source [src]="introvideoURL || profile.introvideo"  type="video/mp4">
                             </video>
+                            <ion-button (click)="introVideo()"  expand="round" style="width:100%">
+                                Upload a Bio 
+                                <ion-icon slot="end" name="cloud-upload-outline"></ion-icon>
+                            </ion-button>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">

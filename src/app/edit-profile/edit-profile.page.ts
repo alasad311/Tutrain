@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
@@ -10,6 +10,7 @@ import { EventService } from '../service/event.service';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
+import { VideoEditor,CreateThumbnailOptions } from '@awesome-cordova-plugins/video-editor/ngx';
 import { Capacitor } from '@capacitor/core';
 
 @Component({
@@ -40,7 +41,7 @@ export class EditProfilePage implements OnInit {
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
     private router: Router,public formBuilder: FormBuilder,private event: EventService,private sanitizer: DomSanitizer,
-    private chooser: Chooser, private filePath: FilePath) { }
+    private chooser: Chooser, private filePath: FilePath,private videoEditor: VideoEditor) { }
   get errorControl() {
     return this.profileUpdate.controls;
   }
@@ -143,8 +144,6 @@ export class EditProfilePage implements OnInit {
       return false;
     } else {
       const data = JSON.parse(JSON.stringify(this.profileUpdate.value));
-
-
       if(data.dob === this.profile.dateofbirth)
       {
         delete data.dob;
@@ -163,6 +162,12 @@ export class EditProfilePage implements OnInit {
       }
       if(data)
       {
+        if(this.uploadVideo)
+        {
+          this.fetch.uploadBio(this.profile.user_id,this.uploadVideo).then(async (response) => {
+
+          });
+        }
         this.fetch.updateUser(this.profile.user_id,data,this.imageData).then(async (response) => {
           if(response.response.results == 'success')
           {
@@ -210,19 +215,25 @@ export class EditProfilePage implements OnInit {
     this.util.refreshUserData();
   }
   introVideo = async () => {
-    // this.hideVideo = true;
+    let mainVideo = <HTMLMediaElement>document.getElementById('introVideoTag');
+    this.hideVideo = null;
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait while we load the video...'
+    });
     await this.chooser.getFile('video/*')
     .then(
       async file =>{
+        await loading.present();
         this.hideVideo = true;
-        this.filePath.resolveNativePath(file.uri).then(filePath =>{
-          this.introvideoURL = Capacitor.convertFileSrc(filePath);
-          console.log(filePath);
-          console.log(Capacitor.convertFileSrc(filePath));
-        })
-        .catch(err => console.log(err));
-      }
-      ).catch((error: any) => console.error(error));
+        this.uploadVideo = file;
+        this.introvideoURL = this.sanitizer.bypassSecurityTrustUrl(
+          Capacitor.convertFileSrc(file.dataURI)
+        )
+        mainVideo.play();
+        mainVideo.pause();
+      }).catch((error: any) => console.error(error));
+      await loading.dismiss();
   };
   getSelectCountry(e){
     if(e.target.value == 'om'){

@@ -45,5 +45,9 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="VideoEditor">
+    <param name="android-package" value="org.apache.cordova.videoeditor.VideoEditor"/>
+  </feature>
+
   
 </widget>

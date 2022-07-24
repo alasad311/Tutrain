@@ -32,5 +32,9 @@
     <param name="ios-package" value="CDVOrientation"/>
   </feature>
 
+  <feature name="VideoEditor">
+    <param name="ios-package" value="VideoEditor"/>
+  </feature>
+
   
 </widget>

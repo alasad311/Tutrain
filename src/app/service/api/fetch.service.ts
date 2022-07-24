@@ -3,6 +3,7 @@ import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { StorageService } from '../storage/storage.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 import { Photo } from '@capacitor/camera';
+import { ChooserResult } from '@awesome-cordova-plugins/chooser/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -652,6 +653,23 @@ export class FetchService {
           reject(error);
         });
     });
+  }
+  public async uploadBio(userID,uploadVideo:ChooserResult): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      let options: FileUploadOptions = {
+        fileKey: 'bioVideo',
+        chunkedMode: true,
+        mimeType: 'multipart/form-data',
+        headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID}
+      }
+      this.fileTransfer.upload(uploadVideo.uri, encodeURI('https://tapp.scd.edu.om/api/v1/users/uploadbio'), options).then((data) => {
+        resolve(JSON.parse(data.response))
+      }, (err) => {
+        reject(err);
+
+      })
+     
+   }) 
   }
   public async updateUser(userID,data,imageData: Photo): Promise<any>{
     //lets being with upload the picture first

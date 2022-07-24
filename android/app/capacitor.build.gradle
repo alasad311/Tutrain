@@ -21,7 +21,7 @@ dependencies {
     implementation project(':capacitor-video-player')
     implementation "androidx.webkit:webkit:1.4.0"
 }
-
+apply from: "../../node_modules/cordova-plugin-video-editor/src/android/build.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

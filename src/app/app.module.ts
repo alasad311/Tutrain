@@ -16,6 +16,7 @@ import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { FileTransfer } from '@awesome-cordova-plugins/file-transfer/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
+import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,7 @@ import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
   imports: [BrowserModule, IonicModule.forRoot(),IonicStorageModule.forRoot()
     , AppRoutingModule,FormsModule,ReactiveFormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },FileTransfer,Chooser,
-    AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser,AppVersion,FilePath],
+    AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser,AppVersion,FilePath,VideoEditor],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
