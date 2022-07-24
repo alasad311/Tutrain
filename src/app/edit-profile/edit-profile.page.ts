@@ -7,7 +7,10 @@ import { UtilService } from '../service/util.service';
 import { Camera, CameraResultType,CameraSource } from '@capacitor/camera';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EventService } from '../service/event.service';
-
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,22 +22,28 @@ export class EditProfilePage implements OnInit {
   contestBadge: any;
   tutor = false;
   student = true;
-  internationalCode:any;
-  imageUrl:any;
-  imageData:any;
-  imageMime:any;
-  country:any;
+  internationalCode: any;
+  imageUrl: any;
+  imageData: any;
+  imageMime: any;
+  country: any;
   user: any;
   isSubmitted = false;
   isDisablied = false;
-  profile:any;
-  degree:any;
-  gov:any;
+  profile: any;
+  degree: any;
+  gov: any;
+  uploadVideo: any;
+  introvideoURL: any;
   profileUpdate: FormGroup;
+  hideVideo: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
-    private router: Router,public formBuilder: FormBuilder,private event:EventService) { }
-
+    private router: Router,public formBuilder: FormBuilder,private event: EventService,private sanitizer: DomSanitizer,
+    private chooser: Chooser, private filePath: FilePath) { }
+  get errorControl() {
+    return this.profileUpdate.controls;
+  }
   async ngOnInit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -42,7 +51,7 @@ export class EditProfilePage implements OnInit {
     });
     await loading.present();
     this.user = await this.storage.get('user');
-    
+
     if(this.user.type == 'student')
     {
       this.student = true;
@@ -58,6 +67,10 @@ export class EditProfilePage implements OnInit {
       this.imageUrl = this.profile.picture;
       this.degree = this.profile.degree;
       this.gov = this.profile.governorate;
+      if(this.profile.introvideo)
+      {
+        this.hideVideo = true;
+      }
       if(this.profile.type == 'student')
       {
         this.profileUpdate = this.formBuilder.group({
@@ -79,10 +92,8 @@ export class EditProfilePage implements OnInit {
           iswhatsapp: [this.profile.is_whatapp,  [Validators.required]],
           hourcost : [this.profile.hour_price, [Validators.required, Validators.pattern('^([0-9]+\.?[0-9]*|\.[0-9]+)$')]],
           dob: [this.profile.dateofbirth],
-          introvideo: ['']
         });
       }
-     
       if(this.profile.country == 'om'){
         this.internationalCode = '+968';
       }else if(this.profile.country == 'kw'){
@@ -103,9 +114,6 @@ export class EditProfilePage implements OnInit {
 
     });
 
-  }
-  get errorControl() {
-    return this.profileUpdate.controls;
   }
   goBackHome(){
     this.navCtrl.back();
@@ -134,10 +142,12 @@ export class EditProfilePage implements OnInit {
       await loading.dismiss();
       return false;
     } else {
-      let data = JSON.parse(JSON.stringify(this.profileUpdate.value));
+      const data = JSON.parse(JSON.stringify(this.profileUpdate.value));
+
+
       if(data.dob === this.profile.dateofbirth)
       {
-        delete data.dob
+        delete data.dob;
       }
       if(this.country !== this.profile.country)
       {
@@ -149,35 +159,35 @@ export class EditProfilePage implements OnInit {
       }
       if(data.fullname === this.profile.fullname)
       {
-        delete data.fullname
+        delete data.fullname;
       }
       if(data)
       {
         this.fetch.updateUser(this.profile.user_id,data,this.imageData).then(async (response) => {
-          if(response.response.results == "success")
+          if(response.response.results == 'success')
           {
             await loading.dismiss();
-            this.alertMessage("Updated","Profile updated successfully!")
+            this.alertMessage('Updated','Profile updated successfully!');
             this.storage.clear();
-            this.storage.set('user',response.response.user[0])
-            this.event.publishSomeData(response.response.user[0])
+            this.storage.set('user',response.response.user[0]);
+            this.event.publishSomeData(response.response.user[0]);
             this.goBackHome();
           }else{
             await loading.dismiss();
-            this.alertMessage("Error","Couldn't update your profile, try again later!")
+            this.alertMessage('Error','Couldn\'t update your profile, try again later!');
             this.isDisablied = false;
           }
 
-        
+
         }).catch(async (error) => {
           //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
           await loading.dismiss();
-          this.alertMessage("Error","Couldn't update your profile, try again later!")
+          this.alertMessage('Error','Couldn\'t update your profile, try again later!');
           this.isDisablied = false;
        });
       }else{
         await loading.dismiss();
-        this.alertMessage("Nothing","Nothing to be updated!")
+        this.alertMessage('Nothing','Nothing to be updated!');
         this.isDisablied = false;
         return false;
       }
@@ -190,15 +200,30 @@ export class EditProfilePage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Prompt,
-      presentationStyle: "fullscreen"
+      presentationStyle: 'fullscreen'
     });
     this.imageUrl = image.webPath;
     this.imageData = image;
-  }
+  };
 
   ionViewDidLeave() {
     this.util.refreshUserData();
   }
+  introVideo = async () => {
+    // this.hideVideo = true;
+    await this.chooser.getFile('video/*')
+    .then(
+      async file =>{
+        this.hideVideo = true;
+        this.filePath.resolveNativePath(file.uri).then(filePath =>{
+          this.introvideoURL = Capacitor.convertFileSrc(filePath);
+          console.log(filePath);
+          console.log(Capacitor.convertFileSrc(filePath));
+        })
+        .catch(err => console.log(err));
+      }
+      ).catch((error: any) => console.error(error));
+  };
   getSelectCountry(e){
     if(e.target.value == 'om'){
       this.internationalCode = '+968';
