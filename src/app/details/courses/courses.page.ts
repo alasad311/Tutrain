@@ -27,6 +27,7 @@ export class CoursesPage implements OnInit {
   content: any;
   videoPlayer: any;
   paid: any;
+  trailer: any;
   constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,
     public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
     private nav: NavController,public util: UtilService) { }
@@ -71,17 +72,15 @@ export class CoursesPage implements OnInit {
     this.sections = null;
     this.fetch.getCourseDetail(id).then((response) => {
       this.course = JSON.parse(response[0].data).response[0];
-
       this.sections = JSON.parse(response[1].data).response;
-      if(JSON.parse(response[2].data).response.length === 0)
-        this.paid = false;
-      else
+      if(JSON.parse(response[2].data).response.length === 0){
+          this.paid = false;
+      }else{
         this.paid = true;
-      
+      }
+      this.trailer = JSON.parse(response[3].data).response[0];
       this.durationName = this.course.duration.replace(/[0-9]/g, '');
-    }).catch((error) => {
-      
-    });
+    }).catch((error) => {});
   }
   setVideoPlayer = async (): Promise<any>=> {
     const platform = Capacitor.getPlatform();

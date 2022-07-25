@@ -25,15 +25,17 @@ export class UtilService {
     this.menuController.open();
   }
   async openContest(){
-    const loading = await this.loadingCtrl.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...'
-    });
-    await loading.present();
     const user = await this.storage.get('user');
     const contest = await this.checkContest();
-    if(contest){if(user.membership){await loading.dismiss(); this.navCtrl.navigateForward(['/contest/'+contest.id]);}else{await loading.dismiss(); this.navCtrl.navigateForward(['/subscription']);}}
-    else{await loading.dismiss(); this.showWarningAlert("No Contest","At the moment there arent any contest check again another day")}
+    if(contest){
+      if(user.membership){
+      this.navCtrl.navigateForward(['/contest/'+contest.id]);
+      }else{
+        this.navCtrl.navigateForward(['/subscription']);
+      }
+    }else{
+      this.navCtrl.navigateForward(['/winners']);
+    }
   }
   /*
   Start Loader

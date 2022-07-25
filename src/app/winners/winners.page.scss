@@ -1,0 +1,96 @@
+ion-header {
+    ion-toolbar {
+        .chikni {
+            font-size: 12px;
+            position: absolute;
+            left: 15px;
+            top: 0px;
+        }
+        ion-title {
+            text-align: center;
+        }
+    }
+}
+
+.icon-remove-margin {
+    margin: 0px;
+}
+
+.remove-background {
+    background-color: transparent;
+}
+
+.contest {
+    box-shadow: 0 0 0 rgba(204, 169, 44, 0.4);
+    animation: pulse 2s infinite;
+    border-radius: 50%;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4);
+        box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+        box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+        box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+    }
+}
+
+.currency_accet {
+    display: flex;
+    flex-direction: row;
+    padding-right: 14px;
+    padding-left: 14px;
+    .img {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+    .detail {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .up_div {
+            display: flex;
+            justify-content: space-between;
+            .title {
+                font-family: "semi-bold";
+                font-size: 16px;
+            }
+            .price {
+                font-family: "semi-bold";
+                font-size: 16px;
+            }
+        }
+        .down_div {
+            display: flex;
+            justify-content: space-between;
+            .type {
+                font-family: "medium";
+                font-size: 13px;
+                color: var(--ion-color-medium);
+            }
+            .status {
+                font-family: "semi-bold";
+                font-size: 13px;
+            }
+        }
+    }
+}

@@ -202,8 +202,24 @@ export class FetchService {
           reject(error);
         });
     });
+    const trailer = new Promise( async (resolve,reject) => {
+      const user = await this.storage.get('user');
+      const url = 'https://tapp.scd.edu.om/api/v1//course/trailer/'+id+'/'+user.email;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
     return new Promise( (resolve,reject) => {
-      Promise.all([courseDetails,sections,paid]).then(res => {
+      Promise.all([courseDetails,sections,paid,trailer]).then(res => {
       resolve(res);
     }).catch(error => {
       reject(error);
@@ -760,5 +776,21 @@ export class FetchService {
         });
     });
   }
-  
+  public async getWinners(): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/contest/winner';
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+      .then(res => {
+        resolve(res)
+      })
+      .catch(error => {
+        reject(error);
+      });
+    });
+  }
 }

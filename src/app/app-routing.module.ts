@@ -134,7 +134,11 @@ const routes: Routes = [
     path: 'category/:id',
     loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule),
     canActivate: [AuthGuardService],
+  },  {
+    path: 'winners',
+    loadChildren: () => import('./winners/winners.module').then( m => m.WinnersPageModule)
   },
+
 
 
 
