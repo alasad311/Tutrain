@@ -125,12 +125,6 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-    path: 'new-courses',
-    loadChildren: () => import('./new-courses/new-courses.module').then( m => m.NewCoursesPageModule),
-    canActivate: [AuthGuardService],
-
-  },
-  {
     path: 'category/:id',
     loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule),
     canActivate: [AuthGuardService],
@@ -141,6 +135,13 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
 
   },
+  {
+    path: 'course-list',
+    loadChildren: () => import('./course-list/course-list.module').then( m => m.CourseListPageModule),
+    canActivate: [AuthGuardService],
+
+  },
+
 
 
 

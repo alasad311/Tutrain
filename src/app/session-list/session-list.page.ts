@@ -12,9 +12,6 @@ import { UtilService } from '../service/util.service';
 export class SessionListPage implements OnInit {
   contest: any;
   contestBadge: any;
-  section = 'all';
-  isCreate = false;
-  isAll = true;
   user: any;
   sessions = null;
   page = 0;
@@ -70,25 +67,11 @@ export class SessionListPage implements OnInit {
   goBackHome(){
     this.navCtrl.back();
   }
-  showSegment(section)
-  {
-    if(section === 'all'){
-      this.sessions = null;
-      this.fetch.getAllSessions(this.user.user_id,this.page).then(async (response) => {
-        this.sessions = JSON.parse(response.data).response;
-        if(this.sessions.length === 0){this.showNull = true;}else{this.showNull = false;}
-      }).catch((error) => {
-      });
-      this.isAll = true;
-      this.isCreate = false;
-    }else if(section === 'create'){
-      this.isAll = false;
-      this.isCreate = true;
-    }
+  createSession(){
+    
   }
   goToSessionUpdate(id,isActive){
 
     //process the changes
-   
   }
 }

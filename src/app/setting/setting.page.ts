@@ -93,11 +93,14 @@ export class SettingPage implements OnInit {
   goToSession(){
     this.router.navigate(['/session-list']);
   }
+  goToCourses(){
+    this.router.navigate(['/courses-list']);
+  }
   editProfile(){
-    this.router.navigate(['/edit-profile'])
+    this.router.navigate(['/edit-profile']);
   }
   changePassword(){
-    this.router.navigate(['/change-password'])
+    this.router.navigate(['/change-password']);
   }
   onNotificationOptionChange(event){
     if(this.popOutNotification !== event.detail.checked)

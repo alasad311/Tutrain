@@ -9,20 +9,10 @@
         </ion-chip>
         <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
-    <ion-toolbar class="segment-toolbar">
-        <ion-segment [(ngModel)]="section" (ionChange)="showSegment(section)" mode="ios" value="all">
-            <ion-segment-button value="all">
-                <ion-label>All Sessions</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="create">
-                <ion-label>Create Session</ion-label>
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div *ngIf="isAll">
+    <div>
         <div class="menu_div">
             <div *ngIf="!sessions">
                 <div class="menu_div" *ngFor="item of [1,2,3,4];let last = last">
@@ -72,9 +62,11 @@
                     </ion-infinite-scroll-content>
                 </ion-infinite-scroll>
             </div>
-        </div>
-        <div *ngIf="isCreate">
-            im create page
+            <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+                <ion-fab-button color="primary">
+                    <ion-icon name="add" (click)="createSession()"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
         </div>
     </div>
 </ion-content>
