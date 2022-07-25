@@ -9,45 +9,62 @@
         </ion-chip>
         <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" showCancelButton="never" (ionClear)="onClear()"  (search)="searchSessions(searchInput)"></ion-searchbar>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    
     <div>
         <div class="menu_div">
             <div *ngIf="!sessions">
-                <div class="menu_div" *ngFor="item of [1,2,3,4];let last = last">
-                    <div class="menu_box" [class.withoutborder]="last">
-                        <div class="color_box">
-                            <ion-thumbnail>
-                                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
-                            </ion-thumbnail>
+                <div class="card" *ngFor="let item of [1,2,3,4];">
+                    <div class="currency_accet">
+                        <ion-skeleton-text animated style="width: 100%; height:300px"></ion-skeleton-text>
+                    </div>
+                    <div class="detail">
+                        <div class="up_div">
+                          <ion-label class="title"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
+                          <ion-label class="price"><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></ion-label>
                         </div>
-                        <div class="menu-box-holder" style="width: 200px;">
-                            <ion-label>
-                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-                            </ion-label>
-                            <ion-label>
-                                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-                            </ion-label>
+                        <div class="down_div">
+                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
+                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
+                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
+                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
                         </div>
-                        <ion-icon name="chevron-forward" class="arrow_icn"></ion-icon>
+                    </div>
+                    <div class="btc_div">
+                      <ion-label class="text"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
+                      <ion-label class="status" color="danger"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
                     </div>
                 </div>
             </div>
             <div *ngIf="sessions">
-                <div class="menu_div" *ngFor="let item of sessions;let last = last">
-                    <div class="menu_box" [class.withoutborder]="last" (click)="goToSessionUpdate(item.id,item.is_active)">
-                        <div class="color_box">
-                            <ion-thumbnail>
-                                <img [src]="item.img" />
-                            </ion-thumbnail>
+                <div class="card" *ngFor="let item of sessions;">
+                    <div class="currency_accet" (click)="goToCurrency()">
+                      <img class="img" [src]="item.img" alt="">
+                    </div>
+                    <div class="detail">
+                        <div class="up_div">
+                          <ion-label class="title">{{item.session_name}}</ion-label>
                         </div>
-                        <div class="menu-box-holder">
-                            <ion-label>{{item.session_name}}</ion-label>
-                            <ion-label>{{item.location}}</ion-label>
-                            <ion-label>{{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}}</ion-label>
+                        <div class="up_div">
+                            <ion-label class="title">{{item.location}}</ion-label>
+                            <ion-label class="price">{{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}}</ion-label>
                         </div>
-                        <ion-icon name="chevron-forward" class="arrow_icn"></ion-icon>
+                        <div class="down_div">
+                          <ion-label class="type">{{item.description}}</ion-label>
+                        </div>
+                    </div>
+                    <div class="btc_div">
+                      <ion-label class="text">
+                        <ion-button>Update</ion-button>
+                      </ion-label>
+                      <ion-label class="status">
+                        <ion-button (click)="deleteSession(item.id)">Delete</ion-button>
+                      </ion-label>
                     </div>
                 </div>
                 <div *ngIf="showNull ">
@@ -61,12 +78,15 @@
                     <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
                     </ion-infinite-scroll-content>
                 </ion-infinite-scroll>
-            </div>
-            <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-                <ion-fab-button color="primary">
-                    <ion-icon name="add" (click)="createSession()"></ion-icon>
-                </ion-fab-button>
-            </ion-fab>
+               
+            </div>  
         </div>
     </div>
 </ion-content>
+<ion-footer>
+    <ion-fab horizontal="end" vertical="bottom">
+        <ion-fab-button color="primary">
+            <ion-icon name="add" (click)="createSession()"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-footer>

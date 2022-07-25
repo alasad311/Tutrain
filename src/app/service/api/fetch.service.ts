@@ -489,6 +489,23 @@ export class FetchService {
         });
     });
   }
+  public async searchSessionsWithinUser(value,page): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/search/user/sessions/'+value+'/'+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
   public async getSessionDetails(id): Promise<any>{
     const courseDetails = new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/session/'+id;
@@ -779,6 +796,23 @@ export class FetchService {
   public async getWinners(): Promise<any>{
     return new Promise( async (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/contest/winner';
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+      .then(res => {
+        resolve(res)
+      })
+      .catch(error => {
+        reject(error);
+      });
+    });
+  }
+  public async deleteSession(id): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/session/delete/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},

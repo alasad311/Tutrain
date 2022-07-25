@@ -70,45 +70,77 @@ ion-header {
         box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
     }
 }
-
-.menu_div {
-    background: white;
-    border-radius: 16px;
-    margin-bottom: 20px;
-    padding: 0px 16px;
-    .menu_box {
-        border-bottom: 1px solid lightgrey;
-        display: flex;
-        align-items: center;
-        position: relative;
-        padding: 16px 0px;
-        .color_box {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            ion-icon {
-                color: white;
-                font-size: 18px;
-            }
-        }
-        .menu-box-holder {
-            display: flex;
-            flex-direction: column;
-            ion-label {
-                margin-left: 16px;
-                font-family: "medium";
-            }
-        }
-        .arrow_icn {
-            position: absolute;
-            right: 0px;
-        }
+.card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px var(--box-shadow-color);
+    --box-shadow-color: #d7d8da;
+    margin: 7px 0px;
+    .text {
+      font-family: "medium";
+      font-size: 14px;
     }
-}
+    .rate {
+      font-family: "medium";
+      font-size: 34px;
+    }
+    .status {
+      font-family: "semi-bold";
+      font-size: 14px;
+    }
 
-.withoutborder {
-    border: 0px !important;
-}
+    .currency_accet {
+        padding: 10px 0px;
+        // border-bottom: 2px solid var(--ion-color-light);
+      }
+      .btc_div{
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+      }
+      .icon{
+          display: flex;
+          justify-content: flex-end;
+      }
+      .detail {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .up_div {
+          display: flex;
+          justify-content: space-between;
+          .title {
+            font-family: "semi-bold";
+            font-size: 16px;
+          }
+          .price {
+            font-family: "medium";
+            font-size: 13px;
+            color: var(--ion-color-medium);
+          }
+        }
+        .down_div {
+          display: flex;
+          justify-content: space-between;
+          .type {
+            font-family: "medium";
+            font-size: 13px;
+            color: var(--ion-color-medium);
+          }
+          .status {
+            font-family: "semi-bold";
+            font-size: 13px;
+          }
+        }
+      }
+  }
+  .currency_accet {
+      display: flex;
+      flex-direction: row;
+      padding: 14px;
+     
+      
+    }
