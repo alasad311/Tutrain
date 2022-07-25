@@ -12,11 +12,24 @@ import { UtilService } from '../service/util.service';
 export class TutorProflePage implements OnInit {
   contest: any;
   contestBadge: any;
+  user: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
     ,public alertController: AlertController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait loading profile...'
+    });
+    await loading.present();
+    const users = await this.storage.get('user');
+    this.fetch.getUserDetailByID(users.user_id).then(async (response) => {
+      this.user = JSON.parse(response.data).response[0];
+      await loading.dismiss();
+    }).catch((error) => {
+
+    });
   }
   ionViewDidEnter() {
     this.util.refreshUserData();

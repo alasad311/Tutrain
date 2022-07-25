@@ -12,22 +12,7 @@
 </ion-header>
 <ion-content>
     <div *ngIf="user">
-        <div *ngIf="!user.introvideo" class="img" [style.backgroundImage]="'url('+user.picture+')'">
-            <ul>
-                <li class="icon">
-                    <ion-icon class="back" name="alert-circle-outline" (click)="reportTutor()"></ion-icon>
-                </li>
-                <li class="phone" *ngIf="user.is_phone">
-                    <ion-icon class="back" name="call-outline" (click)="dialNumber()"></ion-icon>
-                </li>
-                <li class="email" *ngIf="user.is_email">
-                    <ion-icon class="back" name="send-outline" (click)="sendEmail()"></ion-icon>
-                </li>
-                <li class="whatsapp" *ngIf="user.is_whatapp">
-                    <ion-icon class="back" name="logo-whatsapp" (click)="sendWhatapp()"></ion-icon>
-                </li>
-            </ul>
-        </div>
+        <div *ngIf="!user.introvideo" class="img" [style.backgroundImage]="'url('+user.picture+')'"></div>
         <div *ngIf="user.introvideo">
             <video controls preload="auto" width="100%" height="300px">
                 <source [src]="user.introvideo" type="video/mp4">
@@ -63,6 +48,25 @@
             </div>
         </div>
     </div>
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="apps"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top" *ngIf="user">
+            <ion-fab-button color="light">
+                <ion-icon name="alert-circle-outline" (click)="reportTutor()"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" *ngIf="user.is_phone">
+                <ion-icon name="call-outline" (click)="dialNumber()"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" *ngIf="user.is_email">
+                <ion-icon name="send-outline" (click)="sendEmail()"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" *ngIf="user.is_whatapp">
+                <ion-icon name="logo-whatsapp" (click)="sendWhatapp()"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
 </ion-content>
 <ion-footer *ngIf="user">
     <ion-toolbar>
