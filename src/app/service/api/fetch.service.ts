@@ -580,11 +580,12 @@ export class FetchService {
     });
   }
   public async getAllSessions(id,page): Promise<any>{
+    const user = await this.storage.get('user');
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/all/sessions/'+page;
       this.http.sendRequest( url , {
         method: 'get',
-        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
         serializer: 'utf8',
         timeout: 1000
       } )
@@ -596,6 +597,7 @@ export class FetchService {
         });
     });
   }
+  
   public async getContest(): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/contest/';
@@ -900,5 +902,56 @@ export class FetchService {
       });
     });
   }
-  
+  public async getAllCourses(id,page): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/all/courses/'+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  public async searchCoursesWithinUser(value,page): Promise<any>{
+    const user = await this.storage.get('user');
+    return new Promise( (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/search/user/courses/'+value+'/'+page;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }  
+  public async deleteCourse(id): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/course/delete/'+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+      .then(res => {
+        resolve(res)
+      })
+      .catch(error => {
+        reject(error);
+      });
+    });
+  }
 }

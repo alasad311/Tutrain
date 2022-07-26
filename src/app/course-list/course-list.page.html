@@ -1,9 +1,107 @@
-<ion-header>
+<ion-header mode="md">
+  <ion-toolbar class="ion-no-margin">
+      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+      </ion-chip>
+      <ion-title>Tutrain</ion-title>
+      <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
+          <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
+      </ion-chip>
+      <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
+  </ion-toolbar>
   <ion-toolbar>
-    <ion-title>course-list</ion-title>
+      <ion-searchbar mode="ios" [(ngModel)]="searchInput" showCancelButton="never" (ionClear)="onClear()" (search)="searchCourses(searchInput)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <div>
+      <div class="menu_div">
+          <div *ngIf="!courses">
+              <div class="card" *ngFor="let item of [1,2,3,4];">
+                  <div class="currency_accet">
+                      <ion-skeleton-text animated style="width: 100%; height:300px"></ion-skeleton-text>
+                  </div>
+                  <div class="detail">
+                      <div class="up_div">
+                          <ion-label class="title">
+                              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                          </ion-label>
+                          <ion-label class="price">
+                              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                          </ion-label>
+                      </div>
+                      <div class="down_div">
+                          <ion-label class="type">
+                              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                          </ion-label>
+                          <ion-label class="type">
+                              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                          </ion-label>
+                          <ion-label class="type">
+                              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                          </ion-label>
+                          <ion-label class="type">
+                              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                          </ion-label>
+                      </div>
+                  </div>
+                  <div class="btc_div">
+                      <ion-label class="text">
+                          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                      </ion-label>
+                      <ion-label class="status" color="danger">
+                          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                      </ion-label>
+                  </div>
+              </div>
+          </div>
+          <div *ngIf="courses">
+              <div class="card" *ngFor="let item of courses;">
+                  <div class="currency_accet">
+                      <img class="img" [src]="item.img" alt="">
+                  </div>
+                  <div class="detail">
+                      <div class="up_div">
+                          <ion-label class="title">{{item.name}}</ion-label>
+                      </div>
+                      <div class="up_div">
+                          <ion-label class="title">{{item.duration}}</ion-label>
+                          <ion-label class="title">Price: {{item.price}}</ion-label>
+                      </div>
+                      <div class="down_div">
+                          <ion-label class="type">{{item.description}}</ion-label>
+                      </div>
+                  </div>
+                  <div class="btc_div">
+                      <ion-label class="text">
+                      </ion-label>
+                      <ion-label class="status">
+                          <ion-button (click)="deleteSession(item.id)">Delete</ion-button>
+                      </ion-label>
+                  </div>
+              </div>
+              <div *ngIf="showNull ">
+                  <ion-item class="ion-no-padding adjust-margin">
+                      <ion-label>
+                          <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+                      </ion-label>
+                  </ion-item>
+              </div>
+              <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
+                  <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+                  </ion-infinite-scroll-content>
+              </ion-infinite-scroll>
+
+          </div>
+      </div>
+  </div>
 </ion-content>
+<ion-footer>
+  <ion-fab horizontal="end" vertical="bottom">
+      <ion-fab-button color="primary">
+          <ion-icon name="add" (click)="createSession()"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
+</ion-footer>

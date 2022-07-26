@@ -440,8 +440,8 @@ ion-header {
 .form {
     padding: 0;
     ion-list {
-        min-height: 100vh;
-        max-height: 100vh;
+        min-height: calc(100vh - 110px);
+        max-height: calc(100vh - 110px);
         overflow: hidden;
         overflow-y: auto;
         position: relative;
