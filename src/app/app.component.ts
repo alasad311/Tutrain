@@ -40,11 +40,22 @@ export class AppComponent {
     this.statusBar.styleDefault();
     // set status bar to white
     this.statusBar.backgroundColorByHexString('#ffffff');
-    CapacitorApp.addListener('backButton', ({canGoBack}) => {
-      if(this.router.url != '/home')
-      {
-        this.nav.back();
-      }
+    CapacitorApp.addListener('backButton', async ({canGoBack}) => {
+      const modal = await this.modalController.getTop() ? this.modalController.getTop() : null;
+        if(this.router.url == '/session-list' || this.router.url == '/details/courses' || this.router.url == '/details/session' || this.router.url == '/details/users' || this.router.url == '/subscription' || this.router.url == '/track-request'  )
+        {
+          if(modal){
+            this.modalController.dismiss()
+            return
+          }else{
+            this.nav.back()
+            return
+          }
+        }else if(this.router.url != '/home')
+        {
+          this.nav.back();
+        }
+     
 
     });
     this.initializeApp();

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { NavController, LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -17,14 +16,21 @@ export class ListSeatsPage implements OnInit {
   users: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController) { }
+    ,public alertController: AlertController) {
 
-  ngOnInit() {
+  }
 
+  async ngOnInit() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait getting session...'
+    });
+    await loading.present();
     this.fetch.getAllSeatBySession(this.sessionID).then(async (response) =>{
       this.users = JSON.parse(response.data).response;
+      await loading.dismiss();
     });
-
+   
   }
   ionViewDidEnter() {
     this.util.refreshUserData();

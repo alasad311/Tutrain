@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavController, LoadingController, ModalController, AlertController, IonInfiniteScroll } from '@ionic/angular';
 import { EditSessionPage } from '../edit-session/edit-session.page';
 import { ListSeatsPage } from '../list-seats/list-seats.page';
@@ -22,7 +23,9 @@ export class SessionListPage implements OnInit {
   showNull = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController,) { }
+    ,public alertController: AlertController) { 
+
+  }
 
   async ngOnInit() {
     this.user = await this.storage.get('user');
