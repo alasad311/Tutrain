@@ -778,6 +778,25 @@ export class FetchService {
    }) 
 
   }
+  public async createSession(data,imageData: Photo): Promise<any>{
+    //lets being with upload the picture first
+    const user = await this.storage.get('user');
+    return new Promise( async (resolve,reject) => {
+      let options: FileUploadOptions = {
+        fileKey: 'tutrainSession',
+        chunkedMode: true,
+        mimeType: 'multipart/form-data',
+        params: data,
+        headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id}
+      }
+      this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/session/create'), options).then((data) => {
+        resolve(JSON.parse(data.response))
+      }, (err) => {
+        reject(err);
+      })
+   }) 
+  }
+  
   public async changeUserPassword(userID,data): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+userID+'/password';

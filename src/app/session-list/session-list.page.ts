@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, LoadingController, ModalController, AlertController, IonInfiniteScroll } from '@ionic/angular';
+import { AddSessionPage } from '../add-session/add-session.page';
 import { EditSessionPage } from '../edit-session/edit-session.page';
 import { ListSeatsPage } from '../list-seats/list-seats.page';
 import { FetchService } from '../service/api/fetch.service';
@@ -144,8 +145,25 @@ export class SessionListPage implements OnInit {
   goBackHome(){
     this.navCtrl.back();
   }
-  createSession(){
-
+  async createSession(){
+  //process the changes
+  const modal = await this.modalController.create({
+    component: AddSessionPage,
+  });
+  await modal.present();
+  modal.onDidDismiss()
+  .then((data) => {
+     const response = data.data.dismissed; // Here's your selected user!
+    if(response === true)
+    {
+      if(this.searchInput)
+      {
+        this.searchSessions(this.searchInput);
+      }else{
+        this.onClear();
+      }
+    }
+  });
   }
   async updateSession(id,status){
     //process the changes

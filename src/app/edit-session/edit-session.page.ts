@@ -23,11 +23,15 @@ export class EditSessionPage implements OnInit {
   startDateInput: any;
   imageData: any;
   imageUrl: any;
-  toDay = new Date().getFullYear()+ '-' + (1 + new Date().getMonth()).toString().padStart(2, '0') + '-' +
-  new Date().getDate().toString().padStart(2, '0');
+  date = new Date();
+  toDay: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController,public formBuilder: FormBuilder) { }
+    ,public alertController: AlertController,public formBuilder: FormBuilder) { 
+      this.date.setDate(this.date.getDate() + 1);
+      this.toDay = this.date.getFullYear()+ '-' + (1 + this.date.getMonth()).toString().padStart(2, '0') + '-' +
+      this.date.getDate().toString().padStart(2, '0')
+    }
   get errorControl() {
     return this.sessionUpdate.controls;
   }
