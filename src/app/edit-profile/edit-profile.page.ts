@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
@@ -10,7 +10,7 @@ import { EventService } from '../service/event.service';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
-import { VideoEditor,CreateThumbnailOptions } from '@awesome-cordova-plugins/video-editor/ngx';
+import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 import { Capacitor } from '@capacitor/core';
 
 @Component({
@@ -199,7 +199,6 @@ export class EditProfilePage implements OnInit {
     }
   }
   selectPicture = async () => {
-
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: false,

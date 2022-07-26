@@ -10,12 +10,12 @@
         <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
     <ion-toolbar>
-        <ion-searchbar mode="ios" [(ngModel)]="searchInput" showCancelButton="never" (ionClear)="onClear()"  (search)="searchSessions(searchInput)"></ion-searchbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" showCancelButton="never" (ionClear)="onClear()" (search)="searchSessions(searchInput)"></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    
+
     <div>
         <div class="menu_div">
             <div *ngIf="!sessions">
@@ -25,46 +25,63 @@
                     </div>
                     <div class="detail">
                         <div class="up_div">
-                          <ion-label class="title"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
-                          <ion-label class="price"><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></ion-label>
+                            <ion-label class="title">
+                                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                            </ion-label>
+                            <ion-label class="price">
+                                <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                            </ion-label>
                         </div>
                         <div class="down_div">
-                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
-                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
-                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
-                          <ion-label class="type"><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-label>
+                            <ion-label class="type">
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                            </ion-label>
+                            <ion-label class="type">
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                            </ion-label>
+                            <ion-label class="type">
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                            </ion-label>
+                            <ion-label class="type">
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                            </ion-label>
                         </div>
                     </div>
                     <div class="btc_div">
-                      <ion-label class="text"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
-                      <ion-label class="status" color="danger"><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></ion-label>
+                        <ion-label class="text">
+                            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                        </ion-label>
+                        <ion-label class="status" color="danger">
+                            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                        </ion-label>
                     </div>
                 </div>
             </div>
             <div *ngIf="sessions">
                 <div class="card" *ngFor="let item of sessions;">
-                    <div class="currency_accet" (click)="goToCurrency()">
-                      <img class="img" [src]="item.img" alt="">
+                    <div class="currency_accet">
+                        <img class="img" [src]="item.img" alt="">
                     </div>
                     <div class="detail">
                         <div class="up_div">
-                          <ion-label class="title">{{item.session_name}}</ion-label>
+                            <ion-label class="title">{{item.session_name}}</ion-label>
                         </div>
                         <div class="up_div">
                             <ion-label class="title">{{item.location}}</ion-label>
                             <ion-label class="price">{{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}}</ion-label>
                         </div>
                         <div class="down_div">
-                          <ion-label class="type">{{item.description}}</ion-label>
+                            <ion-label class="type">{{item.description}}</ion-label>
                         </div>
                     </div>
                     <div class="btc_div">
-                      <ion-label class="text">
-                        <ion-button>Update</ion-button>
-                      </ion-label>
-                      <ion-label class="status">
-                        <ion-button (click)="deleteSession(item.id)">Delete</ion-button>
-                      </ion-label>
+                        <ion-label class="text">
+                            <ion-button (click)="updateSession(item.id, item.expiration)">Update</ion-button>
+                            <ion-button (click)="goToSeatList(item.id)">Seats Sold</ion-button>
+                        </ion-label>
+                        <ion-label class="status">
+                            <ion-button (click)="deleteSession(item.id,item.expiration)">Delete</ion-button>
+                        </ion-label>
                     </div>
                 </div>
                 <div *ngIf="showNull ">
@@ -78,8 +95,8 @@
                     <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
                     </ion-infinite-scroll-content>
                 </ion-infinite-scroll>
-               
-            </div>  
+
+            </div>
         </div>
     </div>
 </ion-content>

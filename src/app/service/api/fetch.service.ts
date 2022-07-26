@@ -539,7 +539,7 @@ export class FetchService {
     });
     const paid = new Promise( async (resolve,reject) => {
       const user = await this.storage.get('user');
-      const url = 'https://tapp.scd.edu.om/api/v1//session/paied/'+id+'/'+user.email;
+      const url = 'https://tapp.scd.edu.om/api/v1/session/paied/'+id+'/'+user.email;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -741,6 +741,43 @@ export class FetchService {
    }) 
 
   }
+  public async updateSession(id,data,imageData: Photo): Promise<any>{
+    //lets being with upload the picture first
+    return new Promise( async (resolve,reject) => {
+      if(imageData != null)
+      {
+        let options: FileUploadOptions = {
+          fileKey: 'tutrainSession',
+          chunkedMode: true,
+          mimeType: 'multipart/form-data',
+          params: data,
+          headers: {'Authorization' : 'Bearer '+this.apiKey}
+       }
+        this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/session/'+id+'/upload'), options).then((data) => {
+          resolve(JSON.parse(data.response))
+        }, (err) => {
+          reject(err);
+
+        })
+      }else{
+        const url = 'https://tapp.scd.edu.om/api/v1/session/'+id+'/update';
+        this.http.sendRequest( url , {
+          method: 'post',
+          headers: {'content-type' : 'application/json','Authorization' :  'Bearer '+this.apiKey},
+          data: data,
+          serializer: 'json',
+          timeout: 1000
+        } )
+          .then(res => {
+            resolve(JSON.parse(res.data))
+          })
+          .catch(error => {
+            reject(error);
+          });
+      }
+   }) 
+
+  }
   public async changeUserPassword(userID,data): Promise<any>{
     return new Promise( (resolve,reject) => {
       const url = 'https://tapp.scd.edu.om/api/v1/users/'+userID+'/password';
@@ -827,4 +864,22 @@ export class FetchService {
       });
     });
   }
+  public async getAllSeatBySession(id): Promise<any>{
+    return new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/session/seats/'+id;
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+      .then(res => {
+        resolve(res)
+      })
+      .catch(error => {
+        reject(error);
+      });
+    });
+  }
+  
 }

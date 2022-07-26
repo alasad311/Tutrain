@@ -1,0 +1,122 @@
+<ion-header mode="md">
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome({
+            dismissed : false
+          })">
+            <ion-icon class="icon-remove-margin" name="close-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Tutrain</ion-title>
+        <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
+            <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
+        </ion-chip>
+        <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form (ngSubmit)="updateSession()" novalidate>
+        <div class="form animate__animated animate__fadeInUp" *ngIf="session" [formGroup]="sessionUpdate">
+            <ion-list lines="none">
+                <ion-card>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Name</ion-label>
+                            <img [src]="imageUrl ? imageUrl : session.img" />
+                            <ion-button (click)="changeImage()">Change Image</ion-button>
+                        </div>
+                    </ion-item>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Name</ion-label>
+                            <ion-input mode="md" formControlName="sessionname" type="text"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessionname.errors?.required">Please enter a session name</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Location</ion-label>
+                            <ion-input mode="md" formControlName="sessionlocation" type="text"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessionlocation.errors?.required">Please enter a session location</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Description</ion-label>
+                            <ion-textarea rows="5" formControlName="sessiondescription" mode="md" placeholder="Describe the session "></ion-textarea>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessiondescription.errors?.required">Please enter a session Describe</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Tags</ion-label>
+                            <ion-input mode="md" formControlName="sessiontag" placeholder="sperate each tag with a , ex. english,arabic" type="text"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessiontag.errors?.required">Please enter a session tags</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Duration (No. of Days)</ion-label>
+                            <ion-input mode="md" formControlName="sessionduration" placeholder="Session durations in Days" type="number"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessionduration.errors?.required">Please enter a session durations</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Seat Price</ion-label>
+                            <ion-input mode="md" formControlName="sessionprice" placeholder="Seat Price" type="number" readonly="true"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessionprice.errors?.required">Please enter a seat price</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                        <div class="item_inner">
+                            <ion-label>Language</ion-label>
+                            <div class="input_box d-flex">
+                                <ion-select formControlName="sessionlang" placeholder="Select Degree" interface="popover" [disabled]="true">
+                                    <ion-select-option value="Arabic">Arabic</ion-select-option>
+                                    <ion-select-option value="English">English</ion-select-option>
+                                </ion-select>
+                            </div>
+                        </div>
+                    </ion-item>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>No. of Seat Required</ion-label>
+                            <ion-input mode="md" formControlName="sessionseats" placeholder="Set number of seats" type="number" readonly="true"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessionseats.errors?.required">Please enter number of seats required</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Session Agenda</ion-label>
+                            <ion-textarea rows="5" formControlName="sessionagenda" mode="md" placeholder="Enter session agenda "></ion-textarea>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.sessionagenda.errors?.required">Please enter a session agenda</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                        <div class="item_inner">
+                            <ion-label>Session Start Date</ion-label>
+                            <ion-input mode="md" id="startDateInput" type="Date" placeholder="dd/mm/yyyy" (ionChange)="setMinEndDate()" [min]='toDay' formControlName="startdate"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.startdate.errors?.required">Please select a start date</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                        <div class="item_inner">
+                            <ion-label>Session End Date</ion-label>
+                            <ion-input mode="md" type="Date" placeholder="dd/mm/yyyy" [min]='startDateInput' formControlName="enddate"></ion-input>
+                        </div>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.enddate.errors?.required">Please select a end date</span>
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
+                        <div class="item_inner">
+                            <ion-label>Google Map Location (optional)</ion-label>
+                            <ion-input mode="md" formControlName="sessionmap" placeholder="paste google map link" type="url"></ion-input>
+                        </div>
+                    </ion-item>
+                </ion-card>
+            </ion-list>
+        </div>
+        <div class="btn_box">
+            <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">Update</ion-button>
+        </div>
+    </form>
+</ion-content>

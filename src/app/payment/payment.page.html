@@ -30,7 +30,7 @@
     </div>
     <div class="fare">
         <ion-label>Total</ion-label>
-        <ion-label>{{subscription.price  | number : '1.3-3'}}</ion-label>
+        <ion-label>{{subscription.price | number : '1.3-3'}}</ion-label>
     </div>
 </ion-content>
 <ion-content class="ion-padding" *ngIf="course">
@@ -105,7 +105,7 @@
                 <ion-label>Seat for {{session.session_name}} </ion-label>
             </div>
             <div class="name">
-                <ion-label>Session Duration {{session.duration === 1 ? session.duration+" Hour" : session.duration+" Hours"}}</ion-label>
+                <ion-label>Session Duration {{session.duration === 1 ? session.duration+" Day" : session.duration+" Days"}}</ion-label>
             </div>
             <div class="name">
                 <ion-label>By: {{session.fullname}}</ion-label>

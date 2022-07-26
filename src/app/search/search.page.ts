@@ -14,10 +14,10 @@ export class SearchPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   contest: any;
   contestBadge: any;
-  searchInput:any;
-  searchResults:any;
+  searchInput: any;
+  searchResults: any;
   showNull = false;
-  type = "all";
+  type = 'all';
   page = 0;
   constructor(private router: Router, private fetch: FetchService,private nav: NavController,public util: UtilService) { }
 
@@ -27,8 +27,8 @@ export class SearchPage implements OnInit {
 
       if(searchValue.type)
       {
-        this.searchInput = " "
-        this.type = searchValue.type
+        this.searchInput = ' ';
+        this.type = searchValue.type;
         this.searchByType(searchValue.type);
 
       }else
@@ -61,17 +61,66 @@ export class SearchPage implements OnInit {
     this.page = 0;
     this.searchResults = null;
     this.showNull = false;
-    this.fetch.searchAll(value,this.page).then((response) => {
-      var json = JSON.parse(response.data);
-      this.searchResults = json.response
-      if(json.response.length === 0)
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    // this.fetch.searchAll(value,this.page).then((response) => {
+    //   var json = JSON.parse(response.data);
+    //   this.searchResults = json.response
+    //   if(json.response.length === 0)
+    //     {
+    //       this.showNull = true;
+    //       this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    //     }
+    // }).catch((error) => {
+    // });
+    if(this.type === 'all')
+    {
+      this.fetch.searchAll(value,this.page).then((response) => {
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
+        if(json.response.length === 0)
         {
           this.showNull = true;
           this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
         }
-    }).catch((error) => {
-      
-    });
+      }).catch((error) => {
+      });
+    }else if(this.type === 'users')
+    {
+      this.fetch.searchUsers(value,this.page).then((response) => {
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
+      }).catch((error) => {
+      });
+    }else if(this.type === 'courses')
+    {
+      this.fetch.searchCourses(value,this.page).then((response) => {
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
+      }).catch((error) => {
+      });
+    }else if(this.type === 'sessions')
+    {
+      this.fetch.searchSessions(value,this.page).then((response) => {
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
+        if(json.response.length === 0)
+        {
+          this.showNull = true;
+          this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+        }
+      }).catch((error) => {
+      });
+    }
   }
   searchBy(by)
   {
@@ -79,57 +128,53 @@ export class SearchPage implements OnInit {
     this.page = 0;
     this.showNull = false;
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-    if(by === "all")
+    if(by === 'all')
     {
       this.fetch.searchAll(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
           this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
         }
       }).catch((error) => {
-        
       });
-    }else if(by === "users")
+    }else if(by === 'users')
     {
       this.fetch.searchUsers(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
           this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
         }
       }).catch((error) => {
-        
       });
-    }else if(by === "courses")
+    }else if(by === 'courses')
     {
       this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
           this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
         }
       }).catch((error) => {
-        
       });
-    }else if(by === "sessions")
+    }else if(by === 'sessions')
     {
       this.fetch.searchSessions(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
           this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
         }
       }).catch((error) => {
-        
       });
     }
   }
@@ -138,109 +183,109 @@ export class SearchPage implements OnInit {
     this.searchResults = null;
     this.page = 0;
     this.showNull = false;
-    if(by === "all")
+    if(by === 'all')
     {
       this.fetch.searchAll(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
         }
       }).catch((error) => {
-        
+
       });
-    }else if(by === "users")
+    }else if(by === 'users')
     {
       this.fetch.searchUsers(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
         }
       }).catch((error) => {
-        
+
       });
-    }else if(by === "courses")
+    }else if(by === 'courses')
     {
       this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
         }
       }).catch((error) => {
-        
+
       });
-    }else if(by === "sessions")
+    }else if(by === 'sessions')
     {
       this.fetch.searchSessions(this.searchInput,this.page).then((response) => {
-        var json = JSON.parse(response.data);
-        this.searchResults = json.response
+        const json = JSON.parse(response.data);
+        this.searchResults = json.response;
         if(json.response.length === 0)
         {
           this.showNull = true;
         }
       }).catch((error) => {
-        
+
       });
     }
   }
   doInfinite(event) {
     setTimeout(() => {
       this.page = this.page + 1;
-      if(this.type === "all")
+      if(this.type === 'all')
       {
         this.fetch.searchAll(this.searchInput,this.page).then((response) => {
-          var json = JSON.parse(response.data);
-          for (let i = 0; i < json.response.length; i++) {
-            this.searchResults.push(json.response[i])
-          }
-          if(json.response.length == 0)
-            event.target.disabled = true;
-          event.target.complete();
-        }).catch((error) => {
-          
-        });
-      }else if(this.type === "users")
-      {
-        this.fetch.searchUsers(this.searchInput,this.page).then((response) => {
-          var json = JSON.parse(response.data);
-          for (let i = 0; i < json.response.length; i++) {
-            this.searchResults.push(json.response[i])
-          }
-          if(json.response.length == 0)
-            event.target.disabled = true;
-          event.target.complete();
-        }).catch((error) => {
-          
-        });
-      }else if(this.type === "courses")
-      {
-        this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
-          var json = JSON.parse(response.data);
+          const json = JSON.parse(response.data);
           for (let i = 0; i < json.response.length; i++) {
             this.searchResults.push(json.response[i]);
           }
           if(json.response.length == 0)
-            event.target.disabled = true;
+            {event.target.disabled = true;}
+          event.target.complete();
+        }).catch((error) => {
+
+        });
+      }else if(this.type === 'users')
+      {
+        this.fetch.searchUsers(this.searchInput,this.page).then((response) => {
+          const json = JSON.parse(response.data);
+          for (let i = 0; i < json.response.length; i++) {
+            this.searchResults.push(json.response[i]);
+          }
+          if(json.response.length == 0)
+            {event.target.disabled = true;}
+          event.target.complete();
+        }).catch((error) => {
+
+        });
+      }else if(this.type === 'courses')
+      {
+        this.fetch.searchCourses(this.searchInput,this.page).then((response) => {
+          const json = JSON.parse(response.data);
+          for (let i = 0; i < json.response.length; i++) {
+            this.searchResults.push(json.response[i]);
+          }
+          if(json.response.length == 0)
+            {event.target.disabled = true;}
           event.target.complete();
         }).catch((error) => {
         });
-      }else if(this.type === "sessions")
+      }else if(this.type === 'sessions')
       {
         this.fetch.searchSessions(this.searchInput,this.page).then((response) => {
-          var json = JSON.parse(response.data);
-          this.searchResults = json.response
+          const json = JSON.parse(response.data);
+          this.searchResults = json.response;
           if(json.response.length === 0)
           {
             this.showNull = true;
             this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
           }
         }).catch((error) => {
-          
+
         });
       }
     }, 3000);

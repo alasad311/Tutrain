@@ -140,7 +140,15 @@ const routes: Routes = [
     loadChildren: () => import('./course-list/course-list.module').then( m => m.CourseListPageModule),
     canActivate: [AuthGuardService],
 
+  },  {
+    path: 'edit-session',
+    loadChildren: () => import('./edit-session/edit-session.module').then( m => m.EditSessionPageModule)
   },
+  {
+    path: 'list-seats',
+    loadChildren: () => import('./list-seats/list-seats.module').then( m => m.ListSeatsPageModule)
+  },
+
 
 
 

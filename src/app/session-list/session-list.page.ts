@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, LoadingController, ModalController, AlertController, IonInfiniteScroll } from '@ionic/angular';
+import { EditSessionPage } from '../edit-session/edit-session.page';
+import { ListSeatsPage } from '../list-seats/list-seats.page';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -20,7 +22,7 @@ export class SessionListPage implements OnInit {
   showNull = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController) { }
+    ,public alertController: AlertController,) { }
 
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -55,15 +57,15 @@ export class SessionListPage implements OnInit {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 
     this.fetch.searchSessionsWithinUser(search,this.page).then((response) => {
-      var json = JSON.parse(response.data);
-      this.sessions = json.response
+      const json = JSON.parse(response.data);
+      this.sessions = json.response;
       if(json.response.length === 0)
       {
         this.showNull = true;
         this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
       }
     }).catch((error) => {
-      
+
     });
   }
   doInfinite(event) {
@@ -72,7 +74,7 @@ export class SessionListPage implements OnInit {
       if(this.searchInput)
       {
         this.fetch.searchSessionsWithinUser(this.searchInput,this.page).then((response) => {
-          var json = JSON.parse(response.data);
+          const json = JSON.parse(response.data);
           for (let i = 0; i < json.response.length; i++) {
             this.sessions.push(json.response[i]);
           }
@@ -80,7 +82,7 @@ export class SessionListPage implements OnInit {
           {event.target.disabled = true;}
         event.target.complete();
         }).catch((error) => {
-          
+
         });
       }else{
         this.fetch.getAllSessions(this.user.user_id,this.page).then(async (response) => {
@@ -92,7 +94,7 @@ export class SessionListPage implements OnInit {
             {event.target.disabled = true;}
           event.target.complete();
         }).catch((error) => {
-  
+
         });
       }
     }, 2000);
@@ -108,36 +110,72 @@ export class SessionListPage implements OnInit {
     });
 
   }
-  async deleteSession(id){
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait deleting in progress...'
-    });
-    await loading.present();
-    this.fetch.deleteSession(id).then(async (response) =>{
-      console.log(JSON.parse(response.data).result);
-      if(JSON.parse(response.data).result)
-      {
-        this.util.showWarningAlert("Success","You have deleted the session successfully!")
-        await loading.dismiss();
-        this.onClear();
-      }else{
-        await loading.dismiss();
-        this.util.showWarningAlert("Error","Couldn't delete session as there was seats been sold.\n Contact support for further actions!")
-      }
-    })
-  }
   ionViewDidLeave() {
     this.util.refreshUserData();
   }
+  async deleteSession(id,status){
+    if(status){
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Please wait deleting in progress...'
+      });
+      await loading.present();
+      this.fetch.deleteSession(id).then(async (response) =>{
+        if(JSON.parse(response.data).result)
+        {
+          this.util.showWarningAlert('Success','You have deleted the session successfully!');
+          await loading.dismiss();
+          this.onClear();
+        }else{
+          await loading.dismiss();
+          this.util.showWarningAlert('Error',`Couldn\'t delete session as there was seats been sold.
+          \n Contact support for further actions!`);
+        }
+      });
+    }else{
+      this.util.showWarningAlert('Error',`Couldn\'t delete the course session as the course 
+      session end date has expired and no longer active!`);
+    }
+  }
+
   goBackHome(){
     this.navCtrl.back();
   }
   createSession(){
-    
-  }
-  goToSessionUpdate(id,isActive){
 
+  }
+  async updateSession(id,status){
     //process the changes
+    if(status){
+      const modal = await this.modalController.create({
+        component: EditSessionPage,
+        componentProps: { sessionID: id }
+      });
+      await modal.present();
+      modal.onDidDismiss()
+      .then((data) => {
+         const response = data.data.dismissed; // Here's your selected user!
+        if(response === true)
+        {
+          if(this.searchInput)
+          {
+            this.searchSessions(this.searchInput);
+          }else{
+            this.onClear();
+          }
+        }
+      });
+    }else{
+      this.util.showWarningAlert('Error',`Couldn\'t update the course session as the course 
+      session end date has expired and no longer active!`);
+    }
+  }
+  async goToSeatList(id){
+    //process the changes
+    const modal = await this.modalController.create({
+      component: ListSeatsPage,
+      componentProps: { sessionID: id }
+    });
+    await modal.present();
   }
 }
