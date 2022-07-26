@@ -139,28 +139,22 @@ const routes: Routes = [
     path: 'course-list',
     loadChildren: () => import('./course-list/course-list.module').then( m => m.CourseListPageModule),
     canActivate: [AuthGuardService],
-
   },
   {
     path: 'edit-session',
-    loadChildren: () => import('./edit-session/edit-session.module').then( m => m.EditSessionPageModule)
+    loadChildren: () => import('./edit-session/edit-session.module').then( m => m.EditSessionPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'list-seats',
-    loadChildren: () => import('./list-seats/list-seats.module').then( m => m.ListSeatsPageModule)
-  },  {
-    path: 'add-session',
-    loadChildren: () => import('./add-session/add-session.module').then( m => m.AddSessionPageModule)
+    loadChildren: () => import('./list-seats/list-seats.module').then( m => m.ListSeatsPageModule),
+    canActivate: [AuthGuardService],
   },
-
-
-
-
-
-
-
-
-
+  {
+    path: 'add-session',
+    loadChildren: () => import('./add-session/add-session.module').then( m => m.AddSessionPageModule),
+    canActivate: [AuthGuardService],
+  },
 
 ];
 
