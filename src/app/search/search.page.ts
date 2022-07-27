@@ -61,7 +61,7 @@ export class SearchPage implements OnInit {
     this.page = 0;
     this.searchResults = null;
     this.showNull = false;
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    //this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
     // this.fetch.searchAll(value,this.page).then((response) => {
     //   var json = JSON.parse(response.data);
     //   this.searchResults = json.response
