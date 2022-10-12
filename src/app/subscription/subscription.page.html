@@ -1,11 +1,11 @@
 <ion-header mode="md">
-  <ion-toolbar class="ion-no-margin">
-      <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
-          <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
-      </ion-chip>
-      <ion-title>Tutrain</ion-title>
-      
-  </ion-toolbar>
+    <ion-toolbar class="ion-no-margin">
+        <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
+            <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
+        </ion-chip>
+        <ion-title>Subscription</ion-title>
+
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="bg_color">
@@ -15,7 +15,7 @@
         <div class="features">
             <p class="d-flex">
                 <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
-                Benefit #1 
+                Benefit #1
             </p>
             <p class="d-flex">
                 <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
@@ -40,7 +40,9 @@
     <ion-list lines="none" *ngIf="!subs">
         <ion-item *ngFor="let item of [1,2,3]">
             <div class="item_inner">
-                <h2><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></h2>
+                <h2>
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </h2>
                 <h3 class="d-flex">
                     <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text> <span class="end" style="width: 100px;"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></span>
                 </h3>
@@ -48,4 +50,3 @@
         </ion-item>
     </ion-list>
 </ion-content>
-

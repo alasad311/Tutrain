@@ -2,16 +2,13 @@
 ## Within App
 - [ ] design
 - [ ] localization
-- [ ] Page Titles
 - [ ] payment to be adjusted based on new gateaway
-- [ ] create course
+
 
 ## Backend
 - [ ] Payment Gateaway
 
-## 23/07/2022
-- [x] User profile update / tutor / trainer / student
-- [x] Home page connection categories / courses / purchases
-- [x] Session create,Edit and list 
-- [x] Course list,delete
+## 12/10/2022
+- [x] Page Titles
+- [x] hide courses and session from app
 

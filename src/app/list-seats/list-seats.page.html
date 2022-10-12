@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="close-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Tutrain</ion-title>
+        <ion-title>List of Seats</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -25,7 +25,7 @@
                 <ion-label class="type">
                     <ion-label class="status" color="danger">{{item.email}}</ion-label>
                 </ion-label>
-                
+
             </div>
         </div>
     </div>

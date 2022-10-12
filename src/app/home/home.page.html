@@ -10,7 +10,7 @@
         <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
     <ion-toolbar>
-        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchPage(searchInput)"></ion-searchbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Search for a tutor" (search)="searchPage(searchInput)"></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -77,7 +77,7 @@
                     </div>
                     <ion-label>Tutor / Trainer</ion-label>
                 </div>
-                <div class="item" (click)="openSearch('courses')">
+                <!-- <div class="item" (click)="openSearch('courses')">
                     <div class="icon">
                         <img src="https://via.placeholder.com/512x512" />
                     </div>
@@ -88,10 +88,10 @@
                         <img src="https://via.placeholder.com/512x512" />
                     </div>
                     <ion-label>Sessions</ion-label>
-                </div>
+                </div> -->
             </div>
         </div>
-
+        <!-- 
         <div class="heading">
             <ion-label class="title">All Purchases</ion-label>
             <ion-label class="text" (click)="goToAllPurchases()">View all</ion-label>
@@ -179,7 +179,7 @@
                     </div>
                 </ion-slide>
             </ion-slides>
-        </div>
+        </div> -->
 
     </div>
 

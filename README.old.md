@@ -28,3 +28,10 @@
  - added in home tutor / course and session when clicked taken to search and show all data
  - same goes to category now auto fill in search
  - profile video intro work in progress.
+
+## 23/07/2022
+- [x] User profile update / tutor / trainer / student
+- [x] Home page connection categories / courses / purchases
+- [x] Session create,Edit and list 
+- [x] Course list,delete
+- [x] create course
