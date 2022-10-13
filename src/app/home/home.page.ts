@@ -6,6 +6,7 @@ import { FetchService } from './../service/api/fetch.service';
 import { UtilService } from './../service/util.service';
 import { MenuController, NavController,ModalController, AlertController  } from '@ionic/angular';
 import { App as CapacitorApp } from '@capacitor/app';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @Component({
   selector: 'app-home',
@@ -38,11 +39,12 @@ export class HomePage implements OnInit {
   constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
     private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
     private modalCtrl: ModalController,public util: UtilService,public alertController: AlertController,
-    private route: ActivatedRoute ) {
-
+    private route: ActivatedRoute,private statusBar: StatusBar ) {
+      
      }
 
   async ionViewDidEnter() {
+    this.statusBar.backgroundColorByHexString('#ffffff');
     this.util.refreshUserData();
     this.util.checkContest().then((response) => {
       this.contest = response;
