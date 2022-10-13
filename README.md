@@ -8,7 +8,6 @@
 ## Backend
 - [ ] Payment Gateaway
 
-## 12/10/2022
-- [x] Page Titles
-- [x] hide courses and session from app
+## 13/10/2022
+- [x] Splashscreen
 
