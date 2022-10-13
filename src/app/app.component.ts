@@ -28,7 +28,7 @@ export class AppComponent {
   constructor(public alertController: AlertController,private router: Router,public menuCtrl: MenuController,
     private screenOrientation: ScreenOrientation,private storage: StorageService,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, public util: UtilService,
-    private nav: NavController) {
+    private nav: NavController,private appVersion: AppVersion) {
     //   this.androidFullScreen.isImmersiveModeSupported()
     // .then(() => console.log('Immersive mode supported'))
     // .catch(err => console.log(err));
@@ -62,6 +62,9 @@ export class AppComponent {
   async startApp(){
     await this.storage.init();
     this.user = await this.storage.get('user');
+
+    this.appV = await this.appVersion.getAppName()  + ' ' + await this.appVersion.getVersionNumber();
+
   }
   async logout(){
     await this.storage.clear();

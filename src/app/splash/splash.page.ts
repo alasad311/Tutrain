@@ -126,7 +126,6 @@ export class SplashPage implements OnInit {
         });
       });
 
-      this.appV = await this.appVersion.getAppName()  + ' ' + await this.appVersion.getVersionNumber();
       PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         //let navigate to requested slot
