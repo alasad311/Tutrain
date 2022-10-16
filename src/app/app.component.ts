@@ -74,7 +74,6 @@ export class AppComponent {
       this.translate.use(language[0]);
       const htmlTag = this.document.getElementsByTagName('html')[0] as HTMLHtmlElement;
       htmlTag.dir = language[0] === 'ar' ? 'rtl' : 'ltr';
-
     });
 
     this.user = await this.storage.get('user');

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -19,11 +20,13 @@ export class ContestPage implements OnInit {
   lang: any;
   constructor(private navCtrl: NavController,public util: UtilService,private fetch: FetchService,
     private route: ActivatedRoute,public alertController: AlertController,public loadingController: LoadingController,
-    private storage: StorageService) { }
+    private storage: StorageService,private globalization: Globalization) { }
 
   async ngOnInit() {
-    this.lang = await this.storage.get('lang');
-    console.log('stored lang: '+this.lang)
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     this.route.params.subscribe((params: any) => {
       this.fetch.contestDidAnswerer(params['id']).then(async (response) => {
         if(JSON.parse(response.data).isAnswererd)
