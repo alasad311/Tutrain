@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Contest</ion-title>
+        <ion-title>{{ "contest.title" | translate }}</ion-title>
 
     </ion-toolbar>
 </ion-header>
@@ -13,14 +13,29 @@
         <div class="img_box">
             <img src="https://via.placeholder.com/684x587">
         </div>
-        <div *ngIf="contest">
+        <div *ngIf="contest && lang === 'en'">
             <div *ngFor="let item of contest">
                 <div class="text_box ion-text-center" *ngFor="let questions of item.contest_question ">
-                    <h3 [innerHTML]="questions.question"></h3>
+                    <h3 [innerHTML]="questions.question_en"></h3>
                     <div class="features">
                         <ion-radio-group [(ngModel)]="contestAnswerer">
                             <ion-item class="animate__animated animate__zoomIn" *ngFor="let answerers of questions.question_choice">
-                                <ion-label>{{answerers.answerer}}</ion-label>
+                                <ion-label>{{answerers.answerer_en}}</ion-label>
+                                <ion-radio slot="start" value="{{answerers.id}}"></ion-radio>
+                            </ion-item>
+                        </ion-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="contest && lang === 'ar'">
+            <div *ngFor="let item of contest">
+                <div class="text_box ion-text-center" *ngFor="let questions of item.contest_question ">
+                    <h3 [innerHTML]="questions.question_ar"></h3>
+                    <div class="features">
+                        <ion-radio-group [(ngModel)]="contestAnswerer">
+                            <ion-item class="animate__animated animate__zoomIn" *ngFor="let answerers of questions.question_choice">
+                                <ion-label>{{answerers.answerer_ar}}</ion-label>
                                 <ion-radio slot="start" value="{{answerers.id}}"></ion-radio>
                             </ion-item>
                         </ion-radio-group>
@@ -96,7 +111,7 @@
 <ion-footer *ngIf="!isAnswered">
     <ion-toolbar>
         <ion-item lines="none" (click)="submitAnswer()" [disabled]="isDisabled">
-            <ion-label>Submit your answer</ion-label>
+            <ion-label>{{ "contest.btn" | translate }}</ion-label>
         </ion-item>
     </ion-toolbar>
 </ion-footer>

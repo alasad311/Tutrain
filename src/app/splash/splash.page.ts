@@ -60,22 +60,22 @@ export class SplashPage implements OnInit {
       this.event.getObservable().subscribe((data) => {
         this.user = data;
       });
-  
-      await this.storage.init();
       let user = await this.storage.get('user');
       //lets check if the user isnt deleted or inactive
-  
-      await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
-        const checkUser = JSON.parse(response.data).response[0];
-        this.storage.clear();
-        await this.storage.set('user',checkUser);
-        if(checkUser.is_active == 0)
-        {
-          user = null;
+      if(user)
+      {
+        await this.fetch.getUserDetailByID(user.user_id).then(async (response) => {
+          const checkUser = JSON.parse(response.data).response[0];
           this.storage.clear();
-        }
-      }).catch((error) => {
-      });
+          await this.storage.set('user',checkUser);
+          if(checkUser.is_active == 0)
+          {
+            user = null;
+            this.storage.clear();
+          }
+        }).catch((error) => {
+        });
+      }
       this.event.publishSomeData(user);
       CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
         this.zone.run(() => {
@@ -331,8 +331,6 @@ export class SplashPage implements OnInit {
 
 
     });
-
-    
   }
   // set userDetails(user){
   //   this.user = user;

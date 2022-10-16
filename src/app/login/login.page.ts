@@ -4,9 +4,11 @@ import { NavController } from '@ionic/angular';
 import { UsersService } from './../service/api/users.service';
 import { StorageService } from './../service/storage/storage.service';
 import { AlertController } from '@ionic/angular';
-import { EventService } from ".././service/event.service"
+import { EventService } from '.././service/event.service'
 import { PushNotifications,Token } from '@capacitor/push-notifications';
 import { FetchService } from '../service/api/fetch.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,13 +21,14 @@ export class LoginPage implements OnInit {
   public email;
   public password;
   pushToken: any;
-  constructor(private fetch:FetchService,private router: Router,private event:EventService, private navCtrl: NavController,private userApi: UsersService,public alertController: AlertController, private storage : StorageService) { }
+  constructor(private fetch: FetchService,private router: Router,private event: EventService, private navCtrl: NavController,
+    private userApi: UsersService,public alertController: AlertController, private storage: StorageService,
+    private globalization: Globalization, private translate: TranslateService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     PushNotifications.addListener('registration', (token: Token) => {
       this.pushToken = token.value
      })
-    
   }
   goToHome() {
     this.isDisablied = true;
@@ -62,14 +65,14 @@ export class LoginPage implements OnInit {
           if(this.pushToken === json.response.user[0].pushtoken)
           {
             await this.storage.set("user",json.response.user[0])
-            this.alertMessage("Error: #9","Your email has been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
+            this.alertMessage("Error: #9","Your email hasn't been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
               this.router.navigate(['/home']);
             });
           }else{
             this.fetch.updateUserToken({pushtoken: this.pushToken,user_id:json.response.user[0].user_id}).then(async (response) => {
               var json = JSON.parse(response.data);
               await this.storage.set("user",json.response[0])
-              this.alertMessage("Error: #9","Your email has been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
+              this.alertMessage("Error: #9","Your email hasn't been confirmed yet, to use the app full feature you need to confirm your email","","Resend").then(() => {
                 this.router.navigate(['/home']);
               });
             })

@@ -1,0 +1,85 @@
+{
+    "Welcome": {
+        "welcome": "فففف",
+        "login": "ييييي",
+        "account": "ييييي?",
+        "signup": "يييبسييبسشيب شسيب ش"
+    },
+    "createSession": {
+        "title": "Create Session",
+        "sessionimage": "Session Image",
+        "selectimage": "Select an Image",
+        "sessionname": "Session Name",
+        "sessionameerror": "Please enter a session name",
+        "sessionlocation": "Session Location",
+        "sessionlocationerror": "Please enter a session location",
+        "sessiondescription": "Session Description",
+        "sessiondescriptionerror": "Please enter a session Describe",
+        "descriptionplaceholder": "Describe the session",
+        "sessiontag": "Session Tags",
+        "tagplaceholder": "sperate each tag with a , ex. english,arabic",
+        "sessiontagerror": "Please enter a session tags",
+        "sessionduration": "Session Duration (No. of Days)",
+        "durationplaceholder": "Session durations in Days",
+        "sessiondurationerror1": "Please enter a session durations",
+        "sessiondurationerror2": "Only whole number is accpected",
+        "sessionseatprice": "Seat Price",
+        "seatpriceplaceholder": "Seat Price",
+        "sessionseatpriceerror1": "Please enter a seat price",
+        "sessionseatpriceerror2": "Only numbers or decimals",
+        "sessionlanguage": "Language",
+        "languageplaceholder": "Select Session Language",
+        "lang1": "Arabic",
+        "lang2": "English",
+        "sessionnoseats": "No. of Seat Required",
+        "noseatsplaceholder": "Set number of seats",
+        "sessionnoseatserror1": "Please enter number of seats required",
+        "sessionnoseatserror2": "Only numbers",
+        "sessionagenda": "Session Agenda",
+        "agendaplaceholder": "Enter session agenda",
+        "sessionagendaerror": "Please enter a session agenda",
+        "sessionstartdate": "Session Start Date",
+        "sessionstartdateerror": "Please select a start date",
+        "sessionenddate": "Session End Date",
+        "sessionenddateerror": "Please select a end date",
+        "googlemapplaceholder": "paste google map link",
+        "sessiongooglemap": "Google Map Location (optional)",
+        "sessioncreate": "Create"
+    },
+    "booktutor": {
+        "duration": "Duration",
+        "1hour": "1 Hour",
+        "2hour": "2 Hour",
+        "3hour": "3 Hour",
+        "book": "Book"
+    },
+    "changepassword": {
+        "title": "Change Password",
+        "heading": "Change your password",
+        "oldpassword": "Old Password",
+        "oldpassworderror": "Please enter your old password",
+        "newpassword": "New Password",
+        "newpassworderror1": "Please enter a new password",
+        "newpassworderror2": "Your password should be a minimum of 8 characters",
+        "confirmpassword": "Confirm Password",
+        "confirmpassworderror1": "Please re-enter your password",
+        "confirmpassworderror2": "Your password doesnt match",
+        "button": "Change Password"
+    },
+    "contactus": {
+        "title": "Contact Us",
+        "heading": "Contact us",
+        "chat": "Need an ASAP answer? Contact us via chat, 24/7! Or call us on ",
+        "chatus": "Chat with us",
+        "email": "You can email us with your issue, make sure to fully describe your issue to be able fully understand your issue and response accordingly",
+        "emailus": "Email with us",
+        "timing": "8:00 AM - 4:00 PM - Sunday - Thursday",
+        "copy": "Copyright",
+        "write": "TutrainApp All Rights Reserved."
+    },
+    "contest": {
+        "title": "Contest",
+        "btn": "Submit your answer"
+    }
+
+}

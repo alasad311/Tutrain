@@ -154,12 +154,11 @@ const routes: Routes = [
     path: 'add-session',
     loadChildren: () => import('./add-session/add-session.module').then( m => m.AddSessionPageModule),
     canActivate: [AuthGuardService],
-  },  {
+  },
+  {
     path: 'splash',
     loadChildren: () => import('./splash/splash.module').then( m => m.SplashPageModule)
-  },
-
-
+  }
 ];
 
 @NgModule({

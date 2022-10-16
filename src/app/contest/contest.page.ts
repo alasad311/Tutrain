@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
+import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
 
 @Component({
@@ -15,10 +16,14 @@ export class ContestPage implements OnInit {
   contestAnswerer: string;
   disabled = true;
   isDisabled = false;
+  lang: any;
   constructor(private navCtrl: NavController,public util: UtilService,private fetch: FetchService,
-    private route: ActivatedRoute,public alertController: AlertController,public loadingController: LoadingController) { }
+    private route: ActivatedRoute,public alertController: AlertController,public loadingController: LoadingController,
+    private storage: StorageService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.lang = await this.storage.get('lang');
+    console.log('stored lang: '+this.lang)
     this.route.params.subscribe((params: any) => {
       this.fetch.contestDidAnswerer(params['id']).then(async (response) => {
         if(JSON.parse(response.data).isAnswererd)

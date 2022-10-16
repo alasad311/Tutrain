@@ -1,16 +1,17 @@
-import { Component,NgZone } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from './service/storage/storage.service';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { AlertController, MenuController,LoadingController, ModalController, NavController } from '@ionic/angular';
-import { Platform } from '@ionic/angular';
-import { FetchService } from './service/api/fetch.service';
-import { EventService } from './service/event.service';
 import { App as CapacitorApp } from '@capacitor/app';
-import { AndroidFullScreen } from '@awesome-cordova-plugins/android-full-screen/ngx';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { UtilService } from './service/util.service';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
+import { TranslateService } from '@ngx-translate/core';
+import { EventService } from './service/event.service';
+import { Platform } from '@ionic/angular';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ export class AppComponent {
   constructor(public alertController: AlertController,private router: Router,public menuCtrl: MenuController,
     private screenOrientation: ScreenOrientation,private storage: StorageService,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, public util: UtilService,
-    private nav: NavController,private appVersion: AppVersion) {
+    private nav: NavController,private appVersion: AppVersion,private globalization: Globalization,private event: EventService,
+    private translate: TranslateService,private platform: Platform, @Inject(DOCUMENT) private document: Document) {
     //   this.androidFullScreen.isImmersiveModeSupported()
     // .then(() => console.log('Immersive mode supported'))
     // .catch(err => console.log(err));
@@ -36,6 +38,8 @@ export class AppComponent {
     this.statusBar.overlaysWebView(false);
     this.statusBar.styleDefault();
     this.router.navigate(['splash']);
+   
+
     // set status bar to white
     this.statusBar.backgroundColorByHexString('#031a70');
     CapacitorApp.addListener('backButton', async () => {
@@ -61,8 +65,19 @@ export class AppComponent {
 
   async startApp(){
     await this.storage.init();
-    this.user = await this.storage.get('user');
+    this.event.getObservable().subscribe((data) => {
+      this.user = data;
+    });
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.translate.setDefaultLang(language[0]);
+      this.translate.use(language[0]);
+      const htmlTag = this.document.getElementsByTagName('html')[0] as HTMLHtmlElement;
+      htmlTag.dir = language[0] === 'ar' ? 'rtl' : 'ltr';
 
+    });
+
+    this.user = await this.storage.get('user');
     this.appV = await this.appVersion.getAppName()  + ' ' + await this.appVersion.getVersionNumber();
 
   }

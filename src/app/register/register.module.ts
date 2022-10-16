@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
@@ -12,6 +13,7 @@ import { RegisterPage } from './register.page';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+TranslateModule.forChild(),
     IonicModule,
     RegisterPageRoutingModule
   ],

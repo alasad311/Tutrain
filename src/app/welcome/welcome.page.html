@@ -1,19 +1,19 @@
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <img src="https://via.placeholder.com/2818x522">
-        <ion-label class="info"> Lets help you imporve yourself</ion-label>
-        <ion-button (click)="goToLogin()" shape="round">
-          Log In
-        </ion-button>
-        <ion-label class="text">Don't have an account?
-          <span (click)="goToRegister()">Sign Up</span>
-        </ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
-  <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
-  <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <img src="https://via.placeholder.com/2818x522">
+                <ion-label class="info"> {{ "Welcome.welcome" | translate }}</ion-label>
+                <ion-button (click)="goToLogin()" shape="round">
+                    {{ "Welcome.login" | translate }}
+                </ion-button>
+                <ion-label class="text">{{ "Welcome.account" | translate }}
+                    <span (click)="goToRegister()">{{ "Welcome.signup" | translate }}</span>
+                </ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
+    <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
+    <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
 </ion-content>

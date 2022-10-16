@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AuthGuardService } from './../service/Auth/auth-guard.service';
+import { NavigationExtras, Router } from '@angular/router';
 import { StorageService } from './../service/storage/storage.service';
 import { FetchService } from './../service/api/fetch.service';
 import { UtilService } from './../service/util.service';
-import { MenuController, NavController,ModalController, AlertController  } from '@ionic/angular';
-import { App as CapacitorApp } from '@capacitor/app';
+import { NavController,AlertController  } from '@ionic/angular';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @Component({
@@ -36,11 +34,10 @@ export class HomePage implements OnInit {
   registeredCourses:any;
 
   users: any;
-  constructor(private router: Router, private menuCtrl: MenuController,private nav: NavController,
-    private fetch: FetchService, private auth: AuthGuardService, private storage: StorageService,
-    private modalCtrl: ModalController,public util: UtilService,public alertController: AlertController,
-    private route: ActivatedRoute,private statusBar: StatusBar ) {
-      
+  constructor(private router: Router, private nav: NavController,
+    private fetch: FetchService, private storage: StorageService,
+    public util: UtilService,public alertController: AlertController,
+    private statusBar: StatusBar ) {
      }
 
   async ionViewDidEnter() {
@@ -73,7 +70,7 @@ export class HomePage implements OnInit {
       this.newCourses = JSON.parse(response[2].data).response;
       this.registeredCourses = JSON.parse(response[3].data).response;
       event.target.complete();
-    }).catch((error) => {
+    }).catch(() => {
       event.target.complete();
     });
   }
@@ -93,7 +90,7 @@ export class HomePage implements OnInit {
           this.categories = JSON.parse(response[1].data).response;
           this.newCourses = JSON.parse(response[2].data).response;
           this.registeredCourses = JSON.parse(response[3].data).response;
-        }).catch((error) => {
+        }).catch(() => {
         });
       }, 2000 );
     }else{
@@ -103,7 +100,7 @@ export class HomePage implements OnInit {
           this.categories = JSON.parse(response[1].data).response;
           this.newCourses = JSON.parse(response[2].data).response;
           this.registeredCourses = JSON.parse(response[3].data).response;
-        }).catch((error) => {
+        }).catch(() => {
         });
     }
   }

@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Contact Us</ion-title>
+        <ion-title>{{ "contactus.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -14,7 +14,7 @@
 <ion-content>
     <div class="main-content">
         <div class="heading">
-            <ion-label>Contact us</ion-label>
+            <ion-label>{{ "contactus.heading" | translate }}</ion-label>
         </div>
         <div class="line">
             <div class="border"></div>
@@ -27,11 +27,11 @@
             </div>
 
             <div class="contact-detail">
-                Need an ASAP answer? Contact us via chat, 24/7! Or call us on <a href="tel:+968 24523456">+968 24523456</a>.
+                {{ "contactus.chat" | translate }} <a href="tel:+968 24523456">+968 24523456</a>.
             </div>
 
             <div class="contact-btn">
-                <ion-button (click)="goToWhatsApp()" expand="full" color="dark">Chat with us
+                <ion-button (click)="goToWhatsApp()" expand="full" color="dark">{{ "contactus.chatus" | translate }}
                 </ion-button>
             </div>
         </div>
@@ -42,11 +42,11 @@
             </div>
 
             <div class="contact-detail">
-                You can email us with your issue, make sure to fully describe your issue to be able fully understand your issue and response accordingly
+                {{ "contactus.email" | translate }}
             </div>
 
             <div class="contact-btn">
-                <ion-button expand="full" (click)="goToEmail()" color="dark">Email with us
+                <ion-button expand="full" (click)="goToEmail()" color="dark">{{ "contactus.emailus" | translate }}
                 </ion-button>
             </div>
         </div>
@@ -70,7 +70,7 @@
                 <div class="contact">
                     <ion-label><a href="mailto:support@tutrainapp.com">support@tutrainapp.com</a></ion-label>
                     <ion-label><a href="tel:+968 24523456">+968 24523456</a></ion-label>
-                    <ion-label>8:00 AM - 4:00 PM - Sunday - Thursday</ion-label>
+                    <ion-label>{{ "contactus.timing" | translate }}</ion-label>
                 </div>
 
                 <div class="line">
@@ -80,7 +80,7 @@
             </div>
 
             <div class="copyright">
-                <ion-label>Copyright &copy; TutrainApp All Rights Reserved.</ion-label>
+                <ion-label>{{ "contactus.copy" | translate }} &copy; {{ "contactus.write" | translate }}</ion-label>
             </div>
         </div>
 
