@@ -1,37 +1,37 @@
 <ion-content>
-  <div class="row">
-    <img src="https://via.placeholder.com/2818x522">
-    <ion-card>
-      <div class="title-div">
-        <ion-label class="title">Sign In</ion-label>
-      </div>
-      <div class="textbox">
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input class="ion-no-padding" autocomplete="new-password"  [(ngModel)]="email" type="email"></ion-input>
-      </div>
-      <div class="textbox">
-        <ion-label position="stacked">Password</ion-label>
-        <ion-item lines="none" class="ion-no-padding">
-          <ion-input class="ion-no-padding password" [(ngModel)]="password" type="{{showPassword ? 'text' : 'password'}}"></ion-input>
-          <ion-icon slot="end" class="icon-padding" name="{{viewPassword}}" (click)="togglePassword()"></ion-icon>
-        </ion-item>
-      </div>
-      <div class="text-forgot">
-          <span (click)="goToForgotPassword()">Forgot password?</span>
-      </div>
-      <ion-button (click)="goToHome()" [disabled]="isDisablied"  shape="round">
-        Log In
-      </ion-button>
-      <div class="text-div">
-        <ion-label class="text">Don't have an account?
-          <span (click)="goToRegister()">Sign Up</span>
-        </ion-label>
-      </div>
-    </ion-card>
-  </div>
-  <div class="image">
-    <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
-    <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
-    <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
-  </div>
+    <div class="row">
+        <img src="https://via.placeholder.com/2818x522">
+        <ion-card>
+            <div class="title-div">
+                <ion-label class="title">{{ "login.title" | translate }}</ion-label>
+            </div>
+            <div class="textbox">
+                <ion-label position="stacked">{{ "login.email" | translate }}</ion-label>
+                <ion-input class="ion-no-padding" autocomplete="new-password" [(ngModel)]="email" type="email"></ion-input>
+            </div>
+            <div class="textbox">
+                <ion-label position="stacked">{{ "login.password" | translate }}</ion-label>
+                <ion-item lines="none" class="ion-no-padding">
+                    <ion-input class="ion-no-padding password" [(ngModel)]="password" type="{{showPassword ? 'text' : 'password'}}"></ion-input>
+                    <ion-icon slot="end" class="icon-padding" name="{{viewPassword}}" (click)="togglePassword()"></ion-icon>
+                </ion-item>
+            </div>
+            <div class="text-forgot">
+                <span (click)="goToForgotPassword()">{{ "login.forgetpassword" | translate }}</span>
+            </div>
+            <ion-button (click)="goToHome()" [disabled]="isDisablied" shape="round">
+                {{ "login.loginbtn" | translate }}
+            </ion-button>
+            <div class="text-div">
+                <ion-label class="text">{{ "login.donthaveaccount" | translate }}
+                    <span (click)="goToRegister()">{{ "login.signupbtn" | translate }}</span>
+                </ion-label>
+            </div>
+        </ion-card>
+    </div>
+    <div class="image">
+        <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
+        <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
+        <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
+    </div>
 </ion-content>

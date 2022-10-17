@@ -5,6 +5,7 @@ import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { UtilService } from '../service/util.service';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 
 @Component({
   selector: 'app-payment',
@@ -30,11 +31,16 @@ export class PaymentPage implements OnInit {
   tuturHourCost;
   service = 0;
   paymentType = true;
+  lang: any;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController
-    ,public util: UtilService) { }
+    ,public util: UtilService,private globalization: Globalization) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     if(this.dateSelected)
     {
       this.tuturHourCost  = this.tutor.hour_price;

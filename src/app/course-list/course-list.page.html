@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Courses</ion-title>
+        <ion-title>{{ "courselist.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="up_div">
                             <ion-label class="title">{{item.duration}}</ion-label>
-                            <ion-label class="title">Price: {{item.price}}</ion-label>
+                            <ion-label class="title">{{ "courselist.price" | translate }}: {{item.price}}</ion-label>
                         </div>
                         <div class="down_div">
                             <ion-label class="type">{{item.description}}</ion-label>
@@ -78,19 +78,19 @@
                         <ion-label class="text">
                         </ion-label>
                         <ion-label class="status">
-                            <ion-button (click)="deleteSession(item.id)">Delete</ion-button>
+                            <ion-button (click)="deleteSession(item.id)">{{ "courselist.delete" | translate }}</ion-button>
                         </ion-label>
                     </div>
                 </div>
                 <div *ngIf="showNull ">
                     <ion-item class="ion-no-padding adjust-margin">
                         <ion-label>
-                            <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+                            <h3 class="center-null ">{{ "courselist.empty" | translate }}</h3>
                         </ion-label>
                     </ion-item>
                 </div>
                 <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
-                    <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+                    <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="{{ 'courselist.loading' | translate }}">
                     </ion-infinite-scroll-content>
                 </ion-infinite-scroll>
 

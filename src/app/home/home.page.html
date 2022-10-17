@@ -10,12 +10,12 @@
         <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
     <ion-toolbar>
-        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Search for a tutor" (search)="searchPage(searchInput)"></ion-searchbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="{{ 'home.searchplaceholder' | translate }}" (search)="searchPage(searchInput)"></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content slot="fixed" pullFactor="0.5" pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh" refreshingSpinner="crescent">
+        <ion-refresher-content slot="fixed" pullFactor="0.5" pullingIcon="chevron-down-circle-outline" pullingText="{{ 'home.pullplaceholder' | translate }}" refreshingSpinner="crescent">
         </ion-refresher-content>
     </ion-refresher>
     <div class="main-content">
@@ -44,7 +44,7 @@
             </ion-slides>
         </div>
         <div class="heading">
-            <ion-label class="title">{{ "Home.category" | translate }}</ion-label>
+            <ion-label class="title">{{ "home.category" | translate }}</ion-label>
         </div>
 
         <div class="category" *ngIf="!categories">
@@ -75,7 +75,7 @@
                     <div class="icon">
                         <img src="https://via.placeholder.com/512x512" />
                     </div>
-                    <ion-label>Tutor / Trainer</ion-label>
+                    <ion-label>{{"home.tutors" | translate}}</ion-label>
                 </div>
                 <!-- <div class="item" (click)="openSearch('courses')">
                     <div class="icon">

@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 import { Capacitor } from '@capacitor/core';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 
 @Component({
   selector: 'app-edit-profile',
@@ -38,14 +39,20 @@ export class EditProfilePage implements OnInit {
   introvideoURL: any;
   profileUpdate: FormGroup;
   hideVideo: any;
+  lang: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
     private router: Router,public formBuilder: FormBuilder,private event: EventService,private sanitizer: DomSanitizer,
-    private chooser: Chooser, private filePath: FilePath,private videoEditor: VideoEditor) { }
+    private chooser: Chooser, private filePath: FilePath,private videoEditor: VideoEditor,
+    private globalization: Globalization) { }
   get errorControl() {
     return this.profileUpdate.controls;
   }
   async ngOnInit() {
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait loading profile...'
@@ -95,20 +102,44 @@ export class EditProfilePage implements OnInit {
           dob: [this.profile.dateofbirth],
         });
       }
-      if(this.profile.country == 'om'){
-        this.internationalCode = '+968';
-      }else if(this.profile.country == 'kw'){
-        this.internationalCode = '+965';
-      }else if(this.profile.country == 'sa'){
-        this.internationalCode = '+966';
-      }else if(this.profile.country == 'qa'){
-        this.internationalCode = '+974';
-      }else if(this.profile.country == 'iq'){
-        this.internationalCode = '+964';
+      if(this.profile.country == 'dz'){
+          this.internationalCode = '+213';
       }else if(this.profile.country == 'bh'){
-        this.internationalCode = '+973';
+          this.internationalCode = '+973';
+      }else if(this.profile.country == 'eg'){
+          this.internationalCode = '+20';
+      }else if(this.profile.country == 'iq'){
+          this.internationalCode = '+964';
+      }else if(this.profile.country == 'jo'){
+          this.internationalCode = '+962';
+      }else if(this.profile.country == 'kw'){
+          this.internationalCode = '+965';
+      }else if(this.profile.country == 'lb'){
+          this.internationalCode = '+961';
+      }else if(this.profile.country == 'ly'){
+          this.internationalCode = '+218';
+      }else if(this.profile.country == 'ma'){
+          this.internationalCode = '+212';
+      }else if(this.profile.country == 'ps'){
+          this.internationalCode = '+970';
+      }else if(this.profile.country == 'qa'){
+          this.internationalCode = '+974';
+      }else if(this.profile.country == 'sa'){
+          this.internationalCode = '+966';
+      }else if(this.profile.country == 'ss'){
+          this.internationalCode = '+211';
+      }else if(this.profile.country == 'sd'){
+          this.internationalCode = '+249';
+      }else if(this.profile.country == 'om'){
+          this.internationalCode = '+968';
+      }else if(this.profile.country == 'sy'){
+          this.internationalCode = '+963';
+      }else if(this.profile.country == 'tn'){
+          this.internationalCode = '+216';
       }else if(this.profile.country == 'ae'){
-        this.internationalCode = '+971';
+          this.internationalCode = '+971';
+      }else if(this.profile.country == 'ye'){
+          this.internationalCode = '+967';
       }
       await loading.dismiss();
     }).catch((error) => {
@@ -235,20 +266,44 @@ export class EditProfilePage implements OnInit {
       await loading.dismiss();
   };
   getSelectCountry(e){
-    if(e.target.value == 'om'){
-      this.internationalCode = '+968';
-    }else if(e.target.value == 'kw'){
-      this.internationalCode = '+965';
-    }else if(e.target.value == 'sa'){
-      this.internationalCode = '+966';
-    }else if(e.target.value == 'qa'){
-      this.internationalCode = '+974';
-    }else if(e.target.value == 'iq'){
-      this.internationalCode = '+964';
+    if(e.target.value == 'dz'){
+      this.internationalCode = '+213';
     }else if(e.target.value == 'bh'){
-      this.internationalCode = '+973';
+          this.internationalCode = '+973';
+    }else if(e.target.value == 'eg'){
+          this.internationalCode = '+20';
+    }else if(e.target.value == 'iq'){
+          this.internationalCode = '+964';
+    }else if(e.target.value == 'jo'){
+          this.internationalCode = '+962';
+    }else if(e.target.value == 'kw'){
+          this.internationalCode = '+965';
+    }else if(e.target.value == 'lb'){
+          this.internationalCode = '+961';
+    }else if(e.target.value == 'ly'){
+          this.internationalCode = '+218';
+    }else if(e.target.value == 'ma'){
+          this.internationalCode = '+212';
+    }else if(e.target.value == 'ps'){
+          this.internationalCode = '+970';
+    }else if(e.target.value == 'qa'){
+          this.internationalCode = '+974';
+    }else if(e.target.value == 'sa'){
+          this.internationalCode = '+966';
+    }else if(e.target.value == 'ss'){
+          this.internationalCode = '+211';
+    }else if(e.target.value == 'sd'){
+          this.internationalCode = '+249';
+    }else if(e.target.value == 'om'){
+          this.internationalCode = '+968';
+    }else if(e.target.value == 'sy'){
+          this.internationalCode = '+963';
+    }else if(e.target.value == 'tn'){
+          this.internationalCode = '+216';
     }else if(e.target.value == 'ae'){
-      this.internationalCode = '+971';
+          this.internationalCode = '+971';
+    }else if(e.target.value == 'ye'){
+          this.internationalCode = '+967';
     }
   }
   async alertMessage(header,message) {

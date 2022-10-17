@@ -5,6 +5,7 @@ import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
 import { Camera, CameraResultType,CameraSource } from '@capacitor/camera';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 
 
 @Component({
@@ -25,9 +26,10 @@ export class EditSessionPage implements OnInit {
   imageUrl: any;
   date = new Date();
   toDay: any;
+  lang: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController,public formBuilder: FormBuilder) { 
+    ,public alertController: AlertController,public formBuilder: FormBuilder,private globalization: Globalization) { 
       this.date.setDate(this.date.getDate() + 1);
       this.toDay = this.date.getFullYear()+ '-' + (1 + this.date.getMonth()).toString().padStart(2, '0') + '-' +
       this.date.getDate().toString().padStart(2, '0')
@@ -36,6 +38,10 @@ export class EditSessionPage implements OnInit {
     return this.sessionUpdate.controls;
   }
   async ngOnInit() {
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait getting session...'

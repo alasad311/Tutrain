@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Update Profile</ion-title>
+        <ion-title>{{ "updateprofile.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -11,7 +11,7 @@
     </ion-toolbar>
     <div class="header_banner d-flex animate__animated animate__fadeInUp">
         <div class="text_box">
-            <h2>Your Profile</h2>
+            <h2>{{ "updateprofile.heading" | translate }}</h2>
             <h3 *ngIf="profile">{{profile.type}}</h3>
         </div>
         <div class="img_section end d-flex" *ngIf="profile">
@@ -29,15 +29,15 @@
                 <ion-card>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Full Name</ion-label>
+                            <ion-label>{{ "updateprofile.name" | translate }}</ion-label>
                             <ion-input mode="md" formControlName="fullname" type="text"></ion-input>
                         </div>
 
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required">Please enter your fullname</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required">{{ "updateprofile.nameerror" | translate }}</span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Email</ion-label>
+                            <ion-label>{{ "updateprofile.email" | translate }}</ion-label>
                             <div class="input_box d-flex">
                                 <ion-input mode="md" type="email" readonly="true" [value]="profile.email"></ion-input>
                             </div>
@@ -45,43 +45,78 @@
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Date of Birth</ion-label>
+                            <ion-label>{{ "updateprofile.dateofbirth" | translate }}</ion-label>
                             <ion-input mode="md" placeholder="dd/mm/yyyy" type="Date" formControlName="dob"></ion-input>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Country</ion-label>
-                            <div class="input_box d-flex">
-                                <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location" interface="popover">
-                                    <ion-select-option value="om">Sultanate of Oman</ion-select-option>
-                                    <ion-select-option value="kw">Kuwait</ion-select-option>
-                                    <ion-select-option value="sa">Saudi Arabia</ion-select-option>
-                                    <ion-select-option value="qa">Qatar</ion-select-option>
-                                    <ion-select-option value="iq">Iraq</ion-select-option>
-                                    <ion-select-option value="bh">Bahrain</ion-select-option>
-                                    <ion-select-option value="ae">United Arab Emirates</ion-select-option>
+                            <ion-label>{{ "updateprofile.country" | translate }}</ion-label>
+                            <div class="input_box d-flex" *ngIf="lang === 'en'">
+                                <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="{{ 'updateprofile.countryplaceholder' | translate }}" interface="popover">
+                                    <ion-select-option value='dz'>Algeria</ion-select-option>
+                                    <ion-select-option value='bh'>Bahrain</ion-select-option>
+                                    <ion-select-option value='eg'>Egypt</ion-select-option>
+                                    <ion-select-option value='iq'>Iraq</ion-select-option>
+                                    <ion-select-option value='jo'>Jordan</ion-select-option>
+                                    <ion-select-option value='kw'>Kuwait</ion-select-option>
+                                    <ion-select-option value='lb'>Lebanon</ion-select-option>
+                                    <ion-select-option value='ly'>Libya</ion-select-option>
+                                    <ion-select-option value='ma'>Morocco</ion-select-option>
+                                    <ion-select-option value='ps'>Palestinian Territory, Occupied</ion-select-option>
+                                    <ion-select-option value='qa'>Qatar</ion-select-option>
+                                    <ion-select-option value='sa'>Saudi Arabia</ion-select-option>
+                                    <ion-select-option value='ss'>South Sudan</ion-select-option>
+                                    <ion-select-option value='sd'>Sudan</ion-select-option>
+                                    <ion-select-option value='om'>Sultanate of Oman</ion-select-option>
+                                    <ion-select-option value='sy'>Syrian Arab Republic</ion-select-option>
+                                    <ion-select-option value='tn'>Tunisia</ion-select-option>
+                                    <ion-select-option value='ae'>United Arab Emirates</ion-select-option>
+                                    <ion-select-option value='ye'>Yemen</ion-select-option>
+                                </ion-select>
+                            </div>
+                            <div class="input_box d-flex" *ngIf="lang === 'ar'">
+                                <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="{{ 'updateprofile.countryplaceholder' | translate }}" interface="popover">
+                                    <ion-select-option value='dz'>الجزائر </ion-select-option>
+                                    <ion-select-option value='bh'>البحرين </ion-select-option>
+                                    <ion-select-option value='eg'>مصر </ion-select-option>
+                                    <ion-select-option value='iq'>العراق </ion-select-option>
+                                    <ion-select-option value='jo'>الأردن </ion-select-option>
+                                    <ion-select-option value='kw'>الكويت </ion-select-option>
+                                    <ion-select-option value='lb'>لبنان </ion-select-option>
+                                    <ion-select-option value='ly'>ليبيا </ion-select-option>
+                                    <ion-select-option value='ma'>المغرب </ion-select-option>
+                                    <ion-select-option value='ps'>فلسطين </ion-select-option>
+                                    <ion-select-option value='qa'>قطر </ion-select-option>
+                                    <ion-select-option value='sa'>المملكة العربية السعودية </ion-select-option>
+                                    <ion-select-option value='ss'>جنوب السودان</ion-select-option>
+                                    <ion-select-option value='sd'>السودان </ion-select-option>
+                                    <ion-select-option value='om'>سلطنة عُمان </ion-select-option>
+                                    <ion-select-option value='sy'>سوريا </ion-select-option>
+                                    <ion-select-option value='tn'>تونس </ion-select-option>
+                                    <ion-select-option value='ae'>الإمارات العربيّة المتّحدة </ion-select-option>
+                                    <ion-select-option value='ye'>اليمن </ion-select-option>
                                 </ion-select>
                             </div>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" style="border-bottom:unset !important;" lines="none">
                         <div class="item_inner">
-                            <ion-label>Phone</ion-label>
+                            <ion-label>{{ "updateprofile.country" | translate }}</ion-label>
                             <ion-item lines="none" class="ion-no-padding">
                                 <ion-text class="international-code">{{internationalCode}}</ion-text>
                                 <ion-input mode="md" type="tel" style="padding-top: 2px !important;" formControlName="phone"></ion-input>
                             </ion-item>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">Please enter your phone number</span>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">Your phone number cant contain other than numbers</span>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.minlength">Your phone number cant be less than 7 digits</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">{{ "updateprofile.phoneerror1" | translate }}</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">{{ "updateprofile.phoneerror2" | translate }}</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.minlength">{{ "updateprofile.phoneerror3" | translate }}</span>
                         </div>
                     </ion-item>
                 </ion-card>
             </ion-list>
         </div>
         <div class="btn_box">
-            <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">Update</ion-button>
+            <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">{{ "updateprofile.updatebtn" | translate }}</ion-button>
         </div>
     </form>
 
@@ -93,15 +128,15 @@
                 <ion-card>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Full Name</ion-label>
+                            <ion-label>{{ "updateprofile.name" | translate }}</ion-label>
                             <ion-input mode="md" formControlName="fullname" type="text"></ion-input>
                         </div>
 
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required">Please enter your fullname</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required">{{ "updateprofile.nameerror" | translate }}</span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Email</ion-label>
+                            <ion-label>{{ "updateprofile.email" | translate }}</ion-label>
                             <div class="input_box d-flex">
                                 <ion-input mode="md" type="email" readonly="true" [value]="profile.email"></ion-input>
                             </div>
@@ -109,43 +144,78 @@
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Date of Birth</ion-label>
+                            <ion-label>{{ "updateprofile.dateofbirth" | translate }}</ion-label>
                             <ion-input mode="md" type="Date" placeholder="dd/mm/yyyy" formControlName="dob"></ion-input>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Country</ion-label>
-                            <div class="input_box d-flex">
-                                <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location" interface="popover">
-                                    <ion-select-option value="om">Sultanate of Oman</ion-select-option>
-                                    <ion-select-option value="kw">Kuwait</ion-select-option>
-                                    <ion-select-option value="sa">Saudi Arabia</ion-select-option>
-                                    <ion-select-option value="qa">Qatar</ion-select-option>
-                                    <ion-select-option value="iq">Iraq</ion-select-option>
-                                    <ion-select-option value="bh">Bahrain</ion-select-option>
-                                    <ion-select-option value="ae">United Arab Emirates</ion-select-option>
+                            <ion-label>{{ "updateprofile.country" | translate }}</ion-label>
+                            <div class="input_box d-flex" *ngIf="lang === 'en'">
+                                <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="{{ 'updateprofile.countryplaceholder' | translate }}" interface="popover">
+                                    <ion-select-option value='dz'>Algeria</ion-select-option>
+                                    <ion-select-option value='bh'>Bahrain</ion-select-option>
+                                    <ion-select-option value='eg'>Egypt</ion-select-option>
+                                    <ion-select-option value='iq'>Iraq</ion-select-option>
+                                    <ion-select-option value='jo'>Jordan</ion-select-option>
+                                    <ion-select-option value='kw'>Kuwait</ion-select-option>
+                                    <ion-select-option value='lb'>Lebanon</ion-select-option>
+                                    <ion-select-option value='ly'>Libya</ion-select-option>
+                                    <ion-select-option value='ma'>Morocco</ion-select-option>
+                                    <ion-select-option value='ps'>Palestinian Territory, Occupied</ion-select-option>
+                                    <ion-select-option value='qa'>Qatar</ion-select-option>
+                                    <ion-select-option value='sa'>Saudi Arabia</ion-select-option>
+                                    <ion-select-option value='ss'>South Sudan</ion-select-option>
+                                    <ion-select-option value='sd'>Sudan</ion-select-option>
+                                    <ion-select-option value='om'>Sultanate of Oman</ion-select-option>
+                                    <ion-select-option value='sy'>Syrian Arab Republic</ion-select-option>
+                                    <ion-select-option value='tn'>Tunisia</ion-select-option>
+                                    <ion-select-option value='ae'>United Arab Emirates</ion-select-option>
+                                    <ion-select-option value='ye'>Yemen</ion-select-option>
+                                </ion-select>
+                            </div>
+                            <div class="input_box d-flex" *ngIf="lang === 'ar'">
+                                <ion-select (ngModel)="country" [value]="country" (ionChange)="getSelectCountry($event)" placeholder="{{ 'updateprofile.countryplaceholder' | translate }}" interface="popover">
+                                    <ion-select-option value='dz'>الجزائر </ion-select-option>
+                                    <ion-select-option value='bh'>البحرين </ion-select-option>
+                                    <ion-select-option value='eg'>مصر </ion-select-option>
+                                    <ion-select-option value='iq'>العراق </ion-select-option>
+                                    <ion-select-option value='jo'>الأردن </ion-select-option>
+                                    <ion-select-option value='kw'>الكويت </ion-select-option>
+                                    <ion-select-option value='lb'>لبنان </ion-select-option>
+                                    <ion-select-option value='ly'>ليبيا </ion-select-option>
+                                    <ion-select-option value='ma'>المغرب </ion-select-option>
+                                    <ion-select-option value='ps'>فلسطين </ion-select-option>
+                                    <ion-select-option value='qa'>قطر </ion-select-option>
+                                    <ion-select-option value='sa'>المملكة العربية السعودية </ion-select-option>
+                                    <ion-select-option value='ss'>جنوب السودان</ion-select-option>
+                                    <ion-select-option value='sd'>السودان </ion-select-option>
+                                    <ion-select-option value='om'>سلطنة عُمان </ion-select-option>
+                                    <ion-select-option value='sy'>سوريا </ion-select-option>
+                                    <ion-select-option value='tn'>تونس </ion-select-option>
+                                    <ion-select-option value='ae'>الإمارات العربيّة المتّحدة </ion-select-option>
+                                    <ion-select-option value='ye'>اليمن </ion-select-option>
                                 </ion-select>
                             </div>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" style="border-bottom:unset !important;" lines="none">
                         <div class="item_inner">
-                            <ion-label>Phone</ion-label>
+                            <ion-label>{{ "updateprofile.phone" | translate }}</ion-label>
                             <ion-item lines="none" class="ion-no-padding">
                                 <ion-text class="international-code">{{internationalCode}}</ion-text>
                                 <ion-input mode="md" type="tel" style="padding-top: 2px !important;" formControlName="phone"></ion-input>
                             </ion-item>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">Please enter your phone number</span>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">Your phone number cant contain other than numbers</span>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.minlength">Your phone number cant be less than 7 digits</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">{{ "updateprofile.phoneerror1" | translate }}</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">{{ "updateprofile.phoneerror2" | translate }}</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.minlength">{{ "updateprofile.phoneerror3" | translate }}</span>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none">
                         <div class="item_inner">
-                            <ion-label>Degress</ion-label>
-                            <div class="input_box d-flex">
-                                <ion-select (ngModel)="degree" formControlName="deg" [value]="degree" (ionChange)="getSelectCountry($event)" placeholder="Select Degree" interface="popover">
+                            <ion-label>{{ "updateprofile.degree" | translate }}</ion-label>
+                            <div class="input_box d-flex" *ngIf="lang === 'en'">
+                                <ion-select (ngModel)="degree" formControlName="deg" [value]="degree" (ionChange)="getSelectCountry($event)" placeholder="{{ 'updateprofile.degreeplaceholder' | translate }}" interface="popover">
                                     <ion-select-option value="Professional Trainer">Professional Trainer</ion-select-option>
                                     <ion-select-option value="Diploma">Diploma</ion-select-option>
                                     <ion-select-option value="Bachelor">Bachelor</ion-select-option>
@@ -153,74 +223,83 @@
                                     <ion-select-option value="PHD">PHD</ion-select-option>
                                 </ion-select>
                             </div>
+                            <div class="input_box d-flex" *ngIf="lang === 'ar'">
+                                <ion-select (ngModel)="degree" formControlName="deg" [value]="degree" (ionChange)="getSelectCountry($event)" placeholder="{{ 'updateprofile.degreeplaceholder' | translate }}" interface="popover">
+                                    <ion-select-option value="Professional Trainer">مدرب محترف</ion-select-option>
+                                    <ion-select-option value="Diploma">شهادة دبلوم</ion-select-option>
+                                    <ion-select-option value="Bachelor">شهادة البكالوريوس</ion-select-option>
+                                    <ion-select-option value="Master">شهادة الماجستير</ion-select-option>
+                                    <ion-select-option value="PHD">شهادة الدكتوراه</ion-select-option>
+                                </ion-select>
+                            </div>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" style="border-bottom:unset !important;" lines="none">
                         <div class="item_inner">
-                            <ion-label>Hourly Price</ion-label>
+                            <ion-label>{{ "updateprofile.hourprice" | translate }}</ion-label>
                             <ion-item lines="none" class="ion-no-padding">
                                 <ion-input mode="md" type="number" formControlName="hourcost"></ion-input>
                             </ion-item>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">Please enter your hourly price</span>
-                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">Your hour pirce can only contain numbers</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">{{ "updateprofile.hourpriceerror1" | translate }}</span>
+                            <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">{{ "updateprofile.hourpriceerror2" | translate }}</span>
                         </div>
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.deg.errors?.required">Please select a degree</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.deg.errors?.required">{{ "updateprofile.degreeerror" | translate }}</span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Specialization</ion-label>
+                            <ion-label>{{ "updateprofile.spec" | translate }}</ion-label>
                             <ion-input mode="md" formControlName="spec" type="text"></ion-input>
                         </div>
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.spec.errors?.required">Please enter your Specialization</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.spec.errors?.required">{{ "updateprofile.specerror" | translate }}</span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Address</ion-label>
-                            <ion-textarea rows="5" formControlName="address" mode="md" placeholder="Your Address"></ion-textarea>
+                            <ion-label>{{ "updateprofile.address" | translate }}</ion-label>
+                            <ion-textarea rows="5" formControlName="address" mode="md" placeholder="{{ 'updateprofile.addressplaceholder' | translate }}"></ion-textarea>
                         </div>
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.address.errors?.required">Please enter your address</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.address.errors?.required">{{ "updateprofile.addresserror" | translate }}</span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>About you</ion-label>
-                            <ion-textarea rows="5" formControlName="about" mode="md" placeholder="Describe yourself here for users to view"></ion-textarea>
+                            <ion-label>{{ "updateprofile.about" | translate }}</ion-label>
+                            <ion-textarea rows="5" formControlName="about" mode="md" placeholder="{{ 'updateprofile.aboutplaceholder' | translate }}"></ion-textarea>
                         </div>
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.about.errors?.required">Please enter information about yourself </span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.about.errors?.required">{{ "updateprofile.abouterror" | translate }} </span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Video About you (optional) </ion-label>
+                            <ion-label>{{ "updateprofile.videoyou" | translate }} </ion-label>
                             <video id="introVideoTag" controls *ngIf="hideVideo" height="200px" preload="auto">
                                 <source [src]="introvideoURL || profile.introvideo"  type="video/mp4">
                             </video>
                             <ion-button (click)="introVideo()" expand="round" style="width:100%">
-                                Upload a Bio
+                                {{ "updateprofile.uploadvideo" | translate }}
                                 <ion-icon slot="end" name="cloud-upload-outline"></ion-icon>
                             </ion-button>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Tags</ion-label>
-                            <ion-input mode="md" formControlName="tags" placeholder="sperate each tag with a , ex. english,arabic" type="text"></ion-input>
+                            <ion-label> {{ "updateprofile.tags" | translate }}</ion-label>
+                            <ion-input mode="md" formControlName="tags" placeholder="{{ 'updateprofile.tagplaceholder' | translate }}" type="text"></ion-input>
                         </div>
                     </ion-item>
-                    <span class="error-message" *ngIf="isSubmitted && errorControl.tags.errors?.required">Please enter tags</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.tags.errors?.required">{{ "updateprofile.tagerror" | translate }}</span>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Show Email</ion-label>
+                            <ion-label>{{ "updateprofile.showemail" | translate }}</ion-label>
                             <ion-toggle formControlName="isemail"></ion-toggle>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Show Phone</ion-label>
+                            <ion-label>{{ "updateprofile.showphone" | translate }}</ion-label>
                             <ion-toggle formControlName="isphone"></ion-toggle>
                         </div>
                     </ion-item>
                     <ion-item class="animate__animated animate__fadeInUp" lines="none" class="ion-no-padding">
                         <div class="item_inner">
-                            <ion-label>Show Whatsapp</ion-label>
+                            <ion-label>{{ "updateprofile.showwhatsapp" | translate }}</ion-label>
                             <ion-toggle formControlName="iswhatsapp"></ion-toggle>
                         </div>
                     </ion-item>
@@ -228,7 +307,7 @@
             </ion-list>
         </div>
         <div class="btn_box">
-            <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">Update</ion-button>
+            <ion-button size="large" [disabled]="isDisablied" type="submit" class="btn animate__animated animate__fadeInUp" style="--animate-duration: .4s;" expand="round">{{ "updateprofile.updatebtn" | translate }}</ion-button>
         </div>
     </form>
 </ion-content>

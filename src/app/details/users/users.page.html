@@ -39,7 +39,7 @@
                 </div>
                 <div class="about">
                     <div class="title">
-                        <ion-label>About</ion-label>
+                        <ion-label>{{ "userdetails.about" | translate }}</ion-label>
                     </div>
                     <div class="text">
                         <ion-label>{{user.about}}</ion-label>
@@ -71,7 +71,7 @@
 <ion-footer *ngIf="user">
     <ion-toolbar>
         <ion-item lines="none" (click)="bookTutor()">
-            <ion-label>Book</ion-label>
+            <ion-label>{{ "userdetails.book" | translate }}</ion-label>
             <ion-label slot="end">{{user.fullname}}</ion-label>
         </ion-item>
     </ion-toolbar>

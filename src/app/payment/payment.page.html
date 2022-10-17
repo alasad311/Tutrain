@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="dismissModal({})">
             <ion-icon class="icon-remove-margin" name="close" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Checkout</ion-title>
+        <ion-title>{{ "payment.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background ">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -16,8 +16,11 @@
             <div class="name">
                 <ion-label>{{subscription.name}}</ion-label>
             </div>
-            <div class="name">
-                <ion-label>Subscription Duration: {{subscription.noday}} {{subscription.noday > 1 ? "Days": "Day" }}</ion-label>
+            <div class="name" *ngIf="lang === 'en'">
+                <ion-label>{{ "payment.subscriptionduration" | translate }}: {{subscription.noday}} {{subscription.noday > 1 ? "Days": "Day" }}</ion-label>
+            </div>
+            <div class="name" *ngIf="lang === 'ar'">
+                <ion-label>مدة الاشتراك (بالأيام): {{subscription.noday}} </ion-label>
             </div>
             <div class="cart_price">
                 <ion-label>{{subscription.price | number : '1.3-3'}}</ion-label>
@@ -25,11 +28,11 @@
         </div>
     </div>
     <div class="item_total">
-        <ion-label>Item total <span>{{subscription.price | number : '1.3-3'}}</span></ion-label>
-        <ion-label class="color_lbl">Delivery <span>Online</span></ion-label>
+        <ion-label>{{ "payment.itemtotal" | translate }} <span>{{subscription.price | number : '1.3-3'}}</span></ion-label>
+        <ion-label class="color_lbl">{{ "payment.delivery" | translate }} <span>{{ "payment.online" | translate }}</span></ion-label>
     </div>
     <div class="fare">
-        <ion-label>Total</ion-label>
+        <ion-label>{{ "payment.total" | translate }}</ion-label>
         <ion-label>{{subscription.price | number : '1.3-3'}}</ion-label>
     </div>
 </ion-content>
@@ -41,7 +44,7 @@
                 <ion-label>{{course.name}}</ion-label>
             </div>
             <div class="name">
-                <ion-label>By: {{course.fullname}}</ion-label>
+                <ion-label>{{ "payment.by" | translate }}: {{course.fullname}}</ion-label>
             </div>
             <div class="cart_price">
                 <ion-label>{{course.price | number : '1.3-3'}}</ion-label>
@@ -49,12 +52,12 @@
         </div>
     </div>
     <div class="item_total">
-        <ion-label>Item total <span>{{course.price | number : '1.3-3'}}</span></ion-label>
-        <ion-label>Service fees: <span>{{service | number : '1.3-3' }}</span></ion-label>
-        <ion-label class="color_lbl">Delivery <span>Online</span></ion-label>
+        <ion-label>{{ "payment.itemtotal" | translate }} <span>{{course.price | number : '1.3-3'}}</span></ion-label>
+        <ion-label>{{ "payment.servicefees" | translate }}: <span>{{service | number : '1.3-3' }}</span></ion-label>
+        <ion-label class="color_lbl">{{ "payment.delivery" | translate }} <span>{{ "payment.online" | translate }}</span></ion-label>
     </div>
     <div class="fare">
-        <ion-label>Total</ion-label>
+        <ion-label>{{ "payment.total" | translate }}</ion-label>
         <ion-label>{{(course.price+ service) | number : '1.3-3'}}</ion-label>
     </div>
 </ion-content>
@@ -63,10 +66,10 @@
         <div class="bg_image back_image" [style.backgroundImage]="'url('+tutor.picture+')'"></div>
         <div class="food_detail">
             <div class="name">
-                <ion-label>Session Duration {{durationSelect === 1 ? durationSelect+" Hour" : durationSelect+" Hours"}}</ion-label>
+                <ion-label>{{ "payment.sessionduration" | translate }} {{durationSelect === 1 ? durationSelect+" Hour" : durationSelect+" Hours"}}</ion-label>
             </div>
             <div class="name">
-                <ion-label>By: {{tutor.fullname}}</ion-label>
+                <ion-label>{{ "payment.by" | translate }}: {{tutor.fullname}}</ion-label>
             </div>
             <div class="cart_price">
                 <ion-label>{{(tutor.hour_price * durationSelect) | number : '1.3-3'}}</ion-label>
@@ -74,26 +77,26 @@
         </div>
     </div>
     <div class="item_total">
-        <ion-label class="heading_lbl">Payment Method</ion-label>
+        <ion-label class="heading_lbl">{{ "payment.paymentmethod" | translate }}</ion-label>
         <ion-radio-group value="online" [(ngModel)]="paymentMethod" mode="md" (ionChange)="setServiceFees($event)">
             <ion-item class="border_div" lines="none">
-                <ion-label>Online</ion-label>
+                <ion-label>{{ "payment.online" | translate }}</ion-label>
                 <ion-radio value="online"></ion-radio>
             </ion-item>
             <ion-item class="border_div" lines="none">
-                <ion-label>Direct to tutor</ion-label>
+                <ion-label>{{ "payment.directtotutor" | translate }}</ion-label>
                 <ion-radio value="cash"></ion-radio>
             </ion-item>
         </ion-radio-group>
     </div>
     <div class="item_total">
-        <ion-label>Item total <span>{{(tuturHourCost * durationSelect) | number : '1.3-3'}}</span></ion-label>
-        <ion-label>Service fees: <span>{{service | number : '1.3-3'}}</span></ion-label>
-        <ion-label class="color_lbl">Date <span>{{dateFormatted}} </span></ion-label>
-        <ion-label class="color_lbl">Time <span>{{timeFromSelected}} - {{timeToSelected}}</span></ion-label>
+        <ion-label>{{ "payment.itemtotal" | translate }} <span>{{(tuturHourCost * durationSelect) | number : '1.3-3'}}</span></ion-label>
+        <ion-label>{{ "payment.servicefees" | translate }}: <span>{{service | number : '1.3-3'}}</span></ion-label>
+        <ion-label class="color_lbl">{{ "payment.date" | translate }}<span>{{dateFormatted}} </span></ion-label>
+        <ion-label class="color_lbl">{{ "payment.time" | translate }}<span>{{timeFromSelected}} - {{timeToSelected}}</span></ion-label>
     </div>
     <div class="fare">
-        <ion-label>Total</ion-label>
+        <ion-label>{{ "payment.total" | translate }}</ion-label>
         <ion-label>{{((tuturHourCost * durationSelect) + service) | number : '1.3-3'}}</ion-label>
     </div>
 </ion-content>
@@ -102,13 +105,16 @@
         <div class="bg_image back_image" [style.backgroundImage]="'url('+session.img+')'"></div>
         <div class="food_detail">
             <div class="name">
-                <ion-label>Seat for {{session.session_name}} </ion-label>
+                <ion-label>{{ "payment.seatsfor" | translate }} {{session.session_name}} </ion-label>
+            </div>
+            <div class="name" *ngIf="lang === 'en'">
+                <ion-label>{{ "payment.sessionduration" | translate }} {{session.duration === 1 ? session.duration+" Day" : session.duration+" Days"}}</ion-label>
+            </div>
+            <div class="name" *ngIf="lang === 'ar'">
+                <ion-label>{{ "payment.sessionduration" | translate }} {{session.duration}}</ion-label>
             </div>
             <div class="name">
-                <ion-label>Session Duration {{session.duration === 1 ? session.duration+" Day" : session.duration+" Days"}}</ion-label>
-            </div>
-            <div class="name">
-                <ion-label>By: {{session.fullname}}</ion-label>
+                <ion-label>{{ "payment.by" | translate }}: {{session.fullname}}</ion-label>
             </div>
             <div class="cart_price">
                 <ion-label>{{session.price | number : '1.3-3'}}</ion-label>
@@ -116,13 +122,13 @@
         </div>
     </div>
     <div class="item_total">
-        <ion-label>Item total <span>{{session.price | number : '1.3-3'}}</span></ion-label>
-        <ion-label>Service fees: <span>{{service | number : '1.3-3' }}</span></ion-label>
-        <ion-label class="color_lbl">Date <span>{{getActualDate(session.startdate)}} -  {{getActualDate(session.enddate)}}</span></ion-label>
-        <ion-label class="color_lbl">Delivery <span>{{session.location}}</span></ion-label>
+        <ion-label>{{ "payment.itemtotal" | translate }} <span>{{session.price | number : '1.3-3'}}</span></ion-label>
+        <ion-label>{{ "payment.servicefees" | translate }}: <span>{{service | number : '1.3-3' }}</span></ion-label>
+        <ion-label class="color_lbl">{{ "payment.date" | translate }}<span>{{getActualDate(session.startdate)}} -  {{getActualDate(session.enddate)}}</span></ion-label>
+        <ion-label class="color_lbl">{{ "payment.delivery" | translate }} <span>{{session.location}}</span></ion-label>
     </div>
     <div class="fare">
-        <ion-label>Total</ion-label>
+        <ion-label>{{ "payment.total" | translate }}</ion-label>
         <ion-label>{{(session.price+ service) | number : '1.3-3'}}</ion-label>
     </div>
 </ion-content>
@@ -130,7 +136,7 @@
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckout()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
-            <ion-label>Checkout</ion-label>
+            <ion-label>{{ "payment.checkout" | translate }}</ion-label>
             <ion-label slot="end">{{(course.price + service) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
@@ -139,7 +145,7 @@
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckOutTutor()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
-            <ion-label>Checkout</ion-label>
+            <ion-label>{{ "payment.checkout" | translate }}</ion-label>
             <ion-label slot="end">{{((tuturHourCost * durationSelect)+ service) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
@@ -148,7 +154,7 @@
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckoutSession()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
-            <ion-label>Checkout</ion-label>
+            <ion-label>{{ "payment.checkout" | translate }}</ion-label>
             <ion-label slot="end">{{(session.price + service) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
@@ -157,7 +163,7 @@
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckoutSubscription()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
-            <ion-label>Checkout</ion-label>
+            <ion-label>{{ "payment.checkout" | translate }}</ion-label>
             <ion-label slot="end">{{subscription.price | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
