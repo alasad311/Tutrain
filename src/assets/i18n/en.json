@@ -462,8 +462,6 @@
         "newordermessage2": "A user has bought your course  {{course}}",
         "bookingupdated": "Booking has been updated",
         "errormessage": "An Error happened while updated try again later",
-
-
-
+        "loadinglist": "Please wait loading list..."
     }
 }

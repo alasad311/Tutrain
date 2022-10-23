@@ -6,6 +6,7 @@ import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
 import { NativeSettings,AndroidSettings,IOSSettings } from 'capacitor-native-settings';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',

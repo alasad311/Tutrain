@@ -162,7 +162,7 @@ export class PaymentPage implements OnInit {
             {
                 title : this.translate.instant('message.sessionreminder'),
                 body: this.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
-                largeBody : is.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
+                largeBody : this.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
                 id : randomId,
                 schedule: {
                     at: slotDate,

@@ -27,7 +27,7 @@ export class RegisterPage implements OnInit {
   internationalCode = '+968';
   lang: any;
   constructor(private route: ActivatedRoute,private router: Router,private userApi: UsersService,
-    public formBuilder: FormBuilder,public alertController: AlertController,public translate: TranslateService
+    public formBuilder: FormBuilder,public alertController: AlertController,public translate: TranslateService,
     private globalization: Globalization) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
