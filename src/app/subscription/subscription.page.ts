@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { PaymentPage } from '../payment/payment.page';
 import { FetchService } from '../service/api/fetch.service';
@@ -13,15 +14,20 @@ import { UtilService } from '../service/util.service';
 })
 export class SubscriptionPage implements OnInit {
   subs: any;
+  lang: any;
   constructor(private navCtrl: NavController,public util: UtilService,private storage: StorageService,
-    private fetch: FetchService,public modalController: ModalController,public loadingController: LoadingController
+    private fetch: FetchService,public modalController: ModalController,public loadingController: LoadingController,
+    private globalization: Globalization
     ) { }
 
   async ngOnInit() {
    this.fetch.getSubscriptions().then((response) => {
     this.subs = JSON.parse(response.data).response;
   });
-
+  await this.globalization.getPreferredLanguage().then(async (res) =>{
+    const language = res.value.split('-');
+    this.lang = language[0];
+  });
   }
   ionViewDidEnter() {
     this.util.refreshUserData();

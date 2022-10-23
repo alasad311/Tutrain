@@ -3,36 +3,42 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Subscription</ion-title>
+        <ion-title>{{ "subscription.title" | translate }}</ion-title>
 
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="bg_color">
     <div class="why_upgrade">
-        <h1>Whats the benefit of <br> contest subscription?</h1>
+        <h1>{{ "subscription.whyupgrade" | translate }}</h1>
 
         <div class="features">
             <p class="d-flex">
                 <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
-                Benefit #1
+                {{ "subscription.benefit1" | translate }}
             </p>
             <p class="d-flex">
                 <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
-                Benefit #2
+                {{ "subscription.benefit2" | translate }}
             </p>
             <p class="d-flex">
                 <ion-icon class="zmdi zmdi-check-circle"></ion-icon>
-                Benefit #3
+                {{ "subscription.benefit3" | translate }}
             </p>
         </div>
     </div>
     <ion-list lines="none" *ngIf="subs">
         <ion-item (click)="makePayment(item)" *ngFor="let item of subs">
-            <div class="item_inner">
-                <h2>{{item.name}}</h2>
+            <div class="item_inner" *ngif="lang === 'en'">
+                <h2>{{item.name_en}}</h2>
                 <h3 class="d-flex">
-                    {{item.name_type}} <span class="end">{{item.price | number : '1.3-3'}}</span>
+                    {{item.name_type_en}} <span class="end">{{item.price | number : '1.3-3'}}</span>
+                </h3>
+            </div>
+            <div class="item_inner" *ngif="lang === 'ar'">
+                <h2>{{item.name_ar}}</h2>
+                <h3 class="d-flex">
+                    {{item.name_type_ar}} <span class="end">{{item.price | number : '1.3-3'}}</span>
                 </h3>
             </div>
         </ion-item>

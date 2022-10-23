@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -17,11 +18,16 @@ export class PaymentHistoryPage implements OnInit {
   user: any;
   contest: any;
   contestBadge: any;
+  lang: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController) { }
+    ,public alertController: AlertController,private globalization: Globalization) { }
 
   async ngOnInit() {
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     this.user = await this.storage.get('user');
     this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
       this.orders = JSON.parse(response.data).response;

@@ -3,28 +3,28 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Search</ion-title>
+        <ion-title>{{ "search.search" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
         <ion-badge slot="end" mode="ios" class="contest-badge" color="danger">{{contestBadge}}</ion-badge>
     </ion-toolbar>
     <ion-toolbar>
-        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="Find Courses, Tutors, Trainers" (search)="searchDB(searchInput)"></ion-searchbar>
+        <ion-searchbar mode="ios" [(ngModel)]="searchInput" placeholder="{{ 'search.searchplaceholder' | translate }}" (search)="searchDB(searchInput)"></ion-searchbar>
     </ion-toolbar>
     <!-- <ion-toolbar class="segment-toolbar">
         <ion-segment [(ngModel)]="type" (ionChange)="searchBy(type)" mode="ios" value="all" [disabled]="!searchResults">
             <ion-segment-button value="all">
-                <ion-label>All</ion-label>
+                <ion-label>{{ "search.all" | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="courses" >
-                <ion-label>Courses</ion-label>
+                <ion-label>{{ "search.courses" | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="users">
-                <ion-label>Trainer / Tutor</ion-label>
+                <ion-label>{{ "search.tutor" | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="sessions">
-                <ion-label>Sessions</ion-label>
+                <ion-label>{{ "search.session" | translate }}</ion-label>
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar> -->
@@ -82,13 +82,13 @@
         <ion-list>
             <ion-item>
                 <ion-label>
-                    <h3 class="center-null ">Sorry we couldn't find any order</h3>
+                    <h3 class="center-null ">{{ "search.emptylist" | translate }}</h3>
                 </ion-label>
             </ion-item>
         </ion-list>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
-        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="{{ 'search.loading' | translate }}">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>

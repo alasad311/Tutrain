@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>History</ion-title>
+        <ion-title>{{ "paymenthistory.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -48,24 +48,25 @@
                         <ion-label class="title right-side">{{getActualDate(item.date)}}</ion-label>
                     </div>
                     <div class="down_div">
-                        <ion-label class="type" *ngIf="item.name">Course Name: {{item.name}} ({{item.code}})</ion-label>
-                        <ion-label class="type" *ngIf="item.session_name">Session Name: {{item.session_name}}</ion-label>
-                        <ion-label class="type" *ngIf="item.fullname">Tutor Name: {{item.fullname}}</ion-label>
-                        <ion-label class="type" *ngIf="item.is_online">Payment: {{item.paid_amount | number : '1.3-3'}}</ion-label>
-                        <ion-label class="type" *ngIf="!item.is_online">Payment: DIRECT</ion-label>
-                        <ion-label class="type" *ngIf="item.slot">Booked Slot: {{getActualDate(item.slot)}} </ion-label>
-                        <ion-label class="type" *ngIf="item.duration">Duration: {{item.duration === 1 ? item.duration+" Hour" : item.duration+" Hours"}} </ion-label>
-                        <ion-label class="type" *ngIf="item.time_from">Booked Time: {{item.time_from}} - {{item.time_to}} </ion-label>
-                        <ion-label class="type" *ngIf="item.startdate">Date: {{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}} </ion-label>
+                        <ion-label class="type" *ngIf="item.name">{{ "paymenthistory.coursename" | translate }} {{item.name}} ({{item.code}})</ion-label>
+                        <ion-label class="type" *ngIf="item.session_name">{{ "paymenthistory.sessionname" | translate }} {{item.session_name}}</ion-label>
+                        <ion-label class="type" *ngIf="item.fullname">{{ "paymenthistory.tutorname" | translate }} {{item.fullname}}</ion-label>
+                        <ion-label class="type" *ngIf="item.is_online">{{ "paymenthistory.payment" | translate }} {{item.paid_amount | number : '1.3-3'}}</ion-label>
+                        <ion-label class="type" *ngIf="!item.is_online">{{ "paymenthistory.paymentdirect" | translate }} DIRECT</ion-label>
+                        <ion-label class="type" *ngIf="item.slot">{{ "paymenthistory.bookedslot" | translate }} {{getActualDate(item.slot)}} </ion-label>
+                        <ion-label class="type" *ngIf="item.duration && lang === 'en'">{{ "paymenthistory.duration" | translate }} {{item.duration === 1 ? item.duration+" Hour" : item.duration+" Hours"}} </ion-label>
+                        <ion-label class="type" *ngIf="item.duration && lang === 'ar'">{{ "paymenthistory.duration" | translate }} {{item.duration === 1 ? "ساعة" : ""}} {{item.duration === 2 ? "ساعاتين" : ""}} {{item.duration === 3 ? item.duration+" ساعات" : ""}} </ion-label>
+                        <ion-label class="type" *ngIf="item.time_from">{{ "paymenthistory.bookedtime" | translate }} {{item.time_from}} - {{item.time_to}} </ion-label>
+                        <ion-label class="type" *ngIf="item.startdate">{{ "paymenthistory.date" | translate }} {{getActualDate(item.startdate)}} - {{getActualDate(item.enddate)}} </ion-label>
                     </div>
                 </div>
             </div>
             <div class="btc_div">
                 <div *ngIf="!item.subscription_id">
-                    <ion-button expand="full" (click)="openDetails(item)" shape="round"> View {{getOrderObjective(item)}}</ion-button>
+                    <ion-button expand="full" (click)="openDetails(item)" shape="round"> {{ "paymenthistory.view" | translate }} {{getOrderObjective(item)}}</ion-button>
                 </div>
                 <div *ngIf="!item.is_rated && !item.subscription_id">
-                    <ion-button expand="full" (click)="rate(item.ORDERID,item.order_number)" shape="round"> Rate</ion-button>
+                    <ion-button expand="full" (click)="rate(item.ORDERID,item.order_number)" shape="round"> {{ "paymenthistory.rate" | translate }}</ion-button>
                 </div>
             </div>
 
@@ -75,12 +76,12 @@
     <div *ngIf="showNull ">
         <ion-item class="ion-no-padding adjust-margin">
             <ion-label>
-                <h3 class="center-null ">Sorry we couldn't find orders</h3>
+                <h3 class="center-null ">{{ "paymenthistory.emptyorder" | translate }}</h3>
             </ion-label>
         </ion-item>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
-        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="{{ 'paymenthistory.loading' | translate }}">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>

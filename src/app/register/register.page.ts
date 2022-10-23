@@ -4,6 +4,7 @@ import { UsersService } from './../service/api/users.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { PushNotifications,Token } from '@capacitor/push-notifications';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -23,7 +24,10 @@ export class RegisterPage implements OnInit {
   userRegistration: FormGroup;
   public confirm_password;
   internationalCode = '+968';
-  constructor(private route: ActivatedRoute,private router: Router,private userApi: UsersService,public formBuilder: FormBuilder,public alertController: AlertController) {
+  lang: any;
+  constructor(private route: ActivatedRoute,private router: Router,private userApi: UsersService,
+    public formBuilder: FormBuilder,public alertController: AlertController,
+    private globalization: Globalization) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.refCode = this.router.getCurrentNavigation().extras.state.refCode;
@@ -31,8 +35,11 @@ export class RegisterPage implements OnInit {
     });
     
   }
-  ngOnInit() {
-   
+  async ngOnInit() {
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     PushNotifications.addListener('registration', (token: Token) => {
       this.pushToken = token.value;
      });
@@ -82,20 +89,44 @@ export class RegisterPage implements OnInit {
   getSelectCountry(e){
     this.flagImage = '/assets/flag/'+e.target.value+'.svg';
 
-    if(e.target.value == 'om'){
-      this.internationalCode = '+968';
-    }else if(e.target.value == 'kw'){
-      this.internationalCode = '+965';
-    }else if(e.target.value == 'sa'){
-      this.internationalCode = '+966';
-    }else if(e.target.value == 'qa'){
-      this.internationalCode = '+974';
-    }else if(e.target.value == 'iq'){
-      this.internationalCode = '+964';
+    if(e.target.value == 'dz'){
+      this.internationalCode = '+213';
     }else if(e.target.value == 'bh'){
-      this.internationalCode = '+973';
+        this.internationalCode = '+973';
+    }else if(e.target.value == 'eg'){
+        this.internationalCode = '+20';
+    }else if(e.target.value == 'iq'){
+        this.internationalCode = '+964';
+    }else if(e.target.value == 'jo'){
+        this.internationalCode = '+962';
+    }else if(e.target.value == 'kw'){
+        this.internationalCode = '+965';
+    }else if(e.target.value == 'lb'){
+        this.internationalCode = '+961';
+    }else if(e.target.value == 'ly'){
+        this.internationalCode = '+218';
+    }else if(e.target.value == 'ma'){
+        this.internationalCode = '+212';
+    }else if(e.target.value == 'ps'){
+        this.internationalCode = '+970';
+    }else if(e.target.value == 'qa'){
+        this.internationalCode = '+974';
+    }else if(e.target.value == 'sa'){
+        this.internationalCode = '+966';
+    }else if(e.target.value == 'ss'){
+        this.internationalCode = '+211';
+    }else if(e.target.value == 'sd'){
+        this.internationalCode = '+249';
+    }else if(e.target.value == 'om'){
+        this.internationalCode = '+968';
+    }else if(e.target.value == 'sy'){
+        this.internationalCode = '+963';
+    }else if(e.target.value == 'tn'){
+        this.internationalCode = '+216';
     }else if(e.target.value == 'ae'){
-      this.internationalCode = '+971';
+        this.internationalCode = '+971';
+    }else if(e.target.value == 'ye'){
+        this.internationalCode = '+967';
     }
   }
 

@@ -26,6 +26,7 @@ export class AppComponent {
   subscriptions: any;
   appV: any;
   hasUrl = false;
+  lang: any;
   constructor(public alertController: AlertController,private router: Router,public menuCtrl: MenuController,
     private screenOrientation: ScreenOrientation,private storage: StorageService,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, public util: UtilService,
@@ -72,6 +73,7 @@ export class AppComponent {
       const language = res.value.split('-');
       this.translate.setDefaultLang(language[0]);
       this.translate.use(language[0]);
+      this.lang = language[0];
       const htmlTag = this.document.getElementsByTagName('html')[0] as HTMLHtmlElement;
       htmlTag.dir = language[0] === 'ar' ? 'rtl' : 'ltr';
     });

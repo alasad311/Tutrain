@@ -1,10 +1,4 @@
 {
-    "Welcome": {
-        "welcome": "Lets help you imporve yourself",
-        "login": "Log In",
-        "account": "Don't have an account?",
-        "signup": "Sign Up"
-    },
     "createSession": {
         "title": "Create Session",
         "sessionimage": "Session Image",
@@ -254,6 +248,128 @@
         "checkout": "Checkout"
     },
     "paymenthistory": {
-        "title": "History",
+        "title": "Order History",
+        "coursename": "Course Name:",
+        "sessionname": "Session Name:",
+        "tutorname": "Tutor Name:",
+        "payment": "Payment:",
+        "paymentdirect": "Payment: DIRECT",
+        "bookedslot": "Booked Slot: ",
+        "duration": "Duration:",
+        "bookedtime": "Booked Time:",
+        "date": "Date:",
+        "view": "View",
+        "rate": "Rate",
+        "emptyorder": "Sorry we couldn't find orders",
+        "loading": "Loading more data..."
+    },
+    "register": {
+        "title": "Sign Up",
+        "student": "Student",
+        "tutor": "Tutor",
+        "trainer": "Trainer",
+        "location": "Location",
+        "locationerror": "Please select a location",
+        "fullname": "Full Name",
+        "fullnameerror": "Please enter your fullname",
+        "email": "Email",
+        "emailerror1": "Please enter your email",
+        "emailerror2": "Your email format looks incorrect",
+        "phone": "Phone",
+        "phoneerror1": "Please enter your phone number",
+        "phoneerror2": "Your phone number cant contain other than numbers",
+        "password": "Password",
+        "passworderror1": "Please enter a new password",
+        "passworderror2": "Your password should be a minimum of 8 characters",
+        "confirmpassword": "Confirm Password",
+        "confirmpassworderror1": "Please re-enter your password",
+        "confirmpassworderror2": "Your password doesnt match",
+        "register": "Register",
+        "passwordmatcherror": "Your password doesnt match",
+        "alreadyamember": "Already have an account?",
+        "signin": "Sign In"
+    },
+    "reportuser": {
+        "btn": "Submit"
+    },
+    "search": {
+        "search": "Search",
+        "searchplaceholder": "Search for a tutor",
+        "all": "All",
+        "courses": "Courses",
+        "tutor": "Trainer / Tutor",
+        "session": "Sessions",
+        "emptylist": "Sorry we couldn't find any results",
+        "loading": "Loading more data..."
+    },
+    "sessionlist": {
+        "title": "Sessions",
+        "update": "Update",
+        "boughtuser": "Bought Users",
+        "delete": "Delete",
+        "emptylist": "Sorry we couldn't find any sessions",
+        "loading": "Loading more data... "
+    },
+    "setting": {
+        "title": "Setting",
+        "edit": "Edit",
+        "totalearnings": "Total Earnings",
+        "requestpayout": "Request Payout",
+        "yourservices": "Your Services",
+        "yourprofile": "Your Tutor Profile",
+        "trainingsession": "Your Training Sessions",
+        "yourcourses": "Your Courses",
+        "notification": "Notification",
+        "popoutnotification": "Pop-out Notification",
+        "moreoptions": "More Options",
+        "help": "Help",
+        "deleteaccount": "Delete Account",
+        "changepassword": "Change Password"
+    },
+    "subscription": {
+        "title": "Subscription",
+        "whyupgrade": "Whats the benefit of <br> contest subscription?",
+        "benefit1": "Benefit #1",
+        "benefit2": "Benefit #2",
+        "benefit3": "Benefit #3"
+    },
+    "trackrequest": {
+        "title": "Track Requests",
+        "pending": "Pending",
+        "upcoming": "Upcoming",
+        "approvemessage": "Has approved your reuqest on ",
+        "from": "from",
+        "to": "to",
+        "makepayment": "Make Payment",
+        "cancelrequest": "Cancel Request",
+        "sessionmessage": "Has requested a session on",
+        "accept": "Accept",
+        "reject": "Reject",
+        "studentmessage": "Make sure you are on time, for your session on",
+        "calltutor": "Call Tutor",
+        "tutormessage": "Make sure to be prepared you have a session on ",
+        "callstudent": "Call Student",
+        "emptylist": "Sorry we couldn't find any requests",
+        "loading": "Loading more data... "
+    },
+    "tutorprofile": {
+        "about": "About"
+    },
+    "Welcome": {
+        "welcome": "Lets help you imporve yourself",
+        "login": "Log In",
+        "account": "Don't have an account?",
+        "signup": "Sign Up"
+    },
+    "winner": {
+        "title": "Winners"
+    },
+    "sidemenu": {
+        "ordermanagement": "Order Management",
+        "orderhistory": "Order History",
+        "invitefriend": "Invite Friends",
+        "faq": "FAQs",
+        "tos": "Terms of Service",
+        "signout": "Sign Out"
     }
 }

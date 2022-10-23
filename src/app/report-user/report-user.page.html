@@ -2,10 +2,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-item lines="none">
-    <ion-textarea rows="5" [(ngModel)]="feedback"  [disabled]="isDisablied" placeholder="Write your feedback"></ion-textarea>
-  </ion-item>
-  <ion-button class="content_button" (click)="submitReport()" expand="block">
-    Submit
-  </ion-button>
+    <ion-item lines="none">
+        <ion-textarea rows="5" [(ngModel)]="feedback" [disabled]="isDisablied" placeholder="Write your feedback"></ion-textarea>
+    </ion-item>
+    <ion-button class="content_button" (click)="submitReport()" expand="block">
+        {{ "reportuser.btn" | translate }}
+    </ion-button>
 </ion-content>

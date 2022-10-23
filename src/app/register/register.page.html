@@ -1,94 +1,129 @@
-<ion-content >
-  <div class="row">
-    <ion-card>
-      <div class="title-div">
-        <ion-label class="title">Sign Up</ion-label>
-      </div>
-        <div class="segments">
-          <ion-segment [(ngModel)]="type" (ionChange)="setHiddenValue(type)" mode="ios" value="student">
-            <ion-segment-button value="student">
-              <ion-label>Student</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="tutor">
-              <ion-label>Tutor</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="trainer">
-              <ion-label>Trainer</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </div>
-      <form [formGroup]="userRegistration" (ngSubmit)="createAccount()" novalidate >
-        <div class="textbox">
-          <ion-label position="stacked">Location</ion-label>
-          <ion-item lines="none">
-            <ion-select [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-select-border': ''"  formControlName="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location" interface="popover">
-              <ion-select-option value="om">Sultanate of Oman</ion-select-option>
-              <ion-select-option value="kw">Kuwait</ion-select-option>
-              <ion-select-option value="sa">Saudi Arabia</ion-select-option>
-              <ion-select-option value="qa">Qatar</ion-select-option>
-              <ion-select-option value="iq">Iraq</ion-select-option>
-              <ion-select-option value="bh">Bahrain</ion-select-option>
-              <ion-select-option value="ae">United Arab Emirates</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>
-        <span class="error-message-select" *ngIf="isSubmitted && errorControl.country.errors?.required" >Please select a location</span>
-        <div class="textbox">
-          <ion-label position="stacked">Full Name</ion-label>
-          <ion-input autocomplete="new-password" [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-border': ''" class="ion-no-padding" formControlName="fullname" type="text" ></ion-input>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required" >Please enter your fullname</span>
-        </div>
-        <div class="textbox">
-          <ion-label position="stacked">Email</ion-label>
-          <ion-input class="ion-no-padding" autocomplete="new-password" [ngClass]="isSubmitted && errorControl.email.errors?.required || errorControl.email.errors?.pattern ? 'error-border': ''" formControlName="email" type="email"></ion-input>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.required" >Please enter your email</span>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.pattern" >Your email format looks incorrect</span>
-        </div>
-        <div class="textbox">
-          <ion-label position="stacked">Phone</ion-label>
-          <ion-item lines="none" class="ion-no-padding">
-            <ion-text class="international-code">{{internationalCode}}</ion-text>
-            <ion-input class="ion-no-padding phone" autocomplete="new-password" formControlName="phone" type="phone" [ngClass]="isSubmitted && errorControl.phone.errors?.required || errorControl.phone.errors?.pattern ? 'error-border': ''"></ion-input>
-            <ion-img slot="start" class="flag-img" src="{{flagImage}}" ></ion-img>
-          </ion-item>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required" >Please enter your phone number</span>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern" >Your phone number cant contain other than numbers</span>
-        </div>
-        
-        <div class="textbox">
-          <ion-label position="stacked">Password</ion-label>
-          <ion-item lines="none" class="ion-no-padding">
-            <ion-input class="ion-no-padding password" [ngClass]="isSubmitted && errorControl.password.errors?.required || errorControl.password.errors?.minlength ? 'error-border': ''" formControlName="password" type="{{showPassword_1 ? 'text' : 'password'}}"></ion-input>
-            <ion-icon slot="end" class="icon-padding" name="{{viewPassword_1}}" (click)="togglePassword(1)"></ion-icon>
-          </ion-item>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.password.errors?.required" >Please enter a new password</span>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.password.errors?.minlength" >Your password should be a minimum of 8 characters</span>
-        </div>
-        <div class="textbox">
-          <ion-label position="stacked">Confirm Password</ion-label>
-          <ion-item lines="none" class="ion-no-padding">
-            <ion-input class="ion-no-padding password" [ngClass]="isSubmitted && errorControl.confirm_password.errors?.required || errorControl.confirm_password.errors?.confirmedValidator ? 'error-border': ''" formControlName="confirm_password" type="{{showPassword_2 ? 'text' : 'password'}}"></ion-input>
-            <ion-icon slot="end" class="icon-padding" name="{{viewPassword_2}}" (click)="togglePassword(2)"></ion-icon>
-          </ion-item>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.confirm_password.errors?.required" >Please re-enter your password</span>
-          <span class="error-message" *ngIf="isSubmitted && errorControl.confirm_password.errors?.confirmedValidator" >Your password doesnt match</span>    
-        </div>
-        <ion-button type="submit" shape="round" [disabled]="isDisablied" >
-          Register
-        </ion-button>
-        <ion-input type="text" class="hide-input" formControlName="type" ></ion-input>
-        <span class="error-message" *ngIf="isSubmitted && errorControl.type.errors?.required" >Your password doesnt match</span>    
-      </form>
-      <div class="text-div">
-        <ion-label class="text">Already have an account?
-          <span (click)="goToLogin()">Sign In</span>
-        </ion-label>
-      </div>
-    </ion-card>
-  </div>
-  <div class="image">
-    <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
-    <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
-    <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
-  </div>
+<ion-content>
+    <div class="row">
+        <ion-card>
+            <div class="title-div">
+                <ion-label class="title">{{ "register.title" | translate }}</ion-label>
+            </div>
+            <div class="segments">
+                <ion-segment [(ngModel)]="type" (ionChange)="setHiddenValue(type)" mode="ios" value="student">
+                    <ion-segment-button value="student">
+                        <ion-label>{{ "register.student" | translate }}</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="tutor">
+                        <ion-label>{{ "register.tutor" | translate }}</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="trainer">
+                        <ion-label>{{ "register.trainer" | translate }}</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+            </div>
+            <form [formGroup]="userRegistration" (ngSubmit)="createAccount()" novalidate>
+                <div class="textbox">
+                    <ion-label position="stacked">{{ "register.location" | translate }}</ion-label>
+                    <ion-item lines="none" *ngIf="lang === 'en'">
+                        <ion-select [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-select-border': ''" formControlName="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location" interface="popover">
+                            <ion-select-option value='dz'>Algeria</ion-select-option>
+                            <ion-select-option value='bh'>Bahrain</ion-select-option>
+                            <ion-select-option value='eg'>Egypt</ion-select-option>
+                            <ion-select-option value='iq'>Iraq</ion-select-option>
+                            <ion-select-option value='jo'>Jordan</ion-select-option>
+                            <ion-select-option value='kw'>Kuwait</ion-select-option>
+                            <ion-select-option value='lb'>Lebanon</ion-select-option>
+                            <ion-select-option value='ly'>Libya</ion-select-option>
+                            <ion-select-option value='ma'>Morocco</ion-select-option>
+                            <ion-select-option value='ps'>Palestinian Territory, Occupied</ion-select-option>
+                            <ion-select-option value='qa'>Qatar</ion-select-option>
+                            <ion-select-option value='sa'>Saudi Arabia</ion-select-option>
+                            <ion-select-option value='ss'>South Sudan</ion-select-option>
+                            <ion-select-option value='sd'>Sudan</ion-select-option>
+                            <ion-select-option value='om'>Sultanate of Oman</ion-select-option>
+                            <ion-select-option value='sy'>Syrian Arab Republic</ion-select-option>
+                            <ion-select-option value='tn'>Tunisia</ion-select-option>
+                            <ion-select-option value='ae'>United Arab Emirates</ion-select-option>
+                            <ion-select-option value='ye'>Yemen</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item lines="none" *ngIf="lang === 'ar'">
+                        <ion-select [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-select-border': ''" formControlName="country" (ionChange)="getSelectCountry($event)" placeholder="Select Location" interface="popover">
+                            <ion-select-option value='dz'>الجزائر </ion-select-option>
+                            <ion-select-option value='bh'>البحرين </ion-select-option>
+                            <ion-select-option value='eg'>مصر </ion-select-option>
+                            <ion-select-option value='iq'>العراق </ion-select-option>
+                            <ion-select-option value='jo'>الأردن </ion-select-option>
+                            <ion-select-option value='kw'>الكويت </ion-select-option>
+                            <ion-select-option value='lb'>لبنان </ion-select-option>
+                            <ion-select-option value='ly'>ليبيا </ion-select-option>
+                            <ion-select-option value='ma'>المغرب </ion-select-option>
+                            <ion-select-option value='ps'>فلسطين </ion-select-option>
+                            <ion-select-option value='qa'>قطر </ion-select-option>
+                            <ion-select-option value='sa'>المملكة العربية السعودية </ion-select-option>
+                            <ion-select-option value='ss'>جنوب السودان</ion-select-option>
+                            <ion-select-option value='sd'>السودان </ion-select-option>
+                            <ion-select-option value='om'>سلطنة عُمان </ion-select-option>
+                            <ion-select-option value='sy'>سوريا </ion-select-option>
+                            <ion-select-option value='tn'>تونس </ion-select-option>
+                            <ion-select-option value='ae'>الإمارات العربيّة المتّحدة </ion-select-option>
+                            <ion-select-option value='ye'>اليمن </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </div>
+                <span class="error-message-select" *ngIf="isSubmitted && errorControl.country.errors?.required">{{ "register.locationerror" | translate }}</span>
+                <div class="textbox">
+                    <ion-label position="stacked">{{ "register.fullname" | translate }}</ion-label>
+                    <ion-input autocomplete="new-password" [ngClass]="isSubmitted && errorControl.fullname.errors?.required ? 'error-border': ''" class="ion-no-padding" formControlName="fullname" type="text"></ion-input>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.fullname.errors?.required">{{ "register.fullnameerror" | translate }}</span>
+                </div>
+                <div class="textbox">
+                    <ion-label position="stacked">{{ "register.email" | translate }}</ion-label>
+                    <ion-input class="ion-no-padding" autocomplete="new-password" [ngClass]="isSubmitted && errorControl.email.errors?.required || errorControl.email.errors?.pattern ? 'error-border': ''" formControlName="email" type="email"></ion-input>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.required">{{ "register.emailerror1" | translate }}</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.email.errors?.pattern">{{ "register.emailerror2" | translate }}</span>
+                </div>
+                <div class="textbox">
+                    <ion-label position="stacked">{{ "register.phone" | translate }}</ion-label>
+                    <ion-item lines="none" class="ion-no-padding">
+                        <ion-text class="international-code">{{internationalCode}}</ion-text>
+                        <ion-input class="ion-no-padding phone" autocomplete="new-password" formControlName="phone" type="phone" [ngClass]="isSubmitted && errorControl.phone.errors?.required || errorControl.phone.errors?.pattern ? 'error-border': ''"></ion-input>
+                        <ion-img slot="start" class="flag-img" src="{{flagImage}}"></ion-img>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.required">{{ "register.phoneerror1" | translate }}</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.phone.errors?.pattern">{{ "register.phoneerror2" | translate }}</span>
+                </div>
+
+                <div class="textbox">
+                    <ion-label position="stacked">{{ "register.password" | translate }}</ion-label>
+                    <ion-item lines="none" class="ion-no-padding">
+                        <ion-input class="ion-no-padding password" [ngClass]="isSubmitted && errorControl.password.errors?.required || errorControl.password.errors?.minlength ? 'error-border': ''" formControlName="password" type="{{showPassword_1 ? 'text' : 'password'}}"></ion-input>
+                        <ion-icon slot="end" class="icon-padding" name="{{viewPassword_1}}" (click)="togglePassword(1)"></ion-icon>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.password.errors?.required">{{ "register.passworderror1" | translate }}</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.password.errors?.minlength">{{ "register.passworderror2" | translate }}</span>
+                </div>
+                <div class="textbox">
+                    <ion-label position="stacked">{{ "register.confirmpassword" | translate }}</ion-label>
+                    <ion-item lines="none" class="ion-no-padding">
+                        <ion-input class="ion-no-padding password" [ngClass]="isSubmitted && errorControl.confirm_password.errors?.required || errorControl.confirm_password.errors?.confirmedValidator ? 'error-border': ''" formControlName="confirm_password" type="{{showPassword_2 ? 'text' : 'password'}}"></ion-input>
+                        <ion-icon slot="end" class="icon-padding" name="{{viewPassword_2}}" (click)="togglePassword(2)"></ion-icon>
+                    </ion-item>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.confirm_password.errors?.required">{{ "register.confirmpassworderror1" | translate }}</span>
+                    <span class="error-message" *ngIf="isSubmitted && errorControl.confirm_password.errors?.confirmedValidator">{{ "register.confirmpassworderror2" | translate }}</span>
+                </div>
+                <ion-button type="submit" shape="round" [disabled]="isDisablied">
+                    {{ "register.register" | translate }}
+                </ion-button>
+                <ion-input type="text" class="hide-input" formControlName="type"></ion-input>
+                <span class="error-message" *ngIf="isSubmitted && errorControl.type.errors?.required">{{ "register.passwordmatcherror" | translate }}</span>
+            </form>
+            <div class="text-div">
+                <ion-label class="text">{{ "register.alreadyamember" | translate }}
+                    <span (click)="goToLogin()">{{ "register.signin" | translate }}</span>
+                </ion-label>
+            </div>
+        </ion-card>
+    </div>
+    <div class="image">
+        <img class="top-img" src="https://via.placeholder.com/512x512" alt="">
+        <img class="bottom-left" src="https://via.placeholder.com/512x512" alt="">
+        <img class="bottom-right" src="https://via.placeholder.com/512x512" alt="">
+    </div>
 </ion-content>

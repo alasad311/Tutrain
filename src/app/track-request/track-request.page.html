@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Track Requests</ion-title>
+        <ion-title>{{ "trackrequest.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -12,10 +12,10 @@
     <ion-toolbar class="segment-toolbar">
         <ion-segment [(ngModel)]="section" (ionChange)="showSegment(section)" mode="ios" value="pending">
             <ion-segment-button value="pending">
-                <ion-label>Pending</ion-label>
+                <ion-label>{{ "trackrequest.pending" | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="confirmed">
-                <ion-label>Upcoming</ion-label>
+                <ion-label>{{ "trackrequest.upcoming" | translate }}</ion-label>
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
@@ -57,16 +57,16 @@
                                 <ion-label class="title">{{item.fullname}}</ion-label>
                             </div>
                             <div class="down_div">
-                                <ion-label class="type">Has approved your reuqest on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                                <ion-label class="type">{{ "trackrequest.approvemessage" | translate }} {{getActualDate(item.slotDate)}} {{ "trackrequest.from" | translate }}{{item.timefrom}} {{ "trackrequest.to" | translate }}{{item.timeto}}</ion-label>
                             </div>
                         </div>
                     </div>
                     <div class="btc_div">
                         <ion-button [disabled]="isDisablied" (click)="onMakePayment(item.bookid,item.tutorID,item.duration,item.timefrom,item.timeto,item.fullslot)" color="primary">
-                            Make Payment
+                            {{ "trackrequest.makepayment" | translate }}
                         </ion-button>
                         <ion-button [disabled]="isDisablied" (click)="onCancelReques(item.bookid)" fill="outline">
-                            Cancel Request
+                            {{ "trackrequest.cancelrequest" | translate }}
                         </ion-button>
                     </div>
                 </div>
@@ -81,16 +81,16 @@
                                 <ion-label class="title">{{item.fullname}}</ion-label>
                             </div>
                             <div class="down_div">
-                                <ion-label class="type">Has requested a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                                <ion-label class="type">{{ "trackrequest.sessionmessage" | translate }} {{getActualDate(item.slotDate)}} {{ "trackrequest.from" | translate }}{{item.timefrom}} {{ "trackrequest.to" | translate }}{{item.timeto}}</ion-label>
                             </div>
                         </div>
                     </div>
                     <div class="btc_div">
                         <ion-button [disabled]="isDisablied" (click)="onAccept(item.bookid)" color="primary">
-                            Accept
+                            {{ "trackrequest.accept" | translate }}
                         </ion-button>
                         <ion-button [disabled]="isDisablied" (click)="onReject(item.bookid)" fill="outline">
-                            Reject
+                            {{ "trackrequest.reject" | translate }}
                         </ion-button>
                     </div>
                 </div>
@@ -107,11 +107,11 @@
                                 <ion-label class="title">{{item.fullname}}</ion-label>
                             </div>
                             <div class="down_div">
-                                <ion-label class="type">Make sure you are on time, for your session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                                <ion-label class="type">{{ "trackrequest.studentmessage" | translate }} {{getActualDate(item.slotDate)}} {{ "trackrequest.from" | translate }}{{item.timefrom}} {{ "trackrequest.to" | translate }}{{item.timeto}}</ion-label>
                             </div>
                             <div class="btc_div" style="justify-content: end;">
                                 <ion-button [disabled]="isDisablied" (click)="onCallTutor(item.tutorID)" color="primary">
-                                    Call Tutor
+                                    {{ "trackrequest.calltutor" | translate }}
                                 </ion-button>
                             </div>
                         </div>
@@ -129,11 +129,11 @@
                                 <ion-label class="title">{{item.fullname}}</ion-label>
                             </div>
                             <div class="down_div">
-                                <ion-label class="type">Make sure to be prepared you have a session on {{getActualDate(item.slotDate)}} from {{item.timefrom}} to {{item.timeto}}</ion-label>
+                                <ion-label class="type">{{ "trackrequest.tutormessage" | translate }} {{getActualDate(item.slotDate)}} {{ "trackrequest.from" | translate }}{{item.timefrom}} {{ "trackrequest.to" | translate }}{{item.timeto}}</ion-label>
                             </div>
                             <div class="btc_div" style="justify-content: end;">
                                 <ion-button [disabled]="isDisablied" (click)="onCallStudent(item.userID)" color="primary">
-                                    Call Student
+                                    {{ "trackrequest.callstudent" | translate }}
                                 </ion-button>
                             </div>
                         </div>
@@ -145,12 +145,12 @@
     <div *ngIf="showNull">
         <ion-item class="ion-no-padding adjust-margin">
             <ion-label>
-                <h3 class="center-null ">Sorry we couldn't find any requests</h3>
+                <h3 class="center-null ">{{ "trackrequest.emptylist" | translate }}</h3>
             </ion-label>
         </ion-item>
     </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event) ">
-        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="Loading more data... ">
+        <ion-infinite-scroll-content loadingSpinner="crescent " loadingText="{{ 'trackrequest.loading6' | translate }}">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>

@@ -3,7 +3,7 @@
         <ion-chip slot="start" class="remove-background" (click)="goBackHome()">
             <ion-icon class="icon-remove-margin" name="arrow-back-outline" color="dark"></ion-icon>
         </ion-chip>
-        <ion-title>Setting</ion-title>
+        <ion-title>{{ "setting.title" | translate }}</ion-title>
         <ion-chip slot="end" class="remove-background " (click)="util.openContest()">
             <ion-icon class="icon-remove-margin" [class.contest]="contest" name="ribbon-outline" color="danger"></ion-icon>
         </ion-chip>
@@ -23,7 +23,7 @@
                     <ion-label class="prgrm_lbl">{{user.type}}</ion-label>
                 </div>
                 <ion-button (click)="editProfile()" slot="end" shape="round">
-                    Edit
+                    {{ "setting.edit" | translate }}
                 </ion-button>
             </ion-item>
         </div>
@@ -32,11 +32,11 @@
         <div class="info">
             <ion-item lines="none">
                 <div class="name">
-                    <ion-label class="scnd_lbl">Total Earnings</ion-label>
+                    <ion-label class="scnd_lbl">{{ "setting.totalearnings" | translate }}</ion-label>
                     <ion-label class="frst_lbl">{{wallet | number : '1.3-3'}}</ion-label>
                 </div>
                 <ion-button class="request-btn" [disabled]="isDisablied" (click)="payoutRequest()" slot="end" shape="round">
-                    Request Payout
+                    {{ "setting.requestpayout" | translate }}
                 </ion-button>
             </ion-item>
         </div>
@@ -44,21 +44,21 @@
 
 
     <div class="account" *ngIf="tutor">
-        <ion-label class="head_lbl">Your Services</ion-label>
+        <ion-label class="head_lbl">{{ "setting.yourservices" | translate }}</ion-label>
         <div class="info">
             <ion-item lines="none" (click)="goToTutorProfile()">
                 <ion-icon name="school-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-                <ion-label>Your Tutor Profile</ion-label>
+                <ion-label>{{ "setting.yourprofile" | translate }}</ion-label>
                 <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
             </ion-item>
             <ion-item lines="none" (click)="goToSession()">
                 <ion-icon name="people-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-                <ion-label>Your Training Sessions</ion-label>
+                <ion-label>{{ "setting.trainingsession" | translate }}</ion-label>
                 <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
             </ion-item>
             <ion-item lines="none" (click)="goToCourses()">
                 <ion-icon name="people-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-                <ion-label>Your Courses</ion-label>
+                <ion-label>{{ "setting.yourcourses" | translate }}</ion-label>
                 <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
             </ion-item>
 
@@ -66,17 +66,17 @@
     </div>
 
     <div class="nitification">
-        <ion-label class="head_lbl">Notification</ion-label>
+        <ion-label class="head_lbl">{{ "setting.notification" | translate }}</ion-label>
         <ion-item lines="none">
             <ion-icon name="notifications-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-            <ion-label>Pop-out Notificatioon</ion-label>
+            <ion-label>{{ "setting.popoutnotification" | translate }}</ion-label>
             <ion-toggle mode="ios" color="danger" (ionChange)="onNotificationOptionChange($event)" [checked]="popOutNotification"></ion-toggle>
         </ion-item>
     </div>
 
     <div class="other">
-        <ion-label class="head_lbl">More Options</ion-label>
-        <ion-item lines="none">
+        <ion-label class="head_lbl">{{ "setting.moreoptions" | translate }}</ion-label>
+        <!-- <ion-item lines="none">
             <ion-icon name="language-outline" color="primary" style="margin-right: 10px;"></ion-icon>
             <ion-label>Language</ion-label>
             <ion-buttons slot="end">
@@ -85,20 +85,20 @@
                     <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
                 </ion-button>
             </ion-buttons>
-        </ion-item>
+        </ion-item> -->
         <ion-item lines="none" (click)="goToContactUs()">
             <ion-icon name="help-circle-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-            <ion-label>Help</ion-label>
+            <ion-label>{{ "setting.help" | translate }}</ion-label>
             <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
         </ion-item>
         <ion-item lines="none" (click)="deleteAccount()">
             <ion-icon name="person-remove-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-            <ion-label>Delete Account</ion-label>
+            <ion-label>{{ "setting.deleteaccount" | translate }}</ion-label>
             <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
         </ion-item>
         <ion-item lines="none" (click)="changePassword()">
             <ion-icon name="key-outline" color="primary" style="margin-right: 10px;"></ion-icon>
-            <ion-label>Change Password</ion-label>
+            <ion-label>{{ "setting.changepassword" | translate }}</ion-label>
             <ion-icon slot="end" name="chevron-forward" color="medium"></ion-icon>
         </ion-item>
     </div>
