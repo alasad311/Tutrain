@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonRouterOutlet, AlertController, ModalController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { PaymentPage } from 'src/app/payment/payment.page';
 import { FetchService } from 'src/app/service/api/fetch.service';
 import { UtilService } from 'src/app/service/util.service';
@@ -21,7 +22,7 @@ export class SessionPage implements OnInit {
   numberofSeats = 0;
   constructor(private routerOutlet: IonRouterOutlet,public alertController: AlertController,
     public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
-    private nav: NavController,public util: UtilService) { }
+    private nav: NavController,public util: UtilService,public translate: TranslateService) { }
 
     async ngOnInit() {
       this.route.queryParams.subscribe(params => {
@@ -80,9 +81,9 @@ export class SessionPage implements OnInit {
   buySeat(){
     if(this.session.seats > 0)
     {
-      this.alertMessage("Purchase","Are you sure you want to buy a seat for "+this.session.session_name);
+      this.alertMessage(this.translate.instant('message.purchase'),this.translate.instant('message.buyseat')+this.session.session_name);
     }else{
-      this.alertMessage2("Full","The sesson you selected doesnt have empty seats")
+      this.alertMessage2(this.translate.instant('message.full'),this.translate.instant('message.fullsession'));
     }
   }
   async alertMessage(header,message) {
@@ -92,13 +93,13 @@ export class SessionPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: () => {
             this.showPaymentPage()
           }
         },{
-          text: 'Cancel',
+          text: this.translate.instant('message.cancel'),
           id: 'cancel-button',
           handler: () => {
             
@@ -114,7 +115,7 @@ export class SessionPage implements OnInit {
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: ["OK"]
+      buttons: [this.translate.instant('message.ok')]
     });
 
     await alert.present();

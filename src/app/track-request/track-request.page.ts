@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { PaymentPage } from '../payment/payment.page';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -27,7 +28,7 @@ export class TrackRequestPage implements OnInit {
   isDisablied = false;
   constructor(public alertController: AlertController,private navCtrl: NavController,private storage: StorageService,
     private fetch: FetchService,public loadingController: LoadingController,public modalController: ModalController,
-    public util: UtilService) { }
+    public util: UtilService,public translate: TranslateService) { }
   
   async ngOnInit() {
     this.user = await this.storage.get('user');
@@ -93,20 +94,44 @@ export class TrackRequestPage implements OnInit {
     await this.fetch.getUserDetailByID(tutorID).then(async (response) => {
       let json = JSON.parse(response.data).response[0];
       this.isDisablied = false;
-      if(json.country == 'om'){
-        window.open('tel:+968'+json.phone, '_system');
-      }else if(json.country == 'kw'){
-        window.open('tel:+965'+json.phone, '_system');
-      }else if(json.country == 'sa'){
-        window.open('tel:+966'+json.phone, '_system');
-      }else if(json.country == 'qa'){
-        window.open('tel:+974'+json.phone, '_system');
-      }else if(json.country == 'iq'){
-        window.open('tel:+964'+json.phone, '_system');
+      if(json.country == 'dz'){
+        window.open('tel:+213'+json.phone, '_system');
       }else if(json.country == 'bh'){
-        window.open('tel:+973'+json.phone, '_system');
+          window.open('tel:+973'+json.phone, '_system');
+      }else if(json.country == 'eg'){
+          window.open('tel:+20'+json.phone, '_system');
+      }else if(json.country == 'iq'){
+          window.open('tel:+964'+json.phone, '_system');
+      }else if(json.country == 'jo'){
+          window.open('tel:+962'+json.phone, '_system');
+      }else if(json.country == 'kw'){
+          window.open('tel:+965'+json.phone, '_system');
+      }else if(json.country == 'lb'){
+          window.open('tel:+961'+json.phone, '_system');
+      }else if(json.country == 'ly'){
+          window.open('tel:+218'+json.phone, '_system');
+      }else if(json.country == 'ma'){
+          window.open('tel:+212'+json.phone, '_system');
+      }else if(json.country == 'ps'){
+          window.open('tel:+970'+json.phone, '_system');
+      }else if(json.country == 'qa'){
+          window.open('tel:+974'+json.phone, '_system');
+      }else if(json.country == 'sa'){
+          window.open('tel:+966'+json.phone, '_system');
+      }else if(json.country == 'ss'){
+          window.open('tel:+211'+json.phone, '_system');
+      }else if(json.country == 'sd'){
+          window.open('tel:+249'+json.phone, '_system');
+      }else if(json.country == 'om'){
+          window.open('tel:+968'+json.phone, '_system');
+      }else if(json.country == 'sy'){
+          window.open('tel:+963'+json.phone, '_system');
+      }else if(json.country == 'tn'){
+          window.open('tel:+216'+json.phone, '_system');
       }else if(json.country == 'ae'){
-        window.open('tel:+971'+json.phone, '_system');
+          window.open('tel:+971'+json.phone, '_system');
+      }else if(json.country == 'ye'){
+          window.open('tel:+967'+json.phone, '_system');
       }
     }).catch((error) => {
     });
@@ -116,20 +141,44 @@ export class TrackRequestPage implements OnInit {
     await this.fetch.getUserDetailByID(userID).then(async (response) => {
       let json = JSON.parse(response.data).response[0];
       this.isDisablied = false;
-      if(json.country == 'om'){
-        window.open('tel:+968'+json.phone, '_system');
-      }else if(json.country == 'kw'){
-        window.open('tel:+965'+json.phone, '_system');
-      }else if(json.country == 'sa'){
-        window.open('tel:+966'+json.phone, '_system');
-      }else if(json.country == 'qa'){
-        window.open('tel:+974'+json.phone, '_system');
-      }else if(json.country == 'iq'){
-        window.open('tel:+964'+json.phone, '_system');
+      if(json.country == 'dz'){
+        window.open('tel:+213'+json.phone, '_system');
       }else if(json.country == 'bh'){
-        window.open('tel:+973'+json.phone, '_system');
+          window.open('tel:+973'+json.phone, '_system');
+      }else if(json.country == 'eg'){
+          window.open('tel:+20'+json.phone, '_system');
+      }else if(json.country == 'iq'){
+          window.open('tel:+964'+json.phone, '_system');
+      }else if(json.country == 'jo'){
+          window.open('tel:+962'+json.phone, '_system');
+      }else if(json.country == 'kw'){
+          window.open('tel:+965'+json.phone, '_system');
+      }else if(json.country == 'lb'){
+          window.open('tel:+961'+json.phone, '_system');
+      }else if(json.country == 'ly'){
+          window.open('tel:+218'+json.phone, '_system');
+      }else if(json.country == 'ma'){
+          window.open('tel:+212'+json.phone, '_system');
+      }else if(json.country == 'ps'){
+          window.open('tel:+970'+json.phone, '_system');
+      }else if(json.country == 'qa'){
+          window.open('tel:+974'+json.phone, '_system');
+      }else if(json.country == 'sa'){
+          window.open('tel:+966'+json.phone, '_system');
+      }else if(json.country == 'ss'){
+          window.open('tel:+211'+json.phone, '_system');
+      }else if(json.country == 'sd'){
+          window.open('tel:+249'+json.phone, '_system');
+      }else if(json.country == 'om'){
+          window.open('tel:+968'+json.phone, '_system');
+      }else if(json.country == 'sy'){
+          window.open('tel:+963'+json.phone, '_system');
+      }else if(json.country == 'tn'){
+          window.open('tel:+216'+json.phone, '_system');
       }else if(json.country == 'ae'){
-        window.open('tel:+971'+json.phone, '_system');
+          window.open('tel:+971'+json.phone, '_system');
+      }else if(json.country == 'ye'){
+          window.open('tel:+967'+json.phone, '_system');
       }
     }).catch((error) => {
     });
@@ -174,7 +223,7 @@ export class TrackRequestPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...'
+      message: this.translate.instant('message.pleasewait')
     });
     await loading.present();
     this.fetch.cancelBooking({is_trash: true,bookid : id}).then(async (response) => {
@@ -183,9 +232,9 @@ export class TrackRequestPage implements OnInit {
       {
         await loading.dismiss();
         const alertRes = await this.alertController.create({
-          header: 'Updated',
-          message:  'Booking has been updated',
-          buttons: ['OK']});
+          header: this.translate.instant('message.updated'),
+          message:  this.translate.instant('message.bookingupdated'),
+          buttons: [this.translate.instant('message.ok')]});
         await alertRes.present();
         this.requests = null;
         this.showNull = false;
@@ -199,9 +248,9 @@ export class TrackRequestPage implements OnInit {
       }else{
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: 'Error',
-            message:  'An Error happened while updated try again later.',
-            buttons: ['OK']});
+            header: this.translate.instant('message.error'),
+            message:  this.translate.instant('message.errormessage'),
+            buttons: [this.translate.instant('message.ok')]});
           await alertRes.present();
           this.requests = null;
           this.showNull = false;
@@ -221,7 +270,7 @@ export class TrackRequestPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...'
+      message: this.translate.instant('message.pleasewait')
     });
     await loading.present();
     this.fetch.updateBooking({is_accpeted: true,bookid : id}).then(async (response) => {
@@ -230,9 +279,9 @@ export class TrackRequestPage implements OnInit {
       {
         await loading.dismiss();
         const alertRes = await this.alertController.create({
-          header: 'Updated',
-          message:  'Booking has been updated',
-          buttons: ['OK']});
+          header: this.translate.instant('message.updated'),
+          message:  this.translate.instant('message.bookingupdated'),
+          buttons: [this.translate.instant('message.ok')]});
         await alertRes.present();
         this.requests = null;
         this.showNull = false;
@@ -246,9 +295,9 @@ export class TrackRequestPage implements OnInit {
       }else{
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: 'Error',
-            message:  'An Error happened while updated try again later.',
-            buttons: ['OK']});
+            header: this.translate.instant('message.error'),
+            message:  this.translate.instant('message.errormessage'),
+            buttons: [this.translate.instant('message.ok')]});
           await alertRes.present();
           this.requests = null;
           this.showNull = false;
@@ -269,7 +318,7 @@ export class TrackRequestPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...'
+      message: this.translate.instant('message.pleasewait')
     });
     await loading.present();
     this.fetch.updateBooking({is_accpeted: false,bookid : id}).then(async (response) => {
@@ -278,9 +327,9 @@ export class TrackRequestPage implements OnInit {
       {
         await loading.dismiss();
         const alertRes = await this.alertController.create({
-          header: 'Updated',
-          message:  'Booking has been updated',
-          buttons: ['OK']});
+          header: this.translate.instant('message.updated'),
+          message:  this.translate.instant('message.bookingupdated'),
+          buttons: [this.translate.instant('message.ok')]});
         await alertRes.present();
         this.requests = null;
         this.showNull = false;
@@ -294,9 +343,9 @@ export class TrackRequestPage implements OnInit {
       }else{
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: 'Error',
-            message:  'An Error happened while updated try again later.',
-            buttons: ['OK']});
+            header: this.translate.instant('message.error'),
+            message:  this.translate.instant('message.errormessage'),
+            buttons: [this.translate.instant('message.ok')]});
           await alertRes.present();
           this.requests = null;
           this.showNull = false;

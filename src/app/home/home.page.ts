@@ -5,6 +5,7 @@ import { FetchService } from './../service/api/fetch.service';
 import { UtilService } from './../service/util.service';
 import { NavController,AlertController  } from '@ionic/angular';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +38,7 @@ export class HomePage implements OnInit {
   constructor(private router: Router, private nav: NavController,
     private fetch: FetchService, private storage: StorageService,
     public util: UtilService,public alertController: AlertController,
-    private statusBar: StatusBar ) {
+    private statusBar: StatusBar,public translate: TranslateService ) {
      }
 
   async ionViewDidEnter() {
@@ -82,7 +83,8 @@ export class HomePage implements OnInit {
       setTimeout( () => {
         if(this.users.tags == null || this.users.picture == null || this.users.hour_price == null)
         {
-          this.alertMessageWithBtn('Update Profile','Hey '+this.users.fullname+' We can see that your profile is incomplete, to ensure your account being listed in our search you are requested to update your profile.\n Do you wish to update your profile now?');
+          this.alertMessageWithBtn(this.translate.instant('message.missingprofile'),
+          this.translate.instant('message.missingprofilemessage',{fullname: this.users.fullname}));
         }
         //fetch ads
         this.fetch.getHomePage(this.users.email).then((response) => {
@@ -117,14 +119,14 @@ export class HomePage implements OnInit {
       message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: () => {
             alert.dismiss();
             this.router.navigate(['setting']);
           }
         },{
-          text: 'Cancel',
+          text: this.translate.instant('message.cancel'),
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();

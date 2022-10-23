@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { PaymentPage } from '../payment/payment.page';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -17,7 +18,7 @@ export class SubscriptionPage implements OnInit {
   lang: any;
   constructor(private navCtrl: NavController,public util: UtilService,private storage: StorageService,
     private fetch: FetchService,public modalController: ModalController,public loadingController: LoadingController,
-    private globalization: Globalization
+    private globalization: Globalization,public translate: TranslateService
     ) { }
 
   async ngOnInit() {
@@ -55,7 +56,7 @@ export class SubscriptionPage implements OnInit {
       {
         const loading = await this.loadingController.create({
           cssClass: 'my-custom-class',
-          message: 'Please wait...'
+          message: this.translate.instant('message.pleasewait')
         });
         await loading.present();
         let user = await this.storage.get('user');

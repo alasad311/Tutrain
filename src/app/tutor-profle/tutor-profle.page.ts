@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, ModalController, AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -15,12 +16,12 @@ export class TutorProflePage implements OnInit {
   user: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController) { }
+    ,public alertController: AlertController,public translate: TranslateService) { }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait loading profile...'
+      message: this.translate.instant('message.loadingprofile')
     });
     await loading.present();
     const users = await this.storage.get('user');

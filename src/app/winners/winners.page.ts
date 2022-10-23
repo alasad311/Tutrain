@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
 import { UtilService } from '../service/util.service';
 
@@ -13,12 +14,12 @@ export class WinnersPage implements OnInit {
   contestBadge: any;
   winners: any;
   constructor(private navCtrl: NavController,public util: UtilService,private fetch: FetchService,
-    public loadingController: LoadingController) { }
+    public loadingController: LoadingController,public translate: TranslateService) { }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait updating profile...'
+      message: this.translate.instant('message.loadinglist')
     });
     await loading.present();
     this.fetch.getWinners().then(async (response) => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 import { AlertController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -21,7 +22,7 @@ export class PaymentHistoryPage implements OnInit {
   lang: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController,private globalization: Globalization) { }
+    ,public alertController: AlertController,private globalization: Globalization,public translate: TranslateService) { }
 
   async ngOnInit() {
     await this.globalization.getPreferredLanguage().then(async (res) =>{
@@ -80,7 +81,7 @@ export class PaymentHistoryPage implements OnInit {
   {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...'
+      message: this.translate.instant('message.pleasewait')
     });
     await loading.present();
     const datas = {
@@ -93,9 +94,9 @@ export class PaymentHistoryPage implements OnInit {
       if(json.id){
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: 'Rated',
-          message: 'you rated has been added to '+ordernumber+' successfully',
-          buttons: ['OK']
+          header: this.translate.instant('message.rated'),
+          message: this.translate.instant('message.ratedMessage',{order:ordernumber}) ,
+          buttons: [this.translate.instant('message.ok')]
         });
         this.orders = null;
         this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
@@ -113,7 +114,7 @@ export class PaymentHistoryPage implements OnInit {
   {
     const alert = await this.alertController.create({
       cssClass: 'alertstar',
-      header: 'Rate order '+ordernumber,
+      header: this.translate.instant('message.rateorder')+ordernumber,
       buttons: [
         { text: '1',  cssClass:'letstest', handler: data => { this.resolveRec(1,id,ordernumber);}},
         { text: '2',  cssClass:'letstest', handler: data => { this.resolveRec(2,id,ordernumber);}},

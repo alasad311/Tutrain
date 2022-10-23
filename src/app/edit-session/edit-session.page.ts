@@ -6,6 +6,7 @@ import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
 import { Camera, CameraResultType,CameraSource } from '@capacitor/camera';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class EditSessionPage implements OnInit {
   lang: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController,public formBuilder: FormBuilder,private globalization: Globalization) { 
+    ,public alertController: AlertController,public formBuilder: FormBuilder,private globalization: Globalization,
+    public translate: TranslateService) { 
       this.date.setDate(this.date.getDate() + 1);
       this.toDay = this.date.getFullYear()+ '-' + (1 + this.date.getMonth()).toString().padStart(2, '0') + '-' +
       this.date.getDate().toString().padStart(2, '0')
@@ -44,7 +46,7 @@ export class EditSessionPage implements OnInit {
     });
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait getting session...'
+      message: this.translate.instant('message.pleasewaitsession')
     });
     await loading.present();
     this.fetch.getSessionDetails(this.sessionID).then( async (response) =>{
@@ -73,7 +75,7 @@ export class EditSessionPage implements OnInit {
   async updateSession(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait updating session...'
+      message: this.translate.instant('message.updatingsession')
     });
     await loading.present();
     //lets begin updateing
@@ -89,19 +91,19 @@ export class EditSessionPage implements OnInit {
         if(response.response.results == 'success')
         {
           await loading.dismiss();
-          this.alertMessage('Updated','Session updated successfully!');
+          this.alertMessage(this.translate.instant('message.updated'),this.translate.instant('message.sessionupdated'));
           this.goBackHome({
             dismissed : true
           });
         }else{
           await loading.dismiss();
-          this.alertMessage('Error','Couldn\'t update Session, try again later!');
+          this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdatesession'));
           this.isDisablied = false;
         }
       }).catch(async (error) => {
         //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
         await loading.dismiss();
-        this.alertMessage('Error','Couldn\'t update Session, try again later!');
+        this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdatesession'));
         this.isDisablied = false;
      });
 
@@ -133,7 +135,7 @@ export class EditSessionPage implements OnInit {
       cssClass: 'my-custom-class',
       header,
       message,
-      buttons: ['OK']
+      buttons: [this.translate.instant('message.ok')]
     });
 
     await alert.present();

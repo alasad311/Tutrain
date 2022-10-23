@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, LoadingController, ModalController, AlertController, IonInfiniteScroll } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AddSessionPage } from '../add-session/add-session.page';
 import { EditSessionPage } from '../edit-session/edit-session.page';
 import { ListSeatsPage } from '../list-seats/list-seats.page';
@@ -24,7 +25,7 @@ export class CourseListPage implements OnInit {
   showNull = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController) { 
+    ,public alertController: AlertController,public translate: TranslateService) { 
 
   }
 
@@ -120,19 +121,18 @@ export class CourseListPage implements OnInit {
   async deleteSession(id){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait deleting in progress...'
+      message: this.translate.instant('message.pleasewaitdeleting')
     });
     await loading.present();
     this.fetch.deleteCourse(id).then(async (response) =>{
       if(JSON.parse(response.data).result)
       {
-        this.util.showWarningAlert('Success','You have deleted the course successfully!');
+        this.util.showWarningAlert(this.translate.instant('message.success'),this.translate.instant('message.deletecourse'));
         await loading.dismiss();
         this.onClear();
       }else{
         await loading.dismiss();
-        this.util.showWarningAlert('Error',`Couldn\'t delete course as there was seats been sold.
-        \n Contact support for further actions!`);
+        this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.couldntdeletecourse'));
       }
     });
   }
@@ -140,7 +140,7 @@ export class CourseListPage implements OnInit {
   goBackHome(){
     this.navCtrl.back();
   }
-  async createSession(){
-    window.open('https://tapp.scd.edu.om', '_system');
-  }
+  // async createSession(){
+  //   window.open('https://tapp.scd.edu.om', '_system');
+  // }
 }

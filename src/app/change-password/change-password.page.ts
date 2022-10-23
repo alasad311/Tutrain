@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -20,7 +21,7 @@ export class ChangePasswordPage implements OnInit {
   user:any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
-    private router: Router,public formBuilder: FormBuilder) { }
+    private router: Router,public formBuilder: FormBuilder,public translate: TranslateService) { }
 
   async ngOnInit() {
    
@@ -57,7 +58,7 @@ export class ChangePasswordPage implements OnInit {
       return false;
     } else {
       let data = JSON.parse(JSON.stringify(this.passwordChange.value));
-      this.alertMessageWithBtn("Are you sure?","",data)
+      this.alertMessageWithBtn(this.translate.instant('message.areyousure'),"",data)
 
     }
     
@@ -92,7 +93,7 @@ export class ChangePasswordPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: async () => {
             this.fetch.changeUserPassword(this.user.user_id,data).then(async (response) => {
@@ -100,21 +101,21 @@ export class ChangePasswordPage implements OnInit {
               if(result)
               {
                 this.isDisablied = false;
-               this.alertMessageWithoutBtn("Changed","You have updated your password!");
+               this.alertMessageWithoutBtn(this.translate.instant('message.changed'),this.translate.instant('message.passwordupdated'));
                this.goBackHome();
               }else{
                 this.isDisablied = false;
-                this.alertMessageWithoutBtn("Error","You password match our records");
+                this.alertMessageWithoutBtn(this.translate.instant('message.error'),this.translate.instant('message.passworddoesntmatch'));
               }
       
             }).catch((error) => {
               this.isDisablied = false;
-              this.alertMessageWithoutBtn("Error","Couldnt process with your request at the moment try again later!");
+              this.alertMessageWithoutBtn(this.translate.instant('message.error'),this.translate.instant('message.couldntprocess'));
             });
             
           }
         },{
-          text: 'Cancel',
+          text: this.translate.instant('message.cancel'),
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();
@@ -131,7 +132,7 @@ export class ChangePasswordPage implements OnInit {
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: ['OK']
+      buttons: [this.translate.instant('message.ok')]
     });
 
     await alert.present();

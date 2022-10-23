@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors }
 import { AlertController } from '@ionic/angular';
 import { PushNotifications,Token } from '@capacitor/push-notifications';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -26,7 +27,7 @@ export class RegisterPage implements OnInit {
   internationalCode = '+968';
   lang: any;
   constructor(private route: ActivatedRoute,private router: Router,private userApi: UsersService,
-    public formBuilder: FormBuilder,public alertController: AlertController,
+    public formBuilder: FormBuilder,public alertController: AlertController,public translate: TranslateService
     private globalization: Globalization) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -145,14 +146,14 @@ export class RegisterPage implements OnInit {
         const json = JSON.parse(response.data);
         if(json.code === 'ER_DUP_ENTRY')
         {
-          this.alertMessage('Error: #12','Email exisits, did you forget your password? <a href=\'/forgot\'>click here </a>','');
+          this.alertMessage(this.translate.instant('message.errorwithnum')+' #12',this.translate.instant('message.loginerror12'),'');
           this.isDisablied = false;
         }
         else if(json.id){
-          this.alertMessage('Welcome','Your account has been created <br /> check your email to confirm your account','login');
+          this.alertMessage(this.translate.instant('message.welcome'),this.translate.instant('message.welcomemessage'),'login');
         }
       }).catch((error) => {
-        this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
+        this.alertMessage(this.translate.instant('message.errorwithnum')+' #1',this.translate.instant('message.loginerror1'),'');
         this.isDisablied = false;
      });
 
@@ -167,7 +168,7 @@ export class RegisterPage implements OnInit {
       message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: () => {
             if(location)

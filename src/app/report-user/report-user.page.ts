@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -16,7 +17,7 @@ export class ReportUserPage implements OnInit {
   isDisablied = false;
   constructor(public alertController: AlertController,private storage: StorageService,
     public modalController: ModalController,public fetchServices: FetchService,
-    public loadingController: LoadingController,public util: UtilService) { }
+    public loadingController: LoadingController,public util: UtilService,public translate: TranslateService) { }
   
   ngOnInit() {
   }
@@ -27,7 +28,7 @@ export class ReportUserPage implements OnInit {
       const user = await this.storage.get('user');
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: 'Please wait...',
+        message: this.translate.instant('message.pleasewait'),
       });
       await loading.present();
       this.isDisablied = true;
@@ -49,7 +50,7 @@ export class ReportUserPage implements OnInit {
       });
       
     }else{
-      this.alertMessage("Error","Your feedback is less than 10 characters")
+      this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.reportUserMessage'));
     }
 
   }
@@ -64,7 +65,7 @@ export class ReportUserPage implements OnInit {
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: ['OK']
+      buttons: [this.translate.instant('message.ok')]
     });
 
     await alert.present();

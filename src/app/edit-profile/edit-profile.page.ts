@@ -13,6 +13,7 @@ import { FilePath } from '@awesome-cordova-plugins/file-path/ngx';
 import { VideoEditor } from '@awesome-cordova-plugins/video-editor/ngx';
 import { Capacitor } from '@capacitor/core';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-profile',
@@ -44,7 +45,7 @@ export class EditProfilePage implements OnInit {
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
     private router: Router,public formBuilder: FormBuilder,private event: EventService,private sanitizer: DomSanitizer,
     private chooser: Chooser, private filePath: FilePath,private videoEditor: VideoEditor,
-    private globalization: Globalization) { }
+    private globalization: Globalization,public translate: TranslateService) { }
   get errorControl() {
     return this.profileUpdate.controls;
   }
@@ -55,7 +56,7 @@ export class EditProfilePage implements OnInit {
     });
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait loading profile...'
+      message: this.translate.instant('message.loadingprofile')
     });
     await loading.present();
     this.user = await this.storage.get('user');
@@ -163,7 +164,7 @@ export class EditProfilePage implements OnInit {
   async updateProfile(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait updating profile...'
+      message: this.translate.instant('message.updatingprofile')
     });
     await loading.present();
     //lets begin updateing
@@ -210,7 +211,7 @@ export class EditProfilePage implements OnInit {
             this.goBackHome();
           }else{
             await loading.dismiss();
-            this.alertMessage('Error','Couldn\'t update your profile, try again later!');
+            this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdateprofile'));
             this.isDisablied = false;
           }
 
@@ -218,12 +219,12 @@ export class EditProfilePage implements OnInit {
         }).catch(async (error) => {
           //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
           await loading.dismiss();
-          this.alertMessage('Error','Couldn\'t update your profile, try again later!');
+          this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdateprofile'));
           this.isDisablied = false;
        });
       }else{
         await loading.dismiss();
-        this.alertMessage('Nothing','Nothing to be updated!');
+        this.alertMessage(this.translate.instant('message.nothing'),this.translate.instant('message.nothingerror'));
         this.isDisablied = false;
         return false;
       }
@@ -249,7 +250,7 @@ export class EditProfilePage implements OnInit {
     this.hideVideo = null;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait while we load the video...'
+      message: this.translate.instant('message.loadingvideo')
     });
     await this.chooser.getFile('video/*')
     .then(
@@ -311,7 +312,7 @@ export class EditProfilePage implements OnInit {
       cssClass: 'my-custom-class',
       header,
       message,
-      buttons: ['OK']
+      buttons: [this.translate.instant('message.ok')]
     });
 
     await alert.present();

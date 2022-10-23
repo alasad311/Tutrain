@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, LoadingController, ModalController, AlertController, IonInfiniteScroll } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { AddSessionPage } from '../add-session/add-session.page';
 import { EditSessionPage } from '../edit-session/edit-session.page';
 import { ListSeatsPage } from '../list-seats/list-seats.page';
@@ -24,7 +25,7 @@ export class SessionListPage implements OnInit {
   showNull = false;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController) { 
+    ,public alertController: AlertController,public translate: TranslateService) { 
 
   }
 
@@ -121,24 +122,22 @@ export class SessionListPage implements OnInit {
     if(status){
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: 'Please wait deleting in progress...'
+        message: this.translate.instant('message.sessionDelete')
       });
       await loading.present();
       this.fetch.deleteSession(id).then(async (response) =>{
         if(JSON.parse(response.data).result)
         {
-          this.util.showWarningAlert('Success','You have deleted the session successfully!');
+          this.util.showWarningAlert(this.translate.instant('message.success'),this.translate.instant('message.sucessdeletesession'));
           await loading.dismiss();
           this.onClear();
         }else{
           await loading.dismiss();
-          this.util.showWarningAlert('Error',`Couldn\'t delete session as there was seats been sold.
-          \n Contact support for further actions!`);
+          this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.cantdeletedateexpired'));
         }
       });
     }else{
-      this.util.showWarningAlert('Error',`Couldn\'t delete the course session as the course 
-      session end date has expired and no longer active!`);
+      this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.cantdeleteseatsold'));
     }
   }
 
@@ -187,8 +186,8 @@ export class SessionListPage implements OnInit {
         }
       });
     }else{
-      this.util.showWarningAlert('Error',`Couldn\'t update the course session as the course 
-      session end date has expired and no longer active!`);
+      this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.cantdeleteseatsold'));
+
     }
   }
   async goToSeatList(id){

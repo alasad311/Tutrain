@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
@@ -20,7 +21,7 @@ export class ContestPage implements OnInit {
   lang: any;
   constructor(private navCtrl: NavController,public util: UtilService,private fetch: FetchService,
     private route: ActivatedRoute,public alertController: AlertController,public loadingController: LoadingController,
-    private storage: StorageService,private globalization: Globalization) { }
+    private storage: StorageService,private globalization: Globalization,public translate: TranslateService) { }
 
   async ngOnInit() {
     await this.globalization.getPreferredLanguage().then(async (res) =>{
@@ -53,9 +54,9 @@ export class ContestPage implements OnInit {
     if(this.contestAnswerer)
     {
       this.isDisabled = true;
-      this.alertMessageWithBtn("Are you sure?","")
+      this.alertMessageWithBtn(this.translate.instant('message.areyousure'),"")
     }else{
-      this.util.showWarningAlert("Error","You havent selected an answerer!")
+      this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.haventselectedanswerer'))
     }
   }
   goBackHome(){
@@ -74,19 +75,20 @@ export class ContestPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: async () => {
             const loading = await this.loadingController.create({
               cssClass: 'my-custom-class',
-              message: 'Please wait...'
+              message: this.translate.instant('message.pleasewait')
             });
             await loading.present();
             this.fetch.submitUserAnswerer(this.contest[0].id,this.contestAnswerer).then(async (response)=>{
               if(JSON.parse(response.data).id)
               {
                 await loading.dismiss();
-                this.alertMessageWithBtn2("Success","Your answer has been submitted!",this.contest[0].id)
+                this.alertMessageWithBtn2(this.translate.instant('message.success'),
+                this.translate.instant('message.answersubmitted'),this.contest[0].id);
               }
             })
           }
@@ -110,7 +112,7 @@ export class ContestPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: () => {
             this.contest = null;

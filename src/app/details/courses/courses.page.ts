@@ -7,6 +7,7 @@ import { CapacitorVideoPlayer } from 'capacitor-video-player';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { PaymentPage } from '../../payment/payment.page'
 import { UtilService } from 'src/app/service/util.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.page.html',
@@ -30,7 +31,7 @@ export class CoursesPage implements OnInit {
   trailer: any;
   constructor(private routerOutlet: IonRouterOutlet,private screenOrientation: ScreenOrientation,public alertController: AlertController,
     public modalController: ModalController,private router: Router,private route: ActivatedRoute,private fetch: FetchService,
-    private nav: NavController,public util: UtilService) { }
+    private nav: NavController,public util: UtilService,public translate: TranslateService) { }
 
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -126,7 +127,8 @@ export class CoursesPage implements OnInit {
     this.nav.back();
   }
   purchaseCourse(){
-    this.alertMessage("Purchase","Are you sure you want to buy "+this.course.name);
+    this.alertMessage(this.translate.instant('message.purchase'),
+    this.translate.instant('message.areyousurebuy')+this.course.name);
   }
   async showPaymentPage() {
     const modal = await this.modalController.create({
@@ -159,13 +161,13 @@ export class CoursesPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: 'ok',
+          text: this.translate.instant('message.ok'),
           id: 'confirm-button',
           handler: () => {
             this.showPaymentPage()
           }
         },{
-          text: 'Cancel',
+          text: this.translate.instant('message.cancel'),
           id: 'cancel-button',
           handler: () => {
             

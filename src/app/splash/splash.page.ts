@@ -14,6 +14,8 @@ import { FetchService } from '../service/api/fetch.service';
 import { EventService } from '../service/event.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
+import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-splash',
@@ -28,11 +30,13 @@ export class SplashPage implements OnInit {
   subscriptions: any;
   appV: any;
   hasUrl = false;
+  lang: any;
   constructor(public alertController: AlertController,private fetch: FetchService, private event: EventService,
     private platform: Platform,private router: Router,public menuCtrl: MenuController, private screenOrientation: ScreenOrientation,
     private storage: StorageService,private androidFullScreen: AndroidFullScreen,private statusBar: StatusBar,
     public loadingController: LoadingController,public modalController: ModalController, private appVersion: AppVersion,
-    private zone: NgZone,public util: UtilService,private nav: NavController) {
+    private zone: NgZone,public util: UtilService,private nav: NavController,
+    public translate: TranslateService,private globalization: Globalization) {
       setTimeout( () => { this.initializeApp(); }, 3500 );
   }
 
@@ -45,6 +49,10 @@ export class SplashPage implements OnInit {
   };
 
   async initializeApp() {
+    await this.globalization.getPreferredLanguage().then(async (res) =>{
+      const language = res.value.split('-');
+      this.lang = language[0];
+    });
     this.platform.ready().then(async (readySource) => {
       PushNotifications.createChannel({
         id: 'tutrain-default',
@@ -141,15 +149,16 @@ export class SplashPage implements OnInit {
         });
         if(response.type == 'NEWSESSION')
         {
-          this.alertMessage('New Request',response.userFullName +' has requested a session on '
-          + response.slotDate + ' from : '+response.timeFrom+' to: '+ response.timeTo,response.bookID);
+          this.alertMessage(this.translate.instant('message.newsessiontitle'),response.userFullName +
+          this.translate.instant('message.newsessionbody',{slotDate: response.slotDate ,timeFrom:response.timeFrom})
+          + response.timeTo,response.bookID);
         }else if(response.type == 'SESSIONCANCELLED'){
           LocalNotifications.schedule({
             notifications:[
             {
-                title : 'Session Cancelled',
-                body: JSON.parse(JSON.stringify(notification)).body,
-                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                title : this.translate.instant('message.sessioncancelled'),
+                body: this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
+                largeBody : this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -157,12 +166,24 @@ export class SplashPage implements OnInit {
           });
         }else if(response.type == 'SESSIONRESPONSE')
         {
+          let status = response.accpeted;
+          if(this.lang === 'ar')
+          {
+            if(response.accpeted === 'Accepted')
+            {
+              status = 'تم موافقة';
+            }else{
+              status = 'تم رفض';
+            }
+          }
           LocalNotifications.schedule({
             notifications:[
             {
-                title : 'Session '+response.accpeted,
-                body: JSON.parse(JSON.stringify(notification)).body,
-                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                title : this.translate.instant('message.sessionstatus',{statuss: status}) ,
+                body: this.translate.instant('message.sessiionstatusbody',
+                {fullname: response.userFullName,statuss: status,date:response.slotDate}),
+                largeBody : this.translate.instant('message.sessiionstatusbody',
+                {fullname: response.userFullName,statuss: status,date:response.slotDate}),
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -193,7 +214,8 @@ export class SplashPage implements OnInit {
             }else if(response.type == 'NEWORDER'){
               this.router.navigate(['/track-request']);
             }else{
-              this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
+              this.alertMessageStudent(this.translate.instant('message.rejected'),response.userFullName+
+              this.translate.instant('message.rejectedmessage'));
             }
 
           });
@@ -202,17 +224,17 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-                title : 'New Order',
-                body: JSON.parse(JSON.stringify(notification)).body,
-                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                title : this.translate.instant('message.neworder'),
+                body: this.translate.instant('message.neworder',{fullname : response.userName}),
+                largeBody : this.translate.instant('message.neworder',{fullname : response.userName}),
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
             },
             {
-              title : 'Session Reminder',
-              body: 'You have a session with '+response.userName+' in 30 min',
-              largeBody : 'You have a session with '+response.userName+' in 30 min',
+              title : this.translate.instant('message.sessionreminder'),
+              body: this.translate.instant('message.sessionremindermessage',{fullname: response.userName}),
+              largeBody : this.translate.instant('message.sessionremindermessage',{fullname: response.userName}),
               id : this.generateRandomCode(),
               schedule: {
                   at: slotDate,
@@ -228,9 +250,9 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-                title : 'New Order',
-                body: JSON.parse(JSON.stringify(notification)).body,
-                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                title : this.translate.instant('message.neworder'),
+                body: this.translate.instant('message.newordermessage',{course: response.coursename}),
+                largeBody : this.translate.instant('message.newordermessage',{course: response.coursename}),
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -241,9 +263,9 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-              title : 'New Order',
-              body: JSON.parse(JSON.stringify(notification)).body,
-              largeBody : JSON.parse(JSON.stringify(notification)).body,
+              title : this.translate.instant('message.neworder'),
+              body: this.translate.instant('message.newordermessage',{course: response.coursename}),
+              largeBody : this.translate.instant('message.newordermessage',{course: response.coursename}),
               id : this.generateRandomCode(),
               channelId: 'tutrain-default',
               group:'tutrainapp'
@@ -261,15 +283,16 @@ export class SplashPage implements OnInit {
         const response = JSON.parse(JSON.stringify(notification)).notification.data;
         if(response.type == 'NEWSESSION')
         {
-          this.alertMessage('New Request',response.userFullName +' has requested a session on '
-          + response.slotDate + ' from : '+response.timeFrom+' to: '+ response.timeTo,response.bookID);
+          this.alertMessage(this.translate.instant('message.newsessiontitle'),response.userFullName +
+          this.translate.instant('message.newsessionbody',{slotDate: response.slotDate ,timeFrom:response.timeFrom})
+          + response.timeTo,response.bookID);
         }else if(response.type == 'SESSIONCANCELLED'){
           LocalNotifications.schedule({
             notifications:[
             {
-                title : 'Session Cancelled',
-                body: JSON.parse(JSON.stringify(notification)).body,
-                largeBody : JSON.parse(JSON.stringify(notification)).body,
+                title : this.translate.instant('message.sessioncancelled'),
+                body: this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
+                largeBody : this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -299,7 +322,7 @@ export class SplashPage implements OnInit {
               });
               await modal.present();
             }else{
-              this.alertMessageStudent('Rejected',response.userFullName+' has rejected your request');
+              this.alertMessageStudent(this.translate.instant('message.rejected'),response.userFullName+this.translate.instant('message.rejected'));
             }
         }else if(response.type == 'NEWORDER'){
           this.router.navigate(['/track-request']);
@@ -366,17 +389,17 @@ export class SplashPage implements OnInit {
               {
                 alert.dismiss();
                 const alertRes = await this.alertController.create({
-                  header: 'Updated',
-                  message:  'Booking has been updated',
-                  buttons: ['OK']});
+                  header: this.translate.instant('messages.updated'),
+                  message:  this.translate.instant('messages.bookingupdated'),
+                  buttons: [this.translate.instant('messages.ok')]});
                 await alertRes.present();
               }else{
                   alert.dismiss();
                   const alertRes = await this.alertController.create({
-                    header: 'Error',
-                    message:  'An Error happened while updated try again later.',
-                    buttons: ['OK']});
-                  await alertRes.present();
+                    header: this.translate.instant('messages.error'),
+                    message:  this.translate.instant('messages.errormessage'),
+                    buttons: [this.translate.instant('messages.ok')]});
+                    await alertRes.present();
               }
             }).catch((error) => {
             });
@@ -393,17 +416,17 @@ export class SplashPage implements OnInit {
               {
                 alert.dismiss();
                 const alertRes = await this.alertController.create({
-                  header: 'Updated',
-                  message:  'Booking has been updated',
-                  buttons: ['OK']});
+                  header: this.translate.instant('messages.updated'),
+                  message:  this.translate.instant('messages.bookingupdated'),
+                  buttons: [this.translate.instant('messages.ok')]});
                 await alert.present();
               }else{
                   alert.dismiss();
                   const alertRes = await this.alertController.create({
-                    header: 'Error',
-                    message:  'An Error happened while updated try again later.',
-                    buttons: ['OK']});
-                  await alertRes.present();
+                    header: this.translate.instant('messages.error'),
+                    message:  this.translate.instant('messages.errormessage'),
+                    buttons: [this.translate.instant('messages.ok')]});
+                    await alertRes.present();
               }
             }).catch((error) => {
             });
