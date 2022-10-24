@@ -201,6 +201,7 @@ export class UsersPage implements OnInit {
   sendEmail(){
     window.open('mailto:'+this.user.email, '_system');
   }
+  
   sendWhatapp(){
    if(this.lang === 'en')
    {

@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <!-- <div class="category">
             <div class="menu">
                 <div class="item" (click)="openSearch('users')">
                     <div class="icon">
@@ -77,7 +77,7 @@
                     </div>
                     <ion-label>{{"home.tutors" | translate}}</ion-label>
                 </div>
-                <!-- <div class="item" (click)="openSearch('courses')">
+                <div class="item" (click)="openSearch('courses')">
                     <div class="icon">
                         <img src="https://via.placeholder.com/512x512" />
                     </div>
@@ -88,9 +88,38 @@
                         <img src="https://via.placeholder.com/512x512" />
                     </div>
                     <ion-label>Sessions</ion-label>
-                </div> -->
+                </div> 
             </div>
+        </div>-->
+        <div class="heading">
+            <ion-label class="title">Recently Added </ion-label>
+            <ion-label class="text" (click)="openSearch('users')">View all</ion-label>
         </div>
+
+        <ion-row class="product" *ngIf="newTutor">
+            <ion-col size="6" class="ion-no-margin" *ngFor="let item of newTutor" (click)="goToTutor(item.user_id)">
+                <ion-card>
+                    <img src="{{item.picture}}" />
+                    <ion-label class="product-name">{{item.fullname}}</ion-label>
+                    <ion-label class="instructor">{{item.tags}}</ion-label>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+
+        <ion-row class="product" *ngIf="!newTutor">
+            <ion-col size="6" class="ion-no-margin" *ngFor="let item of [1,2,3]">
+                <ion-card>
+                    <ion-skeleton-text animated style="width: 100%; height: 100px;"></ion-skeleton-text>
+                    <ion-label class="instructor">
+                        <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+                    </ion-label>
+                    <ion-label class="product-name">
+                        <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
+                    </ion-label>
+                </ion-card>
+            </ion-col>
+        </ion-row>
         <!-- 
         <div class="heading">
             <ion-label class="title">All Purchases</ion-label>

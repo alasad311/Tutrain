@@ -91,8 +91,24 @@ export class FetchService {
           reject(error);
         });
     });
+    const res5 = new Promise( async (resolve,reject) => {
+      const url = 'https://tapp.scd.edu.om/api/v1/tutor/new'
+      const user = await this.storage.get('user');
+      this.http.sendRequest( url , {
+        method: 'get',
+        headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
+        serializer: 'utf8',
+        timeout: 1000
+      } )
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
     return new Promise( (resolve,reject) => {
-        Promise.all([res1, res2, res3, res4]).then(res => {
+        Promise.all([res1, res2, res3, res4,res5]).then(res => {
         resolve(res);
       }).catch(error => {
         reject(error);

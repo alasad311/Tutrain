@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   categories: any;
   newCourses: any;
   registeredCourses:any;
-
+  newTutor: any;
   users: any;
   constructor(private router: Router, private nav: NavController,
     private fetch: FetchService, private storage: StorageService,
@@ -64,12 +64,15 @@ export class HomePage implements OnInit {
     this.categories = '';
     this.newCourses = '';
     this.registeredCourses = '';
+    this.newTutor = '';
     //fetch ads
     this.fetch.getHomePage(this.users.email).then((response) => {
       this.banner = JSON.parse(response[0].data).response;
       this.categories = JSON.parse(response[1].data).response;
       this.newCourses = JSON.parse(response[2].data).response;
       this.registeredCourses = JSON.parse(response[3].data).response;
+      this.newTutor = JSON.parse(response[4].data).response;
+
       event.target.complete();
     }).catch(() => {
       event.target.complete();
@@ -92,6 +95,7 @@ export class HomePage implements OnInit {
           this.categories = JSON.parse(response[1].data).response;
           this.newCourses = JSON.parse(response[2].data).response;
           this.registeredCourses = JSON.parse(response[3].data).response;
+          this.newTutor = JSON.parse(response[4].data).response;
         }).catch(() => {
         });
       }, 2000 );
@@ -102,6 +106,8 @@ export class HomePage implements OnInit {
           this.categories = JSON.parse(response[1].data).response;
           this.newCourses = JSON.parse(response[2].data).response;
           this.registeredCourses = JSON.parse(response[3].data).response;
+          this.newTutor = JSON.parse(response[4].data).response;
+
         }).catch(() => {
         });
     }
@@ -147,6 +153,15 @@ export class HomePage implements OnInit {
       }
     };
     this.nav.navigateForward('/details/courses',navigationExtras);
+  }
+  goToTutor(id){
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          page: '/home',
+          id: id
+      }
+    };
+    this.nav.navigateForward('/details/users',navigationExtras);
   }
   goToAllPurchases(){
     this.router.navigate(['/payment-history'])
