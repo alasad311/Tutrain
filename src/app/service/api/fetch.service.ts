@@ -17,7 +17,7 @@ export class FetchService {
   fileTransfer: FileTransferObject = this.transfer.create();
   public async getUser(email): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+email 
+      const url = 'https://api.tutrainapp.com/v1/users/'+email 
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -34,7 +34,7 @@ export class FetchService {
   }
   public async getHomePage(email): Promise<any>{
     const res1 = new Promise( (resolve,reject) => {
-      this.http.sendRequest( 'https://tapp.scd.edu.om/api/v1/ads' , {
+      this.http.sendRequest( 'https://api.tutrainapp.com/v1/ads' , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
@@ -48,7 +48,7 @@ export class FetchService {
         })
     });
     const res2 = new Promise( (resolve,reject) => {
-      this.http.sendRequest( 'https://tapp.scd.edu.om/api/v1/category' , {
+      this.http.sendRequest( 'https://api.tutrainapp.com/v1/category' , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         serializer: 'utf8',
@@ -62,7 +62,7 @@ export class FetchService {
         });
     });
     const res3 = new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/courses/new/'+email
+      const url = 'https://api.tutrainapp.com/v1/courses/new/'+email
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -77,7 +77,7 @@ export class FetchService {
         });
     });
     const res4 = new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+email+'/order/courses'
+      const url = 'https://api.tutrainapp.com/v1/users/'+email+'/order/courses'
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -92,7 +92,7 @@ export class FetchService {
         });
     });
     const res5 = new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/tutor/new'
+      const url = 'https://api.tutrainapp.com/v1/tutor/new'
       const user = await this.storage.get('user');
       this.http.sendRequest( url , {
         method: 'get',
@@ -117,7 +117,7 @@ export class FetchService {
   }
   public async searchAll(value,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/search/all/'+value+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/search/all/'+value+'/'+page;
       const user = await this.storage.get('user');
       this.http.sendRequest( url , {
         method: 'get',
@@ -136,7 +136,7 @@ export class FetchService {
   
   public async searchUsers(value,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/search/users/'+value+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/search/users/'+value+'/'+page;
       const user = await this.storage.get('user');
       this.http.sendRequest( url , {
         method: 'get',
@@ -155,7 +155,7 @@ export class FetchService {
 
   public async searchCourses(value,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/search/courses/'+value+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/search/courses/'+value+'/'+page;
       const user = await this.storage.get('user');
       this.http.sendRequest( url , {
         method: 'get',
@@ -173,7 +173,7 @@ export class FetchService {
   }
   public async getCourseDetail(id): Promise<any>{
     const courseDetails = new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/course/'+id;
+      const url = 'https://api.tutrainapp.com/v1/course/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -188,7 +188,7 @@ export class FetchService {
         });
     });
     const sections = new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/course/sections/'+id;
+      const url = 'https://api.tutrainapp.com/v1/course/sections/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -204,7 +204,7 @@ export class FetchService {
     });
     const paid = new Promise( async (resolve,reject) => {
       const user = await this.storage.get('user');
-      const url = 'https://tapp.scd.edu.om/api/v1//course/paied/'+id+'/'+user.email;
+      const url = 'https://api.tutrainapp.com/v1//course/paied/'+id+'/'+user.email;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -220,7 +220,7 @@ export class FetchService {
     });
     const trailer = new Promise( async (resolve,reject) => {
       const user = await this.storage.get('user');
-      const url = 'https://tapp.scd.edu.om/api/v1//course/trailer/'+id+'/'+user.email;
+      const url = 'https://api.tutrainapp.com/v1//course/trailer/'+id+'/'+user.email;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -245,7 +245,7 @@ export class FetchService {
   public async updateOrder(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
-      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/order" , {
+      this.http.sendRequest( "https://api.tutrainapp.com/v1/order" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -262,7 +262,7 @@ export class FetchService {
   } 
   public async getUserDetailByID(id): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/user/'+id
+      const url = 'https://api.tutrainapp.com/v1/user/'+id
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -280,7 +280,7 @@ export class FetchService {
   public async submitReport(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
-      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/report/" , {
+      this.http.sendRequest( "https://api.tutrainapp.com/v1/report/" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -298,7 +298,7 @@ export class FetchService {
   public async createSlot(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
-      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/" , {
+      this.http.sendRequest( "https://api.tutrainapp.com/v1/slot/" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -316,7 +316,7 @@ export class FetchService {
   public async updateUserToken(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
-      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/user/token" , {
+      this.http.sendRequest( "https://api.tutrainapp.com/v1/user/token" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -334,7 +334,7 @@ export class FetchService {
   public async updateBooking(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
-      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/update" , {
+      this.http.sendRequest( "https://api.tutrainapp.com/v1/slot/update" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -352,7 +352,7 @@ export class FetchService {
   public async cancelBooking(data): Promise<any>{
     return new Promise( (resolve,reject) => {
       this.http.setDataSerializer('urlencoded');
-      this.http.sendRequest( "https://tapp.scd.edu.om/api/v1/slot/cancel" , {
+      this.http.sendRequest( "https://api.tutrainapp.com/v1/slot/cancel" , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
         data: data,
@@ -369,7 +369,7 @@ export class FetchService {
   }
   public async getUserInvites(refCode): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+refCode+'/invites';
+      const url = 'https://api.tutrainapp.com/v1/users/'+refCode+'/invites';
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -386,7 +386,7 @@ export class FetchService {
   }
   public async getUserOrders(id,page): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/orders/'+page;
+      const url = 'https://api.tutrainapp.com/v1/users/'+id+'/orders/'+page;
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -403,7 +403,7 @@ export class FetchService {
   }
   public async getUserRequests(id,page,type): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/requests/'+page+'/'+type;
+      const url = 'https://api.tutrainapp.com/v1/users/'+id+'/requests/'+page+'/'+type;
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -420,7 +420,7 @@ export class FetchService {
   }
   public async getTotalUnPaid(id): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/wallet/';
+      const url = 'https://api.tutrainapp.com/v1/users/'+id+'/wallet/';
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -437,7 +437,7 @@ export class FetchService {
   }
   public async getAppSetting(): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/app/setting';
+      const url = 'https://api.tutrainapp.com/v1/app/setting';
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -454,7 +454,7 @@ export class FetchService {
   }
   public async requestPayout(data): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/payout/request';
+      const url = 'https://api.tutrainapp.com/v1/payout/request';
       this.http.sendRequest( url, {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -472,7 +472,7 @@ export class FetchService {
   }
   public async deleteUser(id): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/delete/';
+      const url = 'https://api.tutrainapp.com/v1/users/'+id+'/delete/';
       this.http.sendRequest( url, {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -490,7 +490,7 @@ export class FetchService {
   public async searchSessions(value,page): Promise<any>{
     const user = await this.storage.get('user');
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/search/sessions/'+value+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/search/sessions/'+value+'/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
@@ -507,7 +507,7 @@ export class FetchService {
   }
   public async searchSessionsWithinUser(value,page): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/search/user/sessions/'+value+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/search/user/sessions/'+value+'/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -524,7 +524,7 @@ export class FetchService {
   }
   public async getSessionDetails(id): Promise<any>{
     const courseDetails = new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/session/'+id;
+      const url = 'https://api.tutrainapp.com/v1/session/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -539,7 +539,7 @@ export class FetchService {
         });
     });
     const seats = new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/session/counter/'+id;
+      const url = 'https://api.tutrainapp.com/v1/session/counter/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -555,7 +555,7 @@ export class FetchService {
     });
     const paid = new Promise( async (resolve,reject) => {
       const user = await this.storage.get('user');
-      const url = 'https://tapp.scd.edu.om/api/v1/session/paied/'+id+'/'+user.email;
+      const url = 'https://api.tutrainapp.com/v1/session/paied/'+id+'/'+user.email;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -579,7 +579,7 @@ export class FetchService {
   }
   public async addRating(data): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/rating/new';
+      const url = 'https://api.tutrainapp.com/v1/rating/new';
       this.http.sendRequest( url, {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -598,7 +598,7 @@ export class FetchService {
   public async getAllSessions(id,page): Promise<any>{
     const user = await this.storage.get('user');
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/all/sessions/'+page;
+      const url = 'https://api.tutrainapp.com/v1/users/'+id+'/all/sessions/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
@@ -616,7 +616,7 @@ export class FetchService {
   
   public async getContest(): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/contest/';
+      const url = 'https://api.tutrainapp.com/v1/contest/';
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -633,7 +633,7 @@ export class FetchService {
   }
   public async getSubscriptions(): Promise<any>{
     return new Promise((resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/contest/subscriptions';
+      const url = 'https://api.tutrainapp.com/v1/contest/subscriptions';
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -650,7 +650,7 @@ export class FetchService {
   }
   public async getContestQuestions(id): Promise<any>{
     return new Promise((resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/contest/'+id;
+      const url = 'https://api.tutrainapp.com/v1/contest/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -668,7 +668,7 @@ export class FetchService {
   public async contestDidAnswerer(id): Promise<any>{
     return new Promise( async (resolve,reject) => {
       const user = await this.storage.get('user');
-      const url = 'https://tapp.scd.edu.om/api/v1/contest/'+id+'/answered';
+      const url = 'https://api.tutrainapp.com/v1/contest/'+id+'/answered';
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
@@ -689,7 +689,7 @@ export class FetchService {
       const data = {
         answer: answererID
       };
-      const url = 'https://tapp.scd.edu.om/api/v1/contest/'+contestID+'/';
+      const url = 'https://api.tutrainapp.com/v1/contest/'+contestID+'/';
       this.http.sendRequest( url , {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
@@ -713,7 +713,7 @@ export class FetchService {
         mimeType: 'multipart/form-data',
         headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID}
       }
-      this.fileTransfer.upload(uploadVideo.uri, encodeURI('https://tapp.scd.edu.om/api/v1/users/uploadbio'), options).then((data) => {
+      this.fileTransfer.upload(uploadVideo.uri, encodeURI('https://api.tutrainapp.com/v1/users/uploadbio'), options).then((data) => {
         resolve(JSON.parse(data.response))
       }, (err) => {
         reject(err);
@@ -734,14 +734,14 @@ export class FetchService {
           params: data,
           headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID}
        }
-        this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/users/upload'), options).then((data) => {
+        this.fileTransfer.upload(imageData.path, encodeURI('https://api.tutrainapp.com/v1/users/upload'), options).then((data) => {
           resolve(JSON.parse(data.response))
         }, (err) => {
           reject(err);
 
         })
       }else{
-        const url = 'https://tapp.scd.edu.om/api/v1/users/upload';
+        const url = 'https://api.tutrainapp.com/v1/users/upload';
         this.http.sendRequest( url , {
           method: 'post',
           headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+userID},
@@ -771,14 +771,14 @@ export class FetchService {
           params: data,
           headers: {'Authorization' : 'Bearer '+this.apiKey}
        }
-        this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/session/'+id+'/upload'), options).then((data) => {
+        this.fileTransfer.upload(imageData.path, encodeURI('https://api.tutrainapp.com/v1/session/'+id+'/upload'), options).then((data) => {
           resolve(JSON.parse(data.response))
         }, (err) => {
           reject(err);
 
         })
       }else{
-        const url = 'https://tapp.scd.edu.om/api/v1/session/'+id+'/update';
+        const url = 'https://api.tutrainapp.com/v1/session/'+id+'/update';
         this.http.sendRequest( url , {
           method: 'post',
           headers: {'content-type' : 'application/json','Authorization' :  'Bearer '+this.apiKey},
@@ -807,7 +807,7 @@ export class FetchService {
         params: data,
         headers: {'Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id}
       }
-      this.fileTransfer.upload(imageData.path, encodeURI('https://tapp.scd.edu.om/api/v1/session/create'), options).then((data) => {
+      this.fileTransfer.upload(imageData.path, encodeURI('https://api.tutrainapp.com/v1/session/create'), options).then((data) => {
         resolve(JSON.parse(data.response))
       }, (err) => {
         reject(err);
@@ -817,7 +817,7 @@ export class FetchService {
   
   public async changeUserPassword(userID,data): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+userID+'/password';
+      const url = 'https://api.tutrainapp.com/v1/users/'+userID+'/password';
       this.http.sendRequest( url, {
         method: 'post',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -835,7 +835,7 @@ export class FetchService {
   }
   public async getAllNewCoursePages(id,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/courses/allnew/'+page;
+      const url = 'https://api.tutrainapp.com/v1/courses/allnew/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+id},
@@ -852,7 +852,7 @@ export class FetchService {
   }
   public async getAllCoursesInCategory(id,categoryID,page): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/category/'+categoryID+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/category/'+categoryID+'/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+id},
@@ -869,7 +869,7 @@ export class FetchService {
   }
   public async getWinners(): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/contest/winner';
+      const url = 'https://api.tutrainapp.com/v1/contest/winner';
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -886,7 +886,7 @@ export class FetchService {
   }
   public async deleteSession(id): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/session/delete/'+id;
+      const url = 'https://api.tutrainapp.com/v1/session/delete/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -903,7 +903,7 @@ export class FetchService {
   }
   public async getAllSeatBySession(id): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/session/seats/'+id;
+      const url = 'https://api.tutrainapp.com/v1/session/seats/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -920,7 +920,7 @@ export class FetchService {
   }
   public async getAllCourses(id,page): Promise<any>{
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/users/'+id+'/all/courses/'+page;
+      const url = 'https://api.tutrainapp.com/v1/users/'+id+'/all/courses/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
@@ -938,7 +938,7 @@ export class FetchService {
   public async searchCoursesWithinUser(value,page): Promise<any>{
     const user = await this.storage.get('user');
     return new Promise( (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/search/user/courses/'+value+'/'+page;
+      const url = 'https://api.tutrainapp.com/v1/search/user/courses/'+value+'/'+page;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey,"userID": ""+user.user_id},
@@ -955,7 +955,7 @@ export class FetchService {
   }  
   public async deleteCourse(id): Promise<any>{
     return new Promise( async (resolve,reject) => {
-      const url = 'https://tapp.scd.edu.om/api/v1/course/delete/'+id;
+      const url = 'https://api.tutrainapp.com/v1/course/delete/'+id;
       this.http.sendRequest( url , {
         method: 'get',
         headers: {'content-type' : 'application/json','Authorization' : 'Bearer '+this.apiKey},
