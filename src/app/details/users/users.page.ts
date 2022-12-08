@@ -88,10 +88,10 @@ export class UsersPage implements OnInit {
        const response = data.data.isReported; // Here's your selected user!
       if(response === true)
       {
-        this.alertMessage(this.translate.instant('message.report'),this.translate.instant('message.successreport')+ this.user.fullname);
+        this.alertMessage(this.translate.instant('messages.report'),this.translate.instant('messages.successreport')+ this.user.fullname);
       }else
       {
-        this.alertMessage(this.translate.instant('message.report'),this.translate.instant('message.errorreporting'));
+        this.alertMessage(this.translate.instant('messages.report'),this.translate.instant('messages.errorreporting'));
       }
     });
     await modal.present();
@@ -101,7 +101,7 @@ export class UsersPage implements OnInit {
       cssClass: 'my-custom-class',
       header,
       message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();
@@ -123,7 +123,7 @@ export class UsersPage implements OnInit {
       {
         const loading = await this.loadingController.create({
           cssClass: 'my-custom-class',
-          message: this.translate.instant('message.pleasewait')
+          message: this.translate.instant('messages.pleasewait')
         });
         await loading.present();
         const loginUser = await this.storage.get('user');
@@ -144,13 +144,13 @@ export class UsersPage implements OnInit {
           const json = JSON.parse(response.data).response;
           if(json.id){
             await loading.dismiss();
-            this.alertMessage(this.translate.instant('message.booking'),this.translate.instant('message.bookingerror')+ this.user.fullname);
+            this.alertMessage(this.translate.instant('messages.booking'),this.translate.instant('messages.bookingerror')+ this.user.fullname);
           }else if(json.results === "duplicate"){
             await loading.dismiss();
-            this.alertMessage(this.translate.instant('message.duplicate'),this.translate.instant('message.duplicateerror'));
+            this.alertMessage(this.translate.instant('messages.duplicate'),this.translate.instant('messages.duplicateerror'));
           }else{
             await loading.dismiss();
-            this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.usererror'));
+            this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.usererror'));
           }
         });
       }

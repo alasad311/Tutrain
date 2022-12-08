@@ -56,7 +56,7 @@ export class EditProfilePage implements OnInit {
     });
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.loadingprofile')
+      message: this.translate.instant('messages.loadingprofile')
     });
     await loading.present();
     this.user = await this.storage.get('user');
@@ -164,7 +164,7 @@ export class EditProfilePage implements OnInit {
   async updateProfile(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.updatingprofile')
+      message: this.translate.instant('messages.updatingprofile')
     });
     await loading.present();
     //lets begin updateing
@@ -211,7 +211,7 @@ export class EditProfilePage implements OnInit {
             this.goBackHome();
           }else{
             await loading.dismiss();
-            this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdateprofile'));
+            this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.couldntupdateprofile'));
             this.isDisablied = false;
           }
 
@@ -219,12 +219,12 @@ export class EditProfilePage implements OnInit {
         }).catch(async (error) => {
           //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
           await loading.dismiss();
-          this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdateprofile'));
+          this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.couldntupdateprofile'));
           this.isDisablied = false;
        });
       }else{
         await loading.dismiss();
-        this.alertMessage(this.translate.instant('message.nothing'),this.translate.instant('message.nothingerror'));
+        this.alertMessage(this.translate.instant('messages.nothing'),this.translate.instant('messages.nothingerror'));
         this.isDisablied = false;
         return false;
       }
@@ -250,7 +250,7 @@ export class EditProfilePage implements OnInit {
     this.hideVideo = null;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.loadingvideo')
+      message: this.translate.instant('messages.loadingvideo')
     });
     await this.chooser.getFile('video/*')
     .then(
@@ -312,7 +312,7 @@ export class EditProfilePage implements OnInit {
       cssClass: 'my-custom-class',
       header,
       message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();

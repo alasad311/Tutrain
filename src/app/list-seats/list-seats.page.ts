@@ -24,7 +24,7 @@ export class ListSeatsPage implements OnInit {
   async ngOnInit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewaitsession')
+      message: this.translate.instant('messages.pleasewaitsession')
     });
     await loading.present();
     this.fetch.getAllSeatBySession(this.sessionID).then(async (response) =>{

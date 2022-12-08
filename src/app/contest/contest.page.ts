@@ -54,9 +54,9 @@ export class ContestPage implements OnInit {
     if(this.contestAnswerer)
     {
       this.isDisabled = true;
-      this.alertMessageWithBtn(this.translate.instant('message.areyousure'),"")
+      this.alertMessageWithBtn(this.translate.instant('messages.areyousure'),"")
     }else{
-      this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.haventselectedanswerer'))
+      this.util.showWarningAlert(this.translate.instant('messages.error'),this.translate.instant('messages.haventselectedanswerer'))
     }
   }
   goBackHome(){
@@ -75,20 +75,20 @@ export class ContestPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: async () => {
             const loading = await this.loadingController.create({
               cssClass: 'my-custom-class',
-              message: this.translate.instant('message.pleasewait')
+              message: this.translate.instant('messages.pleasewait')
             });
             await loading.present();
             this.fetch.submitUserAnswerer(this.contest[0].id,this.contestAnswerer).then(async (response)=>{
               if(JSON.parse(response.data).id)
               {
                 await loading.dismiss();
-                this.alertMessageWithBtn2(this.translate.instant('message.success'),
-                this.translate.instant('message.answersubmitted'),this.contest[0].id);
+                this.alertMessageWithBtn2(this.translate.instant('messages.success'),
+                this.translate.instant('messages.answersubmitted'),this.contest[0].id);
               }
             })
           }
@@ -112,7 +112,7 @@ export class ContestPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             this.contest = null;

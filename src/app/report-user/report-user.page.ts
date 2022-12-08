@@ -28,7 +28,7 @@ export class ReportUserPage implements OnInit {
       const user = await this.storage.get('user');
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: this.translate.instant('message.pleasewait'),
+        message: this.translate.instant('messages.pleasewait'),
       });
       await loading.present();
       this.isDisablied = true;
@@ -50,7 +50,7 @@ export class ReportUserPage implements OnInit {
       });
       
     }else{
-      this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.reportUserMessage'));
+      this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.reportUserMessage'));
     }
 
   }
@@ -65,7 +65,7 @@ export class ReportUserPage implements OnInit {
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();

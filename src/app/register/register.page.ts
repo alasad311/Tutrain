@@ -146,14 +146,14 @@ export class RegisterPage implements OnInit {
         const json = JSON.parse(response.data);
         if(json.code === 'ER_DUP_ENTRY')
         {
-          this.alertMessage(this.translate.instant('message.errorwithnum')+' #12',this.translate.instant('message.loginerror12'),'');
+          this.alertMessage(this.translate.instant('messages.errorwithnum')+' #12',this.translate.instant('messages.loginerror12'),'');
           this.isDisablied = false;
         }
         else if(json.id){
-          this.alertMessage(this.translate.instant('message.welcome'),this.translate.instant('message.welcomemessage'),'login');
+          this.alertMessage(this.translate.instant('messages.welcome'),this.translate.instant('messages.welcomemessage'),'login');
         }
       }).catch((error) => {
-        this.alertMessage(this.translate.instant('message.errorwithnum')+' #1',this.translate.instant('message.loginerror1'),'');
+        this.alertMessage(this.translate.instant('messages.errorwithnum')+' #1',this.translate.instant('messages.loginerror1'),'');
         this.isDisablied = false;
      });
 
@@ -168,7 +168,7 @@ export class RegisterPage implements OnInit {
       message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             if(location)

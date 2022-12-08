@@ -127,8 +127,8 @@ export class CoursesPage implements OnInit {
     this.nav.back();
   }
   purchaseCourse(){
-    this.alertMessage(this.translate.instant('message.purchase'),
-    this.translate.instant('message.areyousurebuy')+this.course.name);
+    this.alertMessage(this.translate.instant('messages.purchase'),
+    this.translate.instant('messages.areyousurebuy')+this.course.name);
   }
   async showPaymentPage() {
     const modal = await this.modalController.create({
@@ -161,13 +161,13 @@ export class CoursesPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             this.showPaymentPage()
           }
         },{
-          text: this.translate.instant('message.cancel'),
+          text: this.translate.instant('messages.cancel'),
           id: 'cancel-button',
           handler: () => {
             

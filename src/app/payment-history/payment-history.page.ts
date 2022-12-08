@@ -81,7 +81,7 @@ export class PaymentHistoryPage implements OnInit {
   {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     const datas = {
@@ -94,9 +94,9 @@ export class PaymentHistoryPage implements OnInit {
       if(json.id){
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: this.translate.instant('message.rated'),
-          message: this.translate.instant('message.ratedMessage',{order:ordernumber}) ,
-          buttons: [this.translate.instant('message.ok')]
+          header: this.translate.instant('messages.rated'),
+          message: this.translate.instant('messages.ratedMessage',{order:ordernumber}) ,
+          buttons: [this.translate.instant('messages.ok')]
         });
         this.orders = null;
         this.fetch.getUserOrders(this.user.user_id,this.page).then(async (response) => {
@@ -114,7 +114,7 @@ export class PaymentHistoryPage implements OnInit {
   {
     const alert = await this.alertController.create({
       cssClass: 'alertstar',
-      header: this.translate.instant('message.rateorder')+ordernumber,
+      header: this.translate.instant('messages.rateorder')+ordernumber,
       buttons: [
         { text: '1',  cssClass:'letstest', handler: data => { this.resolveRec(1,id,ordernumber);}},
         { text: '2',  cssClass:'letstest', handler: data => { this.resolveRec(2,id,ordernumber);}},

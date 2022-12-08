@@ -86,8 +86,8 @@ export class HomePage implements OnInit {
       setTimeout( () => {
         if(this.users.tags == null || this.users.picture == null || this.users.hour_price == null)
         {
-          this.alertMessageWithBtn(this.translate.instant('message.missingprofile'),
-          this.translate.instant('message.missingprofilemessage',{fullname: this.users.fullname}));
+          this.alertMessageWithBtn(this.translate.instant('messages.missingprofile'),
+          this.translate.instant('messages.missingprofilemessage',{fullname: this.users.fullname}));
         }
         //fetch ads
         this.fetch.getHomePage(this.users.email).then((response) => {
@@ -125,14 +125,14 @@ export class HomePage implements OnInit {
       message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             alert.dismiss();
             this.router.navigate(['setting']);
           }
         },{
-          text: this.translate.instant('message.cancel'),
+          text: this.translate.instant('messages.cancel'),
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();

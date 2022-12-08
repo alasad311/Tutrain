@@ -56,7 +56,7 @@ export class SubscriptionPage implements OnInit {
       {
         const loading = await this.loadingController.create({
           cssClass: 'my-custom-class',
-          message: this.translate.instant('message.pleasewait')
+          message: this.translate.instant('messages.pleasewait')
         });
         await loading.present();
         let user = await this.storage.get('user');

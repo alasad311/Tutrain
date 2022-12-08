@@ -122,22 +122,22 @@ export class SessionListPage implements OnInit {
     if(status){
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: this.translate.instant('message.sessionDelete')
+        message: this.translate.instant('messages.sessionDelete')
       });
       await loading.present();
       this.fetch.deleteSession(id).then(async (response) =>{
         if(JSON.parse(response.data).result)
         {
-          this.util.showWarningAlert(this.translate.instant('message.success'),this.translate.instant('message.sucessdeletesession'));
+          this.util.showWarningAlert(this.translate.instant('messages.success'),this.translate.instant('messages.sucessdeletesession'));
           await loading.dismiss();
           this.onClear();
         }else{
           await loading.dismiss();
-          this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.cantdeletedateexpired'));
+          this.util.showWarningAlert(this.translate.instant('messages.error'),this.translate.instant('messages.cantdeletedateexpired'));
         }
       });
     }else{
-      this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.cantdeleteseatsold'));
+      this.util.showWarningAlert(this.translate.instant('messages.error'),this.translate.instant('messages.cantdeleteseatsold'));
     }
   }
 
@@ -186,7 +186,7 @@ export class SessionListPage implements OnInit {
         }
       });
     }else{
-      this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.cantdeleteseatsold'));
+      this.util.showWarningAlert(this.translate.instant('messages.error'),this.translate.instant('messages.cantdeleteseatsold'));
 
     }
   }

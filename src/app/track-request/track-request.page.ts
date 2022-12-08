@@ -223,7 +223,7 @@ export class TrackRequestPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     this.fetch.cancelBooking({is_trash: true,bookid : id}).then(async (response) => {
@@ -232,9 +232,9 @@ export class TrackRequestPage implements OnInit {
       {
         await loading.dismiss();
         const alertRes = await this.alertController.create({
-          header: this.translate.instant('message.updated'),
-          message:  this.translate.instant('message.bookingupdated'),
-          buttons: [this.translate.instant('message.ok')]});
+          header: this.translate.instant('messages.updated'),
+          message:  this.translate.instant('messages.bookingupdated'),
+          buttons: [this.translate.instant('messages.ok')]});
         await alertRes.present();
         this.requests = null;
         this.showNull = false;
@@ -248,9 +248,9 @@ export class TrackRequestPage implements OnInit {
       }else{
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: this.translate.instant('message.error'),
-            message:  this.translate.instant('message.errormessage'),
-            buttons: [this.translate.instant('message.ok')]});
+            header: this.translate.instant('messages.error'),
+            message:  this.translate.instant('messages.errormessage'),
+            buttons: [this.translate.instant('messages.ok')]});
           await alertRes.present();
           this.requests = null;
           this.showNull = false;
@@ -270,7 +270,7 @@ export class TrackRequestPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     this.fetch.updateBooking({is_accpeted: true,bookid : id}).then(async (response) => {
@@ -279,9 +279,9 @@ export class TrackRequestPage implements OnInit {
       {
         await loading.dismiss();
         const alertRes = await this.alertController.create({
-          header: this.translate.instant('message.updated'),
-          message:  this.translate.instant('message.bookingupdated'),
-          buttons: [this.translate.instant('message.ok')]});
+          header: this.translate.instant('messages.updated'),
+          message:  this.translate.instant('messages.bookingupdated'),
+          buttons: [this.translate.instant('messages.ok')]});
         await alertRes.present();
         this.requests = null;
         this.showNull = false;
@@ -295,9 +295,9 @@ export class TrackRequestPage implements OnInit {
       }else{
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: this.translate.instant('message.error'),
-            message:  this.translate.instant('message.errormessage'),
-            buttons: [this.translate.instant('message.ok')]});
+            header: this.translate.instant('messages.error'),
+            message:  this.translate.instant('messages.errormessage'),
+            buttons: [this.translate.instant('messages.ok')]});
           await alertRes.present();
           this.requests = null;
           this.showNull = false;
@@ -318,7 +318,7 @@ export class TrackRequestPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     this.fetch.updateBooking({is_accpeted: false,bookid : id}).then(async (response) => {
@@ -327,9 +327,9 @@ export class TrackRequestPage implements OnInit {
       {
         await loading.dismiss();
         const alertRes = await this.alertController.create({
-          header: this.translate.instant('message.updated'),
-          message:  this.translate.instant('message.bookingupdated'),
-          buttons: [this.translate.instant('message.ok')]});
+          header: this.translate.instant('messages.updated'),
+          message:  this.translate.instant('messages.bookingupdated'),
+          buttons: [this.translate.instant('messages.ok')]});
         await alertRes.present();
         this.requests = null;
         this.showNull = false;
@@ -343,9 +343,9 @@ export class TrackRequestPage implements OnInit {
       }else{
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: this.translate.instant('message.error'),
-            message:  this.translate.instant('message.errormessage'),
-            buttons: [this.translate.instant('message.ok')]});
+            header: this.translate.instant('messages.error'),
+            message:  this.translate.instant('messages.errormessage'),
+            buttons: [this.translate.instant('messages.ok')]});
           await alertRes.present();
           this.requests = null;
           this.showNull = false;

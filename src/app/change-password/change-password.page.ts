@@ -58,7 +58,7 @@ export class ChangePasswordPage implements OnInit {
       return false;
     } else {
       let data = JSON.parse(JSON.stringify(this.passwordChange.value));
-      this.alertMessageWithBtn(this.translate.instant('message.areyousure'),"",data)
+      this.alertMessageWithBtn(this.translate.instant('messages.areyousure'),"",data)
 
     }
     
@@ -93,7 +93,7 @@ export class ChangePasswordPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: async () => {
             this.fetch.changeUserPassword(this.user.user_id,data).then(async (response) => {
@@ -101,21 +101,21 @@ export class ChangePasswordPage implements OnInit {
               if(result)
               {
                 this.isDisablied = false;
-               this.alertMessageWithoutBtn(this.translate.instant('message.changed'),this.translate.instant('message.passwordupdated'));
+               this.alertMessageWithoutBtn(this.translate.instant('messages.changed'),this.translate.instant('messages.passwordupdated'));
                this.goBackHome();
               }else{
                 this.isDisablied = false;
-                this.alertMessageWithoutBtn(this.translate.instant('message.error'),this.translate.instant('message.passworddoesntmatch'));
+                this.alertMessageWithoutBtn(this.translate.instant('messages.error'),this.translate.instant('messages.passworddoesntmatch'));
               }
       
             }).catch((error) => {
               this.isDisablied = false;
-              this.alertMessageWithoutBtn(this.translate.instant('message.error'),this.translate.instant('message.couldntprocess'));
+              this.alertMessageWithoutBtn(this.translate.instant('messages.error'),this.translate.instant('messages.couldntprocess'));
             });
             
           }
         },{
-          text: this.translate.instant('message.cancel'),
+          text: this.translate.instant('messages.cancel'),
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();
@@ -132,7 +132,7 @@ export class ChangePasswordPage implements OnInit {
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();

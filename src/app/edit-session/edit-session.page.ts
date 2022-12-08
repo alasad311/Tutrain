@@ -46,7 +46,7 @@ export class EditSessionPage implements OnInit {
     });
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewaitsession')
+      message: this.translate.instant('messages.pleasewaitsession')
     });
     await loading.present();
     this.fetch.getSessionDetails(this.sessionID).then( async (response) =>{
@@ -75,7 +75,7 @@ export class EditSessionPage implements OnInit {
   async updateSession(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.updatingsession')
+      message: this.translate.instant('messages.updatingsession')
     });
     await loading.present();
     //lets begin updateing
@@ -91,19 +91,19 @@ export class EditSessionPage implements OnInit {
         if(response.response.results == 'success')
         {
           await loading.dismiss();
-          this.alertMessage(this.translate.instant('message.updated'),this.translate.instant('message.sessionupdated'));
+          this.alertMessage(this.translate.instant('messages.updated'),this.translate.instant('messages.sessionupdated'));
           this.goBackHome({
             dismissed : true
           });
         }else{
           await loading.dismiss();
-          this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdatesession'));
+          this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.couldntupdatesession'));
           this.isDisablied = false;
         }
       }).catch(async (error) => {
         //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
         await loading.dismiss();
-        this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.couldntupdatesession'));
+        this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.couldntupdatesession'));
         this.isDisablied = false;
      });
 
@@ -135,7 +135,7 @@ export class EditSessionPage implements OnInit {
       cssClass: 'my-custom-class',
       header,
       message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();

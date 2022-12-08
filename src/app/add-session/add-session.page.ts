@@ -57,7 +57,7 @@ export class AddSessionPage implements OnInit {
   async updateSession(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.updatingsession')
+      message: this.translate.instant('messages.updatingsession')
     });
     await loading.present();
     //lets begin updateing
@@ -73,19 +73,19 @@ export class AddSessionPage implements OnInit {
         if(response.response.results == 'success')
         {
           await loading.dismiss();
-          this.alertMessage(this.translate.instant('message.updated'),'Session updated successfully!');
+          this.alertMessage(this.translate.instant('messages.updated'),'Session updated successfully!');
           this.goBackHome({
             dismissed : true
           });
         }else{
           await loading.dismiss();
-          this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.coudntupdate'));
+          this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.coudntupdate'));
           this.isDisablied = false;
         }
       }).catch(async (error) => {
         //this.alertMessage('Error: #1','Service seems offline or unavailable at the moment','');
         await loading.dismiss();
-        this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.coudntupdate'));
+        this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.coudntupdate'));
         this.isDisablied = false;
      });
 
@@ -117,7 +117,7 @@ export class AddSessionPage implements OnInit {
       cssClass: 'my-custom-class',
       header,
       message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();

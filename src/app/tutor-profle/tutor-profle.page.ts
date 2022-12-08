@@ -21,7 +21,7 @@ export class TutorProflePage implements OnInit {
   async ngOnInit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.loadingprofile')
+      message: this.translate.instant('messages.loadingprofile')
     });
     await loading.present();
     const users = await this.storage.get('user');

@@ -27,7 +27,7 @@ export class InviteFriendPage implements OnInit {
       this.lang = language[0];
     });
     const user = await this.storage.get('user');
-    this.refCode = "https://tapp.scd.edu.om/referral/?ref="+user.ref_code;
+    this.refCode = "https://tutrain.com/referral/?ref="+user.ref_code;
 
     this.fetch.getUserInvites(user.ref_code).then(async (response) => {
       const json = JSON.parse(response.data).response[0];
@@ -43,7 +43,7 @@ export class InviteFriendPage implements OnInit {
       string: this.refCode
     });
     const toast = await toastController.create({
-      message: this.translate.instant('message.copiedreferral'),
+      message: this.translate.instant('messages.copiedreferral'),
       duration: 2000
     });
     toast.present();

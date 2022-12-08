@@ -121,18 +121,18 @@ export class CourseListPage implements OnInit {
   async deleteSession(id){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewaitdeleting')
+      message: this.translate.instant('messages.pleasewaitdeleting')
     });
     await loading.present();
     this.fetch.deleteCourse(id).then(async (response) =>{
       if(JSON.parse(response.data).result)
       {
-        this.util.showWarningAlert(this.translate.instant('message.success'),this.translate.instant('message.deletecourse'));
+        this.util.showWarningAlert(this.translate.instant('messages.success'),this.translate.instant('messages.deletecourse'));
         await loading.dismiss();
         this.onClear();
       }else{
         await loading.dismiss();
-        this.util.showWarningAlert(this.translate.instant('message.error'),this.translate.instant('message.couldntdeletecourse'));
+        this.util.showWarningAlert(this.translate.instant('messages.error'),this.translate.instant('messages.couldntdeletecourse'));
       }
     });
   }
@@ -141,6 +141,6 @@ export class CourseListPage implements OnInit {
     this.navCtrl.back();
   }
   // async createSession(){
-  //   window.open('https://tapp.scd.edu.om', '_system');
+  //   window.open('https://tutrain.com', '_system');
   // }
 }

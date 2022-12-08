@@ -91,7 +91,7 @@ export class SplashPage implements OnInit {
           // Example url: https://beerswift.app/tabs/tab2
           // slug = /tabs/tab2
           const slug = event.url.split('?')[0];
-          if (slug == 'https://tapp.scd.edu.om/referral/') {
+          if (slug == 'https://tutrain.com/referral/') {
             if (user) {
               this.router.navigate(['home']);
               this.user = user;
@@ -107,7 +107,7 @@ export class SplashPage implements OnInit {
               this.menuCtrl.enable(false);
               this.router.navigate(['register'],navigationExtras);
             }
-          }else if(slug == 'https://tapp.scd.edu.om/openlogin/')
+          }else if(slug == 'https://tutrain.com/openlogin/')
           {
             if (user) {
               this.router.navigate(['home']);
@@ -149,16 +149,16 @@ export class SplashPage implements OnInit {
         });
         if(response.type == 'NEWSESSION')
         {
-          this.alertMessage(this.translate.instant('message.newsessiontitle'),response.userFullName +
-          this.translate.instant('message.newsessionbody',{slotDate: response.slotDate ,timeFrom:response.timeFrom})
+          this.alertMessage(this.translate.instant('messages.newsessiontitle'),response.userFullName +
+          this.translate.instant('messages.newsessionbody',{slotDate: response.slotDate ,timeFrom:response.timeFrom})
           + response.timeTo,response.bookID);
         }else if(response.type == 'SESSIONCANCELLED'){
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.sessioncancelled'),
-                body: this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
-                largeBody : this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
+                title : this.translate.instant('messages.sessioncancelled'),
+                body: this.translate.instant('messages.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
+                largeBody : this.translate.instant('messages.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -179,10 +179,10 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.sessionstatus',{statuss: status}) ,
-                body: this.translate.instant('message.sessiionstatusbody',
+                title : this.translate.instant('messages.sessionstatus',{statuss: status}) ,
+                body: this.translate.instant('messages.sessiionstatusbody',
                 {fullname: response.userFullName,statuss: status,date:response.slotDate}),
-                largeBody : this.translate.instant('message.sessiionstatusbody',
+                largeBody : this.translate.instant('messages.sessiionstatusbody',
                 {fullname: response.userFullName,statuss: status,date:response.slotDate}),
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
@@ -214,8 +214,8 @@ export class SplashPage implements OnInit {
             }else if(response.type == 'NEWORDER'){
               this.router.navigate(['/track-request']);
             }else{
-              this.alertMessageStudent(this.translate.instant('message.rejected'),response.userFullName+
-              this.translate.instant('message.rejectedmessage'));
+              this.alertMessageStudent(this.translate.instant('messages.rejected'),response.userFullName+
+              this.translate.instant('messages.rejectedmessage'));
             }
 
           });
@@ -224,17 +224,17 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.neworder'),
-                body: this.translate.instant('message.neworder',{fullname : response.userName}),
-                largeBody : this.translate.instant('message.neworder',{fullname : response.userName}),
+                title : this.translate.instant('messages.neworder'),
+                body: this.translate.instant('messages.neworder',{fullname : response.userName}),
+                largeBody : this.translate.instant('messages.neworder',{fullname : response.userName}),
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
             },
             {
-              title : this.translate.instant('message.sessionreminder'),
-              body: this.translate.instant('message.sessionremindermessage',{fullname: response.userName}),
-              largeBody : this.translate.instant('message.sessionremindermessage',{fullname: response.userName}),
+              title : this.translate.instant('messages.sessionreminder'),
+              body: this.translate.instant('messages.sessionremindermessage',{fullname: response.userName}),
+              largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: response.userName}),
               id : this.generateRandomCode(),
               schedule: {
                   at: slotDate,
@@ -250,9 +250,9 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.neworder'),
-                body: this.translate.instant('message.newordermessage',{course: response.coursename}),
-                largeBody : this.translate.instant('message.newordermessage',{course: response.coursename}),
+                title : this.translate.instant('messages.neworder'),
+                body: this.translate.instant('messages.newordermessage',{course: response.coursename}),
+                largeBody : this.translate.instant('messages.newordermessage',{course: response.coursename}),
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -263,9 +263,9 @@ export class SplashPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-              title : this.translate.instant('message.neworder'),
-              body: this.translate.instant('message.newordermessage',{course: response.coursename}),
-              largeBody : this.translate.instant('message.newordermessage',{course: response.coursename}),
+              title : this.translate.instant('messages.neworder'),
+              body: this.translate.instant('messages.newordermessage',{course: response.coursename}),
+              largeBody : this.translate.instant('messages.newordermessage',{course: response.coursename}),
               id : this.generateRandomCode(),
               channelId: 'tutrain-default',
               group:'tutrainapp'
@@ -283,16 +283,16 @@ export class SplashPage implements OnInit {
         const response = JSON.parse(JSON.stringify(notification)).notification.data;
         if(response.type == 'NEWSESSION')
         {
-          this.alertMessage(this.translate.instant('message.newsessiontitle'),response.userFullName +
-          this.translate.instant('message.newsessionbody',{slotDate: response.slotDate ,timeFrom:response.timeFrom})
+          this.alertMessage(this.translate.instant('messages.newsessiontitle'),response.userFullName +
+          this.translate.instant('messages.newsessionbody',{slotDate: response.slotDate ,timeFrom:response.timeFrom})
           + response.timeTo,response.bookID);
         }else if(response.type == 'SESSIONCANCELLED'){
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.sessioncancelled'),
-                body: this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
-                largeBody : this.translate.instant('message.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
+                title : this.translate.instant('messages.sessioncancelled'),
+                body: this.translate.instant('messages.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
+                largeBody : this.translate.instant('messages.sessioncancelledmessage',{fullname:response.fullname,date:response.date}) ,
                 id : this.generateRandomCode(),
                 channelId: 'tutrain-default',
                 group:'tutrainapp'
@@ -322,7 +322,7 @@ export class SplashPage implements OnInit {
               });
               await modal.present();
             }else{
-              this.alertMessageStudent(this.translate.instant('message.rejected'),response.userFullName+this.translate.instant('message.rejected'));
+              this.alertMessageStudent(this.translate.instant('messages.rejected'),response.userFullName+this.translate.instant('messages.rejected'));
             }
         }else if(response.type == 'NEWORDER'){
           this.router.navigate(['/track-request']);

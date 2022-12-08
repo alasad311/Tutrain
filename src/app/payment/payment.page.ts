@@ -121,7 +121,7 @@ export class PaymentPage implements OnInit {
         browser.on('exit').subscribe(event => { this.checkPaymentSession(true); });
       }else{
         this.isDisablied = false;
-        this.alertMessage(this.translate.instant('message.error'),this.translate.instant('message.removedsession'))
+        this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.removedsession'))
       }
 
     }).catch((error) => {
@@ -134,7 +134,7 @@ export class PaymentPage implements OnInit {
     {
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: this.translate.instant('message.pleasewait')
+        message: this.translate.instant('messages.pleasewait')
       });
       await loading.present();
       const user = await this.storage.get('user');
@@ -153,16 +153,16 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage(this.translate.instant('message.payment'),
-          this.translate.instant('message.youhavepaid')+ ((this.tuturHourCost * this.durationSelect )+this.service).toFixed(3));
+          this.alertMessage(this.translate.instant('messages.payment'),
+          this.translate.instant('messages.youhavepaid')+ ((this.tuturHourCost * this.durationSelect )+this.service).toFixed(3));
           const randomId = Math.floor(Math.random() * 10000) + 1;
           const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.sessionreminder'),
-                body: this.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
-                largeBody : this.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
+                title : this.translate.instant('messages.sessionreminder'),
+                body: this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
+                largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
                 id : randomId,
                 schedule: {
                     at: slotDate,
@@ -189,7 +189,7 @@ export class PaymentPage implements OnInit {
     {
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: this.translate.instant('message.pleasewait')
+        message: this.translate.instant('messages.pleasewait')
       });
       await loading.present();
       const user = await this.storage.get('user');
@@ -208,7 +208,7 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage(this.translate.instant('message.payment'),this.translate.instant('message.youhavepaid')+ (this.course.price+this.service).toFixed(3) );
+          this.alertMessage(this.translate.instant('messages.payment'),this.translate.instant('messages.youhavepaid')+ (this.course.price+this.service).toFixed(3) );
         }
 
       }).catch((error) => {
@@ -243,7 +243,7 @@ export class PaymentPage implements OnInit {
     {
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: this.translate.instant('message.pleasewait')
+        message: this.translate.instant('messages.pleasewait')
       });
       await loading.present();
       const user = await this.storage.get('user');
@@ -262,7 +262,7 @@ export class PaymentPage implements OnInit {
         const json = JSON.parse(response.data).response;
         await loading.dismiss();
         if(json.id){
-          this.alertMessage(this.translate.instant('message.payment'),this.translate.instant('message.youhavepaid')+ (this.subscription.price).toFixed(3) );
+          this.alertMessage(this.translate.instant('messages.payment'),this.translate.instant('messages.youhavepaid')+ (this.subscription.price).toFixed(3) );
         }
 
       }).catch((error) => {
@@ -297,7 +297,7 @@ export class PaymentPage implements OnInit {
     {
       const loading = await this.loadingController.create({
         cssClass: 'my-custom-class',
-        message: this.translate.instant('message.pleasewait')
+        message: this.translate.instant('messages.pleasewait')
       });
       await loading.present();
       const user = await this.storage.get('user');
@@ -320,9 +320,9 @@ export class PaymentPage implements OnInit {
           LocalNotifications.schedule({
             notifications:[
             {
-                title : this.translate.instant('message.sessionreminder'),
-                body: this.translate.instant('message.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
-                largeBody :this.translate.instant('message.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
+                title : this.translate.instant('messages.sessionreminder'),
+                body: this.translate.instant('messages.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
+                largeBody :this.translate.instant('messages.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
                 id : randomId,
                 schedule: {
                     at: this.session.startdate,
@@ -334,8 +334,8 @@ export class PaymentPage implements OnInit {
             }]
           });
 
-          this.alertMessage(this.translate.instant('message.payment'),
-          this.translate.instant('message.youhavepaid')+ (this.session.price+this.service).toFixed(3) );
+          this.alertMessage(this.translate.instant('messages.payment'),
+          this.translate.instant('messages.youhavepaid')+ (this.session.price+this.service).toFixed(3) );
         }
 
       }).catch((error) => {
@@ -404,7 +404,7 @@ export class PaymentPage implements OnInit {
     this.isDisablied = true;
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     const user = await this.storage.get('user');
@@ -423,16 +423,16 @@ export class PaymentPage implements OnInit {
       const json = JSON.parse(response.data).response;
       await loading.dismiss();
       if(json.id){
-        this.alertMessage(this.translate.instant('message.sessionreminder'),this.translate.instant('message.sessionpayment'));
+        this.alertMessage(this.translate.instant('messages.sessionreminder'),this.translate.instant('messages.sessionpayment'));
         const randomId = Math.floor(Math.random() * 10000) + 1;
 
         const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
         LocalNotifications.schedule({
           notifications:[
           {
-              title : this.translate.instant('message.sessionreminder'),
-              body: this.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
-              largeBody : this.translate.instant('message.sessionremindermessage',{fullname: this.tutor.fullname}),
+              title : this.translate.instant('messages.sessionreminder'),
+              body: this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
+              largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
               id : randomId,
               schedule: {
                   at: slotDate,
@@ -464,7 +464,7 @@ export class PaymentPage implements OnInit {
       message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             alert.dismiss();

@@ -19,7 +19,7 @@ export class WinnersPage implements OnInit {
   async ngOnInit() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.loadinglist')
+      message: this.translate.instant('messages.loadinglist')
     });
     await loading.present();
     this.fetch.getWinners().then(async (response) => {

@@ -42,8 +42,8 @@ export class LoginPage implements OnInit {
         const json = JSON.parse(response.data);
         if(json.response.results === false)
         {
-          this.alertMessage(this.translate.instant('message.errorwithnum')+'#11',
-          this.translate.instant('message.loginerror11'),'','');
+          this.alertMessage(this.translate.instant('messages.errorwithnum')+'#11',
+          this.translate.instant('messages.loginerror11'),'','');
           this.isDisablied = false;
         }
         else if(json.response.results === true && json.response.is_confirmed === true){
@@ -66,27 +66,27 @@ export class LoginPage implements OnInit {
           if(this.pushToken === json.response.user[0].pushtoken)
           {
             await this.storage.set('user',json.response.user[0]);
-            this.alertMessage(this.translate.instant('message.errorwithnum')+'#9',
-            this.translate.instant('message.loginerror9'),'','Resend').then(() => {
+            this.alertMessage(this.translate.instant('messages.errorwithnum')+'#9',
+            this.translate.instant('messages.loginerror9'),'','Resend').then(() => {
               this.router.navigate(['/home']);
             });
           }else{
             this.fetch.updateUserToken({pushtoken: this.pushToken,user_id:json.response.user[0].user_id}).then(async (response) => {
               const json = JSON.parse(response.data);
               await this.storage.set('user',json.response[0]);
-              this.alertMessage(this.translate.instant('message.errorwithnum')+'#9',
-              this.translate.instant('message.loginerror9'),'','Resend').then(() => {
+              this.alertMessage(this.translate.instant('messages.errorwithnum')+'#9',
+              this.translate.instant('messages.loginerror9'),'','Resend').then(() => {
                 this.router.navigate(['/home']);
               });
             });
           }
           this.isDisablied = false;
         }else{
-          this.alertMessage(this.translate.instant('message.errorwithnum')+'#12',this.translate.instant('message.loginerror12'),'','');
+          this.alertMessage(this.translate.instant('messages.errorwithnum')+'#12',this.translate.instant('messages.loginerror12'),'','');
           this.isDisablied = false;
         }
       }).catch((error) => {
-        this.alertMessage(this.translate.instant('message.errorwithnum')+'#1',this.translate.instant('message.loginerror1'),'','');
+        this.alertMessage(this.translate.instant('messages.errorwithnum')+'#1',this.translate.instant('messages.loginerror1'),'','');
         this.isDisablied = false;
      });
 
@@ -120,7 +120,7 @@ export class LoginPage implements OnInit {
         message,
         buttons: [
           {
-            text: this.translate.instant('message.ok'),
+            text: this.translate.instant('messages.ok'),
             id: 'confirm-button',
             handler: () => {
               if(location)
@@ -130,7 +130,7 @@ export class LoginPage implements OnInit {
             }
           },
           {
-            text: this.translate.instant('message.resend'),
+            text: this.translate.instant('messages.resend'),
             id: 'confirm-button',
             handler: () => {
               this.userApi.sendVerification({email: this.email}).then((response) => {
@@ -138,14 +138,14 @@ export class LoginPage implements OnInit {
 
                 if(json.response.sent === false)
                 {
-                  this.alertMessage(this.translate.instant('message.errorwithnum')+'#2',
-                  this.translate.instant('message.loginerror2'),'','');
+                  this.alertMessage(this.translate.instant('messages.errorwithnum')+'#2',
+                  this.translate.instant('messages.loginerror2'),'','');
                 }
                 else if(json.response.sent === true ){
                   this.alertMessage('Sent','Email has been sent again','','');
                 }
               }).catch((error) => {
-                this.alertMessage(this.translate.instant('message.errorwithnum')+'#1',this.translate.instant('message.loginerror1'),'','');
+                this.alertMessage(this.translate.instant('messages.errorwithnum')+'#1',this.translate.instant('messages.loginerror1'),'','');
              });
             }
           }
@@ -159,7 +159,7 @@ export class LoginPage implements OnInit {
         message,
         buttons: [
           {
-            text: this.translate.instant('message.ok'),
+            text: this.translate.instant('messages.ok'),
             id: 'confirm-button',
             handler: () => {
               if(location)

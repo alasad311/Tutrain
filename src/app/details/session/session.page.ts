@@ -81,9 +81,9 @@ export class SessionPage implements OnInit {
   buySeat(){
     if(this.session.seats > 0)
     {
-      this.alertMessage(this.translate.instant('message.purchase'),this.translate.instant('message.buyseat')+this.session.session_name);
+      this.alertMessage(this.translate.instant('messages.purchase'),this.translate.instant('messages.buyseat')+this.session.session_name);
     }else{
-      this.alertMessage2(this.translate.instant('message.full'),this.translate.instant('message.fullsession'));
+      this.alertMessage2(this.translate.instant('messages.full'),this.translate.instant('messages.fullsession'));
     }
   }
   async alertMessage(header,message) {
@@ -93,13 +93,13 @@ export class SessionPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             this.showPaymentPage()
           }
         },{
-          text: this.translate.instant('message.cancel'),
+          text: this.translate.instant('messages.cancel'),
           id: 'cancel-button',
           handler: () => {
             
@@ -115,7 +115,7 @@ export class SessionPage implements OnInit {
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();

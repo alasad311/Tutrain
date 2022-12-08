@@ -55,10 +55,10 @@ export class SettingPage implements OnInit {
     this.isDisablied = true;
     if(this.wallet > 0)
     {
-      this.alertMessageWithBtn(this.translate.instant('message.payout'),this.translate.instant('message.payoutareyoursure'));
+      this.alertMessageWithBtn(this.translate.instant('messages.payout'),this.translate.instant('messages.payoutareyoursure'));
     }else
     {
-      this.alertMessageWithoutBtn(this.translate.instant('message.payout'),this.translate.instant('message.payouterror'));
+      this.alertMessageWithoutBtn(this.translate.instant('messages.payout'),this.translate.instant('messages.payouterror'));
       this.isDisablied = false;
     }
 
@@ -113,14 +113,14 @@ export class SettingPage implements OnInit {
     }
   }
   async deleteAccount(){
-    this.alertMessageWithBtnDelete(this.translate.instant('message.deleteaccount'),this.translate.instant('message.areyousure'))
+    this.alertMessageWithBtnDelete(this.translate.instant('messages.deleteaccount'),this.translate.instant('messages.areyousure'))
   }
   async alertMessageWithoutBtn(header,message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: header,
       message: message,
-      buttons: [this.translate.instant('message.ok')]
+      buttons: [this.translate.instant('messages.ok')]
     });
 
     await alert.present();
@@ -128,7 +128,7 @@ export class SettingPage implements OnInit {
   async addRequestofPayout(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     this.fetch.requestPayout({user_id: this.user.user_id,amount : this.wallet}).then(async (response) => {
@@ -140,9 +140,9 @@ export class SettingPage implements OnInit {
           this.wallet = json.response[0].TotalW;
           await loading.dismiss();
           const alertRes = await this.alertController.create({
-            header: this.translate.instant('message.requested'),
-            message:  this.translate.instant('message.requestedmessage'),
-            buttons: [this.translate.instant('message.ok')]});
+            header: this.translate.instant('messages.requested'),
+            message:  this.translate.instant('messages.requestedmessage'),
+            buttons: [this.translate.instant('messages.ok')]});
           await alertRes.present();
           this.isDisablied = false;
         }).catch((error) => {
@@ -158,14 +158,14 @@ export class SettingPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             alert.dismiss();
             this.addRequestofPayout();
           }
         },{
-          text: this.translate.instant('message.cancel'),
+          text: this.translate.instant('messages.cancel'),
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();
@@ -180,7 +180,7 @@ export class SettingPage implements OnInit {
   async removeAccount(){
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: this.translate.instant('message.pleasewait')
+      message: this.translate.instant('messages.pleasewait')
     });
     await loading.present();
     this.fetch.deleteUser(this.user.user_id).then(async (response) => {
@@ -191,11 +191,11 @@ export class SettingPage implements OnInit {
       {
         this.storage.clear();
         const alertRes = await this.alertController.create({
-          header: this.translate.instant('message.deletion'),
-          message:  this.translate.instant('message.deletionsuccess'),
+          header: this.translate.instant('messages.deletion'),
+          message:  this.translate.instant('messages.deletionsuccess'),
           buttons: [
             {
-              text: this.translate.instant('message.ok'),
+              text: this.translate.instant('messages.ok'),
               cssClass:'test',
               handler: () => {
                 this.router.navigate(['/login']);
@@ -216,14 +216,14 @@ export class SettingPage implements OnInit {
       message: message,
       buttons: [
         {
-          text: this.translate.instant('message.ok'),
+          text: this.translate.instant('messages.ok'),
           id: 'confirm-button',
           handler: () => {
             alert.dismiss();
             this.removeAccount();
           }
         },{
-          text: this.translate.instant('message.cancel'),
+          text: this.translate.instant('messages.cancel'),
           id: 'cancel-button',
           handler: () => {
             alert.dismiss();
