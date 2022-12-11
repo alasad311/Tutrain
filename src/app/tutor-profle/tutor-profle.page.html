@@ -15,7 +15,7 @@
     <div *ngIf="user">
         <div *ngIf="!user.introvideo" class="img" [style.backgroundImage]="'url('+user.picture+')'"></div>
         <div *ngIf="user.introvideo">
-            <video controls preload="auto" width="100%" height="300px">
+            <video #videoPlayer loop playsinline muted autoplay (canplay)="playVideo()" preload="auto" (click)="pauseVideo()" onloadedmetadata="this.muted = true" width="100%" height="300px">
                 <source [src]="user.introvideo" type="video/mp4">
             </video>
         </div>

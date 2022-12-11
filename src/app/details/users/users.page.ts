@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute,NavigationExtras,Router } from '@angular/router';
 import { AlertController, IonRouterOutlet, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { FetchService } from 'src/app/service/api/fetch.service';
@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
+  @ViewChild('videoPlayer') videoplayer: ElementRef;
   contest: any;
   contestBadge: any;
   id: any;
@@ -285,6 +286,18 @@ export class UsersPage implements OnInit {
     }else if(this.user.country == 'ye'){
         window.open('https://api.whatsapp.com/send?phone=+967'+this.user.phone+'&text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%20%D8%8C%20%D9%88%D8%AC%D8%AF%D8%AA%D9%83%20%D9%81%D9%8A%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20Tutrain.%20%D8%A7%D9%86%D8%A7%20%D8%A8%D8%AD%D8%A7%D8%AC%D8%A9%20%D8%A7%D9%84%D9%89%20%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%AA%D9%83%D9%85%D8%9F', '_system');
     }
+   }
+  }
+  playVideo(){
+    this.videoplayer.nativeElement.play();
+    this.videoplayer.nativeElement.muted = false;
+  }
+  pauseVideo(){
+   if(this.videoplayer.nativeElement.paused)
+   {
+    this.videoplayer.nativeElement.play();
+   } else{
+    this.videoplayer.nativeElement.pause();
    }
   }
 }

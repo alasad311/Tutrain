@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavController, LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FetchService } from '../service/api/fetch.service';
@@ -10,7 +10,10 @@ import { UtilService } from '../service/util.service';
   templateUrl: './tutor-profle.page.html',
   styleUrls: ['./tutor-profle.page.scss'],
 })
+
 export class TutorProflePage implements OnInit {
+  // @ViewChild('videoPlayer') videoplayer: HTMLVideoElement;
+  @ViewChild('videoPlayer') videoplayer: ElementRef;
   contest: any;
   contestBadge: any;
   user: any;
@@ -48,5 +51,17 @@ export class TutorProflePage implements OnInit {
   }
   goBackHome(){
     this.navCtrl.back();
+  }
+  playVideo(){
+    this.videoplayer.nativeElement.play();
+    this.videoplayer.nativeElement.muted = false;
+  }
+  pauseVideo(){
+   if(this.videoplayer.nativeElement.paused)
+   {
+    this.videoplayer.nativeElement.play();
+   } else{
+    this.videoplayer.nativeElement.pause();
+   }
   }
 }
