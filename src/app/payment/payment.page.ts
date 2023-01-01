@@ -87,26 +87,37 @@ export class PaymentPage implements OnInit {
   dismissModal(data){
     this.modalController.dismiss(data);
   }
-  onCheckout(){
-    this.isDisablied = true;
-    const browser = this.iab.create(
-      'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
-      '_blank',{ location: 'no',zoom: 'no'});
-    browser.on('exit').subscribe(event => { this.checkPayment(true); });
-  }
-  onTutorCheckout(){
-    this.isDisablied = true;
-    const browser = this.iab.create(
-    'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
-    '_blank',{ location: 'no',zoom: 'no'});
-    browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
-  }
+  // onCheckout(){
+  //   this.isDisablied = true;
+  //   const browser = this.iab.create(
+  //     'https://payment.tutrainapp.com/test.php?lang='+this.lang,
+  //     '_blank',{ location: 'no',zoom: 'no'});
+  //   browser.on('exit').subscribe(event => { this.checkPayment(true); });
+  // }
+  // onTutorCheckout(){
+  //   this.isDisablied = true;
+  //   const browser = this.iab.create(
+  //     'https://payment.tutrainapp.com/test.php?lang='+this.lang,
+  //   '_blank',{ location: 'no',zoom: 'no'});
+  //   browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
+  // }
   onCheckoutSubscription(){
     this.isDisablied = true;
     const browser = this.iab.create(
-      'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
+      'https://payment.tutrainapp.com/test.php?lang='+this.lang,
       '_blank',{ location: 'no',zoom: 'no'});
-    browser.on('exit').subscribe(event => { this.checkPaymentSubscription(true); });
+    //browser.on('exit').subscribe(event => { this.checkPaymentSubscription(true); });
+      browser.executeScript({
+      code: 'document.getElementById("customBackbtn").onclick = function() {\
+      var message = "close";\
+      var messageObj = {message: message};\
+      var stringifiedMessageObj = JSON.stringify(messageObj);\
+      webkit.messageHandlers.cordova_iab.postMessage("stringifiedMessageObj");\
+      }'});
+    browser.on('message').subscribe((val)=>{
+      const postObject: any = val;
+        console.log(postObject);
+      });
   }
   onCheckoutSession(){
     // check if session is still exisist before purchasing
@@ -116,7 +127,7 @@ export class PaymentPage implements OnInit {
       if(json && (this.session.seats - JSON.parse(response[1].data).response[0].totalSeatsTaken - 1) >= 0)
       {
         const browser = this.iab.create(
-          'https://payments.eduwinapp.com/nbo/index.php?orderid=1&amount=0.1&merchant_reference=100&remark=test&language=en&email=test@test.om',
+          'https://payment.tutrainapp.com/test.php?lang='+this.lang,
           '_blank',{ location: 'no',zoom: 'no'});
         browser.on('exit').subscribe(event => { this.checkPaymentSession(true); });
       }else{
@@ -238,7 +249,7 @@ export class PaymentPage implements OnInit {
   }
   async checkPaymentSubscription(event)
   {
-
+    console.log(event);
     if(event)
     {
       const loading = await this.loadingController.create({
