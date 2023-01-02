@@ -29,19 +29,18 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule,HttpClientModule, IonicModule.forRoot(),IonicStorageModule.forRoot()
-    , AppRoutingModule,FormsModule,ReactiveFormsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },FileTransfer,Chooser,
-    AuthGuardService ,HTTP,ScreenOrientation,AndroidFullScreen,StatusBar,InAppBrowser,AppVersion,FilePath,VideoEditor,Globalization],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), IonicStorageModule.forRoot(),
+        AppRoutingModule, FormsModule, ReactiveFormsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })],
+    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FileTransfer, Chooser,
+        AuthGuardService, HTTP, ScreenOrientation, AndroidFullScreen, StatusBar, InAppBrowser, AppVersion, FilePath, VideoEditor, Globalization],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -132,7 +132,7 @@
         <ion-label>{{(session.price+ service) | number : '1.3-3'}}</ion-label>
     </div>
 </ion-content>
-<ion-footer *ngIf="course">
+<!-- <ion-footer *ngIf="course">
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckout()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
@@ -149,8 +149,8 @@
             <ion-label slot="end">{{((tuturHourCost * durationSelect)+ service) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
-</ion-footer>
-<ion-footer *ngIf="session">
+</ion-footer> -->
+<!-- <ion-footer *ngIf="session">
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckoutSession()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>
@@ -158,8 +158,20 @@
             <ion-label slot="end">{{(session.price + service) | number : '1.3-3'}}</ion-label>
         </ion-item>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
 <ion-footer *ngIf="subscription">
+    <div>
+        <ion-radio-group value="debit" mode="ios" [(ngModel)]="gateway">
+            <ion-item lines="none">
+                <ion-label>Debit Card</ion-label>
+                <ion-radio value="debit"></ion-radio>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label>Credit Card</ion-label>
+                <ion-radio value="credit"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </div>
     <ion-toolbar>
         <ion-item lines="none" (click)="onCheckoutSubscription()" [disabled]="isDisablied">
             <ion-icon slot="start" name="cart-outline" color="light"></ion-icon>

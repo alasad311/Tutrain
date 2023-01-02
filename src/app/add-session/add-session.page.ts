@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NavController, LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
@@ -19,7 +19,7 @@ export class AddSessionPage implements OnInit {
   contestBadge: any;
   isSubmitted = false;
   isDisablied = false;
-  sessionAdd: FormGroup;
+  sessionAdd: UntypedFormGroup;
   startDateInput: any;
   imageData: any;
   imageUrl: any;
@@ -27,7 +27,7 @@ export class AddSessionPage implements OnInit {
   toDay: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService
     ,public util: UtilService,public loadingController: LoadingController, public modalController: ModalController
-    ,public alertController: AlertController,public formBuilder: FormBuilder,public translate: TranslateService) { 
+    ,public alertController: AlertController,public formBuilder: UntypedFormBuilder,public translate: TranslateService) { 
       this.date.setDate(this.date.getDate() + 1);
       this.toDay = this.date.getFullYear()+ '-' + (1 + this.date.getMonth()).toString().padStart(2, '0') + '-' +
       this.date.getDate().toString().padStart(2, '0')

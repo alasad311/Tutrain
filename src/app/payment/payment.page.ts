@@ -24,6 +24,7 @@ export class PaymentPage implements OnInit {
   @Input() bookID: any;
   @Input() subscription: any;
   contest: any;
+  gateway = 'debit';
   contestBadge: any;
   serviceFees: any;
   paymentMethod = 'online';
@@ -102,151 +103,157 @@ export class PaymentPage implements OnInit {
   //   browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
   // }
   onCheckoutSubscription(){
-    this.isDisablied = true;
+    let url;
+
+    if(this.gateway == 'debit')
+    {
+      url = 'https://payment.tutrainapp.com/debit.php?lang='+this.lang;
+    }else if(this.gateway == 'credit'){
+      url = 'https://payment.tutrainapp.com/credit.php?lang='+this.lang;
+    }
     const browser = this.iab.create(
-      'https://payment.tutrainapp.com/test.php?lang='+this.lang,
+      url,
       '_blank',{ location: 'no',zoom: 'no'});
     //browser.on('exit').subscribe(event => { this.checkPaymentSubscription(true); });
-      browser.executeScript({
-      code: 'document.getElementById("customBackbtn").onclick = function() {\
-      var message = "close";\
-      var messageObj = {message: message};\
-      var stringifiedMessageObj = JSON.stringify(messageObj);\
-      webkit.messageHandlers.cordova_iab.postMessage("stringifiedMessageObj");\
-      }'});
-    browser.on('message').subscribe((val)=>{
-      const postObject: any = val;
-        console.log(postObject);
-      });
-  }
-  onCheckoutSession(){
-    // check if session is still exisist before purchasing
-    this.isDisablied = true;
-    this.fetchServices.getSessionDetails(this.session.id).then(async (response) => {
-      const json = JSON.parse(response[0].data).response[0];
-      if(json && (this.session.seats - JSON.parse(response[1].data).response[0].totalSeatsTaken - 1) >= 0)
-      {
-        const browser = this.iab.create(
-          'https://payment.tutrainapp.com/test.php?lang='+this.lang,
-          '_blank',{ location: 'no',zoom: 'no'});
-        browser.on('exit').subscribe(event => { this.checkPaymentSession(true); });
-      }else{
-        this.isDisablied = false;
-        this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.removedsession'))
+    browser.on('loadstop').subscribe(event => {
+      browser.show();
+      console.log(event.url);
+      if (event.url.match('payment/cancel')) {
+        browser.close();
+      }else if(event.url.match('payment/success')){
+        browser.close();
+        this.checkPaymentSubscription(true);
       }
-
-    }).catch((error) => {
-      this.isDisablied = false;
     });
   }
-  async checkTutorPayment(event)
-  {
-    if(event)
-    {
-      const loading = await this.loadingController.create({
-        cssClass: 'my-custom-class',
-        message: this.translate.instant('messages.pleasewait')
-      });
-      await loading.present();
-      const user = await this.storage.get('user');
-      const data = {
-        paid_amount: (this.tuturHourCost * this.durationSelect ),
-        course_id : null,
-        session_id : null,
-        service_fees:this.service,
-        user_id : user.user_id,
-        tutor_id: this.tutor.user_id,
-        is_online:this.paymentType,
-        book_id: this.bookID,
-        subscription_id: null
-      };
-      this.fetchServices.updateOrder(data).then(async (response) => {
-        const json = JSON.parse(response.data).response;
-        await loading.dismiss();
-        if(json.id){
-          this.alertMessage(this.translate.instant('messages.payment'),
-          this.translate.instant('messages.youhavepaid')+ ((this.tuturHourCost * this.durationSelect )+this.service).toFixed(3));
-          const randomId = Math.floor(Math.random() * 10000) + 1;
-          const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
-          LocalNotifications.schedule({
-            notifications:[
-            {
-                title : this.translate.instant('messages.sessionreminder'),
-                body: this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
-                largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
-                id : randomId,
-                schedule: {
-                    at: slotDate,
-                    allowWhileIdle: true,
-                    repeats: false,
-                },
-                channelId: 'tutrain-default',
-                group:'tutrainapp'
-            }]
-          });
-        }
+  // onCheckoutSession(){
+  //   // check if session is still exisist before purchasing
+  //   this.isDisablied = true;
+  //   this.fetchServices.getSessionDetails(this.session.id).then(async (response) => {
+  //     const json = JSON.parse(response[0].data).response[0];
+  //     if(json && (this.session.seats - JSON.parse(response[1].data).response[0].totalSeatsTaken - 1) >= 0)
+  //     {
+  //       const browser = this.iab.create(
+  //         'https://payment.tutrainapp.com/test.php?lang='+this.lang,
+  //         '_blank',{ location: 'no',zoom: 'no'});
+  //       browser.on('exit').subscribe(event => { this.checkPaymentSession(true); });
+  //     }else{
+  //       this.isDisablied = false;
+  //       this.alertMessage(this.translate.instant('messages.error'),this.translate.instant('messages.removedsession'))
+  //     }
 
-      }).catch((error) => {
-        this.isDisablied = false;
-      });
-    }else{
-      this.isDisablied = false;
-    }
-  }
-  async checkPayment(event)
-  {
+  //   }).catch((error) => {
+  //     this.isDisablied = false;
+  //   });
+  // }
+  // async checkTutorPayment(event)
+  // {
+  //   if(event)
+  //   {
+  //     const loading = await this.loadingController.create({
+  //       cssClass: 'my-custom-class',
+  //       message: this.translate.instant('messages.pleasewait')
+  //     });
+  //     await loading.present();
+  //     const user = await this.storage.get('user');
+  //     const data = {
+  //       paid_amount: (this.tuturHourCost * this.durationSelect ),
+  //       course_id : null,
+  //       session_id : null,
+  //       service_fees:this.service,
+  //       user_id : user.user_id,
+  //       tutor_id: this.tutor.user_id,
+  //       is_online:this.paymentType,
+  //       book_id: this.bookID,
+  //       subscription_id: null
+  //     };
+  //     this.fetchServices.updateOrder(data).then(async (response) => {
+  //       const json = JSON.parse(response.data).response;
+  //       await loading.dismiss();
+  //       if(json.id){
+  //         this.alertMessage(this.translate.instant('messages.payment'),
+  //         this.translate.instant('messages.youhavepaid')+ ((this.tuturHourCost * this.durationSelect )+this.service).toFixed(3));
+  //         const randomId = Math.floor(Math.random() * 10000) + 1;
+  //         const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
+  //         LocalNotifications.schedule({
+  //           notifications:[
+  //           {
+  //               title : this.translate.instant('messages.sessionreminder'),
+  //               body: this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
+  //               largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
+  //               id : randomId,
+  //               schedule: {
+  //                   at: slotDate,
+  //                   allowWhileIdle: true,
+  //                   repeats: false,
+  //               },
+  //               channelId: 'tutrain-default',
+  //               group:'tutrainapp'
+  //           }]
+  //         });
+  //       }
 
-    if(event)
-    {
-      const loading = await this.loadingController.create({
-        cssClass: 'my-custom-class',
-        message: this.translate.instant('messages.pleasewait')
-      });
-      await loading.present();
-      const user = await this.storage.get('user');
-      const data = {
-        paid_amount: this.course.price,
-        service_fees:this.service,
-        course_id : this.course.id,
-        session_id : null,
-        user_id : user.user_id,
-        tutor_id: null,
-        is_online:this.paymentType,
-        book_id: null,
-        subscription_id: null
-      };
-      this.fetchServices.updateOrder(data).then(async (response) => {
-        const json = JSON.parse(response.data).response;
-        await loading.dismiss();
-        if(json.id){
-          this.alertMessage(this.translate.instant('messages.payment'),this.translate.instant('messages.youhavepaid')+ (this.course.price+this.service).toFixed(3) );
-        }
+  //     }).catch((error) => {
+  //       this.isDisablied = false;
+  //     });
+  //   }else{
+  //     this.isDisablied = false;
+  //   }
+  // }
+  // async checkPayment(event)
+  // {
 
-      }).catch((error) => {
-        this.isDisablied = false;
-      });
-    }else{
-      this.isDisablied = false;
-    }
+  //   if(event)
+  //   {
+  //     const loading = await this.loadingController.create({
+  //       cssClass: 'my-custom-class',
+  //       message: this.translate.instant('messages.pleasewait')
+  //     });
+  //     await loading.present();
+  //     const user = await this.storage.get('user');
+  //     const data = {
+  //       paid_amount: this.course.price,
+  //       service_fees:this.service,
+  //       course_id : this.course.id,
+  //       session_id : null,
+  //       user_id : user.user_id,
+  //       tutor_id: null,
+  //       is_online:this.paymentType,
+  //       book_id: null,
+  //       subscription_id: null
+  //     };
+  //     this.fetchServices.updateOrder(data).then(async (response) => {
+  //       const json = JSON.parse(response.data).response;
+  //       await loading.dismiss();
+  //       if(json.id){
+  //         this.alertMessage(this.translate.instant('messages.payment'),this.translate.instant('messages.youhavepaid')+ (this.course.price+this.service).toFixed(3) );
+  //       }
 
-    //Preparing ahead
+  //     }).catch((error) => {
+  //       this.isDisablied = false;
+  //     });
+  //   }else{
+  //     this.isDisablied = false;
+  //   }
+
+  //   //Preparing ahead
 
 
 
-    // browser.executeScript({
-    //   code: "document.getElementById('customBackbtn').onclick = function() {\
-    //   var message = 'close';\
-    //   var messageObj = {message: message};\
-    //   var stringifiedMessageObj = JSON.stringify(messageObj);\
-    //   webkit.messageHandlers.cordova_iab.postMessage('stringifiedMessageObj');\
-    //   }"});
-    // browser.on('message').subscribe((val)=>{
-    //   const postObject:any = val;
+  //   // browser.executeScript({
+  //   //   code: "document.getElementById('customBackbtn').onclick = function() {\
+  //   //   var message = 'close';\
+  //   //   var messageObj = {message: message};\
+  //   //   var stringifiedMessageObj = JSON.stringify(messageObj);\
+  //   //   webkit.messageHandlers.cordova_iab.postMessage('stringifiedMessageObj');\
+  //   //   }"});
+  //   // browser.on('message').subscribe((val)=>{
+  //   //   const postObject:any = val;
 
-    //   //Do whatever you want to with postObject response from inappbrowser
+  //   //   //Do whatever you want to with postObject response from inappbrowser
 
-    //   });
-  }
+  //   //   });
+  // }
   async checkPaymentSubscription(event)
   {
     console.log(event);
@@ -301,79 +308,79 @@ export class PaymentPage implements OnInit {
 
     //   });
   }
-  async checkPaymentSession(event)
-  {
+  // async checkPaymentSession(event)
+  // {
 
-    if(event)
-    {
-      const loading = await this.loadingController.create({
-        cssClass: 'my-custom-class',
-        message: this.translate.instant('messages.pleasewait')
-      });
-      await loading.present();
-      const user = await this.storage.get('user');
-      const data = {
-        paid_amount: this.session.price,
-        service_fees:this.service,
-        course_id : null,
-        session_id : this.session.id,
-        user_id : user.user_id,
-        tutor_id: null,
-        is_online:this.paymentType,
-        book_id: null,
-        subscription_id: null
-      };
-      this.fetchServices.updateOrder(data).then(async (response) => {
-        const json = JSON.parse(response.data).response;
-        await loading.dismiss();
-        if(json.id){
-          const randomId = Math.floor(Math.random() * 10000) + 1;
-          LocalNotifications.schedule({
-            notifications:[
-            {
-                title : this.translate.instant('messages.sessionreminder'),
-                body: this.translate.instant('messages.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
-                largeBody :this.translate.instant('messages.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
-                id : randomId,
-                schedule: {
-                    at: this.session.startdate,
-                    allowWhileIdle: true,
-                    repeats: false,
-                },
-                channelId: 'tutrain-default',
-                group:'tutrainapp'
-            }]
-          });
+  //   if(event)
+  //   {
+  //     const loading = await this.loadingController.create({
+  //       cssClass: 'my-custom-class',
+  //       message: this.translate.instant('messages.pleasewait')
+  //     });
+  //     await loading.present();
+  //     const user = await this.storage.get('user');
+  //     const data = {
+  //       paid_amount: this.session.price,
+  //       service_fees:this.service,
+  //       course_id : null,
+  //       session_id : this.session.id,
+  //       user_id : user.user_id,
+  //       tutor_id: null,
+  //       is_online:this.paymentType,
+  //       book_id: null,
+  //       subscription_id: null
+  //     };
+  //     this.fetchServices.updateOrder(data).then(async (response) => {
+  //       const json = JSON.parse(response.data).response;
+  //       await loading.dismiss();
+  //       if(json.id){
+  //         const randomId = Math.floor(Math.random() * 10000) + 1;
+  //         LocalNotifications.schedule({
+  //           notifications:[
+  //           {
+  //               title : this.translate.instant('messages.sessionreminder'),
+  //               body: this.translate.instant('messages.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
+  //               largeBody :this.translate.instant('messages.sessionreminder2',{fullname: this.session.fullname}) + this.session.location,
+  //               id : randomId,
+  //               schedule: {
+  //                   at: this.session.startdate,
+  //                   allowWhileIdle: true,
+  //                   repeats: false,
+  //               },
+  //               channelId: 'tutrain-default',
+  //               group:'tutrainapp'
+  //           }]
+  //         });
 
-          this.alertMessage(this.translate.instant('messages.payment'),
-          this.translate.instant('messages.youhavepaid')+ (this.session.price+this.service).toFixed(3) );
-        }
+  //         this.alertMessage(this.translate.instant('messages.payment'),
+  //         this.translate.instant('messages.youhavepaid')+ (this.session.price+this.service).toFixed(3) );
+  //       }
 
-      }).catch((error) => {
-        this.isDisablied = false;
-      });
-    }else{
-      this.isDisablied = false;
-    }
+  //     }).catch((error) => {
+  //       this.isDisablied = false;
+  //     });
+  //   }else{
+  //     this.isDisablied = false;
+  //   }
 
-    //Preparing ahead
+  //   //Preparing ahead
 
 
 
-    // browser.executeScript({
-    //   code: "document.getElementById('customBackbtn').onclick = function() {\
-    //   var message = 'close';\
-    //   var messageObj = {message: message};\
-    //   var stringifiedMessageObj = JSON.stringify(messageObj);\
-    //   webkit.messageHandlers.cordova_iab.postMessage('stringifiedMessageObj');\
-    //   }"});
-    // browser.on('message').subscribe((val)=>{
-    //   const postObject:any = val;
+  //   // browser.executeScript({
+  //   //   code: "document.getElementById('customBackbtn').onclick = function() {\
+  //   //   var message = 'close';\
+  //   //   var messageObj = {message: message};\
+  //   //   var stringifiedMessageObj = JSON.stringify(messageObj);\
+  //   //   webkit.messageHandlers.cordova_iab.postMessage('stringifiedMessageObj');\
+  //   //   }"});
+  //   // browser.on('message').subscribe((val)=>{
+  //   //   const postObject:any = val;
 
-    //   //Do whatever you want to with postObject response from inappbrowser
+  //   //   //Do whatever you want to with postObject response from inappbrowser
 
-    //   });
-  }
+  //   //   });
+  // }
   getActualDate(date)
   {
     const newdate = new Date(date);
@@ -411,63 +418,63 @@ export class PaymentPage implements OnInit {
       this.paymentType = true;
     }
   }
-  async directFeesPayment(){
-    this.isDisablied = true;
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: this.translate.instant('messages.pleasewait')
-    });
-    await loading.present();
-    const user = await this.storage.get('user');
-    const data = {
-      paid_amount: (this.tuturHourCost * this.durationSelect )+this.service,
-      course_id : null,
-      session_id : null,
-      service_fees:this.service,
-      user_id : user.user_id,
-      tutor_id: this.tutor.user_id,
-      is_online:this.paymentType,
-      book_id: this.bookID,
-      subscription_id: null
-    };
-    this.fetchServices.updateOrder(data).then(async (response) => {
-      const json = JSON.parse(response.data).response;
-      await loading.dismiss();
-      if(json.id){
-        this.alertMessage(this.translate.instant('messages.sessionreminder'),this.translate.instant('messages.sessionpayment'));
-        const randomId = Math.floor(Math.random() * 10000) + 1;
+  // async directFeesPayment(){
+  //   this.isDisablied = true;
+  //   const loading = await this.loadingController.create({
+  //     cssClass: 'my-custom-class',
+  //     message: this.translate.instant('messages.pleasewait')
+  //   });
+  //   await loading.present();
+  //   const user = await this.storage.get('user');
+  //   const data = {
+  //     paid_amount: (this.tuturHourCost * this.durationSelect )+this.service,
+  //     course_id : null,
+  //     session_id : null,
+  //     service_fees:this.service,
+  //     user_id : user.user_id,
+  //     tutor_id: this.tutor.user_id,
+  //     is_online:this.paymentType,
+  //     book_id: this.bookID,
+  //     subscription_id: null
+  //   };
+  //   this.fetchServices.updateOrder(data).then(async (response) => {
+  //     const json = JSON.parse(response.data).response;
+  //     await loading.dismiss();
+  //     if(json.id){
+  //       this.alertMessage(this.translate.instant('messages.sessionreminder'),this.translate.instant('messages.sessionpayment'));
+  //       const randomId = Math.floor(Math.random() * 10000) + 1;
 
-        const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
-        LocalNotifications.schedule({
-          notifications:[
-          {
-              title : this.translate.instant('messages.sessionreminder'),
-              body: this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
-              largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
-              id : randomId,
-              schedule: {
-                  at: slotDate,
-                  allowWhileIdle: true,
-                  repeats: false,
-              },
-              channelId: 'tutrain-default',
-              group:'tutrainapp'
-          }]
-        });
-      }
+  //       const slotDate = new Date(new Date(json.fullSlot).getTime() - (60000*30));
+  //       LocalNotifications.schedule({
+  //         notifications:[
+  //         {
+  //             title : this.translate.instant('messages.sessionreminder'),
+  //             body: this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
+  //             largeBody : this.translate.instant('messages.sessionremindermessage',{fullname: this.tutor.fullname}),
+  //             id : randomId,
+  //             schedule: {
+  //                 at: slotDate,
+  //                 allowWhileIdle: true,
+  //                 repeats: false,
+  //             },
+  //             channelId: 'tutrain-default',
+  //             group:'tutrainapp'
+  //         }]
+  //       });
+  //     }
 
-    }).catch((error) => {
-      this.isDisablied = false;
-    });
-  }
-  onCheckOutTutor(){
-    if(this.paymentMethod == 'online')
-    {
-      this.onTutorCheckout();
-    }else{
-      this.directFeesPayment();
-    }
-  }
+  //   }).catch((error) => {
+  //     this.isDisablied = false;
+  //   });
+  // }
+  // onCheckOutTutor(){
+  //   if(this.paymentMethod == 'online')
+  //   {
+  //     this.onTutorCheckout();
+  //   }else{
+  //     this.directFeesPayment();
+  //   }
+  // }
   async alertMessage(header,message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UsersService } from './../service/api/users.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { PushNotifications,Token } from '@capacitor/push-notifications';
 import { Globalization } from '@awesome-cordova-plugins/globalization/ngx';
@@ -22,12 +22,12 @@ export class RegisterPage implements OnInit {
   isSubmitted = false;
   isDisablied = false;
   pushToken: any;
-  userRegistration: FormGroup;
+  userRegistration: UntypedFormGroup;
   public confirm_password;
   internationalCode = '+968';
   lang: any;
   constructor(private route: ActivatedRoute,private router: Router,private userApi: UsersService,
-    public formBuilder: FormBuilder,public alertController: AlertController,public translate: TranslateService,
+    public formBuilder: UntypedFormBuilder,public alertController: AlertController,public translate: TranslateService,
     private globalization: Globalization) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {

@@ -5,7 +5,7 @@ import { FetchService } from '../service/api/fetch.service';
 import { StorageService } from '../service/storage/storage.service';
 import { UtilService } from '../service/util.service';
 import { Camera, CameraResultType,CameraSource } from '@capacitor/camera';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { EventService } from '../service/event.service';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -38,12 +38,12 @@ export class EditProfilePage implements OnInit {
   gov: any;
   uploadVideo: any;
   introvideoURL: any;
-  profileUpdate: FormGroup;
+  profileUpdate: UntypedFormGroup;
   hideVideo: any;
   lang: any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
-    private router: Router,public formBuilder: FormBuilder,private event: EventService,private sanitizer: DomSanitizer,
+    private router: Router,public formBuilder: UntypedFormBuilder,private event: EventService,private sanitizer: DomSanitizer,
     private chooser: Chooser, private filePath: FilePath,private videoEditor: VideoEditor,
     private globalization: Globalization,public translate: TranslateService) { }
   get errorControl() {

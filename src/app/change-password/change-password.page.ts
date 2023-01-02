@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,13 +15,13 @@ import { UtilService } from '../service/util.service';
 export class ChangePasswordPage implements OnInit {
   contest: any;
   contestBadge: any;
-  passwordChange: FormGroup;
+  passwordChange: UntypedFormGroup;
   isSubmitted = false;
   isDisablied = false;
   user:any;
   constructor(private navCtrl: NavController,private storage: StorageService,private fetch: FetchService,
     public alertController: AlertController,public loadingController: LoadingController,public util: UtilService,
-    private router: Router,public formBuilder: FormBuilder,public translate: TranslateService) { }
+    private router: Router,public formBuilder: UntypedFormBuilder,public translate: TranslateService) { }
 
   async ngOnInit() {
    
