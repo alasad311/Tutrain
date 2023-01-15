@@ -13,8 +13,11 @@
     <div class="brand">
         <!-- <div class="bg_image back_image" [style.backgroundImage]="'url('+course.img+')'"></div> -->
         <div class="food_detail">
-            <div class="name">
-                <ion-label>{{subscription.name}}</ion-label>
+            <div class="name" *ngIf="lang === 'en'">
+                <ion-label>{{subscription.name_en}}</ion-label>
+            </div>
+            <div class="name" *ngIf="lang === 'ar'">
+                <ion-label>{{subscription.name_ar}}</ion-label>
             </div>
             <div class="name" *ngIf="lang === 'en'">
                 <ion-label>{{ "payment.subscriptionduration" | translate }}: {{subscription.noday}} {{subscription.noday > 1 ? "Days": "Day" }}</ion-label>

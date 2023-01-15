@@ -34,6 +34,7 @@ export class PaymentPage implements OnInit {
   service = 0;
   paymentType = true;
   lang: any;
+  order: any;
   constructor(private iab: InAppBrowser,public alertController: AlertController,public modalController: ModalController,
     private storage: StorageService, public fetchServices: FetchService,public loadingController: LoadingController
     ,public util: UtilService,private globalization: Globalization,private translate: TranslateService) { }
@@ -107,13 +108,15 @@ export class PaymentPage implements OnInit {
 
     if(this.gateway == 'debit')
     {
-      url = 'https://payment.tutrainapp.com/debit.php?lang='+this.lang;
+      url = 'https://payment.tutrainapp.com/tutrain.jsp?lang='+this.lang+
+      '&amount='+this.subscription.price+'&desc='+this.subscription.description_en+'&orderid=TUT-INV-'+(this.serviceFees.max_order+1);
     }else if(this.gateway == 'credit'){
-      url = 'https://payment.tutrainapp.com/credit.php?lang='+this.lang;
+      url = 'https://payment.tutrainapp.com/credit.php?lang='+this.lang+
+      '&amount='+this.subscription.price+'&desc='+this.subscription.description_en+'&orderid=TUT-INV-'+(this.serviceFees.max_order+1);
     }
     const browser = this.iab.create(
       url,
-      '_blank',{ location: 'no',zoom: 'no'});
+      '_blank',{ location: 'no',zoom: 'yes'});
     //browser.on('exit').subscribe(event => { this.checkPaymentSubscription(true); });
     browser.on('loadstop').subscribe(event => {
       browser.show();

@@ -328,7 +328,7 @@
     },
     "subscription": {
         "title": "Subscription",
-        "whyupgrade": "Whats the benefit of <br> contest subscription?",
+        "whyupgrade": "Whats the benefit of <br /> contest subscription?",
         "benefit1": "Benefit #1",
         "benefit2": "Benefit #2",
         "benefit3": "Benefit #3"

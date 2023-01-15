@@ -18,6 +18,7 @@
             android:name="com.tutrain.MainActivity"
             android:label="@string/title_activity_main"
             android:supportsPictureInPicture="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarLaunch"
             android:launchMode="singleTask">
 
