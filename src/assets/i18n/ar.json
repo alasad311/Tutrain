@@ -45,7 +45,7 @@
         "1hour": "1 Hour",
         "2hour": "2 Hour",
         "3hour": "3 Hour",
-        "book": "Book"
+        "book": "Call Tutor"
     },
     "changepassword": {
         "title": "Change Password",
@@ -245,6 +245,9 @@
         "date": "Date",
         "time": "Time",
         "seatsfor": "Seat for",
+        "debit": "Debit Card",
+        "credit": "Credit Card",
+        "thawani": "Thawani",
         "checkout": "Checkout"
     },
     "paymenthistory": {
@@ -328,7 +331,7 @@
     },
     "subscription": {
         "title": "Subscription",
-        "whyupgrade": "Whats the benefit of <br> contest subscription?",
+        "whyupgrade": "Whats the benefit of <br /> contest subscription?",
         "benefit1": "Benefit #1",
         "benefit2": "Benefit #2",
         "benefit3": "Benefit #3"

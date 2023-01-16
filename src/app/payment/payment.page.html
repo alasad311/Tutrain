@@ -166,13 +166,18 @@
     <div>
         <ion-radio-group value="debit" mode="ios" [(ngModel)]="gateway">
             <ion-item lines="none">
-                <ion-label>Debit Card</ion-label>
+                <ion-label>{{ "payment.debit" | translate }}</ion-label>
                 <ion-radio value="debit"></ion-radio>
             </ion-item>
             <ion-item lines="none">
-                <ion-label>Credit Card</ion-label>
+                <ion-label>{{ "payment.credit" | translate }}</ion-label>
                 <ion-radio value="credit"></ion-radio>
             </ion-item>
+            <ion-item lines="none">
+                <ion-label><img src="https://thawani.om/wp-content/uploads/2020/10/logo-square.png" />{{ "payment.thawani" | translate }}</ion-label>
+                <ion-radio value="thawani"></ion-radio>
+            </ion-item>
+
         </ion-radio-group>
     </div>
     <ion-toolbar>

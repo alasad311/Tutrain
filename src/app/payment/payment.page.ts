@@ -108,11 +108,17 @@ export class PaymentPage implements OnInit {
 
     if(this.gateway == 'debit')
     {
-      url = 'https://payment.tutrainapp.com/tutrain.jsp?lang='+this.lang+
-      '&amount='+this.subscription.price+'&desc='+this.subscription.description_en+'&orderid=TUT-INV-'+(this.serviceFees.max_order+1);
+      url = 'https://scd.edu.om:10000/tutrain.jsp?lang='+this.lang+
+      '&amount='+this.subscription.price+'&desc='+this.subscription.description_en+
+      '&orderid=TUT-INV-'+(Math.floor(Math.random() * 100000000));
     }else if(this.gateway == 'credit'){
       url = 'https://payment.tutrainapp.com/credit.php?lang='+this.lang+
-      '&amount='+this.subscription.price+'&desc='+this.subscription.description_en+'&orderid=TUT-INV-'+(this.serviceFees.max_order+1);
+      '&amount='+this.subscription.price+'&desc='+this.subscription.description_en+
+      '&orderid=TUT-INV-'+(Math.floor(Math.random() * 100000000));
+    }else if(this.gateway == 'thawani'){
+      url = 'https://payment.tutrainapp.com/thawani.php?lang='+this.lang+
+      '&amount='+(this.subscription.price*1000)+'&desc='+this.subscription.description_en+
+      '&orderid=TUT-INV-'+(Math.floor(Math.random() * 100000000));
     }
     const browser = this.iab.create(
       url,

@@ -245,6 +245,9 @@
         "date": "Date",
         "time": "Time",
         "seatsfor": "Seat for",
+        "debit": "Debit Card",
+        "credit": "Credit Card",
+        "thawani": "Thawani",
         "checkout": "Checkout"
     },
     "paymenthistory": {
