@@ -103,9 +103,13 @@ export class PaymentPage implements OnInit {
   //   '_blank',{ location: 'no',zoom: 'no'});
   //   browser.on('exit').subscribe(event => { this.checkTutorPayment(true); });
   // }
-  onCheckoutSubscription(){
+  async onCheckoutSubscription(){
     let url;
-
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: this.translate.instant('messages.pleasewait')
+    });
+   
     if(this.gateway == 'debit')
     {
       url = 'https://scd.edu.om:10000/tutrain.jsp?lang='+this.lang+
@@ -123,10 +127,13 @@ export class PaymentPage implements OnInit {
     const browser = this.iab.create(
       url,
       '_blank',{ location: 'no',zoom: 'yes'});
+      browser.hide();
+      await loading.present();
     //browser.on('exit').subscribe(event => { this.checkPaymentSubscription(true); });
-    browser.on('loadstop').subscribe(event => {
+    browser.on('loadstop').subscribe(async event => {
+      await loading.dismiss();
       browser.show();
-      console.log(event.url);
+
       if (event.url.match('payment/cancel')) {
         browser.close();
       }else if(event.url.match('payment/success')){
